@@ -44,7 +44,11 @@ var Utilities = (() => {
 		);
 	}
 	function rangeFrom(init = 0, len = 1, step = 1) {
-		return [...Array(len)].map((_, inc) => step * inc + init);
+		var stepFn =
+			typeof step == 'number'
+				? (_, inc) => step * inc + init
+				: (_, inc) => step(inc) + init;
+		return [...Array(len)].map(stepFn);
 	}
 	function intersectArrays(...arrays) {
 		return arrays.reduce((arrAcc, arrN) =>
