@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utilties</title>
+    <style>
+        p,
+        ul {
+            width: 60ch;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <h1>Utilities Test Harness</h1>
+        <section>
+            <ul>
+                <li>acculatedAverage</li>
+                <li>clampRange</li>
+                <li>normaliseRange</li>
+                <li>liniarInterpolate</li>
+                <li>mapRanges</li>
+                <li>rangeBetween</li>
+                <li>rangeFrom</li>
+                <li>intersectArrays</li>
+                <li>unionArrays</li>
+                <li>exercise</li>
+            </ul>
+            <p>The above functions make considerable use of the technique called currying to return a specialised
+                function.
+                This
+                saves on suppling parameters that are not expected to change.</p>
+            <h4>NB: The functions have been prepared with no input validation or additional error checking.</h4>
+        </section>
+        <hr>
+
+        <h2>Acculated Average</h2>
+        <section>
+            <h3>Parameters</h3>
+            <h4>Initial call</h4>
+            <ul>
+                <li>averageToDate: Current average before the new Value arrived. (defaulted to 0)</li>
+                <li>sampleSize: Number of values in the sample, including the new Value. (defaulted to 0)</li>
+            </ul>
+            <h4>Subsequent calls</h4>
+            <ul>
+                <li>newValue - New data point to be included in the average calculation.</li>
+                <li>newAverge - Replacement value of the averageToDate. (optional)</li>
+                <li>newSampleSize - Replacement value of the sampleSize. (optional)</li>
+            </ul>
+            <h4>Return Value</h4>
+            <p>The new calculated average.</p>
+            <h3>Description</h3>
+        </section>
+        <hr>
+
+        <h2>Clamp Range</h2>
+        <section>
+            <h3>Parameters</h3>
+            <h4>Initial call</h4>
+            <ul>
+                <li>min - lower boundry of the range.</li>
+                <li>max - upper boundry of the range.</li>
+            </ul>
+            <h4>Subsequent calls</h4>
+            <ul>
+                <li>value - datum to be clamped.</li>
+            </ul>
+            <h4>Return Value</h4>
+            <p>A value within the clamped range.</p>
+            <h3>Description</h3>
+            <p>Function that restricts a value to within a given numeric range. Initialised with the lower and upper
+                boundries
+                of a
+                range, this function returns another specialised function.</p>
+            <p>When the specialised function is called with a single number, the value may be changed to bring it within
+                the predefined range.</p>
+            <p>
+
+                If the input value is below the lower boundries the output from the function will be the lower boundary.
+                Likewise, if the input value is above the upper boundries the output from the function will be the upper
+                boundary.
+            </p>
+            <p>If the input value is within the boundries the output from the function will be the input value.</p>
+        </section>
+        <hr>
+
+        <h2>Normalise Range</h2>
+        <section>
+            <h3>Parameters</h3>
+            <h4>Initial call</h4>
+            <ul>
+                <li>start - lower boundry of the range.</li>
+                <li>end - upper boundry of the range.</li>
+            </ul>
+            <h4>Subsequent calls</h4>
+            <ul>
+                <li>value - datum to be normalised (set to a value between 0 and 1 proportional to the given range.)
+                </li>
+            </ul>
+            <h4>Return Value</h4>
+            <p>A value between 0 and 1.</p>
+            <h3>Description</h3>
+            <p>The NormaliseRange function takes in the min and max values of a range in which future values are to be
+                normalised, and returns a specialised function.</p>
+            <p>When the specialised function is called with a value within the range the result is a value proportional
+                to the range (between 0 and 1.)</p>
+            <p>Input values outside the expected range will be either less than 0 or greater than 1.</p>
+        </section>
+        <hr>
+
+        <h2>Liniar Interpolate</h2>
+        <section>
+            <h3>Parameters</h3>
+            <h4>Initial call</h4>
+            <ul>
+                <li>start - lower boundry of the range.</li>
+                <li>end - upper boundry of the range.</li>
+            </ul>
+            <h4>Subsequent calls</h4>
+            <ul>
+                <li>value - datum (between 0 and 1) to be interpolated.</li>
+            </ul>
+            <h4>Return Value</h4>
+            <p>A value between the start and end values, proportional to the input value.</p>
+            <h3>Description</h3>
+        </section>
+        <hr>
+
+        <h2>Map Ranges</h2>
+        <section>
+            <h3>Parameters</h3>
+            <h4>Initial call</h4>
+            <ul>
+                <li>fromMin - lower boundry of the source range.</li>
+                <li>fromMax - upper boundry of the source range.</li>
+                <li>toMin - lower boundry of the target range.</li>
+                <li>toMax - upper boundry of the target range.</li>
+            </ul>
+            <h4>Subsequent calls</h4>
+            <ul>
+                <li>value - datum from the source range to be mapped into the target range.</li>
+            </ul>
+            <h4>Return Value</h4>
+            <p>A value in the target range, when the input value is from the source range, otherwise unknown.</p>
+            <h3>Description</h3>
+        </section>
+        <hr>
+
+        <h2>Range Between</h2>
+        <section>
+            <h3>Parameters</h3>
+            <ul>
+                <li>min - lower boundry of the range.</li>
+                <li>max - upper boundry of the range.</li>
+                <li>step - size of the interval between values in the range (defaulted to 1.)</li>
+            </ul>
+            <h4>Return Value</h4>
+            <p>A new array containing the a numbers.</p>
+            <h3>Description</h3>
+        </section>
+        <hr>
+
+        <h2>Range From</h2>
+        <section>
+            <h3>Parameters</h3>
+            <ul>
+                <li>init - initial value of the range.</li>
+                <li>len - number of values in the outputrange.</li>
+                <li>step - size of the interval between values in the range (defaulted to 1.)</li>
+            </ul>
+            <h4>Return Value</h4>
+            <p>A new array containing the a numbers.</p>
+            <h3>Description</h3>
+        </section>
+        <hr>
+
+        <h2>Intersect Arrays</h2>
+        <section>
+            <h3>Parameters</h3>
+            <ul>
+                <li>arrays - One or more arrays from which the intersect is to be extracted.</li>
+            </ul>
+            <h4>Return Value</h4>
+            <p>A new array containing only those values found in all the given arrays.</p>
+            <h3>Description</h3>
+        </section>
+        <hr>
+
+        <h2>Union Arrays</h2>
+        <section>
+            <h3>Parameters</h3>
+            <ul>
+                <li>arrays - One or more arrays from which the union is to be extracted.</li>
+            </ul>
+            <h4>Return Value</h4>
+            <p>A new array containing a distinct list of values from all of the given arrays.</p>
+            <h3>Description</h3>
+        </section>
+        <hr>
+
+        <h2>Exercise</h2>
+        <section>
+            <h3>Parameters</h3>
+            <ul>
+                <li>expected - The value anticipated to be the result.</li>
+                <li>actual - The value calculated as the result.</li>
+                <li>id - Reference for the specific exercise. (optional)</li>
+            </ul>
+            <h4>Return Value</h4>
+            <p>Result of the comparison (true or false.)</p>
+            <h3>Description</h3>
+        </section>
+    </main>
+
+
+    <script src="Utilities.js"></script>
+    <script>
+        console.log('\nAcculated Average (current average, new sample size, new value)');
+        console.log(`\tUtilities.acculatedAverage(9, 5)(9) = ${Utilities.acculatedAverage(9, 5)(9)}
+        Explanation : 9 * 5 = 45, + 9 = 54, / 6 = 9.`);
+        console.log(`\tUtilities.acculatedAverage(9, 5)(45) = ${Utilities.acculatedAverage(9, 5)(45)}
+        Explanation : 9 * 5 = 45, + 45 = 90, / 6 = 15.`);
+        var newAverage = Utilities.acculatedAverage();
+        console.log(`\tnewAverage(1) = ${newAverage(1)} = 1.0`);
+        console.log(`\tnewAverage(2) = ${newAverage(2)} = 1.5`);
+        console.log(`\tnewAverage(3) = ${newAverage(3)} = 2.0`);
+        console.log(`\tnewAverage(4) = ${newAverage(4)} = 2.5`);
+        console.log(`\tnewAverage(5) = ${newAverage(5)} = 3.0`);
+
+        console.log('\nClamp Range between 50 to 60');
+        var clampedRange = Utilities.clampRange(50, 60);
+        console.log(`\tclampedRange(45) = ${clampedRange(45)}`);
+        console.log(`\tclampedRange(50) = ${clampedRange(50)}`);
+        console.log(`\tclampedRange(55) = ${clampedRange(55)}`);
+        console.log(`\tclampedRange(60) = ${clampedRange(60)}`);
+        console.log(`\tclampedRange(65) = ${clampedRange(65)}`);
+
+        console.log('\nNormal Range between 50 to 60');
+        var normalizedRange = Utilities.normaliseRange(50, 60);
+        console.log(`\tnormalizedRange(45) = ${normalizedRange(45)}`);
+        console.log(`\tnormalizedRange(50) = ${normalizedRange(50)}`);
+        console.log(`\tnormalizedRange(55) = ${normalizedRange(55)}`);
+        console.log(`\tnormalizedRange(60) = ${normalizedRange(60)}`);
+        console.log(`\tnormalizedRange(65) = ${normalizedRange(65)}`);
+
+        console.log('\nLiniar Interpolate between 50 to 60');
+        var liniarInterlopated = Utilities.liniarInterpolate(50, 60);
+        console.log(`\tliniarInterlopated(0.00) = ${liniarInterlopated(0)}`);
+        console.log(`\tliniarInterlopated(0.25) = ${liniarInterlopated(0.25)}`);
+        console.log(`\tliniarInterlopated(0.50) = ${liniarInterlopated(0.5)}`);
+        console.log(`\tliniarInterlopated(0.75) = ${liniarInterlopated(0.75)}`);
+        console.log(`\tliniarInterlopated(1.00) = ${liniarInterlopated(1)}`);
+
+        console.log('\nMap Ranges 50~60 to 80~100');
+        var mappedRanges = Utilities.mapRanges(50, 60, 80, 100);
+        console.log(`\tmappedRanges(45) = ${mappedRanges(45)}`);
+        console.log(`\tmappedRanges(50) = ${mappedRanges(50)}`);
+        console.log(`\tmappedRanges(55) = ${mappedRanges(55)}`);
+        console.log(`\tmappedRanges(60) = ${mappedRanges(60)}`);
+        console.log(`\tmappedRanges(65) = ${mappedRanges(65)}`);
+
+        console.log('\nRange Between - Generate an array containing values between Min and less than Max, in STEP intervals.');
+        console.log(`\tUtilities.rangeBetween(10, 20) = ${Utilities.rangeBetween(10, 20)}`);
+        console.log(`\tUtilities.rangeBetween(10, 20, 2) = ${Utilities.rangeBetween(10, 20, 2)}`);
+
+        console.log('\nRange From - Generate an array containing Len number of values starting from Init, in STEP intervals.');
+        console.log(`\tUtilities.rangeFrom() = ${Utilities.rangeFrom()}`);
+        console.log(`\tUtilities.rangeFrom(10) = ${Utilities.rangeFrom(10)}`);
+        console.log(`\tUtilities.rangeFrom(10, 20) = ${Utilities.rangeFrom(10, 20)}`);
+        console.log(`\tUtilities.rangeFrom(10, 20, 2) = ${Utilities.rangeFrom(10, 20, 2)}`);
+
+        console.log('\nIntersect Array: Extract values common to all given arrays');
+        console.log('\tGiven the following Arrays:');
+        var alpha = Utilities.rangeFrom(1, 4);
+        console.log(`\tAlpha: [${alpha}]`);
+        var beta = Utilities.rangeFrom(2, 4);
+        console.log(`\tBeta: [${beta}]`);
+        var delta = Utilities.rangeFrom(3, 4);
+        console.log(`\tDelta: [${delta}]`);
+        var zeta = Utilities.rangeFrom(10, 4, 10);
+        console.log(`\tZeta: [${zeta}]`);
+        console.log('\n\tCalculate:\n');
+        console.log(`\tUtilities.intersectArrays(alpha) = ${Utilities.intersectArrays(alpha)}`);
+        console.log(`\tUtilities.intersectArrays(alpha, beta) = ${Utilities.intersectArrays(alpha, beta)}`);
+        console.log(`\tUtilities.intersectArrays(alpha, beta, delta) = ${Utilities.intersectArrays(alpha, beta, delta)}`);
+        console.log(`\tUtilities.intersectArrays(alpha, zeta) = ${Utilities.intersectArrays(alpha, zeta)}`);
+
+        console.log('\nUnion Array: Extract a distinct set of values from all given arrays');
+        console.log('\tGiven the following Arrays:');
+        var alpha = Utilities.rangeFrom(1, 4);
+        console.log(`\tAlpha: [${alpha}]`);
+        var beta = Utilities.rangeFrom(2, 4);
+        console.log(`\tBeta: [${beta}]`);
+        var delta = Utilities.rangeFrom(3, 4);
+        console.log(`\tDelta: [${delta}]`);
+        var zeta = Utilities.rangeFrom(10, 4, 10);
+        console.log(`\tZeta: [${zeta}]`);
+        console.log('\n\tCalculate:\n');
+        console.log(`\tUtilities.unionArrays(alpha) = ${Utilities.unionArrays(alpha)}`);
+        console.log(`\tUtilities.unionArrays(alpha, beta) = ${Utilities.unionArrays(alpha, beta)}`);
+        console.log(`\tUtilities.unionArrays(alpha, beta, delta) = ${Utilities.unionArrays(alpha, beta, delta)}`);
+        console.log(`\tUtilities.unionArrays(alpha, zeta) = ${Utilities.unionArrays(alpha, zeta)}`);
+
+        console.log('\nExercise');
+        Utilities.exercise([10], [10]);
+        Utilities.exercise([10], [9, 11], 'TWO');
+        Utilities.exercise([10], [9, 10, 11].filter(x => x % 10), 'three');
+        Utilities.exercise([10], [9, 10, 11].filter(x => !(x % 10)), 4);
+    </script>
+</body>
+
+</html>

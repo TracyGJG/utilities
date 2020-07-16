@@ -1,2 +1,3 @@
-# utilities
-A component containing a bunch of utility functions I find useful
+# Utilities
+
+A collection of 10 utility functions I find useful.
