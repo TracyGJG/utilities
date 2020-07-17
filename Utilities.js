@@ -1,6 +1,6 @@
 var Utilities = (() => {
 	return {
-		acculatedAverage,
+		accumulatedAverage,
 		clampRange,
 		normaliseRange,
 		liniarInterpolate,
@@ -12,7 +12,7 @@ var Utilities = (() => {
 		exercise,
 	};
 
-	function acculatedAverage(averageToDate = 0, sampleSize = 0) {
+	function accumulatedAverage(averageToDate = 0, sampleSize = 0) {
 		var runningTotal = averageToDate * (sampleSize || 1);
 		var currentSampleSize = sampleSize;
 		return (newValue, newAverage, newSampleSize) => {

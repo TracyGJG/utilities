@@ -37,7 +37,7 @@
         </section>
         <hr>
 
-        <h2>Acculated Average</h2>
+        <h2>Accumulated Average</h2>
         <section>
             <h3>Parameters</h3>
             <h4>Initial call</h4>
@@ -54,6 +54,17 @@
             <h4>Return Value</h4>
             <p>The new calculated average.</p>
             <h3>Description</h3>
+            <p>Utility for recalculating an average as the sample size increased. There are two ways of using the
+                function, one-off and incremental, but both employ partial application.</p>
+            <p>One-off, involves calling acculmulateAverage with the current average and the size of the sample (number
+                of values from which the average is calculated.) This provides the partial application (specilised
+                function) that can then be called with the value to the included in the average.</p>
+            <code>Utility.accumulatedAverage(currentAverage, sampleSize)(newValue)</code>
+            <p>The incremental appraoch of using the function involves placing the initial call without parameters (or
+                with the defaults), to get the specialised function. </p>
+            <code>var accumulateAverage = Utility.accumulatedAverage();</code><br>
+            <code>var newAverage = accumulateAverage(newSample)); // newAverage = (0 + newSample) / (0 + 1)</code><br>
+            <p>Subsequent calls to accumulateAverage with include additional values as part of the new average.</p>
         </section>
         <hr>
 
@@ -127,6 +138,8 @@
             <h4>Return Value</h4>
             <p>A value between the start and end values, proportional to the input value.</p>
             <h3>Description</h3>
+            <p>This function converts a normalised value (beweet 0 and 1), and initilised with a given range, returns a
+                value within the range proportional to the input value.</p>
         </section>
         <hr>
 
@@ -147,6 +160,9 @@
             <h4>Return Value</h4>
             <p>A value in the target range, when the input value is from the source range, otherwise unknown.</p>
             <h3>Description</h3>
+            <p>The Map Ranges function is quite self explanatory. Initialised with a source and target range, and given
+                an input value (within the source range), it returns a value in the target range with the same
+                normalised proportion.</p>
         </section>
         <hr>
 
@@ -161,6 +177,8 @@
             <h4>Return Value</h4>
             <p>A new array containing the numbers between <i>min</i> and <i>max</i> - 1, in <i>step</i> intervals.</p>
             <h3>Description</h3>
+            <p>RangeBetween is a generator function that produces an array of numbers between <i>min</i> and <i>max</i>
+                (- 1) in <i>step</i> intervals (default value is 1.)</p>
         </section>
         <hr>
 
@@ -176,6 +194,9 @@
             <p>A new array containing <i>len</i> numbers starting from <i>init</i>, in <i>step</i> intervals.</p>
             <p>A new array containing the a numbers.</p>
             <h3>Description</h3>
+            <p>Similar to the RangeBetween function, this function generates an array of <i>len</i> numbers commencing
+                with <i>init</i> and varying by <i>step</i>. The step parameter can be a fixed value (defaulted to 1) or
+                a function using the index as an input.</p>
         </section>
         <hr>
 
@@ -188,6 +209,7 @@
             <h4>Return Value</h4>
             <p>A new array containing only those values found in all the given arrays.</p>
             <h3>Description</h3>
+            <p>Extracts the common values of all the input arrays into a new array of distinct values.</p>
         </section>
         <hr>
 
@@ -200,6 +222,7 @@
             <h4>Return Value</h4>
             <p>A new array containing a distinct list of values from all of the given arrays.</p>
             <h3>Description</h3>
+            <p>Extracts a list of all the values from the input arrays into a new array of distinct values.</p>
         </section>
         <hr>
 
@@ -214,17 +237,18 @@
             <h4>Return Value</h4>
             <p>Result of the comparison (true or false.)</p>
             <h3>Description</h3>
+            <p>A simple mechanism for ad-hoc testing of a pure function.</p>
         </section>
     </main>
 
     <script src="Utilities.js"></script>
     <script>
-        console.log('\nAcculated Average');
-        console.log(`\tUtilities.acculatedAverage(9, 5)(9) = ${Utilities.acculatedAverage(9, 5)(9)}
+        console.log('\nAccumulated Average');
+        console.log(`\tUtilities.accumulatedAverage(9, 5)(9) = ${Utilities.acculatedAverage(9, 5)(9)}
         Explanation : 9 * 5 = 45, + 9 = 54, / 6 = 9.`);
-        console.log(`\tUtilities.acculatedAverage(9, 5)(45) = ${Utilities.acculatedAverage(9, 5)(45)}
+        console.log(`\tUtilities.accumulatedAverage(9, 5)(45) = ${Utilities.acculatedAverage(9, 5)(45)}
         Explanation : 9 * 5 = 45, + 45 = 90, / 6 = 15.`);
-        var newAverage = Utilities.acculatedAverage();
+        var newAverage = Utilities.accumulatedAverage();
         console.log(`\tnewAverage(1) = ${newAverage(1)} = 1.0`);
         console.log(`\tnewAverage(2) = ${newAverage(2)} = 1.5`);
         console.log(`\tnewAverage(3) = ${newAverage(3)} = 2.0`);
