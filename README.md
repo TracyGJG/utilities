@@ -152,7 +152,7 @@ This function converts a normalised value (beweet 0 and 1), and initilised with 
 
 #### Return Value
 
-- A value in the target range, when the input value is from the source range, otherwise unknown.
+A value in the target range, when the input value is from the source range, otherwise unknown.
 
 ### Description
 
