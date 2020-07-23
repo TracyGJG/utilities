@@ -1,6 +1,6 @@
 # Utilities
 
-A collection of 10 utility functions I find useful.
+A collection of utility functions I find useful.
 
 - acculatedAverage
 - clampRange
@@ -9,13 +9,14 @@ A collection of 10 utility functions I find useful.
 - mapRanges
 - rangeBetween
 - rangeFrom
+- inRange
 - intersectArrays
 - unionArrays
 - exercise
 
 The above functions make considerable use of the technique called currying to return a specialised function. This saves on suppling parameters that are not expected to change.
 
-#### NB: The functions have been prepared with no input validation or additional error checking.
+### NB: The functions have been prepared with no input validation or additional error checking.
 
 ---
 
@@ -34,7 +35,7 @@ The above functions make considerable use of the technique called currying to re
 - newAverge - Replacement value of the averageToDate. (optional)
 - newSampleSize - Replacement value of the sampleSize. (optional)
 
-#### Return Value
+### Return Value
 
 The new calculated average.
 
@@ -69,7 +70,7 @@ Subsequent calls to accumulateAverage with include additional values as part of 
 
 - value - datum to be clamped.
 
-#### Return Value
+### Return Value
 
 A value within the clamped range.
 
@@ -98,7 +99,7 @@ If the input value is within the boundries the output from the function will be 
 
 - value - datum to be normalised (set to a value between 0 and 1 proportional to the given range.)
 
-#### Return Value
+### Return Value
 
 A value between 0 and 1.
 
@@ -125,7 +126,7 @@ Input values outside the expected range will be either less than 0 or greater th
 
 - value - datum (between 0 and 1) to be interpolated.
 
-#### Return Value
+### Return Value
 
 A value between the start and end values, proportional to the input value.
 
@@ -150,7 +151,7 @@ This function converts a normalised value (beweet 0 and 1), and initilised with 
 
 - value - datum from the source range to be mapped into the target range.
 
-#### Return Value
+### Return Value
 
 A value in the target range, when the input value is from the source range, otherwise unknown.
 
@@ -168,7 +169,7 @@ The Map Ranges function is quite self explanatory. Initialised with a source and
 - max - upper boundry of the range.
 - step - size of the interval between values in the range (defaulted to 1.)
 
-#### Return Value
+### Return Value
 
 A new array containing the numbers between min and max - 1, in step intervals.
 
@@ -186,7 +187,7 @@ RangeBetween is a generator function that produces an array of numbers between _
 - len - number of values in the outputrange.
 - step - size of the interval between values in the range (defaulted to 1.)
 
-#### Return Value
+### Return Value
 
 A new array containing len numbers starting from init, in step intervals.
 
@@ -198,13 +199,39 @@ Similar to the RangeBetween function, this function generates an array of len nu
 
 ---
 
+## inRange
+
+### Parameters
+
+#### Initial call
+
+- from - lower boundry of the primary range.
+- to - upper boundry of the primary range.
+
+#### Subsequent calls
+
+- from - lower boundry of the secondary range.
+- to - upper boundry of the secondary range (optional).
+
+### Return Value
+
+Boolean value indicating the ranges overlap or a value is within a given range.
+
+### Description
+
+This function supports two use cases:
+1 Confirm two ranges overloap.
+2 Confirm a value lies within a primary range.
+
+---
+
 ## intersectArrays
 
 ### Parameters
 
 - arrays - One or more arrays from which the intersect is to be extracted.
 
-#### Return Value
+### Return Value
 
 A new array containing only those values found in all the given arrays.
 
@@ -220,7 +247,7 @@ Extracts the common values of all the input arrays into a new array of distinct 
 
 - arrays - One or more arrays from which the union is to be extracted.
 
-#### Return Value
+### Return Value
 
 A new array containing a distinct list of values from all of the given arrays.
 
@@ -238,7 +265,7 @@ Extracts a list of all the values from the input arrays into a new array of dist
 - actual - The value calculated as the result.
 - id - Reference for the specific exercise. (optional)
 
-#### Return Value
+### Return Value
 
 Result of the comparison (true or false.)
 

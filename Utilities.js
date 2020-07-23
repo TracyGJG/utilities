@@ -7,6 +7,7 @@ var Utilities = (() => {
 		mapRanges,
 		rangeBetween,
 		rangeFrom,
+		inRange,
 		intersectArrays,
 		unionArrays,
 		exercise,
@@ -50,6 +51,22 @@ var Utilities = (() => {
 				: (_, inc) => step(inc) + init;
 		return [...Array(len)].map(stepFn);
 	}
+
+	function inRange(from, to) {
+		if (arguments.length != 2)
+			new SyntaxError(
+				'overlappingRanges needs to be provided with two primary values.'
+			);
+		var aFrom = Math.min(from, to);
+		var aTo = Math.max(from, to);
+		return function check(from, to) {
+			var xTo = arguments.length == 1 ? from : to;
+			var bFrom = Math.min(from, xTo);
+			var bTo = Math.max(from, xTo);
+			return !(bTo < aFrom || bFrom > aTo);
+		};
+	}
+
 	function intersectArrays(...arrays) {
 		return arrays.reduce((arrAcc, arrN) =>
 			[...new Set(arrAcc)].filter((item) => arrN.includes(item))

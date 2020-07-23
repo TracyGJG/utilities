@@ -10,24 +10,29 @@
         ul {
             width: 60ch;
         }
+
+        a {
+            color: #000;
+        }
     </style>
 </head>
 
 <body>
-    <h1>Utilities Test Harness</h1>
+    <h1 id='0'>Utilities Test Harness</h1>
     <main>
         <section>
             <ul>
-                <li>acculatedAverage</li>
-                <li>clampRange</li>
-                <li>normaliseRange</li>
-                <li>liniarInterpolate</li>
-                <li>mapRanges</li>
-                <li>rangeBetween</li>
-                <li>rangeFrom</li>
-                <li>intersectArrays</li>
-                <li>unionArrays</li>
-                <li>exercise</li>
+                <li><a href="#1">accumulatedAverage</a></li>
+                <li><a href="#2">clampRange</a></li>
+                <li><a href="#3">normaliseRange</a></li>
+                <li><a href="#4">liniarInterpolate</a></li>
+                <li><a href="#5">mapRanges</a></li>
+                <li><a href="#6">rangeBetween</a></li>
+                <li><a href="#7">rangeFrom</a></li>
+                <li><a href="#8">inRange</a></li>
+                <li><a href="#9">intersectArrays</a></li>
+                <li><a href="#10">unionArrays</a></li>
+                <li><a href="#11">exercise</a></li>
             </ul>
             <p>The above functions make considerable use of the technique called currying to return a specialised
                 function.
@@ -37,7 +42,7 @@
         </section>
         <hr>
 
-        <h2>Accumulated Average</h2>
+        <h2 id='1'><a href="#0">Accumulated Average</a></h2>
         <section>
             <h3>Parameters</h3>
             <h4>Initial call</h4>
@@ -68,7 +73,7 @@
         </section>
         <hr>
 
-        <h2>Clamp Range</h2>
+        <h2 id='2'><a href="#0">Clamp Range</a></h2>
         <section>
             <h3>Parameters</h3>
             <h4>Initial call</h4>
@@ -99,7 +104,7 @@
         </section>
         <hr>
 
-        <h2>Normalise Range</h2>
+        <h2 id='3'><a href="#0">Normalise Range</a></h2>
         <section>
             <h3>Parameters</h3>
             <h4>Initial call</h4>
@@ -123,7 +128,7 @@
         </section>
         <hr>
 
-        <h2>Liniar Interpolate</h2>
+        <h2 id='4'><a href="#0">Liniar Interpolate</a></h2>
         <section>
             <h3>Parameters</h3>
             <h4>Initial call</h4>
@@ -143,7 +148,7 @@
         </section>
         <hr>
 
-        <h2>Map Ranges</h2>
+        <h2 id='5'><a href="#0">Map Ranges</a></h2>
         <section>
             <h3>Parameters</h3>
             <h4>Initial call</h4>
@@ -166,7 +171,7 @@
         </section>
         <hr>
 
-        <h2>Range Between</h2>
+        <h2 id='6'><a href="#0">Range Between</a></h2>
         <section>
             <h3>Parameters</h3>
             <ul>
@@ -182,7 +187,7 @@
         </section>
         <hr>
 
-        <h2>Range From</h2>
+        <h2 id='7'><a href="#0">Range From</a></h2>
         <section>
             <h3>Parameters</h3>
             <ul>
@@ -200,7 +205,31 @@
         </section>
         <hr>
 
-        <h2>Intersect Arrays</h2>
+        <h2 id='8'><a href="#0">InRange</a></h2>
+        <section>
+            <h3>Parameters</h3>
+            <h4>Initial call</h4>
+            <ul>
+                <li>from - lower boundry of the primary range.</li>
+                <li>to - upper boundry of the primary range.</li>
+            </ul>
+            <h4>Subsequent calls</h4>
+            <ul>
+                <li>from - lower boundry of the secondary range.</li>
+                <li>to - upper boundry of the secondary range.</li>
+            </ul>
+            <h4>Return Value</h4>
+            <p>Boolean value indicating the ranges overlap or a value is within a given range.</p>
+            <h3>Description</h3>
+            <p>This function supports two use cases:</p>
+            <ol>
+                <li>Confirm two ranges overloap.</li>
+                <li>Confirm a value lies within a primary range.</li>
+            </ol>
+        </section>
+        <hr>
+
+        <h2 id='9'><a href="#0">Intersect Arrays</a></h2>
         <section>
             <h3>Parameters</h3>
             <ul>
@@ -213,7 +242,7 @@
         </section>
         <hr>
 
-        <h2>Union Arrays</h2>
+        <h2 id='10'><a href="#0">Union Arrays</a></h2>
         <section>
             <h3>Parameters</h3>
             <ul>
@@ -226,7 +255,7 @@
         </section>
         <hr>
 
-        <h2>Exercise</h2>
+        <h2 id='11'><a href="#0">Exercise</a></h2>
         <section>
             <h3>Parameters</h3>
             <ul>
@@ -244,9 +273,9 @@
     <script src="Utilities.js"></script>
     <script>
         console.log('\nAccumulated Average');
-        console.log(`\tUtilities.accumulatedAverage(9, 5)(9) = ${Utilities.acculatedAverage(9, 5)(9)}
+        console.log(`\tUtilities.accumulatedAverage(9, 5)(9) = ${Utilities.accumulatedAverage(9, 5)(9)}
         Explanation : 9 * 5 = 45, + 9 = 54, / 6 = 9.`);
-        console.log(`\tUtilities.accumulatedAverage(9, 5)(45) = ${Utilities.acculatedAverage(9, 5)(45)}
+        console.log(`\tUtilities.accumulatedAverage(9, 5)(45) = ${Utilities.accumulatedAverage(9, 5)(45)}
         Explanation : 9 * 5 = 45, + 45 = 90, / 6 = 15.`);
         var newAverage = Utilities.accumulatedAverage();
         console.log(`\tnewAverage(1) = ${newAverage(1)} = 1.0`);
@@ -299,6 +328,28 @@
         console.log('\nRange From (function): Generate an array containing Len number of values starting from Init, at intervals according to a function.');
         function power2(x) { return 2 ** x; }
         console.log(`\tUtilities.rangeFrom(10, 20, power2) = [${Utilities.rangeFrom(10, 10, power2)}]`);
+
+        console.log('\nIn Range (value in range');
+        console.log('Given the primary range of 100 - 200:');
+        var valueRange = Utilities.inRange(100, 200);
+        console.log(`\tUtilities.inRange(100, 200)(50) = ${valueRange(50)}`);
+        console.log(`\tUtilities.inRange(100, 200)(99) = ${valueRange(99)}`);
+        console.log(`\tUtilities.inRange(100, 200)(100) = ${valueRange(100)}`);
+        console.log(`\tUtilities.inRange(100, 200)(101) = ${valueRange(101)}`);
+        console.log(`\tUtilities.inRange(100, 200)(199) = ${valueRange(199)}`);
+        console.log(`\tUtilities.inRange(100, 200)(200) = ${valueRange(200)}`);
+        console.log(`\tUtilities.inRange(100, 200)(201) = ${valueRange(201)}`);
+        console.log(`\tUtilities.inRange(100, 200)(250) = ${valueRange(250)}`);
+
+        console.log('\nIn Range (overlapping ranges');
+        console.log('Given the primary range of 100 - 200:');
+        var primaryRange = Utilities.inRange(100, 200);
+        console.log(`\tUtilities.inRange(100, 200)(1, 75) = ${primaryRange(1, 75)}`);
+        console.log(`\tUtilities.inRange(100, 200)(50, 150) = ${primaryRange(50, 150)}`);
+        console.log(`\tUtilities.inRange(100, 200)(150, 250) = ${primaryRange(150, 250)}`);
+        console.log(`\tUtilities.inRange(100, 200)(250, 300) = ${primaryRange(250, 300)}`);
+        console.log(`\tUtilities.inRange(100, 200)(50, 300) = ${primaryRange(50, 300)}`);
+
 
         console.log('\nIntersect Array: Extract values common to all given arrays');
         console.log('Given the following Arrays:');
