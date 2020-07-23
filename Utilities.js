@@ -8,6 +8,7 @@ var Utilities = (() => {
 		rangeBetween,
 		rangeFrom,
 		inRange,
+		loopRange,
 		intersectArrays,
 		unionArrays,
 		exercise,
@@ -25,6 +26,7 @@ var Utilities = (() => {
 			return runningTotal / currentSampleSize;
 		};
 	}
+
 	function clampRange(min, max) {
 		return (value) => Math.min(Math.max(value, min), max);
 	}
@@ -39,16 +41,19 @@ var Utilities = (() => {
 		var interpolate = liniarInterpolate(toMin, toMax);
 		return (value) => interpolate(norlaise(value));
 	}
+
 	function rangeBetween(min, max, step = 1) {
 		return [...Array((max - min) / step).keys()].map(
 			(index) => index * step + min
 		);
 	}
+	/**
+	 * @typedef {number|function(number): number} Step
+	 * @param {Step} step
+	 */
 	function rangeFrom(init = 0, len = 1, step = 1) {
-		var stepFn =
-			typeof step == 'number'
-				? (_, inc) => step * inc + init
-				: (_, inc) => step(inc) + init;
+		var stepFn = (_, inc) =>
+			(typeof step == 'number' ? step * inc : step(inc)) + init;
 		return [...Array(len)].map(stepFn);
 	}
 
@@ -66,6 +71,11 @@ var Utilities = (() => {
 			return !(bTo < aFrom || bFrom > aTo);
 		};
 	}
+	function loopRange(max, min = 0) {
+		return function move(cur, dir) {
+			return ((cur + dir + max - min) % max) + min;
+		};
+	}
 
 	function intersectArrays(...arrays) {
 		return arrays.reduce((arrAcc, arrN) =>
@@ -73,8 +83,10 @@ var Utilities = (() => {
 		);
 	}
 	function unionArrays(...arrays) {
+		//@ts-ignore missing flat method of Array.
 		return Array.from(new Set(arrays.flat()));
 	}
+
 	function exercise(expected, actual, id = '') {
 		var expectedResult = JSON.stringify(expected);
 		var actualResult = JSON.stringify(actual);

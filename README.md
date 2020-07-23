@@ -10,6 +10,7 @@ A collection of utility functions I find useful.
 - rangeBetween
 - rangeFrom
 - inRange
+- loopRange
 - intersectArrays
 - unionArrays
 - exercise
@@ -222,6 +223,32 @@ Boolean value indicating the ranges overlap or a value is within a given range.
 This function supports two use cases:
 1 Confirm two ranges overloap.
 2 Confirm a value lies within a primary range.
+
+---
+
+## loopRange
+
+### Parameters
+
+#### Initial call
+
+- max - maximum output value of the range.
+- min - minimal output value of the range (optional, defaulted to zero).
+
+#### Subsequent calls
+
+- cur - Current value within the range.
+- dir - Direction of change (1 to increase and -1 to decrease.)
+
+### Return Value
+
+Calculated new value within the range.
+
+### Description
+
+Calculates a new value in a sequence based on the current (_cur_) input. The value increases or decreases based on the direction (_dir_) value (1 to increase, -1 to decrease.) The value changes within a defined range up to a maximum (_max_) and minimum (_min_), which is an optional input with a default of zero.
+
+When the value exceeds the bounds of the range it loops round to the opposite end of the range.
 
 ---
 

@@ -30,9 +30,10 @@
                 <li><a href="#6">rangeBetween</a></li>
                 <li><a href="#7">rangeFrom</a></li>
                 <li><a href="#8">inRange</a></li>
-                <li><a href="#9">intersectArrays</a></li>
-                <li><a href="#10">unionArrays</a></li>
-                <li><a href="#11">exercise</a></li>
+                <li><a href="#9">loopRange</a></li>
+                <li><a href="#10">intersectArrays</a></li>
+                <li><a href="#11">unionArrays</a></li>
+                <li><a href="#12">exercise</a></li>
             </ul>
             <p>The above functions make considerable use of the technique called currying to return a specialised
                 function.
@@ -229,7 +230,31 @@
         </section>
         <hr>
 
-        <h2 id='9'><a href="#0">Intersect Arrays</a></h2>
+        <h2 id='9'><a href="#0">LoopRange</a></h2>
+        <section>
+            <h3>Parameters</h3>
+            <h4>Initial call</h4>
+            <ul>
+                <li>max - maximum output value of the range.</li>
+                <li>min - minimal output value of the range (optional, defaulted to zero).</li>
+            </ul>
+            <h4>Subsequent calls</h4>
+            <ul>
+                <li>cur - Current value within the range.</li>
+                <li>dir - Direction of change (1 to increase and -1 to decrease.)</li>
+            </ul>
+            <h4>Return Value</h4>
+            <p>Calculated new value within the range.</p>
+            <h3>Description</h3>
+            <p>Calculates a new value in a sequence based on the current (<i>cur</i>) input. The value increases or
+                decreases based on the direction (<i>dir</i>) value (1 to increase, -1 to decrease.) The value changes
+                within a defined range up to a maximum (<i>max</i>) and minimum (<i>min</i>), which is an optional input
+                with a default of zero.</p>
+            <p>When the value exceeds the bounds of the range it loops round to the opposite end of the range.</p>
+        </section>
+        <hr>
+
+        <h2 id='10'><a href="#0">Intersect Arrays</a></h2>
         <section>
             <h3>Parameters</h3>
             <ul>
@@ -242,7 +267,7 @@
         </section>
         <hr>
 
-        <h2 id='10'><a href="#0">Union Arrays</a></h2>
+        <h2 id='11'><a href="#0">Union Arrays</a></h2>
         <section>
             <h3>Parameters</h3>
             <ul>
@@ -255,7 +280,7 @@
         </section>
         <hr>
 
-        <h2 id='11'><a href="#0">Exercise</a></h2>
+        <h2 id='12'><a href="#0">Exercise</a></h2>
         <section>
             <h3>Parameters</h3>
             <ul>
@@ -329,7 +354,7 @@
         function power2(x) { return 2 ** x; }
         console.log(`\tUtilities.rangeFrom(10, 20, power2) = [${Utilities.rangeFrom(10, 10, power2)}]`);
 
-        console.log('\nIn Range (value in range');
+        console.log('\nIn Range (value in range)');
         console.log('Given the primary range of 100 - 200:');
         var valueRange = Utilities.inRange(100, 200);
         console.log(`\tUtilities.inRange(100, 200)(50) = ${valueRange(50)}`);
@@ -341,7 +366,7 @@
         console.log(`\tUtilities.inRange(100, 200)(201) = ${valueRange(201)}`);
         console.log(`\tUtilities.inRange(100, 200)(250) = ${valueRange(250)}`);
 
-        console.log('\nIn Range (overlapping ranges');
+        console.log('\nIn Range (overlapping ranges)');
         console.log('Given the primary range of 100 - 200:');
         var primaryRange = Utilities.inRange(100, 200);
         console.log(`\tUtilities.inRange(100, 200)(1, 75) = ${primaryRange(1, 75)}`);
@@ -350,6 +375,33 @@
         console.log(`\tUtilities.inRange(100, 200)(250, 300) = ${primaryRange(250, 300)}`);
         console.log(`\tUtilities.inRange(100, 200)(50, 300) = ${primaryRange(50, 300)}`);
 
+        console.log('\nLoop Range (zero indexed)');
+        var zeroIndexed = Utilities.loopRange(9);
+        var inc = 1;
+        var dec = -1;
+        var incValue = 4;
+        console.log(`\tIncreased from ${incValue}`);
+        for (var i = 1; i <= 10; i++) {
+            console.log(`\t${i}\tUtilities.loopRange(9) from ${incValue} to ${incValue = zeroIndexed(incValue, inc)}`);
+        }
+        var decValue = 4;
+        console.log(`\tDecreased from ${decValue}`);
+        for (var i = 1; i <= 10; i++) {
+            console.log(`\t${i}\tUtilities.loopRange(9) from ${decValue} to ${decValue = zeroIndexed(decValue, dec)}`);
+        }
+
+        console.log('\nLoop Range (one indexed)');
+        var oneIndexed = Utilities.loopRange(9, 1);
+        incValue = 4;
+        console.log(`\tIncreased from ${incValue}`);
+        for (var i = 1; i <= 10; i++) {
+            console.log(`\t${i}\tUtilities.loopRange(9, 1) from ${incValue} to ${incValue = oneIndexed(incValue, inc)}`);
+        }
+        decValue = 4;
+        console.log(`\tDecreased from ${decValue}`);
+        for (var i = 1; i <= 10; i++) {
+            console.log(`\t${i}\tUtilities.loopRange(9, 1) from ${decValue} to ${decValue = oneIndexed(decValue, dec)}`);
+        }
 
         console.log('\nIntersect Array: Extract values common to all given arrays');
         console.log('Given the following Arrays:');
