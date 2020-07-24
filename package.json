@@ -1,0 +1,19 @@
+{
+  "name": "utilities",
+  "version": "1.0.0",
+  "description": "Collection of utility functions",
+  "main": "utilities.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TracyGJG/utilities.git"
+  },
+  "author": "Tracy-Gregory Gilmore",
+  "license": "CC-BY-1.0",
+  "bugs": {
+    "url": "https://github.com/TracyGJG/utilities/issues"
+  },
+  "homepage": "https://github.com/TracyGJG/utilities#readme"
+}

@@ -12,6 +12,12 @@ var Utilities = (() => {
 		intersectArrays,
 		unionArrays,
 		exercise,
+		base64EncodeUnicode,
+		base64DecodeUnicode,
+		shortDay,
+		longDay,
+		shortMonth,
+		longMonth,
 	};
 
 	function accumulatedAverage(averageToDate = 0, sampleSize = 0) {
@@ -103,5 +109,52 @@ var Utilities = (() => {
 			'color: red;'
 		);
 		return false;
+	}
+
+	function base64EncodeUnicode(bin) {
+		return btoa(
+			encodeURIComponent(bin).replace(/%([0-9A-F]{2})/g, (match, p1) =>
+				String.fromCharCode(Number(`0x${p1}`))
+			)
+		);
+	}
+	function base64DecodeUnicode(b64) {
+		return decodeURIComponent(
+			[...b64.replace(/=*$/, '')]
+				.map((char) =>
+					'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+						.indexOf(char)
+						.toString(2)
+						//@ts-ignore missing padStart method of String objects.
+						.padStart(6, '0')
+				)
+				.join('')
+				.match(/.{8}/g)
+				.map((bin) => `%${parseInt(bin, 2).toString(16).toUpperCase()}`)
+				.join('')
+		);
+	}
+
+	function shortDay(lang = 'en-GB', idx) {
+		var dateString = (_) =>
+			new Date(1970, 0, 4 + _).toLocaleString(lang, {
+				weekday: 'short',
+			});
+		return arguments.length == 2 ? dateString(idx) : dateString;
+	}
+	function longDay(lang = 'en-GB', idx) {
+		var dateString = (_) =>
+			new Date(1970, 0, 4 + _).toLocaleString(lang, { weekday: 'long' });
+		return arguments.length == 2 ? dateString(idx) : dateString;
+	}
+	function shortMonth(lang = 'en-GB', idx) {
+		var dateString = (_) =>
+			new Date(1970, _, 1).toLocaleString(lang, { month: 'short' });
+		return arguments.length == 2 ? dateString(idx) : dateString;
+	}
+	function longMonth(lang = 'en-GB', idx) {
+		var dateString = (_) =>
+			new Date(1970, _, 1).toLocaleString(lang, { month: 'long' });
+		return arguments.length == 2 ? dateString(idx) : dateString;
 	}
 })();

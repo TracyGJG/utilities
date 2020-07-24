@@ -14,6 +14,12 @@ A collection of utility functions I find useful.
 - intersectArrays
 - unionArrays
 - exercise
+- base64encoding
+- base64decoding
+- shortDay
+- longDay
+- shortMonth
+- longMonth
 
 The above functions make considerable use of the technique called currying to return a specialised function. This saves on suppling parameters that are not expected to change.
 
@@ -299,3 +305,105 @@ Result of the comparison (true or false.)
 ### Description
 
 A simple mechanism for ad-hoc testing of a pure function.
+
+---
+
+## Base 64 Encoding
+
+### Parameters
+
+- Raw data such as a binary buffer
+
+### Return Value
+
+Base 64 encoded version of the input raw data.
+
+### Description
+
+Applies Base64 encoding of supplied data.
+
+---
+
+## Base 64 Decoding
+
+### Parameters
+
+- Data in Base64 encoding
+
+### Return Value
+
+Decodes version of the Base64 encoded input data.
+
+### Description
+
+Applies Base64 decoding of supplied encloded data.
+
+---
+
+## Date Strings - Short Day
+
+### Parameters
+
+- lang - Locale string (defaulted to gb-GB)
+- idx - Number in the range of 0-6 (optional on initial call, mandatory on second call.)
+
+### Return Value
+
+String representing the short form of the day of week in the language of the given locale code.
+
+### Description
+
+Provides the short form of the day of week in the given locale, based in a numeric value in the range of 0 to 6.
+
+---
+
+## Date Strings - Long Day
+
+### Parameters
+
+- lang - Locale string (defaulted to gb-GB)
+- idx - Number in the range of 0-6 (optional on initial call, mandatory on second call.)
+
+### Return Value
+
+String representing the long form of the day of week in the language of the given locale code.
+
+### Description
+
+Provides the long form of the day of week in the given locale, based in a numeric value in the range of 0 to 6.
+
+---
+
+## Date Strings - Short Month
+
+### Parameters
+
+- lang - Locale string (defaulted to gb-GB)
+- idx - Number in the range of 0-11 (optional on initial call, mandatory on second call.)
+
+### Return Value
+
+String representing the short form of the month of year in the language of the given locale code.
+
+### Description
+
+Provides the short form of the month of year in the given locale, based in a numeric value in the range of 0 to 11.
+
+---
+
+## Date Strings - Long Month
+
+### Parameters
+
+- lang - Locale string (defaulted to gb-GB)
+- idx - Number in the range of 0-11 (optional on initial call, mandatory on second call.)
+
+### Return Value
+
+String representing the long form of the month of year in the language of the given locale code.
+
+### Description
+
+Provides the long form of the month of year in the given locale, based in a numeric value in the range of 0 to 11.
+
+---

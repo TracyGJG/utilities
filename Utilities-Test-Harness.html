@@ -34,11 +34,15 @@
                 <li><a href="#10">intersectArrays</a></li>
                 <li><a href="#11">unionArrays</a></li>
                 <li><a href="#12">exercise</a></li>
+                <li><a href="#13">Base 64 Encoding</a></li>
+                <li><a href="#14">Base 64 Decoding</a></li>
+                <li><a href="#15">Short Day</a></li>
+                <li><a href="#16">Long Day</a></li>
+                <li><a href="#17">Short Month</a></li>
+                <li><a href="#18">Long Month</a></li>
             </ul>
             <p>The above functions make considerable use of the technique called currying to return a specialised
-                function.
-                This
-                saves on suppling parameters that are not expected to change.</p>
+                function. This saves on suppling parameters that are not expected to change.</p>
             <h4>NB: The functions have been prepared with no input validation or additional error checking.</h4>
         </section>
         <hr>
@@ -293,9 +297,92 @@
             <h3>Description</h3>
             <p>A simple mechanism for ad-hoc testing of a pure function.</p>
         </section>
+        <hr>
+
+        <h2 id='13'><a href="#0">Base 64 Encoding</a></h2>
+        <section>
+            <h3>Parameters</h3>
+            <ul>
+                <li>Raw data such as a binary buffer</li>
+            </ul>
+            <h4>Return Value</h4>
+            <p>Base 64 encoded version of the input raw data.</p>
+            <h3>Description</h3>
+            <p>Applies Base64 encoding of supplied data.</p>
+        </section>
+
+        <h2 id='14'><a href="#0">Base 64 Decoding</a></h2>
+        <section>
+            <h3>Parameters</h3>
+            <ul>
+                <li>Data in Base64 encoding</li>
+            </ul>
+            <h4>Return Value</h4>
+            <p>Decodes version of the Base64 encoded input data.</p>
+            <h3>Description</h3>
+            <p>Applies Base64 decoding of supplied encloded data.</p>
+        </section>
+        <hr>
+
+        <h2 id='15'><a href="#0">Date Strings - Short Day</a></h2>
+        <section>
+            <h3>Parameters</h3>
+            <ul>
+                <li>lang - Locale string (defaulted to gb-GB)</li>
+                <li>idx - Number in the range of 0-6 (optional on initial call, mandatory on second call.)</li>
+            </ul>
+            <h4>Return Value</h4>
+            <p>String representing the short form of the day of week in the language of the given locale code.</p>
+            <h3>Description</h3>
+            <p>Provides the short form of the day of week in the given locale, based in a numeric value in the range of
+                0 to 6.</p>
+        </section>
+
+        <h2 id='16'><a href="#0">Date Strings - Long Day</a></h2>
+        <section>
+            <h3>Parameters</h3>
+            <ul>
+                <li>lang - Locale string (defaulted to gb-GB)</li>
+                <li>idx - Number in the range of 0-6 (optional on initial call, mandatory on second call.)</li>
+            </ul>
+            <h4>Return Value</h4>
+            <p>String representing the long form of the day of week in the language of the given locale code.</p>
+            <h3>Description</h3>
+            <p>Provides the long form of the day of week in the given locale, based in a numeric value in the range of 0
+                to 6.</p>
+        </section>
+
+        <h2 id='17'><a href="#0">Date Strings - Short Month</a></h2>
+        <section>
+            <h3>Parameters</h3>
+            <ul>
+                <li>lang - Locale string (defaulted to gb-GB)</li>
+                <li>idx - Number in the range of 0-11 (optional on initial call, mandatory on second call.)</li>
+            </ul>
+            <h4>Return Value</h4>
+            <p>String representing the short form of the month of year in the language of the given locale code.</p>
+            <h3>Description</h3>
+            <p>Provides the short form of the month of year in the given locale, based in a numeric value in the range
+                of 0 to 11.</p>
+        </section>
+
+        <h2 id='18'><a href="#0">Date Strings - Long Month</a></h2>
+        <section>
+            <h3>Parameters</h3>
+            <ul>
+                <li>lang - Locale string (defaulted to gb-GB)</li>
+                <li>idx - Number in the range of 0-11 (optional on initial call, mandatory on second call.)</li>
+            </ul>
+            <h4>Return Value</h4>
+            <p>String representing the long form of the month of year in the language of the given locale code.</p>
+            <h3>Description</h3>
+            <p>Provides the long form of the month of year in the given locale, based in a numeric value in the range of
+                0 to 11.</p>
+        </section>
+        <hr>
     </main>
 
-    <script src="Utilities.js"></script>
+    <script src="utilities.js"></script>
     <script>
         console.log('\nAccumulated Average');
         console.log(`\tUtilities.accumulatedAverage(9, 5)(9) = ${Utilities.accumulatedAverage(9, 5)(9)}
@@ -341,16 +428,16 @@
         console.log(`\tmappedRanges(60) = ${mappedRanges(60)}`);
         console.log(`\tmappedRanges(65) = ${mappedRanges(65)}`);
 
-        console.log('\nRange Between: Generate an array containing values between Min and less than Max, in step intervals.');
+        console.log('\nRange Between');
         console.log(`\tUtilities.rangeBetween(10, 20) = [${Utilities.rangeBetween(10, 20)}]`);
         console.log(`\tUtilities.rangeBetween(10, 20, 2) = [${Utilities.rangeBetween(10, 20, 2)}]`);
 
-        console.log('\nRange From (numeric): Generate an array containing Len number of values starting from Init, in step intervals.');
+        console.log('\nRange From (numeric)');
         console.log(`\tUtilities.rangeFrom() = [${Utilities.rangeFrom()}]`);
         console.log(`\tUtilities.rangeFrom(10) = [${Utilities.rangeFrom(10)}]`);
         console.log(`\tUtilities.rangeFrom(10, 20) = [${Utilities.rangeFrom(10, 20)}]`);
         console.log(`\tUtilities.rangeFrom(10, 20, 2) = [${Utilities.rangeFrom(10, 20, 2)}]`);
-        console.log('\nRange From (function): Generate an array containing Len number of values starting from Init, at intervals according to a function.');
+        console.log('\nRange From (function)');
         function power2(x) { return 2 ** x; }
         console.log(`\tUtilities.rangeFrom(10, 20, power2) = [${Utilities.rangeFrom(10, 10, power2)}]`);
 
@@ -440,6 +527,32 @@
         console.log(`\t\tResult: ${Utilities.exercise([10], [9, 11], 'TWO')}`);
         console.log(`\t\tResult: ${Utilities.exercise([10], [9, 10, 11].filter(x => x % 10), 'three')}`);
         console.log(`\t\tResult: ${Utilities.exercise([10], [9, 10, 11].filter(x => !(x % 10)), 4)}`);
+
+        console.log('\nBase64');
+        var b64EncodeTest = 'Hello World!';
+        console.log(`\tEncoding of '${b64EncodeTest}' = '${Utilities.base64EncodeUnicode(b64EncodeTest)}'`);
+        var b64DecodeTest = 'SGVsbG8gV29ybGQh';
+        console.log(`\tDecoding of '${b64DecodeTest}' = '${Utilities.base64DecodeUnicode(b64DecodeTest)}'`);
+
+        console.log('\nDate Strings');
+        console.log('\tDay of Week (short) [');
+        for (day = 0; day < 7; day++) {
+            console.log(`\t\tDay ${day} (UK) = '${Utilities.shortDay()(day)}'`);
+        }
+        console.log('\tDay of Week (long)');
+        var longDayFrench = Utilities.longDay('fr-FR')
+        for (day = 0; day < 7; day++) {
+            console.log(`\t\tDay ${day} (FR) = '${longDayFrench(day)}'`);
+        }
+        console.log('\tMonth of Year (short)');
+        var shortMonthGerman = Utilities.shortMonth('de-DE');
+        for (month = 0; month < 12; month++) {
+            console.log(`\t\tMonth ${month} (DE) = '${shortMonthGerman(month)}'`);
+        }
+        console.log('\tMonth of Year (long)');
+        for (month = 0; month < 12; month++) {
+            console.log(`\t\tMonth ${month} (UK) = '${Utilities.longMonth()(month)}'`);
+        }
     </script>
 </body>
 
