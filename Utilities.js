@@ -11,8 +11,8 @@ module.exports = {
 	intersectArrays,
 	unionArrays,
 	exercise,
-	base64EncodeUnicode,
-	base64DecodeUnicode,
+	base64Encode,
+	base64Decode,
 	shortDay,
 	longDay,
 	shortMonth,
@@ -64,7 +64,7 @@ function rangeFrom(init = 0, len = 1, step = 1) {
 
 function inRange(from, to) {
 	if (arguments.length != 2)
-		new SyntaxError(
+		throw new SyntaxError(
 			'overlappingRanges needs to be provided with two primary values.'
 		);
 	var aFrom = Math.min(from, to);
@@ -110,14 +110,14 @@ function exercise(expected, actual, id = '') {
 	return false;
 }
 
-function base64EncodeUnicode(bin) {
+function base64Encode(bin) {
 	return btoa(
 		encodeURIComponent(bin).replace(/%([0-9A-F]{2})/g, (match, p1) =>
 			String.fromCharCode(Number(`0x${p1}`))
 		)
 	);
 }
-function base64DecodeUnicode(b64) {
+function base64Decode(b64) {
 	return decodeURIComponent(
 		[...b64.replace(/=*$/, '')]
 			.map((char) =>

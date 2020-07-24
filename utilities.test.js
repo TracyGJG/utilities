@@ -8,7 +8,6 @@ describe('Utilities', () => {
 			var result2 = Utilities.accumulatedAverage(9, 5)(45);
 			expect(result2).toEqual(15);
 		});
-		
 		it('can calculate with incremental calls', () => {
 			var newAverage = Utilities.accumulatedAverage();
 			expect(newAverage(1)).toEqual(1.0);
@@ -16,6 +15,10 @@ describe('Utilities', () => {
 			expect(newAverage(3)).toEqual(2.0);
 			expect(newAverage(4)).toEqual(2.5);
 			expect(newAverage(5)).toEqual(3.0);
+		});
+		it('can re-calculate an average', () => {
+			var newAverage = Utilities.accumulatedAverage();
+			expect(newAverage(45, 9, 6)).toEqual(15);
 		});
 	});
 	describe('Clamp Range', () => {
@@ -67,5 +70,184 @@ describe('Utilities', () => {
 			expect(mappedRanges(50)).toEqual(122);
 			expect(mappedRanges(100)).toEqual(212);
 		});
+	});
+	describe('Ranges Between', () => {
+		it('can generate a range of 10 values between 10 and 20', () => {
+			Utilities.rangeBetween(10, 20).forEach((value, index) => {
+				expect(value).toEqual(10 + index);
+			});
+		})
+		it('can generate a range of 10 values between 10 and 20, in steps of 2', () => {
+			Utilities.rangeBetween(10, 20, 2).forEach((value, index) => {
+				expect(value).toEqual(10 + 2 * index);
+			});
+		})
+	});
+	describe('Ranges From', () => {
+		it('can generate a range - no arguments', () => {
+			expect(Utilities.rangeFrom().length).toEqual(1);
+			expect(Utilities.rangeFrom()[0]).toEqual(0);
+		})
+		it('can generate a range - single argument', () => {
+			expect(Utilities.rangeFrom(10).length).toEqual(1);
+			expect(Utilities.rangeFrom(10)[0]).toEqual(10);
+		})
+		it('can generate a range - pair of arguments', () => {
+			expect(Utilities.rangeFrom(10, 20).length).toEqual(20);
+			expect(Utilities.rangeFrom(10, 20)[2]).toEqual(12);
+			expect(Utilities.rangeFrom(10, 20)[19]).toEqual(29);
+		})
+		it('can generate a range - pair of arguments, with step value', () => {
+			expect(Utilities.rangeFrom(10, 20, 2).length).toEqual(20);
+			expect(Utilities.rangeFrom(10, 20, 2)[2]).toEqual(14);
+			expect(Utilities.rangeFrom(10, 20, 2)[19]).toEqual(48);
+		})
+		it('can generate a range - pair of arguments, with step function', () => {
+			var fn = _ => 2 ** _;
+			expect(Utilities.rangeFrom(10, 20, fn).length).toEqual(20);
+			expect(Utilities.rangeFrom(10, 20, fn)[2]).toEqual(14);
+			expect(Utilities.rangeFrom(10, 20, fn)[19]).toEqual(524298);
+		})
+	});
+	describe('In Range', () => {
+		var inRange = Utilities.inRange(100,200);
+		it('can identify points between 100 and 200', () => {
+			expect(inRange(50)).toBeFalsy();
+			expect(inRange(99)).toBeFalsy();
+			expect(inRange(100)).toBeTruthy();
+			expect(inRange(101)).toBeTruthy();
+			expect(inRange(199)).toBeTruthy();
+			expect(inRange(200)).toBeTruthy();
+			expect(inRange(201)).toBeFalsy();
+			expect(inRange(250)).toBeFalsy();
+		})
+		it('can identify ranges that overlap 100 and 200', () => {
+			expect(inRange(0, 50)).toBeFalsy();
+			expect(inRange(0, 99)).toBeFalsy();
+			expect(inRange(50, 100)).toBeTruthy();
+			expect(inRange(50, 150)).toBeTruthy();
+			expect(inRange(50, 250)).toBeTruthy();
+			expect(inRange(200, 250)).toBeTruthy();
+			expect(inRange(201, 250)).toBeFalsy();
+		})
+		it('can throw an exception when supplied with invalid input', () => {
+			var expectionTestNoArgs = () => {
+				Utilities.inRange();
+			};
+			expect(expectionTestNoArgs).toThrow();
+			var expectionTestOneArg = () => {
+				Utilities.inRange(100);
+			};
+			expect(expectionTestNoArgs).toThrow();
+			var expectionTestThreeArg = () => {
+				Utilities.inRange(100, 200, 300);
+			};
+			expect(expectionTestThreeArg).toThrow();
+		})
+	});
+	describe('Loop Range', () => {
+		describe('(zero indexed)', () => {
+			var zeroIndexed = Utilities.loopRange(9);
+			it('can be increased', () => {
+				var dir = 1;
+				expect(zeroIndexed(4, dir)).toEqual(5);
+				expect(zeroIndexed(8, dir)).toEqual(0);
+			});
+			it('can be decreased', () => {
+				var dir = -1;
+				expect(zeroIndexed(4, dir)).toEqual(3);
+				expect(zeroIndexed(0, dir)).toEqual(8);
+			});
+		});
+		describe('(one indexed)', () => {
+			var oneIndexed = Utilities.loopRange(9, 1);
+			it('can be increased', () => {
+				var dir = 1;
+				expect(oneIndexed(4, dir)).toEqual(5);
+				expect(oneIndexed(9, dir)).toEqual(1);
+			});
+			it('can be decreased', () => {
+				var dir = -1;
+				expect(oneIndexed(4, dir)).toEqual(3);
+				expect(oneIndexed(1, dir)).toEqual(9);
+			});
+		});
+	});
+
+	describe('Intersect Array', () => {
+        var alpha = Utilities.rangeFrom(1, 4);
+        var beta = Utilities.rangeFrom(2, 4);
+        var delta = Utilities.rangeFrom(3, 4);
+        var zeta = Utilities.rangeFrom(10, 4, 10);
+        it('can intersect a single array', () => {
+            expect(Utilities.intersectArrays(alpha).length).toEqual(4);
+        });
+        it('can intersect an array with an empty array', () => {
+            expect(Utilities.intersectArrays(alpha, []).length).toEqual(0);
+        });
+        it('can intersect three arrays', () => {
+            expect(Utilities.intersectArrays(alpha, beta, delta).length).toEqual(2);
+        });
+        it('can intersect two (non-intersecting arrays', () => {
+            expect(Utilities.intersectArrays(alpha, zeta).length).toEqual(0);
+        });
+	});
+	describe('Union Array', () => {
+        var alpha = Utilities.rangeFrom(1, 4);
+        var beta = Utilities.rangeFrom(2, 4);
+        var delta = Utilities.rangeFrom(3, 4);
+        var zeta = Utilities.rangeFrom(10, 4, 10);
+        it('can union a single array', () => {
+            expect(Utilities.unionArrays(alpha).length).toEqual(4);
+            });
+        it('can union an array with an empty array', () => {
+            expect(Utilities.unionArrays(alpha, []).length).toEqual(4);
+        });
+        it('can union three arrays', () => {
+            expect(Utilities.unionArrays(alpha, beta, delta).length).toEqual(6);
+        });
+        it('can union two (non-intersecting arrays', () => {
+            expect(Utilities.unionArrays(alpha, zeta).length).toEqual(8);
+        });
+	});
+
+    describe('Pure function Exercise', () => {
+        it('can test without an id', () => {
+            expect(Utilities.exercise([10], [10])).toBeTruthy();
+            expect(Utilities.exercise([10], [1])).toBeFalsy();
+        });
+        it('can test with an id', () => {
+            expect(Utilities.exercise([10], [10], 'Works')).toBeTruthy();
+            expect(Utilities.exercise([10], [1], 'Errors')).toBeFalsy();
+        });
+    });
+
+	describe('Base 64', () => {
+		var rawData = 'Hello World!';
+		var base64Data = 'SGVsbG8gV29ybGQh';
+		it('can encode', () => {
+			expect(Utilities.base64Encode(rawData)).toEqual(base64Data);
+		});
+		it('can decode', () => {
+			expect(Utilities.base64Decode(base64Data)).toEqual(rawData);
+		});
+	});
+	describe('Date Strings', () => {
+		it('can produce the short form of the British day for Wednesday (day 4)', () => {
+			expect(Utilities.shortDay()(3)).toEqual('Wed');
+			expect(Utilities.shortDay('gb-GB', 3)).toEqual('Wed');
+		})
+		it('can produce the long form of the French day for Wednesday (day 4)', () => {
+			expect(Utilities.longDay('fr-FR', 3)).toEqual('mercredi');
+			expect(Utilities.longDay()(3)).toEqual('Wednesday');
+		})
+		it('can produce the short form of the German month for October (Month 9)', () => {
+			expect(Utilities.shortMonth('de-DE', 9)).toEqual('Okt');
+			expect(Utilities.shortMonth()(9)).toEqual('Oct');
+		})
+		it('can produce the long form of the British day for October (Month 9)', () => {
+			expect(Utilities.longMonth()(9)).toEqual('October');
+			expect(Utilities.longMonth('gb-GB', 9)).toEqual('October');
+		})
 	});
 });
