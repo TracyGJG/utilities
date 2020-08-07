@@ -60,7 +60,7 @@ describe('Utilities', () => {
 			expect(mappedRanges(60)).toEqual(100);
 			expect(mappedRanges(65)).toEqual(110);
 		});
-		
+
 		it('can map Celsius to Fahrenheit', () => {
         var mappedRanges = Utilities.mapRanges(0, 100, 32, 212);
 			expect(mappedRanges(-40).toFixed(0)).toEqual("-40");
@@ -249,5 +249,54 @@ describe('Utilities', () => {
 			expect(Utilities.longMonth()(9)).toEqual('October');
 			expect(Utilities.longMonth('gb-GB', 9)).toEqual('October');
 		})
+	});
+
+	describe('Object Equality', () => {
+		describe('can compare similar nested objects', () => {
+			var obj1 = {
+				strProp: 'Property 1',
+				numProp: 2,
+				blnProp: true,
+				arrProp: [ 'alpha', 'beta', 'gamma'],
+				objProp: {
+					subProp: 'Sub Property'
+				}
+			};
+			var obj2 = JSON.parse(JSON.stringify(obj1));
+
+			expect(Utilities.objectEquality(obj1, obj2)).toBeTruthy();
+		});
+
+		describe('can compare objects that vary only be a single nested property value', () => {
+			var obj1 = {
+				strProp: 'Property 1',
+				numProp: 2,
+				blnProp: true,
+				arrProp: [ 'alpha', 'beta', 'gamma'],
+				objProp: {
+					subProp: 'Sub Property'
+				}
+			};
+			var obj2 = JSON.parse(JSON.stringify(obj1));
+			obj2.objProp.subProp = 'Dif Property';
+
+			expect(Utilities.objectEquality(obj1, obj2)).toBeFalsy();
+		});
+
+		describe('can compare objects that vary in structure by a single nested property', () => {
+			var obj1 = {
+				strProp: 'Property 1',
+				numProp: 2,
+				blnProp: true,
+				arrProp: [ 'alpha', 'beta', 'gamma'],
+				objProp: {
+					subProp: 'Sub Property'
+				}
+			};
+			var obj2 = JSON.parse(JSON.stringify(obj1));
+			obj2.objProp.subProp2 = 'Additional Property';
+
+			expect(Utilities.objectEquality(obj1, obj2)).toBeFalsy();
+		});
 	});
 });

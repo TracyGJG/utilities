@@ -20,6 +20,7 @@ A collection of utility functions I find useful.
 - longDay
 - shortMonth
 - longMonth
+- objectEqual
 
 The above functions make considerable use of the technique called currying to return a specialised function. This saves on suppling parameters that are not expected to change.
 
@@ -405,5 +406,22 @@ String representing the long form of the month of year in the language of the gi
 ### Description
 
 Provides the long form of the month of year in the given locale, based in a numeric value in the range of 0 to 11.
+
+---
+
+## Object Equality
+
+### Parameters
+
+- obj1 - first object in comparison
+- obj2 - second object in comparison
+
+### Return Value
+
+Boolean flag indication if the values held withint _obj1_ are the same as those in _obj2_.
+
+### Description
+
+Performs a comparison of all the values in the properties of both of the objects supplied.
 
 ---
