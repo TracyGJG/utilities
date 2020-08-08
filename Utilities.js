@@ -1,4 +1,4 @@
-module.exports = {
+var IUtility = {
 	accumulatedAverage,
 	clampRange,
 	normaliseRange,
@@ -18,7 +18,17 @@ module.exports = {
 	shortMonth,
 	longMonth,
 	objectEquality,
+	caseConverter,
+	CAMEL: 'C',
+	GLOBAL: 'G',
+	HEADER: 'H',
+	KABAB: 'K',
+	LOWER: 'L',
+	PASCAL: 'P',
+	TITLE: 'T',
+	UPPER: 'U',
 };
+module.exports = IUtility;
 
 function accumulatedAverage(averageToDate = 0, sampleSize = 0) {
 	var runningTotal = averageToDate * (sampleSize || 1);
@@ -186,4 +196,62 @@ function objectEquality(obj1, obj2) {
 	function isObject(object) {
 		return object != null && typeof object === 'object';
 	}
+}
+
+function caseConverter(textCase) {
+	var textConversion = textCase && textCase.toUpperCase();
+	var conversionCheck = (_) => (text) => _.includes(text);
+	var isValidConversion = conversionCheck('CGHKLPTU');
+	var isSplitAtUnderscore = conversionCheck('CGHKPT');
+	var isSplitAtHyphen = conversionCheck('CGKP');
+	var isJoinWithSpace = conversionCheck('HLTU');
+	var isJoinWithHyphen = conversionCheck('K');
+	var isJoinWithUnderscore = conversionCheck('G');
+	var isUppercaseConversion = conversionCheck('GU');
+	var isLowercaseConversion = conversionCheck('KL');
+	var isCapitalisedConversion = conversionCheck('HPCT');
+	var isFirstCamel = (conversionCase, index) =>
+		conversionCase == IUtility.CAMEL && !index;
+	var isTitleAcronym = (conversionCase, text) =>
+		conversionCase == IUtility.TITLE && !/[a-z]/.test(text);
+
+	if (!isValidConversion(textConversion)) {
+		throw Error(
+			'caseConverter: Invalid case specified. Must be one of the expected constants.'
+		);
+	}
+
+	return function convertString(subjectText) {
+		var trimedText = subjectText.trim();
+		var dedupedText = trimedText
+			.replace(/_+/g, '_')
+			.replace(/-+/g, '-')
+			.replace(/\s+/g, ' ');
+
+		var splitDelimiters = `[${isSplitAtUnderscore(textConversion) ? '_' : ''}${
+			isSplitAtHyphen(textConversion) ? '-' : ''
+		}\\s]`;
+		var joinDelimiter = isJoinWithSpace(textConversion)
+			? ' '
+			: isJoinWithUnderscore(textConversion)
+			? '_'
+			: isJoinWithHyphen(textConversion)
+			? '-'
+			: '';
+
+		var splitPattern = new RegExp(splitDelimiters, 'g');
+		var splitText = dedupedText.split(splitPattern);
+		var convertedText = splitText.map((text, index) => {
+			if (isUppercaseConversion(textConversion)) return text.toUpperCase();
+			if (isLowercaseConversion(textConversion)) return text.toLowerCase();
+			if (isCapitalisedConversion(textConversion)) {
+				if (isFirstCamel(textConversion, index)) return text.toLowerCase();
+				if (isTitleAcronym(textConversion, text)) return text.toUpperCase();
+				return `${text[0].toUpperCase()}${text.slice(1).toLowerCase()}`;
+			}
+			return text;
+		});
+		var joinedText = convertedText.join(joinDelimiter);
+		return joinedText;
+	};
 }

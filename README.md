@@ -21,6 +21,7 @@ A collection of utility functions I find useful.
 - shortMonth
 - longMonth
 - objectEqual
+- caseConverter
 
 The above functions make considerable use of the technique called currying to return a specialised function. This saves on suppling parameters that are not expected to change.
 
@@ -423,5 +424,49 @@ Boolean flag indication if the values held withint _obj1_ are the same as those 
 ### Description
 
 Performs a comparison of all the values in the properties of both of the objects supplied.
+
+---
+
+## Case Converter
+
+### Parameters
+
+#### Initial call
+
+- case - The type of text conversion to be performed (use the Utilities constants.)
+
+#### Subsequent calls
+
+- sub - Subject string to be converted.
+
+### Return Value
+
+The converted string.
+
+### Description
+
+Converts input strings according to a pre-defined format.
+
+- CASE_C: camelCase: The first word is all lowercase with the remaining words all capitalised. All separation is removed (spaces, hyphens and underscores.)
+- CASE_G: GLOBAL_CASE; All text is uppercase and all separators made underscores.
+- CASE_H: Heading Case, where each word is changed to leading letter uppercase, rest lowercase. Hyphes and spaces are preserved but duplicates are removed.
+- CASE_K: kabab-case; All lowercase text with hyphen separation only.
+- CASE_L: lower case; All text is converted to lowercase, duplicate separators reduced but retained.
+- CASE_P: PascalCase; Like Camel-case but even the first word is capitalised.
+- CASE_T: Title Case; like Heading case but preserving acronyms in all upper case (this is the default.)
+- CASE_U: UPPER CASE; All text is converted to uppercase, duplicate separators reduced to single characters but retained.
+
+#### Examples
+
+Example text "This\_\_is an EXAMPLE test--case"
+
+- Camel case: "thisIsAnExampleTestCase"
+- Global case: "THIS_IS_AN_EXAMPLE_TEST_CASE"
+- Heading case: "This Is An Example Test-case"
+- Kabab case: "this-is-an-example-test-case"
+- Lower case: "this_is an example test-case"
+- Pascal case: "ThisIsAnExampleTestCase"
+- Title case: "This Is An EXAMPLE Test-case"
+- Upper case: "THIS_IS AN EXAMPLE TEST-CASE"
 
 ---

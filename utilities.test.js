@@ -299,4 +299,80 @@ describe('Utilities', () => {
 			expect(Utilities.objectEquality(obj1, obj2)).toBeFalsy();
 		});
 	});
+
+	describe('Case Converter', () => {
+		var testText = 'This__is  an EXAMPLE test-case';
+
+		it('can throw an exception for invalid case specification.', () => {
+			var testExec = () => {
+				var camelCase = Utilities.caseConverter();
+			};
+
+			expect(testExec).toThrowError('caseConverter: Invalid case specified. Must be one of the expected constants.');
+		});
+
+		it('can convert to camel case', () => {
+			var camelCase = Utilities.caseConverter(Utilities.CAMEL);
+
+			var result = camelCase(testText);
+
+			expect(result).toEqual('thisIsAnExampleTestCase');
+		});
+
+		it('can convert to global case', () => {
+			var globalCase = Utilities.caseConverter(Utilities.GLOBAL);
+
+			var result = globalCase(testText);
+
+			expect(result).toEqual('THIS_IS_AN_EXAMPLE_TEST_CASE');
+		});
+
+		it('can convert to title case', () => {
+			var titleCase = Utilities.caseConverter(Utilities.TITLE);
+
+			var result = titleCase(testText);
+
+			expect(result).toEqual('This Is An EXAMPLE Test-case');
+		});
+
+		it('can convert to kabab case', () => {
+			var kababCase = Utilities.caseConverter(Utilities.KABAB);
+
+			var result = kababCase(testText);
+
+			expect(result).toEqual('this-is-an-example-test-case');
+		});
+
+		it('can convert to lower case', () => {
+			var lowerCase = Utilities.caseConverter(Utilities.LOWER);
+
+			var result = lowerCase(testText);
+
+			expect(result).toEqual('this_is an example test-case');
+		});
+
+		it('can convert to pascal case', () => {
+			var pascalCase = Utilities.caseConverter(Utilities.PASCAL);
+
+			var result = pascalCase(testText);
+
+			expect(result).toEqual('ThisIsAnExampleTestCase');
+		});
+
+		it('can convert to title case', () => {
+			var titleCase = Utilities.caseConverter(Utilities.TITLE);
+
+			var result = titleCase(testText);
+
+			expect(result).toEqual('This Is An EXAMPLE Test-case');
+		});
+
+		it('can convert to upper case', () => {
+			var upperCase = Utilities.caseConverter(Utilities.UPPER);
+
+			var result = upperCase(testText);
+
+			expect(result).toEqual('THIS_IS AN EXAMPLE TEST-CASE');
+		});
+	})
 });
