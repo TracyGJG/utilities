@@ -458,7 +458,7 @@ Converts input strings according to a pre-defined format.
 
 #### Examples
 
-Example text "This\_\_is an EXAMPLE test--case"
+Example text "This\_\_is \ an \ EXAMPLE test--case"
 
 - Camel case: "thisIsAnExampleTestCase"
 - Global case: "THIS_IS_AN_EXAMPLE_TEST_CASE"
