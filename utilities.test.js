@@ -1,4 +1,4 @@
-const Utilities = require('./utilities');
+import Utilities from './utilities';
 
 describe('Utilities', () => {
 	describe('Accumulated Average', () => {

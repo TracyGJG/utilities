@@ -28,7 +28,7 @@ var IUtility = {
 	TITLE: 'T',
 	UPPER: 'U',
 };
-module.exports = IUtility;
+export default IUtility;
 
 function accumulatedAverage(averageToDate = 0, sampleSize = 0) {
 	var runningTotal = averageToDate * (sampleSize || 1);

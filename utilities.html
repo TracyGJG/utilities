@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utilities</title>
+</head>
+<body>
+    <script type="module">
+        import utils from './utilities.min.js';
+
+		var rawData = 'Hello World!';
+        var base64Data = 'SGVsbG8gV29ybGQh';
+        
+        console.log(`base64Encode('${rawData}') = "${utils.base64Encode(rawData)}"`);
+        console.log(`base64Decode('${base64Data}') = "${utils.base64Decode(base64Data)}"`);
+    </script>
+</body>
+</html>

@@ -6,8 +6,10 @@
   "scripts": {
     "min": "jsmin -o utilities.min.js utilities.js",
     "coverage": "jest --coverage",
-    "test": "jest"
+    "test": "jest",
+    "test-esm": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/TracyGJG/utilities.git"
@@ -19,6 +21,7 @@
   },
   "homepage": "https://github.com/TracyGJG/utilities#readme",
   "devDependencies": {
-    "jest": "^26.1.0"
+    "jest": "^26.1.0",
+    "jsmin": "^1.0.1"
   }
 }
