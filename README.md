@@ -2,26 +2,18 @@
 
 A collection of utility functions I find useful.
 
-- acculatedAverage
-- clampRange
-- normaliseRange
-- liniarInterpolate
-- mapRanges
-- rangeBetween
-- rangeFrom
-- inRange
-- loopRange
-- intersectArrays
-- unionArrays
-- exercise
-- base64encoding
-- base64decoding
-- shortDay
-- longDay
-- shortMonth
-- longMonth
-- objectEqual
-- caseConverter
+ Functions ||
+ :----: | :----:
+ exercise | acculatedAverage
+ clampRange | normaliseRange
+ liniarInterpolate | mapRanges
+ rangeBetween | rangeFrom
+ inRange | loopRange
+ intersectArrays | unionArrays
+ base64encoding | base64decoding
+ shortDay | longDay
+ shortMonth | longMonth
+ objectEqual | caseConverter
 
 The above functions make considerable use of the technique called currying to return a specialised function. This saves on suppling parameters that are not expected to change.
 
