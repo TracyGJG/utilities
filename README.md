@@ -27,6 +27,10 @@ The above functions make considerable use of the technique called currying to re
 
 ### NB: The functions have been prepared with no input validation or additional error checking.
 
+## Update: 5th September 2020
+This library was originally developed as an ES Module but had to be converted to Common.JS to make it compatible and testable with Jest.
+Following the advice given in [Valentino Gagliardi's article](https://www.valentinog.com/blog/jest/), I have been able to to convert it back to an ES Module; making it usable by Node and in the web browser.
+
 ---
 
 ## acculatedAverage

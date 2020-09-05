@@ -209,7 +209,6 @@ function caseConverter(textCase) {
 	var isJoinWithUnderscore = conversionCheck('G');
 	var isUppercaseConversion = conversionCheck('GU');
 	var isLowercaseConversion = conversionCheck('KL');
-	var isCapitalisedConversion = conversionCheck('HPCT');
 	var isFirstCamel = (conversionCase, index) =>
 		conversionCase == IUtility.CAMEL && !index;
 	var isTitleAcronym = (conversionCase, text) =>
@@ -244,12 +243,9 @@ function caseConverter(textCase) {
 		var convertedText = splitText.map((text, index) => {
 			if (isUppercaseConversion(textConversion)) return text.toUpperCase();
 			if (isLowercaseConversion(textConversion)) return text.toLowerCase();
-			if (isCapitalisedConversion(textConversion)) {
-				if (isFirstCamel(textConversion, index)) return text.toLowerCase();
-				if (isTitleAcronym(textConversion, text)) return text.toUpperCase();
-				return `${text[0].toUpperCase()}${text.slice(1).toLowerCase()}`;
-			}
-			return text;
+			if (isFirstCamel(textConversion, index)) return text.toLowerCase();
+			if (isTitleAcronym(textConversion, text)) return text.toUpperCase();
+			return `${text[0].toUpperCase()}${text.slice(1).toLowerCase()}`;
 		});
 		var joinedText = convertedText.join(joinDelimiter);
 		return joinedText;
