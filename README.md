@@ -14,6 +14,7 @@ A collection of utility functions I find useful.
  shortDay | longDay
  shortMonth | longMonth
  objectEqual | caseConverter
+ consoleTable | 
 
 The above functions make considerable use of the technique called currying to return a specialised function. This saves on suppling parameters that are not expected to change.
 
@@ -464,5 +465,21 @@ Example text "This\_\_is \ an \ EXAMPLE test--case"
 - Pascal case: "ThisIsAnExampleTestCase"
 - Title case: "This Is An EXAMPLE Test-case"
 - Upper case: "THIS_IS AN EXAMPLE TEST-CASE"
+
+---
+
+## Console Table
+
+### Parameters
+
+- arr - an array of values, objects or array's of primitives.
+- domNode - (optional) target, defaulted to the document.body.
+
+### Return Value
+None.
+
+### Description
+
+An alternative to the console.table function but generates HTML.
 
 ---

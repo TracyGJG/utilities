@@ -374,5 +374,60 @@ describe('Utilities', () => {
 
 			expect(result).toEqual('THIS_IS AN EXAMPLE TEST-CASE');
 		});
+	});
+
+	describe('console_table', () => {
+		it('with an empty array', () => {
+			const testData = [];
+			const testTarget = { innerHTML: '' };
+			const expectedResult = '';
+			Utilities.consoleTable( testData, testTarget);
+			expect(testTarget.innerHTML).toEqual(expectedResult);
+		});
+
+		it('with an array of values', () => {
+			const testData = [1, 2, 3, 4, 5];
+			const testTarget = { innerHTML: '' };
+			const expectedResult = `<table border="1">
+<tr><th>#</th><th>Value</th></tr>
+<tr><td>0</td><td>1</td></tr>
+<tr><td>1</td><td>2</td></tr>
+<tr><td>2</td><td>3</td></tr>
+<tr><td>3</td><td>4</td></tr>
+<tr><td>4</td><td>5</td></tr>
+</table>`;
+			Utilities.consoleTable( testData, testTarget);
+			expect(testTarget.innerHTML).toEqual(expectedResult);
+		});
+
+		it('with an array of arrays', () => {
+			const testData = [
+				[1, 2, 3, 4],
+				[5, 6, 7, 8]
+			];
+			const testTarget = { innerHTML: '' };
+			const expectedResult = `<table border="1">
+<tr><th>#</th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+<tr><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+<tr><td>1</td><td>5</td><td>6</td><td>7</td><td>8</td></tr>
+</table>`;
+			Utilities.consoleTable( testData, testTarget);
+			expect(testTarget.innerHTML).toEqual(expectedResult);
+		});
+
+		it('with an array of object', () => {
+			const testData = [
+				{alpha: 1, beta: 2, gamma: 3, delta: 4},
+				{alpha: 5, beta: 6, gamma: 7, delta: 8}
+			];
+			const testTarget = { innerHTML: '' };
+			const expectedResult = `<table border="1">
+<tr><th>#</th><th>alpha</th><th>beta</th><th>gamma</th><th>delta</th></tr>
+<tr><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+<tr><td>1</td><td>5</td><td>6</td><td>7</td><td>8</td></tr>
+</table>`;
+			Utilities.consoleTable( testData, testTarget);
+			expect(testTarget.innerHTML).toEqual(expectedResult);
+		});
 	})
 });

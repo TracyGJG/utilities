@@ -27,7 +27,9 @@ var IUtility = {
 	PASCAL: 'P',
 	TITLE: 'T',
 	UPPER: 'U',
+	consoleTable: console_table
 };
+
 export default IUtility;
 
 function accumulatedAverage(averageToDate = 0, sampleSize = 0) {
@@ -250,4 +252,23 @@ function caseConverter(textCase) {
 		var joinedText = convertedText.join(joinDelimiter);
 		return joinedText;
 	};
+}
+
+function console_table(arr, domNode = document.body) {
+	function getHeading(row) {
+		return Array.isArray(row) ? row.map((_, idx) => `<th>${idx + 1}</th>`).join('')
+			: (typeof row === 'object') ? Object.keys(row).map(col => `<th>${col}</th>`).join('') :  `<th>Value</th>`;
+	}
+	function getData(row) {
+		const htmlData = cell => `<td>${cell}</td>`;
+		return Array.isArray(row) ? row.map(htmlData).join('')
+			: (typeof row === 'object') ? Object.values(row).map(htmlData).join('') : htmlData(row) ;
+	}
+
+	domNode.innerHTML +=
+		arr.length ? `<table border="1">
+<tr><th>#</th>${getHeading(arr[0])}</tr>
+${arr.map((row, idx) => `<tr><td>${idx}</td>${getData(row)}</tr>
+`).join('')
+}</table>` : '';
 }
