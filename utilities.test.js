@@ -430,4 +430,63 @@ describe('Utilities', () => {
 			expect(testTarget.innerHTML).toEqual(expectedResult);
 		});
 	})
+
+	describe('dataType', () => {
+		it('can detect Undefined', () => {
+			expect(Utilities.dataType()).toEqual('undefined');
+		});
+
+		it('can detect Null', () => {
+			expect(Utilities.dataType(null)).toEqual('null');
+		});
+
+		it('can detect Boolean', () => {
+			expect(Utilities.dataType(false)).toEqual('boolean');
+		});
+
+		it('can detect Numbers', () => {
+			expect(Utilities.dataType(42)).toEqual('number');
+		});
+		
+		it('can detect Strings', () => {
+			expect(Utilities.dataType('fourty-two')).toEqual('string');
+		});
+		
+		it('can detect Objects', () => {
+			expect(Utilities.dataType({})).toEqual('object');
+		});
+		
+		it('can detect Arrays', () => {
+			expect(Utilities.dataType([])).toEqual('array');
+		});
+		
+		it('can detect Regular Expressions', () => {
+			expect(Utilities.dataType(/42/)).toEqual('regexp');
+		});
+
+		it('can detect Dates', () => {
+			expect(Utilities.dataType(new Date())).toEqual('date');
+		});
+		
+		it('can detect Errors', () => {
+			expect(Utilities.dataType(new Error())).toEqual('error');
+		});
+
+		it('can detect Sets', () => {
+			expect(Utilities.dataType(new Set())).toEqual('set');
+		});
+
+		it('can detect Maps', () => {
+			expect(Utilities.dataType(new Map())).toEqual('map');
+		});
+
+		it('can detect Symbols', () => {
+			expect(Utilities.dataType(Symbol())).toEqual('symbol');
+		});
+
+		it('can detect Big Integers', () => {
+			expect(Utilities.dataType(42n)).toEqual('bigint');
+		});
+
+	})
 });

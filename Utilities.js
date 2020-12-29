@@ -27,7 +27,8 @@ var IUtility = {
 	PASCAL: 'P',
 	TITLE: 'T',
 	UPPER: 'U',
-	consoleTable: console_table
+	consoleTable: console_table,
+	dataType
 };
 
 export default IUtility;
@@ -271,4 +272,8 @@ function console_table(arr, domNode = document.body) {
 ${arr.map((row, idx) => `<tr><td>${idx}</td>${getData(row)}</tr>
 `).join('')
 }</table>` : '';
+}
+
+function dataType(subject) {
+	return Object.prototype.toString.call(subject).match(/\s(?<T>[^\]]*)/).groups.T.toLowerCase()
 }

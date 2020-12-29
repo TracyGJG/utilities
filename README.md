@@ -13,12 +13,14 @@ A collection of utility functions I find useful.
  base64encoding | base64decoding
  shortDay | longDay
  shortMonth | longMonth
- objectEqual | caseConverter
- consoleTable | 
-
+ objectEqual | dataType
+ caseConverter | consoleTable
 The above functions make considerable use of the technique called currying to return a specialised function. This saves on suppling parameters that are not expected to change.
 
 ### NB: The functions have been prepared with no input validation or additional error checking.
+
+## Update: 29th December 2020
+New function dataType added to report the type of data held in a variable as a string.
 
 ## Update: 5th September 2020
 This library was originally developed as an ES Module but had to be converted to Common.JS to make it compatible and testable with Jest.
@@ -483,3 +485,23 @@ None.
 An alternative to the console.table function but generates HTML.
 
 ---
+
+## Data Type
+
+### Parameters
+
+- subject variable of any type.
+
+### Return Value
+
+Lowercase string representation of the type of data held in the variable. This includes the following:
+
+ Standard Types ||
+ :----: | :----: |
+undefined | null |
+boolean | number |
+string | object |
+array | regexp |
+date | error |
+set | map |
+symbol | bigint |
