@@ -452,6 +452,10 @@ describe('Utilities', () => {
 			expect(Utilities.dataType('fourty-two')).toEqual('string');
 		});
 		
+		it('can detect Template Literal as String', () => {
+			expect(Utilities.dataType(`fourty-two`)).toEqual('string');
+		});
+		
 		it('can detect Objects', () => {
 			expect(Utilities.dataType({})).toEqual('object');
 		});
@@ -487,6 +491,5 @@ describe('Utilities', () => {
 		it('can detect Big Integers', () => {
 			expect(Utilities.dataType(42n)).toEqual('bigint');
 		});
-
 	})
 });
