@@ -4,31 +4,57 @@ A collection of utility functions I find useful.
 
  Functions ||
  :----: | :----:
- exercise | acculatedAverage
- clampRange | normaliseRange
- liniarInterpolate | mapRanges
- rangeBetween | rangeFrom
- inRange | loopRange
- intersectArrays | unionArrays
- base64encoding | base64decoding
- shortDay | longDay
- shortMonth | longMonth
- objectEqual | dataType
- caseConverter | consoleTable
+ [exercise](#exercise) | [acculatedAverage](#acculatedAverage)
+ [clampRange](#clampRange) | [normaliseRange](#normaliseRange)
+ [liniarInterpolate](#liniarInterpolate) | [mapRanges](#mapRanges)
+ [rangeBetween](#rangeBetween) | [rangeFrom](#rangeFrom)
+ [inRange](#inRange) | [acculatedAverage](#acculatedAverage)
+ [intersectArrays](#intersectArrays) | [unionArrays](#unionArrays)
+ [replaceArray](#replaceArray) | 
+ [base64encoding](#base64encoding) | [base64decoding](#base64decoding)
+ [shortDay](#shortDay) | [longDay](#longDay)
+ [shortMonth](#shortMonth) | [longMonth](#longMonth)
+ [objectEquality](#objectEquality) | [dataType](#dataType)
+ [caseConverter](#caseConverter) | [consoleTable](#consoleTable)
+
 The above functions make considerable use of the technique called currying to return a specialised function. This saves on suppling parameters that are not expected to change.
 
 ### NB: The functions have been prepared with no input validation or additional error checking.
 
-## Update: 29th December 2020
+## Change Log
+
+### Update: 5th March 2021
+New function replaceArray added to replace the content of an array in place, without reassignment.
+
+### Update: 29th December 2020
 New function dataType added to report the type of data held in a variable as a string.
 
-## Update: 5th September 2020
+### Update: 5th September 2020
 This library was originally developed as an ES Module but had to be converted to Common.JS to make it compatible and testable with Jest.
 Following the advice given in [Valentino Gagliardi's article](https://www.valentinog.com/blog/jest/), I have been able to to convert it back to an ES Module; making it usable by Node and in the web browser.
 
 ---
 
-## acculatedAverage
+## [exercise](:#exercise)
+
+### Parameters
+
+- expected - The value anticipated to be the result.
+- actual - The value calculated as the result.
+- id - Reference for the specific exercise. (optional)
+
+### Return Value
+
+Result of the comparison (true or false.)
+
+### Description
+
+A simple mechanism for ad-hoc testing of a pure function.
+
+---
+
+## [acculatedAverage](:#acculatedAverage)
+
 
 ### Parameters
 
@@ -65,7 +91,8 @@ Subsequent calls to accumulateAverage with include additional values as part of 
 
 ---
 
-## clampRange
+## [clampRange](:#clampRange)
+
 
 ### Parameters
 
@@ -94,7 +121,7 @@ If the input value is within the boundries the output from the function will be 
 
 ---
 
-## normaliseRange
+## [normaliseRange](:#normaliseRange)
 
 ### Parameters
 
@@ -121,7 +148,8 @@ Input values outside the expected range will be either less than 0 or greater th
 
 ---
 
-## liniarInterpolate
+## [liniarInterpolate](:#liniarInterpolate)
+
 
 ### Parameters
 
@@ -144,7 +172,8 @@ This function converts a normalised value (beweet 0 and 1), and initilised with 
 
 ---
 
-## mapRanges
+## [mapRanges](:#mapRanges)
+
 
 ### Parameters
 
@@ -169,7 +198,8 @@ The Map Ranges function is quite self explanatory. Initialised with a source and
 
 ---
 
-## rangeBetween
+## [rangeBetween](:#rangeBetween)
+
 
 ### Parameters
 
@@ -187,7 +217,8 @@ RangeBetween is a generator function that produces an array of numbers between _
 
 ---
 
-## rangeFrom
+## [rangeFrom](:#rangeFrom)
+
 
 ### Parameters
 
@@ -202,12 +233,12 @@ A new array containing len numbers starting from init, in step intervals.
 A new array containing the a numbers.
 
 ### Description
-
 Similar to the RangeBetween function, this function generates an array of len numbers commencing with init and varying by step. The step parameter can be a fixed value (defaulted to 1) or a function using the index as an input.
 
 ---
 
-## inRange
+## [inRange](:#inRange)
+
 
 ### Parameters
 
@@ -228,12 +259,12 @@ Boolean value indicating the ranges overlap or a value is within a given range.
 ### Description
 
 This function supports two use cases:
-1 Confirm two ranges overloap.
-2 Confirm a value lies within a primary range.
-
+1. Confirm two ranges overloap.
+2. Confirm a value lies within a primary range.
 ---
 
-## loopRange
+## [loopRange](:#loopRange)
+
 
 ### Parameters
 
@@ -259,7 +290,8 @@ When the value exceeds the bounds of the range it loops round to the opposite en
 
 ---
 
-## intersectArrays
+## [intersectArrays](:#intersectArrays)
+
 
 ### Parameters
 
@@ -275,7 +307,8 @@ Extracts the common values of all the input arrays into a new array of distinct 
 
 ---
 
-## unionArrays
+## [unionArrays](:#unionArrays)
+
 
 ### Parameters
 
@@ -291,25 +324,26 @@ Extracts a list of all the values from the input arrays into a new array of dist
 
 ---
 
-## exercise
+## [replaceArray](:#replaceArray)
+
 
 ### Parameters
 
-- expected - The value anticipated to be the result.
-- actual - The value calculated as the result.
-- id - Reference for the specific exercise. (optional)
+- targetArray - Reference to the array to be replaced.
+- arrayContent - Option reference to an array containing data to populate the target array.
 
 ### Return Value
 
-Result of the comparison (true or false.)
+None - updates th targetArray directly.
 
 ### Description
 
-A simple mechanism for ad-hoc testing of a pure function.
+Replaces the content of the targetArray with the (optional) content of the arrayContent.
 
 ---
 
-## Base 64 Encoding
+## [base64encoding](:#base64encoding)
+
 
 ### Parameters
 
@@ -325,7 +359,8 @@ Applies Base64 encoding of supplied data.
 
 ---
 
-## Base 64 Decoding
+## [base64Decoding](:#base64decoding)
+
 
 ### Parameters
 
@@ -341,7 +376,9 @@ Applies Base64 decoding of supplied encloded data.
 
 ---
 
-## Date Strings - Short Day
+## Date Strings
+### [shortDay](:#shortDay)
+
 
 ### Parameters
 
@@ -358,8 +395,7 @@ Provides the short form of the day of week in the given locale, based in a numer
 
 ---
 
-## Date Strings - Long Day
-
+### [longDay](:#longDay)
 ### Parameters
 
 - lang - Locale string (defaulted to gb-GB)
@@ -375,7 +411,8 @@ Provides the long form of the day of week in the given locale, based in a numeri
 
 ---
 
-## Date Strings - Short Month
+### [shortMonth](:#shortMonth)
+
 
 ### Parameters
 
@@ -392,7 +429,9 @@ Provides the short form of the month of year in the given locale, based in a num
 
 ---
 
-## Date Strings - Long Month
+### [longMonth](:#longMonth)
+
+
 
 ### Parameters
 
@@ -409,7 +448,8 @@ Provides the long form of the month of year in the given locale, based in a nume
 
 ---
 
-## Object Equality
+## [objectEquality](:#objectEquality)
+
 
 ### Parameters
 
@@ -420,13 +460,35 @@ Provides the long form of the month of year in the given locale, based in a nume
 
 Boolean flag indication if the values held withint _obj1_ are the same as those in _obj2_.
 
+## [dataType](:#dataType)
+
+
+### Parameters
+
+- subject variable of any type.
+
+### Return Value
+
+Lowercase string representation of the type of data held in the variable. This includes the following:
+
+ Standard Types ||
+ :----: | :----: |
+undefined | null |
+boolean | number |
+string | object |
+array | regexp |
+date | error |
+set | map |
+symbol | bigint |
+
 ### Description
 
 Performs a comparison of all the values in the properties of both of the objects supplied.
 
 ---
 
-## Case Converter
+## [caseConverter](:#caseConverter)
+
 
 ### Parameters
 
@@ -467,10 +529,9 @@ Example text "This\_\_is \ an \ EXAMPLE test--case"
 - Pascal case: "ThisIsAnExampleTestCase"
 - Title case: "This Is An EXAMPLE Test-case"
 - Upper case: "THIS_IS AN EXAMPLE TEST-CASE"
-
 ---
 
-## Console Table
+## [consoleTable](:#consoleTable)
 
 ### Parameters
 
@@ -485,23 +546,3 @@ None.
 An alternative to the console.table function but generates HTML.
 
 ---
-
-## Data Type
-
-### Parameters
-
-- subject variable of any type.
-
-### Return Value
-
-Lowercase string representation of the type of data held in the variable. This includes the following:
-
- Standard Types ||
- :----: | :----: |
-undefined | null |
-boolean | number |
-string | object |
-array | regexp |
-date | error |
-set | map |
-symbol | bigint |

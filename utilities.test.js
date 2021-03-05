@@ -492,4 +492,35 @@ describe('Utilities', () => {
 			expect(Utilities.dataType(42n)).toEqual('bigint');
 		});
 	})
+
+	describe('replaceArray', () => {
+/*
+function replaceArray(targetArray, arrayContent = []) {
+  targetArray.splice(0, targetArray.length, ...arrayContent);
+}
+*/
+		it('can populate an empty array', () => {
+			const tgtArr = [];
+			const srcArr = [1, 2, 3];
+
+			Utilities.replaceArray(tgtArr, srcArr);
+			expect(tgtArr.length).toEqual(3);
+		});
+
+		it('can empty a populated array', () => {
+			const tgtArr = [1, 2, 3];
+
+			Utilities.replaceArray(tgtArr);
+			expect(tgtArr.length).toEqual(0);
+		});
+
+		it('can replace a populated array', () => {
+			const tgtArr = [1, 2, 3];
+			const srcArr = [4, 5, 6, 7];
+
+			Utilities.replaceArray(tgtArr, srcArr);
+			expect(tgtArr.length).toEqual(4);
+		});
+
+	})
 });

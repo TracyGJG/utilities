@@ -1,4 +1,5 @@
 var IUtility = {
+	exercise,
 	accumulatedAverage,
 	clampRange,
 	normaliseRange,
@@ -10,7 +11,7 @@ var IUtility = {
 	loopRange,
 	intersectArrays,
 	unionArrays,
-	exercise,
+	replaceArray,
 	base64Encode,
 	base64Decode,
 	shortDay,
@@ -18,7 +19,9 @@ var IUtility = {
 	shortMonth,
 	longMonth,
 	objectEquality,
+	dataType,
 	caseConverter,
+	consoleTable: console_table,
 	CAMEL: 'C',
 	GLOBAL: 'G',
 	HEADER: 'H',
@@ -26,9 +29,7 @@ var IUtility = {
 	LOWER: 'L',
 	PASCAL: 'P',
 	TITLE: 'T',
-	UPPER: 'U',
-	consoleTable: console_table,
-	dataType
+	UPPER: 'U'
 };
 
 export default IUtility;
@@ -112,13 +113,13 @@ function exercise(expected, actual, id = '') {
 	var exerId = id ? ` ${id}` : '';
 	if (expectedResult == actualResult) {
 		console.info(
-			`%c EXERCISE${exerId} - Passed: Expected (${expectedResult}) and received(${actualResult}).`,
+			`%cEXERCISE${exerId} - Passed:	Expected (${expectedResult}), Received (${actualResult}).`,
 			'color: green;'
 		);
 		return true;
 	}
 	console.info(
-		`%c EXERCISE${exerId} - Failed: Expected (${expectedResult}) but received(${actualResult}).`,
+		`%cEXERCISE${exerId} - Failed:	Expected (${expectedResult}), Received (${actualResult}).`,
 		'color: red;'
 	);
 	return false;
@@ -277,3 +278,7 @@ ${arr.map((row, idx) => `<tr><td>${idx}</td>${getData(row)}</tr>
 function dataType(subject) {
 	return Object.prototype.toString.call(subject).match(/\s(?<T>[^\]]*)/).groups.T.toLowerCase()
 }
+
+function replaceArray(targetArray, arrayContent = []) {
+	targetArray.splice(0, targetArray.length, ...arrayContent);
+}  
