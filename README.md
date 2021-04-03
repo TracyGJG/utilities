@@ -23,6 +23,9 @@ The above functions make considerable use of the technique called currying to re
 
 ## Change Log
 
+### Update: 3rd April 2021
+Applied patch to address the report by Snyk of a vulnerability in the y18n package version 4.0.0. 
+
 ### Update: 5th March 2021
 New function replaceArray added to replace the content of an array in place, without reassignment.
 
