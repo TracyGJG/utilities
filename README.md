@@ -2,20 +2,20 @@
 
 A collection of utility functions I find useful.
 
- Functions ||
- :----: | :----:
- [exercise](#exercise) | [acculatedAverage](#acculatedAverage)
- [clampRange](#clampRange) | [normaliseRange](#normaliseRange)
- [liniarInterpolate](#liniarInterpolate) | [mapRanges](#mapRanges)
- [rangeBetween](#rangeBetween) | [rangeFrom](#rangeFrom)
- [inRange](#inRange) | [acculatedAverage](#acculatedAverage)
- [intersectArrays](#intersectArrays) | [unionArrays](#unionArrays)
- [replaceArray](#replaceArray) | 
- [base64encoding](#base64encoding) | [base64decoding](#base64decoding)
- [shortDay](#shortDay) | [longDay](#longDay)
- [shortMonth](#shortMonth) | [longMonth](#longMonth)
- [objectEquality](#objectEquality) | [dataType](#dataType)
- [caseConverter](#caseConverter) | [consoleTable](#consoleTable)
+|                Functions                |                                       |
+| :-------------------------------------: | :-----------------------------------: |
+|          [exercise](#exercise)          | [acculatedAverage](#acculatedAverage) |
+|        [clampRange](#clampRange)        |   [normaliseRange](#normaliseRange)   |
+| [liniarInterpolate](#liniarInterpolate) |        [mapRanges](#mapRanges)        |
+|      [rangeBetween](#rangeBetween)      |        [rangeFrom](#rangeFrom)        |
+|           [inRange](#inRange)           | [acculatedAverage](#acculatedAverage) |
+|   [intersectArrays](#intersectArrays)   |      [unionArrays](#unionArrays)      |
+|      [replaceArray](#replaceArray)      |
+|    [base64encoding](#base64encoding)    |   [base64decoding](#base64decoding)   |
+|          [shortDay](#shortDay)          |          [longDay](#longDay)          |
+|        [shortMonth](#shortMonth)        |        [longMonth](#longMonth)        |
+|    [objectEquality](#objectEquality)    |         [dataType](#dataType)         |
+|     [caseConverter](#caseConverter)     |     [consoleTable](#consoleTable)     |
 
 The above functions make considerable use of the technique called currying to return a specialised function. This saves on suppling parameters that are not expected to change.
 
@@ -24,12 +24,15 @@ The above functions make considerable use of the technique called currying to re
 ## Change Log
 
 ### Update: 5th March 2021
+
 New function replaceArray added to replace the content of an array in place, without reassignment.
 
 ### Update: 29th December 2020
+
 New function dataType added to report the type of data held in a variable as a string.
 
 ### Update: 5th September 2020
+
 This library was originally developed as an ES Module but had to be converted to Common.JS to make it compatible and testable with Jest.
 Following the advice given in [Valentino Gagliardi's article](https://www.valentinog.com/blog/jest/), I have been able to to convert it back to an ES Module; making it usable by Node and in the web browser.
 
@@ -54,7 +57,6 @@ A simple mechanism for ad-hoc testing of a pure function.
 ---
 
 ## [acculatedAverage](:#acculatedAverage)
-
 
 ### Parameters
 
@@ -92,7 +94,6 @@ Subsequent calls to accumulateAverage with include additional values as part of 
 ---
 
 ## [clampRange](:#clampRange)
-
 
 ### Parameters
 
@@ -150,7 +151,6 @@ Input values outside the expected range will be either less than 0 or greater th
 
 ## [liniarInterpolate](:#liniarInterpolate)
 
-
 ### Parameters
 
 #### Initial call
@@ -173,7 +173,6 @@ This function converts a normalised value (beweet 0 and 1), and initilised with 
 ---
 
 ## [mapRanges](:#mapRanges)
-
 
 ### Parameters
 
@@ -200,7 +199,6 @@ The Map Ranges function is quite self explanatory. Initialised with a source and
 
 ## [rangeBetween](:#rangeBetween)
 
-
 ### Parameters
 
 - min - lower boundry of the range.
@@ -219,7 +217,6 @@ RangeBetween is a generator function that produces an array of numbers between _
 
 ## [rangeFrom](:#rangeFrom)
 
-
 ### Parameters
 
 - init - initial value of the range.
@@ -230,15 +227,13 @@ RangeBetween is a generator function that produces an array of numbers between _
 
 A new array containing len numbers starting from init, in step intervals.
 
-A new array containing the a numbers.
-
 ### Description
+
 Similar to the RangeBetween function, this function generates an array of len numbers commencing with init and varying by step. The step parameter can be a fixed value (defaulted to 1) or a function using the index as an input.
 
 ---
 
 ## [inRange](:#inRange)
-
 
 ### Parameters
 
@@ -259,12 +254,13 @@ Boolean value indicating the ranges overlap or a value is within a given range.
 ### Description
 
 This function supports two use cases:
+
 1. Confirm two ranges overloap.
 2. Confirm a value lies within a primary range.
+
 ---
 
 ## [loopRange](:#loopRange)
-
 
 ### Parameters
 
@@ -292,7 +288,6 @@ When the value exceeds the bounds of the range it loops round to the opposite en
 
 ## [intersectArrays](:#intersectArrays)
 
-
 ### Parameters
 
 - arrays - One or more arrays from which the intersect is to be extracted.
@@ -309,7 +304,6 @@ Extracts the common values of all the input arrays into a new array of distinct 
 
 ## [unionArrays](:#unionArrays)
 
-
 ### Parameters
 
 - arrays - One or more arrays from which the union is to be extracted.
@@ -325,7 +319,6 @@ Extracts a list of all the values from the input arrays into a new array of dist
 ---
 
 ## [replaceArray](:#replaceArray)
-
 
 ### Parameters
 
@@ -344,7 +337,6 @@ Replaces the content of the targetArray with the (optional) content of the array
 
 ## [base64encoding](:#base64encoding)
 
-
 ### Parameters
 
 - Raw data such as a binary buffer
@@ -361,7 +353,6 @@ Applies Base64 encoding of supplied data.
 
 ## [base64Decoding](:#base64decoding)
 
-
 ### Parameters
 
 - Data in Base64 encoding
@@ -377,8 +368,8 @@ Applies Base64 decoding of supplied encloded data.
 ---
 
 ## Date Strings
-### [shortDay](:#shortDay)
 
+### [shortDay](:#shortDay)
 
 ### Parameters
 
@@ -396,6 +387,7 @@ Provides the short form of the day of week in the given locale, based in a numer
 ---
 
 ### [longDay](:#longDay)
+
 ### Parameters
 
 - lang - Locale string (defaulted to gb-GB)
@@ -412,7 +404,6 @@ Provides the long form of the day of week in the given locale, based in a numeri
 ---
 
 ### [shortMonth](:#shortMonth)
-
 
 ### Parameters
 
@@ -431,8 +422,6 @@ Provides the short form of the month of year in the given locale, based in a num
 
 ### [longMonth](:#longMonth)
 
-
-
 ### Parameters
 
 - lang - Locale string (defaulted to gb-GB)
@@ -450,7 +439,6 @@ Provides the long form of the month of year in the given locale, based in a nume
 
 ## [objectEquality](:#objectEquality)
 
-
 ### Parameters
 
 - obj1 - first object in comparison
@@ -462,7 +450,6 @@ Boolean flag indication if the values held withint _obj1_ are the same as those 
 
 ## [dataType](:#dataType)
 
-
 ### Parameters
 
 - subject variable of any type.
@@ -471,15 +458,15 @@ Boolean flag indication if the values held withint _obj1_ are the same as those 
 
 Lowercase string representation of the type of data held in the variable. This includes the following:
 
- Standard Types ||
- :----: | :----: |
-undefined | null |
-boolean | number |
-string | object |
-array | regexp |
-date | error |
-set | map |
-symbol | bigint |
+| Standard Types |        |
+| :------------: | :----: |
+|   undefined    |  null  |
+|    boolean     | number |
+|     string     | object |
+|     array      | regexp |
+|      date      | error  |
+|      set       |  map   |
+|     symbol     | bigint |
 
 ### Description
 
@@ -488,7 +475,6 @@ Performs a comparison of all the values in the properties of both of the objects
 ---
 
 ## [caseConverter](:#caseConverter)
-
 
 ### Parameters
 
@@ -529,6 +515,7 @@ Example text "This\_\_is \ an \ EXAMPLE test--case"
 - Pascal case: "ThisIsAnExampleTestCase"
 - Title case: "This Is An EXAMPLE Test-case"
 - Upper case: "THIS_IS AN EXAMPLE TEST-CASE"
+
 ---
 
 ## [consoleTable](:#consoleTable)
@@ -539,6 +526,7 @@ Example text "This\_\_is \ an \ EXAMPLE test--case"
 - domNode - (optional) target, defaulted to the document.body.
 
 ### Return Value
+
 None.
 
 ### Description
