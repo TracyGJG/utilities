@@ -2,20 +2,21 @@
 
 A collection of utility functions I find useful.
 
-|                Functions                |                                       |
-| :-------------------------------------: | :-----------------------------------: |
-|          [exercise](#exercise)          | [acculatedAverage](#acculatedAverage) |
-|        [clampRange](#clampRange)        |   [normaliseRange](#normaliseRange)   |
-| [liniarInterpolate](#liniarInterpolate) |        [mapRanges](#mapRanges)        |
-|      [rangeBetween](#rangeBetween)      |        [rangeFrom](#rangeFrom)        |
-|           [inRange](#inRange)           | [acculatedAverage](#acculatedAverage) |
-|   [intersectArrays](#intersectArrays)   |      [unionArrays](#unionArrays)      |
-|      [replaceArray](#replaceArray)      |
-|    [base64encoding](#base64encoding)    |   [base64decoding](#base64decoding)   |
-|          [shortDay](#shortDay)          |          [longDay](#longDay)          |
-|        [shortMonth](#shortMonth)        |        [longMonth](#longMonth)        |
-|    [objectEquality](#objectEquality)    |         [dataType](#dataType)         |
-|     [caseConverter](#caseConverter)     |     [consoleTable](#consoleTable)     |
+|                Functions                |                                   |
+| :-------------------------------------: | :-------------------------------: |
+|  [acculatedAverage](#acculatedAverage)  |                                   |
+|        [clampRange](#clampRange)        | [normaliseRange](#normaliseRange) |
+| [liniarInterpolate](#liniarInterpolate) |      [mapRanges](#mapRanges)      |
+|      [rangeBetween](#rangeBetween)      |      [rangeFrom](#rangeFrom)      |
+|           [inRange](#inRange)           |      [loopRange](#loopRange)      |
+|   [intersectArrays](#intersectArrays)   |    [unionArrays](#unionArrays)    |
+|      [replaceArray](#replaceArray)      |                                   |
+|    [base64encoding](#base64encoding)    | [base64decoding](#base64decoding) |
+|          [shortDay](#shortDay)          |        [longDay](#longDay)        |
+|        [shortMonth](#shortMonth)        |      [longMonth](#longMonth)      |
+|     [caseConverter](#caseConverter)     |                                   |
+|    [objectEquality](#objectEquality)    |       [dataType](#dataType)       |
+|          [exercise](#exercise)          |   [consoleTable](#consoleTable)   |
 
 The above functions make considerable use of the technique called currying to return a specialised function. This saves on suppling parameters that are not expected to change.
 
@@ -23,16 +24,21 @@ The above functions make considerable use of the technique called currying to re
 
 ## Change Log
 
+### Update: 17th April 2021
+
+Revised `unionArrays` function.
+
 ### Update: 3rd April 2021
-Applied patch to address the report by Snyk of a vulnerability in the y18n package version 4.0.0. 
+
+Applied patch to address the report by Snyk of a vulnerability in the y18n package version 4.0.0.
 
 ### Update: 5th March 2021
 
-New function replaceArray added to replace the content of an array in place, without reassignment.
+New function `replaceArray` added to replace the content of an array in place, without reassignment.
 
 ### Update: 29th December 2020
 
-New function dataType added to report the type of data held in a variable as a string.
+New function `dataType` added to report the type of data held in a variable as a string.
 
 ### Update: 5th September 2020
 
