@@ -533,4 +533,20 @@ describe("Utilities: Exercising", () => {
       expect(testTarget.innerHTML).toEqual(expectedResult);
     });
   });
+
+  describe("Utilities: Sleep", () => {
+    it("can delay progress by a given interval (within a period)", async () => {
+      const timeStamp1 = new Date();
+      await Utilities.sleep(1000);
+      const timeStamp2 = new Date();
+      expect(timeStamp2 - timeStamp1).toBeLessThan(1015);
+    });
+
+    it("can delay progress by a given interval (greater than period)", async () => {
+      const timeStamp1 = new Date();
+      await Utilities.sleep(1000);
+      const timeStamp2 = new Date();
+      expect(timeStamp2 - timeStamp1).toBeGreaterThan(1005);
+    });
+  });
 });

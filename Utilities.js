@@ -26,6 +26,7 @@ var IUtility = {
 
   exercise,
   consoleTable: console_table,
+  sleep,
 
   CAMEL: "C",
   GLOBAL: "G",
@@ -297,4 +298,8 @@ ${arr
   )
   .join("")}</table>`
     : "";
+}
+
+async function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }

@@ -17,12 +17,17 @@ A collection of utility functions I find useful.
 |     [caseConverter](#caseConverter)     |                                   |
 |    [objectEquality](#objectEquality)    |       [dataType](#dataType)       |
 |          [exercise](#exercise)          |   [consoleTable](#consoleTable)   |
+|             [sleep](#sleep)             |                                   |
 
 The above functions make considerable use of the technique called currying to return a specialised function. This saves on suppling parameters that are not expected to change.
 
 ### NB: The functions have been prepared with no input validation or additional error checking.
 
 ## Change Log
+
+### Update: 5th June 2021
+
+Added `sleep` function.
 
 ### Update: 17th April 2021
 
