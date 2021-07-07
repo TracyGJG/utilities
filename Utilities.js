@@ -27,6 +27,8 @@ var IUtility = {
   exercise,
   consoleTable: console_table,
   sleep,
+  memoize,
+  curry,
 
   CAMEL: "C",
   GLOBAL: "G",
@@ -302,4 +304,17 @@ ${arr
 
 async function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function memoize(fn, _cache = {}) {
+  return (...args) =>
+    ((key) => (_cache[key] = _cache[key] || fn(...args)))(JSON.stringify(args));
+}
+
+function curry(fn, _args = []) {
+  return (...args) =>
+    ((a) => (a.length === fn.length ? fn(...a) : curry(fn, a)))([
+      ..._args,
+      ...args,
+    ]);
 }

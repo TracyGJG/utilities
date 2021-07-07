@@ -546,7 +546,66 @@ describe("Utilities: Exercising", () => {
       const timeStamp1 = new Date();
       await Utilities.sleep(1000);
       const timeStamp2 = new Date();
-      expect(timeStamp2 - timeStamp1).toBeGreaterThan(1005);
+      expect(timeStamp2 - timeStamp1).toBeGreaterThan(1000);
+    });
+  });
+
+  describe("Utilities: Memoise", () => {
+    let globalCount = 0;
+    function delayedCube(x, y, z) {
+      globalCount++;
+      return x * y * z;
+    }
+
+    it("can increase globalCount for each call (not memoised)", () => {
+      globalCount = 0;
+      expect(delayedCube(2, 3, 7)).toBe(42);
+      expect(globalCount).toBe(1);
+      expect(delayedCube(2, 3, 7)).toBe(42);
+      expect(globalCount).toBe(2);
+      expect(delayedCube(2, 3, 7)).toBe(42);
+      expect(globalCount).toBe(3);
+    });
+
+    it("can increase globalCount just once for each call (memoised)", () => {
+      globalCount = 0;
+      const delayedCube_ = Utilities.memoize(delayedCube);
+      expect(delayedCube_(2, 3, 7)).toBe(42);
+      expect(globalCount).toBe(1);
+      expect(delayedCube_(2, 3, 7)).toBe(42);
+      expect(globalCount).toBe(1);
+      expect(delayedCube_(2, 3, 7)).toBe(42);
+      expect(globalCount).toBe(1);
+    });
+  });
+
+  describe("Utilities: Curry", () => {
+    function cube(x, y, z) {
+      return x * y * z;
+    }
+    const cube_ = Utilities.curry(cube);
+
+    it("can create a curried function that will accept, all args all at once", () => {
+      expect(cube_(2, 3, 7)).toBe(42);
+    });
+
+    it("can create a curried function that will accept, an arg followed by last two", () => {
+      expect(cube_(2)(3, 7)).toBe(42);
+      const cube_one = cube_(2);
+      expect(cube_one(3, 7)).toBe(42);
+    });
+
+    it("can create a curried function that will accept, two args then last", () => {
+      expect(cube_(2, 3)(7)).toBe(42);
+      const cube_two = cube_(2, 3);
+      expect(cube_two(7)).toBe(42);
+    });
+
+    it("can create a curried function that will accept, all args one at a time", () => {
+      expect(cube_(2)(3)(7)).toBe(42);
+      const cube_one = cube_(2);
+      const cube_two = cube_one(3);
+      expect(cube_two(7)).toBe(42);
     });
   });
 });

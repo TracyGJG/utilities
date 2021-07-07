@@ -18,6 +18,7 @@ A collection of utility functions I find useful.
 |    [objectEquality](#objectEquality)    |       [dataType](#dataType)       |
 |          [exercise](#exercise)          |   [consoleTable](#consoleTable)   |
 |             [sleep](#sleep)             |                                   |
+|           [memoise](#memoise)           |          [curry](#curry)          |
 
 The above functions make considerable use of the technique called currying to return a specialised function. This saves on suppling parameters that are not expected to change.
 
@@ -546,5 +547,39 @@ None.
 ### Description
 
 An alternative to the console.table function but generates HTML.
+
+---
+
+## [memoise](:#memoise)
+
+### Parameters
+
+- fn - pure function to convert into a memoised function.
+- \_cache - private cache of function executions.
+
+### Return Value
+
+A memoised function.
+
+### Description
+
+Converts the given pure function into on that is optimised using memoisation (caching.)
+
+---
+
+## [curry](:#curry)
+
+### Parameters
+
+- fn - variadic function to convert into a curried function.
+- \_args - private array of arguments accumulated prior to execution.
+
+### Return Value
+
+A curried function.
+
+### Description
+
+Converts the given variadic function into one that expects arguments to be supplied one at a time.
 
 ---
