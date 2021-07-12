@@ -26,6 +26,10 @@ The above functions make considerable use of the technique called currying to re
 
 ## Change Log
 
+### Update: 7th July 2021
+
+Added `memoise` and `curry` functions.
+
 ### Update: 5th June 2021
 
 Added `sleep` function.
