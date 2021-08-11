@@ -12,6 +12,7 @@ var IUtility = {
   intersectArrays,
   unionArrays,
   replaceArray,
+  reconcileArrays,
 
   base64Encode,
   base64Decode,
@@ -85,6 +86,32 @@ function dataType(subject) {
 
 function replaceArray(targetArray, arrayContent = []) {
   targetArray.splice(0, targetArray.length, ...arrayContent);
+}
+
+function reconcileArrays(sourceArray, targetArray, objectKey = "id") {
+  const compareProp = (target) => (source) =>
+    source[objectKey] === target[objectKey];
+  const replaceArrayContent = (target, source) => {
+    replaceArray(target, source);
+    return target;
+  };
+
+  replaceArray(
+    targetArray,
+    sourceArray.map((sourceItem) => {
+      const targetItem = targetArray.find(compareProp(sourceItem));
+      return targetItem ? updateItem(sourceItem, targetItem) : sourceItem;
+    })
+  );
+
+  function updateItem(source, target) {
+    Object.entries(source).forEach((entry) =>
+      Array.isArray(entry[1])
+        ? replaceArrayContent(target[entry[0]], entry[1])
+        : (target[entry[0]] = entry[1])
+    );
+    return source;
+  }
 }
 
 function rangeFrom(init = 0, len = 1, step = 1) {

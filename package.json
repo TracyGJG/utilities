@@ -6,6 +6,7 @@
   "scripts": {
     "min": "jsmin -o utilities.min.js utilities.js",
     "coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
+    "watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "type": "module",

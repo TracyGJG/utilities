@@ -10,7 +10,7 @@ A collection of utility functions I find useful.
 |      [rangeBetween](#rangeBetween)      |      [rangeFrom](#rangeFrom)      |
 |           [inRange](#inRange)           |      [loopRange](#loopRange)      |
 |   [intersectArrays](#intersectArrays)   |    [unionArrays](#unionArrays)    |
-|      [replaceArray](#replaceArray)      |                                   |
+|      [replaceArray](#replaceArray)      | [reconcileArray](#reconcileArray) |
 |    [base64encoding](#base64encoding)    | [base64decoding](#base64decoding) |
 |          [shortDay](#shortDay)          |        [longDay](#longDay)        |
 |        [shortMonth](#shortMonth)        |      [longMonth](#longMonth)      |
@@ -25,6 +25,10 @@ The above functions make considerable use of the technique called currying to re
 ### NB: The functions have been prepared with no input validation or additional error checking.
 
 ## Change Log
+
+### Update: 11th August 2021
+
+Added `reconcileArray` to update an array based on a second without losing reference.
 
 ### Update: 7th July 2021
 
@@ -342,15 +346,33 @@ Extracts a list of all the values from the input arrays into a new array of dist
 ### Parameters
 
 - targetArray - Reference to the array to be replaced.
-- arrayContent - Option reference to an array containing data to populate the target array.
+- arrayContent - Optional reference to an array containing data to populate the target array.
 
 ### Return Value
 
-None - updates th targetArray directly.
+None - updates the targetArray directly by reference.
 
 ### Description
 
 Replaces the content of the targetArray with the (optional) content of the arrayContent.
+
+---
+
+## [reconcileArray](:reconcileArray)
+
+### Parameters
+
+- sourceArray - Reference to an Object Array containing content to by used to update the primary array.
+- targetArray - Reference to an Object Array to be updated without losing reference.
+- objectKey - Optional string (defaulted to 'id') name of the property of all objects in the array that act as a unique identifier.
+
+### Return Value
+
+None - updates the targetArray directly by reference.
+
+### Description
+
+Replaces the content of the targetArray with content from the sourceArray using the objectKey to locate common objects. Object in the sourceArray but not in target are added, those in target but not source are removed. Objects that appear in both arrays, as identified by the objectKey property, are updated with any array properties also preserved.
 
 ---
 
