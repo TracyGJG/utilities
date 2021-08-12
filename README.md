@@ -2,23 +2,38 @@
 
 A collection of utility functions I find useful.
 
-|                Functions                |                                   |
+|                 Ranges                  |                                   |
 | :-------------------------------------: | :-------------------------------: |
 |  [acculatedAverage](#acculatedAverage)  |                                   |
 |        [clampRange](#clampRange)        | [normaliseRange](#normaliseRange) |
 | [liniarInterpolate](#liniarInterpolate) |      [mapRanges](#mapRanges)      |
 |      [rangeBetween](#rangeBetween)      |      [rangeFrom](#rangeFrom)      |
 |           [inRange](#inRange)           |      [loopRange](#loopRange)      |
-|   [intersectArrays](#intersectArrays)   |    [unionArrays](#unionArrays)    |
-|      [replaceArray](#replaceArray)      | [reconcileArray](#reconcileArray) |
-|    [base64encoding](#base64encoding)    | [base64decoding](#base64decoding) |
-|          [shortDay](#shortDay)          |        [longDay](#longDay)        |
-|        [shortMonth](#shortMonth)        |      [longMonth](#longMonth)      |
-|     [caseConverter](#caseConverter)     |                                   |
-|    [objectEquality](#objectEquality)    |       [dataType](#dataType)       |
-|          [exercise](#exercise)          |   [consoleTable](#consoleTable)   |
-|             [sleep](#sleep)             |                                   |
-|           [memoise](#memoise)           |          [curry](#curry)          |
+
+|               Arrays                |                                   |
+| :---------------------------------: | :-------------------------------: |
+| [intersectArrays](#intersectArrays) |    [unionArrays](#unionArrays)    |
+|    [replaceArray](#replaceArray)    | [reconcileArray](#reconcileArray) |
+
+|          Data Converters          |                                   |
+| :-------------------------------: | :-------------------------------: |
+| [base64encoding](#base64encoding) | [base64decoding](#base64decoding) |
+|       [shortDay](#shortDay)       |        [longDay](#longDay)        |
+|     [shortMonth](#shortMonth)     |      [longMonth](#longMonth)      |
+|  [caseConverter](#caseConverter)  |                                   |
+
+|          Data Comparison          |                       |
+| :-------------------------------: | :-------------------: |
+| [objectEquality](#objectEquality) | [dataType](#dataType) |
+
+|      Exercising       |                               |
+| :-------------------: | :---------------------------: |
+| [exercise](#exercise) | [consoleTable](#consoleTable) |
+
+|        Tools        |                 |
+| :-----------------: | :-------------: |
+|   [sleep](#sleep)   |                 |
+| [memoise](#memoise) | [curry](#curry) |
 
 The above functions make considerable use of the technique called currying to return a specialised function. This saves on suppling parameters that are not expected to change.
 
@@ -61,23 +76,7 @@ Following the advice given in [Valentino Gagliardi's article](https://www.valent
 
 ---
 
-## [exercise](:#exercise)
-
-### Parameters
-
-- expected - The value anticipated to be the result.
-- actual - The value calculated as the result.
-- id - Reference for the specific exercise. (optional)
-
-### Return Value
-
-Result of the comparison (true or false.)
-
-### Description
-
-A simple mechanism for ad-hoc testing of a pure function.
-
----
+# Ranges
 
 ## [acculatedAverage](:#acculatedAverage)
 
@@ -309,6 +308,8 @@ When the value exceeds the bounds of the range it loops round to the opposite en
 
 ---
 
+# Arrays
+
 ## [intersectArrays](:#intersectArrays)
 
 ### Parameters
@@ -375,6 +376,8 @@ None - updates the targetArray directly by reference.
 Replaces the content of the targetArray with content from the sourceArray using the objectKey to locate common objects. Object in the sourceArray but not in target are added, those in target but not source are removed. Objects that appear in both arrays, as identified by the objectKey property, are updated with any array properties also preserved.
 
 ---
+
+# Data Converters
 
 ## [base64encoding](:#base64encoding)
 
@@ -478,6 +481,8 @@ Provides the long form of the month of year in the given locale, based in a nume
 
 ---
 
+# Data Comparison
+
 ## [objectEquality](:#objectEquality)
 
 ### Parameters
@@ -559,6 +564,26 @@ Example text "This\_\_is \ an \ EXAMPLE test--case"
 
 ---
 
+# Exercising
+
+## [exercise](:#exercise)
+
+### Parameters
+
+- expected - The value anticipated to be the result.
+- actual - The value calculated as the result.
+- id - Reference for the specific exercise. (optional)
+
+### Return Value
+
+Result of the comparison (true or false.)
+
+### Description
+
+A simple mechanism for ad-hoc testing of a pure function.
+
+---
+
 ## [consoleTable](:#consoleTable)
 
 ### Parameters
@@ -573,6 +598,24 @@ None.
 ### Description
 
 An alternative to the console.table function but generates HTML.
+
+---
+
+# Tools
+
+## [sleep](:sleep)
+
+### Parameters
+
+- ms - delay in milliseconds (1/1000th of a second)
+
+### Return Value
+
+None
+
+### Description
+
+Delays processing of the current thread or a set period of time (approximately.)
 
 ---
 
