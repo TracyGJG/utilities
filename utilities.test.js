@@ -1,5 +1,26 @@
 import Utilities from "./utilities";
 
+const expectedTableHtml = [
+  `<table border="1">
+<tr><th>#</th><th>Value</th></tr>
+<tr><td>0</td><td>1</td></tr>
+<tr><td>1</td><td>2</td></tr>
+<tr><td>2</td><td>3</td></tr>
+<tr><td>3</td><td>4</td></tr>
+<tr><td>4</td><td>5</td></tr>
+</table>`,
+  `<table border="1">
+<tr><th>#</th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+<tr><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+<tr><td>1</td><td>5</td><td>6</td><td>7</td><td>8</td></tr>
+</table>`,
+  `<table border="1">
+<tr><th>#</th><th>alpha</th><th>beta</th><th>gamma</th><th>delta</th></tr>
+<tr><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+<tr><td>1</td><td>5</td><td>6</td><td>7</td><td>8</td></tr>
+</table>`,
+];
+
 describe("Utilities", () => {
   describe("Ranges", () => {
     describe("Accumulated Average", () => {
@@ -146,30 +167,32 @@ describe("Utilities", () => {
         expect(expectionTestThreeArg).toThrow();
       });
     });
-    describe("Loop Range (zero indexed)", () => {
-      var zeroIndexed = Utilities.loopRange(9);
-      it("can be increased", () => {
-        var dir = 1;
-        expect(zeroIndexed(4, dir)).toEqual(5);
-        expect(zeroIndexed(8, dir)).toEqual(0);
+    describe("Loop Range", () => {
+      describe("zero indexed", () => {
+        var zeroIndexed = Utilities.loopRange(9);
+        it("can be increased", () => {
+          var dir = 1;
+          expect(zeroIndexed(4, dir)).toEqual(5);
+          expect(zeroIndexed(8, dir)).toEqual(0);
+        });
+        it("can be decreased", () => {
+          var dir = -1;
+          expect(zeroIndexed(4, dir)).toEqual(3);
+          expect(zeroIndexed(0, dir)).toEqual(8);
+        });
       });
-      it("can be decreased", () => {
-        var dir = -1;
-        expect(zeroIndexed(4, dir)).toEqual(3);
-        expect(zeroIndexed(0, dir)).toEqual(8);
-      });
-    });
-    describe("Loop Range (one indexed)", () => {
-      var oneIndexed = Utilities.loopRange(9, 1);
-      it("can be increased", () => {
-        var dir = 1;
-        expect(oneIndexed(4, dir)).toEqual(5);
-        expect(oneIndexed(9, dir)).toEqual(1);
-      });
-      it("can be decreased", () => {
-        var dir = -1;
-        expect(oneIndexed(4, dir)).toEqual(3);
-        expect(oneIndexed(1, dir)).toEqual(9);
+      describe("one indexed", () => {
+        var oneIndexed = Utilities.loopRange(9, 1);
+        it("can be increased", () => {
+          var dir = 1;
+          expect(oneIndexed(4, dir)).toEqual(5);
+          expect(oneIndexed(9, dir)).toEqual(1);
+        });
+        it("can be decreased", () => {
+          var dir = -1;
+          expect(oneIndexed(4, dir)).toEqual(3);
+          expect(oneIndexed(1, dir)).toEqual(9);
+        });
       });
     });
   });
@@ -564,14 +587,7 @@ describe("Utilities", () => {
       it("with an array of values", () => {
         const testData = [1, 2, 3, 4, 5];
         const testTarget = { innerHTML: "" };
-        const expectedResult = `<table border="1">
-<tr><th>#</th><th>Value</th></tr>
-<tr><td>0</td><td>1</td></tr>
-<tr><td>1</td><td>2</td></tr>
-<tr><td>2</td><td>3</td></tr>
-<tr><td>3</td><td>4</td></tr>
-<tr><td>4</td><td>5</td></tr>
-</table>`;
+        const expectedResult = expectedTableHtml[0];
         Utilities.consoleTable(testData, testTarget);
         expect(testTarget.innerHTML).toEqual(expectedResult);
       });
@@ -582,11 +598,7 @@ describe("Utilities", () => {
           [5, 6, 7, 8],
         ];
         const testTarget = { innerHTML: "" };
-        const expectedResult = `<table border="1">
-<tr><th>#</th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
-<tr><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td></tr>
-<tr><td>1</td><td>5</td><td>6</td><td>7</td><td>8</td></tr>
-</table>`;
+        const expectedResult = expectedTableHtml[1];
         Utilities.consoleTable(testData, testTarget);
         expect(testTarget.innerHTML).toEqual(expectedResult);
       });
@@ -597,16 +609,14 @@ describe("Utilities", () => {
           { alpha: 5, beta: 6, gamma: 7, delta: 8 },
         ];
         const testTarget = { innerHTML: "" };
-        const expectedResult = `<table border="1">
-<tr><th>#</th><th>alpha</th><th>beta</th><th>gamma</th><th>delta</th></tr>
-<tr><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td></tr>
-<tr><td>1</td><td>5</td><td>6</td><td>7</td><td>8</td></tr>
-</table>`;
+        const expectedResult = expectedTableHtml[2];
         Utilities.consoleTable(testData, testTarget);
         expect(testTarget.innerHTML).toEqual(expectedResult);
       });
     });
+  });
 
+  describe("Tools", () => {
     describe("Sleep", () => {
       it("can delay progress by a given interval (within a period)", async () => {
         const timeStamp1 = new Date();
@@ -622,7 +632,6 @@ describe("Utilities", () => {
         expect(timeStamp2 - timeStamp1).toBeGreaterThan(1000);
       });
     });
-
     describe("Memoise", () => {
       let globalCount = 0;
       function delayedCube(x, y, z) {
@@ -651,7 +660,6 @@ describe("Utilities", () => {
         expect(globalCount).toBe(1);
       });
     });
-
     describe("Curry", () => {
       function cube(x, y, z) {
         return x * y * z;
