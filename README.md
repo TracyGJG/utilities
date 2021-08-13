@@ -223,8 +223,8 @@ The Map Ranges function is quite self explanatory. Initialised with a source and
 
 ### Parameters
 
-- min - lower boundry of the range.
-- max - upper boundry of the range.
+- max - one more than the upper boundry of the range.
+- min - lower boundry of the range (defaulted to 0.)
 - step - size of the interval between values in the range (defaulted to 1.)
 
 ### Return Value

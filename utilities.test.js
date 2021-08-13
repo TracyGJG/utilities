@@ -95,12 +95,12 @@ describe("Utilities", () => {
     });
     describe("Ranges Between", () => {
       it("can generate a range of 10 values between 10 and 20", () => {
-        Utilities.rangeBetween(10, 20).forEach((value, index) => {
+        Utilities.rangeBetween(20, 10).forEach((value, index) => {
           expect(value).toEqual(10 + index);
         });
       });
       it("can generate a range of 10 values between 10 and 20, in steps of 2", () => {
-        Utilities.rangeBetween(10, 20, 2).forEach((value, index) => {
+        Utilities.rangeBetween(20, 10, 2).forEach((value, index) => {
           expect(value).toEqual(10 + 2 * index);
         });
       });
@@ -622,7 +622,7 @@ describe("Utilities", () => {
         const timeStamp1 = new Date();
         await Utilities.sleep(1000);
         const timeStamp2 = new Date();
-        expect(timeStamp2 - timeStamp1).toBeLessThan(1015);
+        expect(timeStamp2 - timeStamp1).toBeLessThan(1020);
       });
 
       it("can delay progress by a given interval (greater than period)", async () => {

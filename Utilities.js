@@ -71,7 +71,7 @@ function mapRanges(fromMin, fromMax, toMin, toMax) {
   return (value) => interpolate(norlaise(value));
 }
 
-function rangeBetween(min, max, step = 1) {
+function rangeBetween(max, min = 0, step = 1) {
   return [...Array((max - min) / step).keys()].map(
     (index) => index * step + min
   );
