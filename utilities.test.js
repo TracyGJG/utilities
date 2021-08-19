@@ -342,6 +342,57 @@ describe("Utilities", () => {
         expect(target[1].value).toBe("beta");
       });
     });
+    describe("transposeArray", () => {
+      it("can process an empty array", () => {
+        const testMatrix = [];
+        const resultMatrix = Utilities.transposeArray(testMatrix);
+        expect(Array.isArray(resultMatrix)).toBeTruthy();
+        expect(resultMatrix.length).toBe(0);
+      });
+      it("can process an array containing empty rows", () => {
+        const testMatrix = [[], [], []];
+        const resultMatrix = Utilities.transposeArray(testMatrix);
+        expect(Array.isArray(resultMatrix)).toBeTruthy();
+        expect(resultMatrix.length).toBe(0);
+      });
+      it("can process an array containing a single row", () => {
+        const testMatrix = [["alpha", "beta", "gamma"]];
+        const resultMatrix = Utilities.transposeArray(testMatrix);
+        expect(Array.isArray(resultMatrix)).toBeTruthy();
+        expect(resultMatrix.length).toBe(3);
+        expect(resultMatrix[0][0]).toBe("alpha");
+        expect(resultMatrix[1][0]).toBe("beta");
+        expect(resultMatrix[2][0]).toBe("gamma");
+      });
+      it("can process an array containing rows with a single value (column)", () => {
+        const testMatrix = [["alpha"], ["beta"], ["gamma"]];
+        const resultMatrix = Utilities.transposeArray(testMatrix);
+        expect(Array.isArray(resultMatrix)).toBeTruthy();
+        expect(resultMatrix.length).toBe(1);
+        expect(resultMatrix[0][0]).toBe("alpha");
+        expect(resultMatrix[0][1]).toBe("beta");
+        expect(resultMatrix[0][2]).toBe("gamma");
+      });
+      it("can process a 2D array (matrix)", () => {
+        const testMatrix = [
+          ["A", 1, "alpha"],
+          ["B", 2, "beta"],
+          ["C", 3, "gamma"],
+        ];
+        const resultMatrix = Utilities.transposeArray(testMatrix);
+        expect(Array.isArray(resultMatrix)).toBeTruthy();
+        expect(resultMatrix.length).toBe(3);
+        expect(resultMatrix[0][0]).toBe("A");
+        expect(resultMatrix[0][1]).toBe("B");
+        expect(resultMatrix[0][2]).toBe("C");
+        expect(resultMatrix[1][0]).toBe(1);
+        expect(resultMatrix[1][1]).toBe(2);
+        expect(resultMatrix[1][2]).toBe(3);
+        expect(resultMatrix[2][0]).toBe("alpha");
+        expect(resultMatrix[2][1]).toBe("beta");
+        expect(resultMatrix[2][2]).toBe("gamma");
+      });
+    });
   });
 
   describe("Converters", () => {

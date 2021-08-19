@@ -14,6 +14,7 @@ A collection of utility functions I find useful.
 | :---------------------------------: | :-------------------------------: |
 | [intersectArrays](#intersectArrays) |    [unionArrays](#unionArrays)    |
 |    [replaceArray](#replaceArray)    | [reconcileArray](#reconcileArray) |
+|  [transposeArray](#transposeArray)  |                                   |
 
 |          Data Converters          |                                   |
 | :-------------------------------: | :-------------------------------: |
@@ -40,6 +41,10 @@ The above functions make considerable use of the technique called currying to re
 ### NB: The functions have been prepared with no input validation or additional error checking.
 
 ## Change Log
+
+## Update: 19th August 2021
+
+Added `transposeArray` to pivot the rows with columns of a 2D array.
 
 ### Update: 11th August 2021
 
@@ -374,6 +379,22 @@ None - updates the targetArray directly by reference.
 ### Description
 
 Replaces the content of the targetArray with content from the sourceArray using the objectKey to locate common objects. Object in the sourceArray but not in target are added, those in target but not source are removed. Objects that appear in both arrays, as identified by the objectKey property, are updated with any array properties also preserved.
+
+---
+
+## [transposeArray](:#transposeArray)
+
+### Parameters
+
+- The original 2D array
+
+### Return Value
+
+A new array with the rows and columns from the input array transposed.
+
+### Description
+
+Takes a 2 dimensional array (matrix) and produces a new array where the rows of the initial array become the columns of the new array and vice-a-verse.
 
 ---
 

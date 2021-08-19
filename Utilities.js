@@ -13,6 +13,7 @@ var IUtility = {
   unionArrays,
   replaceArray,
   reconcileArrays,
+  transposeArray,
 
   base64Encode,
   base64Decode,
@@ -112,6 +113,13 @@ function reconcileArrays(sourceArray, targetArray, objectKey = "id") {
     );
     return source;
   }
+}
+
+function transposeArray(matrix) {
+  return matrix.reduce(
+    (__, row) => row.map((_, i) => [...(__[i] || []), row[i]]),
+    []
+  );
 }
 
 function rangeFrom(init = 0, len = 1, step = 1) {
