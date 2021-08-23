@@ -24,6 +24,7 @@ var IUtility = {
   caseConverter,
 
   objectEquality,
+  cloneObject,
   dataType,
 
   exercise,
@@ -252,6 +253,22 @@ function objectEquality(obj1, obj2) {
   }
 }
 
+function cloneObject(obj) {
+  if (obj === null || typeof obj !== "object" || "__isActiveClone" in obj)
+    return obj;
+
+  let temp = obj instanceof Date ? new obj.constructor() : obj.constructor();
+
+  for (let key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      obj["__isActiveClone"] = null;
+      temp[key] = cloneObject(obj[key]);
+      delete obj["__isActiveClone"];
+    }
+  }
+  return temp;
+}
+
 function caseConverter(textCase) {
   var textConversion = textCase && textCase.toUpperCase();
   var conversionCheck = (_) => (text) => _.includes(text);
@@ -306,7 +323,7 @@ function caseConverter(textCase) {
   };
 }
 
-function console_table(arr, domNode = document.body) {
+function console_table(arr, domNode) {
   function getHeading(row) {
     return Array.isArray(row)
       ? row.map((_, idx) => `<th>${idx + 1}</th>`).join("")

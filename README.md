@@ -23,9 +23,10 @@ A collection of utility functions I find useful.
 |     [shortMonth](#shortMonth)     |      [longMonth](#longMonth)      |
 |  [caseConverter](#caseConverter)  |                                   |
 
-|          Data Comparison          |                       |
+|    Data Comparison and Cloning    |                       |
 | :-------------------------------: | :-------------------: |
 | [objectEquality](#objectEquality) | [dataType](#dataType) |
+|    [cloneObject](#cloneObject)    |                       |
 
 |      Exercising       |                               |
 | :-------------------: | :---------------------------: |
@@ -41,6 +42,10 @@ The above functions make considerable use of the technique called currying to re
 ### NB: The functions have been prepared with no input validation or additional error checking.
 
 ## Change Log
+
+## Update: 22nd August 2021
+
+Added `cloneObject` to enable deep duplication of objects including data types not supported by JSON.
 
 ## Update: 19th August 2021
 
@@ -502,7 +507,7 @@ Provides the long form of the month of year in the given locale, based in a nume
 
 ---
 
-# Data Comparison
+# Data Comparison and Cloning
 
 ## [objectEquality](:#objectEquality)
 
@@ -514,6 +519,24 @@ Provides the long form of the month of year in the given locale, based in a nume
 ### Return Value
 
 Boolean flag indication if the values held withint _obj1_ are the same as those in _obj2_.
+
+### Description
+
+Compares two objects and reports in they are equivalent (contain the same primitives.)
+
+## [cloneObject](:#cloneObject)
+
+### Parameters
+
+- obj - source object to be duplicated
+
+### Return Value
+
+A new object with the same structure as the input object and copies of the primitive values.
+
+### Description
+
+Creates a renew object with the same structure of the input, containing copies of the primitive values.
 
 ## [dataType](:#dataType)
 
