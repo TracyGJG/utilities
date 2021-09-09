@@ -391,15 +391,31 @@ Replaces the content of the targetArray with content from the sourceArray using 
 
 ### Parameters
 
-- The original 2D array
+- The original 2D array.
+
+e.g. [['A1', 'B1', 'C1'], ['A2', 'B2', 'C2'], ['A3', 'B3', 'C3']]
+
+|  I/P  | col 1 | col 2 | col 3 |
+| :---: | :---: | :---: | :---: |
+| row 1 |  A1   |  B1   |  C1   |
+| row 2 |  A2   |  B2   |  C2   |
+| row 3 |  A3   |  B3   |  C3   |
 
 ### Return Value
 
 A new array with the rows and columns from the input array transposed.
 
+e.g. [['A1', 'A2', 'A3'], ['B1', 'B2', 'B3'], ['C1', 'C2', 'C3']]
+
+|  O/P  | col 1 | col 2 | col 3 |
+| :---: | :---: | :---: | :---: |
+| row 1 |  A1   |  A2   |  C3   |
+| row 2 |  B1   |  B2   |  B3   |
+| row 3 |  C1   |  C2   |  C3   |
+
 ### Description
 
-Takes a 2 dimensional array (matrix) and produces a new array where the rows of the initial array become the columns of the new array and vice-a-verse.
+Takes a 2-dimensional array (matrix) and produces a new array where the rows of the initial array become the columns of the new array and vice-a-verse.
 
 ---
 
