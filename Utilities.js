@@ -115,7 +115,7 @@ function reconcileArrays(sourceArray, targetArray, objectKey = "id") {
 
 function transposeArray(matrix) {
   return matrix.reduce(
-    (__, row) => row.map((_, i) => [...(__[i] || []), row[i]]),
+    (_, row) => row.map((__, i) => [...(_[i] || []), row[i]]),
     []
   );
 }
