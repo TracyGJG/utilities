@@ -88,20 +88,17 @@ function dataType(subject) {
 
 function replaceArray(targetArray, arrayContent = []) {
   targetArray.splice(0, targetArray.length, ...arrayContent);
+  return targetArray;
 }
 
 function reconcileArrays(sourceArray, targetArray, objectKey = "id") {
-  const compareProp = (target) => (source) =>
+  const compareProperties = (target) => (source) =>
     source[objectKey] === target[objectKey];
-  const replaceArrayContent = (target, source) => {
-    replaceArray(target, source);
-    return target;
-  };
 
   replaceArray(
     targetArray,
     sourceArray.map((sourceItem) => {
-      const targetItem = targetArray.find(compareProp(sourceItem));
+      const targetItem = targetArray.find(compareProperties(sourceItem));
       return targetItem ? updateItem(sourceItem, targetItem) : sourceItem;
     })
   );
@@ -109,7 +106,7 @@ function reconcileArrays(sourceArray, targetArray, objectKey = "id") {
   function updateItem(source, target) {
     Object.entries(source).forEach((entry) =>
       Array.isArray(entry[1])
-        ? replaceArrayContent(target[entry[0]], entry[1])
+        ? replaceArray(target[entry[0]], entry[1])
         : (target[entry[0]] = entry[1])
     );
     return source;
