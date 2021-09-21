@@ -26,6 +26,7 @@ var IUtility = {
   objectEquality,
   cloneObject,
   dataType,
+  compareObjectByProperty,
 
   exercise,
   consoleTable: console_table,
@@ -264,6 +265,15 @@ function cloneObject(obj) {
     }
   }
   return temp;
+}
+
+function compareObjectByProperty(propName) {
+  return (objA, objB) =>
+    objA[propName] < objB[propName]
+      ? -1
+      : objA[propName] > objB[propName]
+      ? 1
+      : 0;
 }
 
 function caseConverter(textCase) {

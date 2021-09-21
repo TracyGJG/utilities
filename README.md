@@ -23,10 +23,10 @@ A collection of utility functions I find useful.
 |     [shortMonth](#shortMonth)     |      [longMonth](#longMonth)      |
 |  [caseConverter](#caseConverter)  |                                   |
 
-|    Data Comparison and Cloning    |                       |
-| :-------------------------------: | :-------------------: |
-| [objectEquality](#objectEquality) | [dataType](#dataType) |
-|    [cloneObject](#cloneObject)    |                       |
+|    Data Comparison and Cloning    |                                                     |
+| :-------------------------------: | :-------------------------------------------------: |
+| [objectEquality](#objectEquality) |                [dataType](#dataType)                |
+|    [cloneObject](#cloneObject)    | [compareObjectByProperty](#compareObjectByProperty) |
 
 |      Exercising       |                               |
 | :-------------------: | :---------------------------: |
@@ -42,6 +42,10 @@ The above functions make considerable use of the technique called currying to re
 ### NB: The functions have been prepared with no input validation or additional error checking.
 
 ## Change Log
+
+## Update: 21st September 2021
+
+Added `compareObjectByProperty` to generate an object comparator function based on a given property name.
 
 ## Update: 22nd August 2021
 
@@ -553,6 +557,20 @@ A new object with the same structure as the input object and copies of the primi
 ### Description
 
 Creates a renew object with the same structure of the input, containing copies of the primitive values.
+
+## [compareObjectByProperty](:#compareObjectByProperty)
+
+### Parameters
+
+- propertyName - name of the property to be used to compare objects in a sort method
+
+### Return Value
+
+A comparator function used to sort objects containing the given property.
+
+### Description
+
+Creates a comparator function for use with an array of objects containing the given property.
 
 ## [dataType](:#dataType)
 

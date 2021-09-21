@@ -679,6 +679,36 @@ describe("Comparison and Cloning", () => {
       expect(Utilities.dataType(42n)).toEqual("bigint");
     });
   });
+  describe("compareObjectByProperty", () => {
+    let testObjArray;
+
+    beforeEach(() => {
+      testObjArray = [
+        { id: 1, name: "Alpha" },
+        { id: 2, name: "Gamma" },
+        { id: 6, name: "Delta" },
+        { id: 3, name: "Beta" },
+        { id: 4, name: "Delta" },
+        { id: 5, name: "Beta" },
+      ];
+    });
+
+    it.only("can produce an object comparator using a given property name", () => {
+      testObjArray.sort(Utilities.compareObjectByProperty("name"));
+      expect(testObjArray[0].name).toEqual("Alpha");
+      expect(testObjArray[0].id).toEqual(1);
+      expect(testObjArray[1].name).toEqual("Beta");
+      expect(testObjArray[1].id).toEqual(3);
+      expect(testObjArray[2].name).toEqual("Beta");
+      expect(testObjArray[2].id).toEqual(5);
+      expect(testObjArray[3].name).toEqual("Delta");
+      expect(testObjArray[3].id).toEqual(6);
+      expect(testObjArray[4].name).toEqual("Delta");
+      expect(testObjArray[4].id).toEqual(4);
+      expect(testObjArray[5].name).toEqual("Gamma");
+      expect(testObjArray[5].id).toEqual(2);
+    });
+  });
 });
 
 describe("Exercising", () => {
