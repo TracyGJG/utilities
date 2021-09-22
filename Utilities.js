@@ -267,13 +267,14 @@ function cloneObject(obj) {
   return temp;
 }
 
-function compareObjectByProperty(propName) {
+function compareObjectByProperty(propName, ascending = true) {
   return (objA, objB) =>
-    objA[propName] < objB[propName]
+    (ascending ? 1 : -1) *
+    (objA[propName] < objB[propName]
       ? -1
       : objA[propName] > objB[propName]
       ? 1
-      : 0;
+      : 0);
 }
 
 function caseConverter(textCase) {

@@ -562,7 +562,8 @@ Creates a renew object with the same structure of the input, containing copies o
 
 ### Parameters
 
-- propertyName - name of the property to be used to compare objects in a sort method
+- propertyName - string - name of the property to be used to compare objects in a sort method.
+- ascending - boolean - optional (defaulted to true) indication or the required sort order.
 
 ### Return Value
 

@@ -693,7 +693,7 @@ describe("Comparison and Cloning", () => {
       ];
     });
 
-    it.only("can produce an object comparator using a given property name", () => {
+    it("can produce an object comparator using a given property name (ascending)", () => {
       testObjArray.sort(Utilities.compareObjectByProperty("name"));
       expect(testObjArray[0].name).toEqual("Alpha");
       expect(testObjArray[0].id).toEqual(1);
@@ -701,12 +701,28 @@ describe("Comparison and Cloning", () => {
       expect(testObjArray[1].id).toEqual(3);
       expect(testObjArray[2].name).toEqual("Beta");
       expect(testObjArray[2].id).toEqual(5);
-      expect(testObjArray[3].name).toEqual("Delta");
-      expect(testObjArray[3].id).toEqual(6);
       expect(testObjArray[4].name).toEqual("Delta");
       expect(testObjArray[4].id).toEqual(4);
+      expect(testObjArray[3].name).toEqual("Delta");
+      expect(testObjArray[3].id).toEqual(6);
       expect(testObjArray[5].name).toEqual("Gamma");
       expect(testObjArray[5].id).toEqual(2);
+    });
+
+    it("can produce an object comparator using a given property name (descending)", () => {
+      testObjArray.sort(Utilities.compareObjectByProperty("name", false));
+      expect(testObjArray[0].name).toEqual("Gamma");
+      expect(testObjArray[0].id).toEqual(2);
+      expect(testObjArray[1].name).toEqual("Delta");
+      expect(testObjArray[1].id).toEqual(6);
+      expect(testObjArray[2].name).toEqual("Delta");
+      expect(testObjArray[2].id).toEqual(4);
+      expect(testObjArray[3].name).toEqual("Beta");
+      expect(testObjArray[3].id).toEqual(3);
+      expect(testObjArray[4].name).toEqual("Beta");
+      expect(testObjArray[4].id).toEqual(5);
+      expect(testObjArray[5].name).toEqual("Alpha");
+      expect(testObjArray[5].id).toEqual(1);
     });
   });
 });
