@@ -23,10 +23,11 @@ A collection of utility functions I find useful.
 |     [shortMonth](#shortMonth)     |      [longMonth](#longMonth)      |
 |  [caseConverter](#caseConverter)  |                                   |
 
-|    Data Comparison and Cloning    |                                                     |
-| :-------------------------------: | :-------------------------------------------------: |
-| [objectEquality](#objectEquality) |                [dataType](#dataType)                |
-|    [cloneObject](#cloneObject)    | [compareObjectByProperty](#compareObjectByProperty) |
+|     Data Comparison and Cloning     |                                                     |
+| :---------------------------------: | :-------------------------------------------------: |
+|  [objectEquality](#objectEquality)  |                [dataType](#dataType)                |
+|     [cloneObject](#cloneObject)     | [compareObjectByProperty](#compareObjectByProperty) |
+| [extractProperty](#extractProperty) |                                                     |
 
 |      Exercising       |                               |
 | :-------------------: | :---------------------------: |
@@ -42,6 +43,11 @@ The above functions make considerable use of the technique called currying to re
 ### NB: The functions have been prepared with no input validation or additional error checking.
 
 ## Change Log
+
+## Update 13th October 2012
+
+- Added `extractProperty` to extract objects/values from a containing object given a path of property names.
+- Refinement of the `compareObjectByProperty` method.
 
 ## Update: 21st September 2021
 
@@ -572,6 +578,20 @@ A comparator function used to sort objects containing the given property.
 ### Description
 
 Creates a comparator function for use with an array of objects containing the given property.
+
+## [extractProperty](:#extractProperty)
+
+### Parameters
+
+- propertyNames - a series of property names (strings) provided as arguments that define the path within an object from where the value/object can be extracted.
+
+### Return Value
+
+A extractor function that returns the value/object from a given object, using the intial property path.
+
+### Description
+
+Creates an extractor function that, given an object, will use the list of property names to extract the end property value/object.
 
 ## [dataType](:#dataType)
 

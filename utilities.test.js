@@ -725,6 +725,46 @@ describe("Comparison and Cloning", () => {
       expect(testObjArray[5].id).toEqual(1);
     });
   });
+  describe("extractProperty", () => {
+    const tests = [
+      {
+        alpha: 1,
+        beta: {
+          gamma: 10,
+        },
+      },
+      {
+        alpha: 2,
+        beta: {
+          gamma: 20,
+        },
+      },
+    ];
+
+    it("can extract shallow property value", () => {
+      const extractAlpha = Utilities.extractProperty("alpha");
+      expect(extractAlpha(tests[0])).toBe(1);
+      expect(extractAlpha(tests[1])).toBe(2);
+    });
+
+    it("can extract property object", () => {
+      const extractAlpha = Utilities.extractProperty("beta");
+      expect(extractAlpha(tests[0]).gamma).toBe(10);
+      expect(extractAlpha(tests[1]).gamma).toBe(20);
+    });
+
+    it("can extract deep property value", () => {
+      const extractAlpha = Utilities.extractProperty("beta", "gamma");
+      expect(extractAlpha(tests[0])).toBe(10);
+      expect(extractAlpha(tests[1])).toBe(20);
+    });
+
+    it("can abort when the property is missing", () => {
+      const extractDelta = Utilities.extractProperty("delta");
+      expect(extractDelta).toBeDefined();
+      expect(extractDelta(tests[0])).toBeNull();
+    });
+  });
 });
 
 describe("Exercising", () => {
