@@ -617,6 +617,37 @@ describe("Comparison and Cloning", () => {
       expect(Object.keys(resultObject).length).toBe(0);
       expect(resultObject.dt).toBeFalsy();
     });
+    it("can duplicate complex objects properties", () => {
+      function testFn() {
+        return this.message;
+      }
+      const testFnWithMessage = testFn.bind({ message: 'Hello World' });
+
+      const testObject = {
+        arrayOfPrimitives: [
+          true,
+          42,
+          'Fourty-Two',
+          null,
+          undefined,
+          Symbol('Fourty-Two'),
+          42n,
+          NaN,
+          Infinity,
+        ],
+        objectOfProperties: {
+          dt: new Date(),
+          re: /^Hello World$/i,
+          fn: testFnWithMessage,
+        },
+      };
+
+      const resultObject = Utilities.duplicateObject(testObject);
+      expect(typeof resultObject).toBe("object");
+      expect(Object.keys(resultObject).length).toBe(2);
+      expect(resultObject.arrayOfPrimitives.length).toBe(9);
+      expect(Object.keys(resultObject.objectOfProperties).length).toBe(3);
+    });
   });
   describe("dataType", () => {
     it("can detect Undefined", () => {

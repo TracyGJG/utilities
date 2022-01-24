@@ -26,8 +26,8 @@ A collection of utility functions I find useful.
 |     Data Comparison and Cloning     |                                                     |
 | :---------------------------------: | :-------------------------------------------------: |
 |  [objectEquality](#objectEquality)  |                [dataType](#dataType)                |
-|     [cloneObject](#cloneObject)     | [compareObjectByProperty](#compareObjectByProperty) |
-| [extractProperty](#extractProperty) |                                                     |
+|     [cloneObject](#cloneObject)     |         [duplicateObject](#duplicateObject)         |
+| [extractProperty](#extractProperty) | [compareObjectByProperty](#compareObjectByProperty) |
 
 |      Exercising       |                               |
 | :-------------------: | :---------------------------: |
@@ -44,7 +44,11 @@ The above functions make considerable use of the technique called currying to re
 
 ## Change Log
 
-## Update 13th October 2012
+## Update 24th January 2022
+
+- Added `duplicateObject` to create an in-depth copy of an object including properties of data types not supported by JSON.
+
+## Update 13th October 2021
 
 - Added `extractProperty` to extract objects/values from a containing object given a path of property names.
 - Refinement of the `compareObjectByProperty` method.
@@ -563,6 +567,19 @@ A new object with the same structure as the input object and copies of the primi
 ### Description
 
 Creates a renew object with the same structure of the input, containing copies of the primitive values.
+## [duplicateObject](:#duplicateObject)
+
+### Parameters
+
+- obj - source object to be duplicated
+
+### Return Value
+
+A new object with the same structure as the input object and copies of the primitive values and more complecated objects.
+
+### Description
+
+Creates a renew object with the same structure of the input, containing copies of the primitive values and objects such as RegExp, Date and Function.
 
 ## [compareObjectByProperty](:#compareObjectByProperty)
 
