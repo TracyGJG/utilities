@@ -10,6 +10,7 @@
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "type": "module",
+  "keywords": [],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/TracyGJG/utilities.git"
@@ -20,8 +21,8 @@
     "url": "https://github.com/TracyGJG/utilities/issues"
   },
   "homepage": "https://github.com/TracyGJG/utilities#readme",
-  "devDependencies": {
-    "jest": "^26.1.0",
+  "dependencies": {
+    "jest": "^27.5.0",
     "jsmin": "^1.0.1"
   }
 }

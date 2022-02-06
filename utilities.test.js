@@ -856,7 +856,7 @@ describe("Tools", () => {
       const timeStamp1 = new Date();
       await Utilities.sleep(1000);
       const timeStamp2 = new Date();
-      expect(timeStamp2 - timeStamp1).toBeLessThan(1020);
+      expect(timeStamp2 - timeStamp1).toBeLessThan(1021);
     });
 
     it("can delay progress by a given interval (greater than period)", async () => {

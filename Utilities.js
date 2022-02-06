@@ -175,8 +175,9 @@ function exercise(expected, actual, id = '') {
 }
 
 function base64Encode(bin) {
-	return btoa(
-		encodeURIComponent(bin).replace(/%([0-9A-F]{2})/g, (match, p1) =>
+	const BTOA = str => Buffer.from(str).toString('base64');
+	return BTOA(
+		encodeURIComponent(bin).replace(/%([\dA-F]{2})/g, (_, p1) =>
 			String.fromCharCode(Number(`0x${p1}`))
 		)
 	);
