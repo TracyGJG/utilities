@@ -770,6 +770,10 @@ describe("Comparison and Cloning", () => {
           gamma: 20,
         },
       },
+      {
+        alpha: 3,
+        delta: ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun']
+      },
     ];
 
     it("can extract shallow property value", () => {
@@ -782,6 +786,11 @@ describe("Comparison and Cloning", () => {
       const extractAlpha = Utilities.extractProperty("beta");
       expect(extractAlpha(tests[0]).gamma).toBe(10);
       expect(extractAlpha(tests[1]).gamma).toBe(20);
+    });
+
+    it("can an array element value", () => {
+      const extractAlpha = Utilities.extractProperty("2", "delta", '2');
+      expect(extractAlpha(tests)).toBe('Wed');
     });
 
     it("can extract deep property value", () => {
