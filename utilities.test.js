@@ -932,4 +932,67 @@ describe("Tools", () => {
       expect(cube_two(7)).toBe(42);
     });
   });
+  describe('Lens', () => {
+    const testObjects = [
+      null,
+      {},
+      [],
+      {a: 42},
+      [42],
+      {a: {b: 42}},
+      [{b: 42}],
+      [[42]],
+      {a: [42]}
+    ];
+
+    it('can manage a missing item in a null object', () => {
+      const lookup = Utilities.lens('a');
+      expect(lookup(testObjects[0])).not.toBeDefined();
+    });
+
+    it('can manage a missing item in an object', () => {
+      const lookup = Utilities.lens('a');
+      expect(lookup(testObjects[1])).not.toBeDefined();
+    });
+
+    it('can manage a missing item in an array', () => {
+      const lookup = Utilities.lens(0);
+      expect(lookup(testObjects[2])).not.toBeDefined();
+    });
+
+    it('can locate an item in an object', () => {
+      const lookup = Utilities.lens('a');
+      expect(lookup(testObjects[3])).toBe(42);
+    });
+
+    it('can locate an item in an array', () => {
+      const lookup = Utilities.lens(0);
+      expect(lookup(testObjects[4])).toBe(42);
+    });
+
+    it('can locate an item in an object of an object (args)', () => {
+      const lookup = Utilities.lens('a', 'b');
+      expect(lookup(testObjects[5])).toBe(42);
+    });
+
+    it('can locate an item in an object of an array (args)', () => {
+      const lookup = Utilities.lens(0, 'b');
+      expect(lookup(testObjects[6])).toBe(42);
+    });
+
+    it('can locate an item in an array of an array (string)', () => {
+      const lookup = Utilities.lens('[0][0]');
+      expect(lookup(testObjects[7])).toBe(42);
+    });
+
+    it('can locate an item in an array of an object (string)', () => {
+      const lookup = Utilities.lens('a[0]');
+      expect(lookup(testObjects[8])).toBe(42);
+    });
+
+    it('can locate an item in an array of an object (args)', () => {
+      const lookup = Utilities.lens('a', 0);
+      expect(lookup(testObjects[8])).toBe(42);
+    });
+  });
 });

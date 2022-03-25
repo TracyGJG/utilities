@@ -35,7 +35,7 @@ A collection of utility functions I find useful.
 
 |        Tools        |                 |
 | :-----------------: | :-------------: |
-|   [sleep](#sleep)   |                 |
+|   [sleep](#sleep)   |  [lens](#lens)  |
 | [memoise](#memoise) | [curry](#curry) |
 
 The above functions make considerable use of the technique called currying to return a specialised function. This saves on suppling parameters that are not expected to change.
@@ -767,4 +767,21 @@ A curried function.
 
 Converts the given variadic function into one that expects arguments to be supplied one at a time.
 
+
+
+## [lens](:#lens)
+
+### Parameters
+
+- props - one or more propertyNames or array subscripts, either individually or in strings.
+
+### Return Value
+
+A lookup function to return the value of a property at the stated location, for a given object.
+
+### Description
+
+Creates a repeatable function for extracting values out of objects/arrays at a given location (property/subscript).
+
 ---
+

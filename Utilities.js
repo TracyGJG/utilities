@@ -35,6 +35,7 @@ var IUtility = {
 	sleep,
 	memoize,
 	curry,
+	lens,
 
 	CAMEL: 'C',
 	GLOBAL: 'G',
@@ -273,9 +274,6 @@ function duplicateObject(srcObj) {
 		return srcObj.map(duplicateObject);
 	}
 	if (srcObj != null && typeof srcObj === 'object') {
-		if (srcObj instanceof Function) {
-			return srcObj;
-		}
 		if (srcObj instanceof Date) {
 			return new Date(srcObj.toISOString());
 		}
@@ -407,4 +405,17 @@ function curry(fn, _args = []) {
 			..._args,
 			...args,
 		]);
+}
+
+function lens(...props) {
+	return obj =>
+		props
+			.join('.')
+			.split(/[\[\]\.]+/)
+			.filter(item => item !== '')
+			.reduce(
+				(ob, pr) =>
+					typeof ob === 'object' && ob != null && pr in ob ? ob[pr] : undefined,
+				obj
+			);
 }
