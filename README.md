@@ -767,7 +767,7 @@ A curried function.
 
 Converts the given variadic function into one that expects arguments to be supplied one at a time.
 
-
+---
 
 ## [lens](:#lens)
 
