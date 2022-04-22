@@ -37,6 +37,7 @@ A collection of utility functions I find useful.
 | :-----------------: | :-------------: |
 |   [sleep](#sleep)   |  [lens](#lens)  |
 | [memoise](#memoise) | [curry](#curry) |
+| [compose](#compose) | |
 
 The above functions make considerable use of the technique called currying to return a specialised function. This saves on suppling parameters that are not expected to change.
 
@@ -44,24 +45,28 @@ The above functions make considerable use of the technique called currying to re
 
 ## Change Log
 
-## Update 24th January 2022
+### Update 22nd April 2022
+
+- Added `compose` to combine a list of monadic (single parameter) functions into a single new function.
+
+### Update 24th January 2022
 
 - Added `duplicateObject` to create an in-depth copy of an object including properties of data types not supported by JSON.
 
-## Update 13th October 2021
+### Update 13th October 2021
 
 - Added `extractProperty` to extract objects/values from a containing object given a path of property names.
 - Refinement of the `compareObjectByProperty` method.
 
-## Update: 21st September 2021
+### Update: 21st September 2021
 
 Added `compareObjectByProperty` to generate an object comparator function based on a given property name.
 
-## Update: 22nd August 2021
+### Update: 22nd August 2021
 
 Added `cloneObject` to enable deep duplication of objects including data types not supported by JSON.
 
-## Update: 19th August 2021
+### Update: 19th August 2021
 
 Added `transposeArray` to pivot the rows with columns of a 2D array.
 
@@ -554,6 +559,8 @@ Boolean flag indication if the values held withint _obj1_ are the same as those 
 
 Compares two objects and reports in they are equivalent (contain the same primitives.)
 
+---
+
 ## [cloneObject](:#cloneObject)
 
 ### Parameters
@@ -567,6 +574,9 @@ A new object with the same structure as the input object and copies of the primi
 ### Description
 
 Creates a renew object with the same structure of the input, containing copies of the primitive values.
+
+---
+
 ## [duplicateObject](:#duplicateObject)
 
 ### Parameters
@@ -580,6 +590,8 @@ A new object with the same structure as the input object and copies of the primi
 ### Description
 
 Creates a renew object with the same structure of the input, containing copies of the primitive values and objects such as RegExp, Date and Function.
+
+---
 
 ## [compareObjectByProperty](:#compareObjectByProperty)
 
@@ -596,6 +608,8 @@ A comparator function used to sort objects containing the given property.
 
 Creates a comparator function for use with an array of objects containing the given property.
 
+---
+
 ## [extractProperty](:#extractProperty)
 
 ### Parameters
@@ -609,6 +623,8 @@ A extractor function that returns the value/object from a given object, using th
 ### Description
 
 Creates an extractor function that, given an object, will use the list of property names to extract the end property value/object.
+
+---
 
 ## [dataType](:#dataType)
 
@@ -785,3 +801,18 @@ Creates a repeatable function for extracting values out of objects/arrays at a g
 
 ---
 
+## [compose](:#compose)
+
+### Parameters
+
+- args - a number of monadic (single parameter) functions.
+
+### Return Value
+
+A new monadic function that is a combination of all those provided.
+
+### Description
+
+Combines a list of monadic (single parameter) functions into a single new function that expects a single input parameter.
+
+---

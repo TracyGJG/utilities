@@ -36,6 +36,7 @@ var IUtility = {
 	memoize,
 	curry,
 	lens,
+	compose,
 
 	CAMEL: 'C',
 	GLOBAL: 'G',
@@ -418,4 +419,8 @@ function lens(...props) {
 					typeof ob === 'object' && ob != null && pr in ob ? ob[pr] : undefined,
 				obj
 			);
+}
+
+function compose(...functions) {
+	return args => functions.reduce((arg, fn) => fn(arg), args);
 }

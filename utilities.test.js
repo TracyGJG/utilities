@@ -995,4 +995,24 @@ describe("Tools", () => {
       expect(lookup(testObjects[8])).toBe(42);
     });
   });
+  describe('Compose', () => {
+    it('can combine functions', () => {
+      function plusNine(int) { return int + 9; }
+      const timesTweleve = int => int * 12;
+
+      const composedFn = Utilities.compose(
+        plusNine,
+        timesTweleve,
+        function minusSix(int) { return int - 6; },
+        int => int / 3
+      );
+      expect((((2 + 9) * 12) - 6) / 3).toBe(42);
+      expect(composedFn(2)).toBe(42);
+    });
+
+    it('can provide the identify function by default ', () => {
+      const composedFn = Utilities.compose();
+      expect(composedFn(42)).toBe(42);
+    });
+  });
 });
