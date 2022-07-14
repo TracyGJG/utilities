@@ -650,64 +650,108 @@ describe("Comparison and Cloning", () => {
     });
   });
   describe("dataType", () => {
-    it("can detect Undefined", () => {
-      expect(Utilities.dataType()).toEqual("undefined");
+    describe("Primitive Values", () => {
+      it("can detect Undefined", () => {
+        expect(Utilities.dataType()).toEqual("undefined");
+      });
+
+      it("can detect Null", () => {
+        expect(Utilities.dataType(null)).toEqual("null");
+      });
+
+      it("can detect NaN (Not a Number) as a Number", () => {
+        expect(Utilities.dataType(NaN)).toEqual("number");
+      });
+
+      it("can detect Infinity as a Number", () => {
+        expect(Utilities.dataType(Infinity)).toEqual("number");
+      });
     });
 
-    it("can detect Null", () => {
-      expect(Utilities.dataType(null)).toEqual("null");
+    describe("Booleans", () => {
+      it("can detect a literal", () => {
+        expect(Utilities.dataType(false)).toEqual("boolean");
+      });
+
+      it("can detect an object", () => {
+        expect(Utilities.dataType(Boolean())).toEqual("boolean");
+      });
     });
 
-    it("can detect Boolean", () => {
-      expect(Utilities.dataType(false)).toEqual("boolean");
+    describe("Numbers", () => {
+      it("can detect a literal", () => {
+        expect(Utilities.dataType(42)).toEqual("number");
+      });
+
+      it("can detect an object", () => {
+        expect(Utilities.dataType(Number("42"))).toEqual("number");
+      });
     });
 
-    it("can detect Numbers", () => {
-      expect(Utilities.dataType(42)).toEqual("number");
+    describe("Strings", () => {
+      it("can detect a literal", () => {
+        expect(Utilities.dataType("fourty-two")).toEqual("string");
+      });
+
+      it("can detect a Template Literal", () => {
+        expect(Utilities.dataType(`fourty-two`)).toEqual("string");
+      });
+
+      it("can detect an object", () => {
+        expect(Utilities.dataType(String(42))).toEqual("string");
+      });
     });
 
-    it("can detect Strings", () => {
-      expect(Utilities.dataType("fourty-two")).toEqual("string");
+    describe("Regular Expressions", () => {
+      it("can detect a literal", () => {
+        expect(Utilities.dataType(/42/)).toEqual("regexp");
+      });
+      
+      it("can detect an object", () => {
+        expect(Utilities.dataType(RegExp('42'))).toEqual("regexp");
+      });
     });
 
-    it("can detect Template Literal as String", () => {
-      expect(Utilities.dataType(`fourty-two`)).toEqual("string");
+    describe("Objects", () => {
+      it("can detect an Object", () => {
+        expect(Utilities.dataType({})).toEqual("object");
+      });
+
+      it("can detect an Array", () => {
+        expect(Utilities.dataType([])).toEqual("array");
+      });
+
+      it("can detect an Error", () => {
+        expect(Utilities.dataType(Error())).toEqual("error");
+      });
+
+      it("can detect a Symbol", () => {
+        expect(Utilities.dataType(Symbol())).toEqual("symbol");
+      });
     });
 
-    it("can detect Objects", () => {
-      expect(Utilities.dataType({})).toEqual("object");
+    describe("Big Integers", () => {
+      it("can detect a literal", () => {
+        expect(Utilities.dataType(42n)).toEqual("bigint");
+      });
+
+      it("can detect an object", () => {
+        expect(Utilities.dataType(BigInt('42'))).toEqual("bigint");
+      });
     });
 
-    it("can detect Arrays", () => {
-      expect(Utilities.dataType([])).toEqual("array");
-    });
+    describe("From constructor", () => {
+      it("can detect a Date", () => {
+        expect(Utilities.dataType(new Date())).toEqual("date");
+      });
 
-    it("can detect Regular Expressions", () => {
-      expect(Utilities.dataType(/42/)).toEqual("regexp");
-    });
+      it("can detect a Set", () => {
+        expect(Utilities.dataType(new Set())).toEqual("set");
+      });
 
-    it("can detect Dates", () => {
-      expect(Utilities.dataType(new Date())).toEqual("date");
-    });
-
-    it("can detect Errors", () => {
-      expect(Utilities.dataType(new Error())).toEqual("error");
-    });
-
-    it("can detect Sets", () => {
-      expect(Utilities.dataType(new Set())).toEqual("set");
-    });
-
-    it("can detect Maps", () => {
-      expect(Utilities.dataType(new Map())).toEqual("map");
-    });
-
-    it("can detect Symbols", () => {
-      expect(Utilities.dataType(Symbol())).toEqual("symbol");
-    });
-
-    it("can detect Big Integers", () => {
-      expect(Utilities.dataType(42n)).toEqual("bigint");
+      it("can detect a Map", () => {
+        expect(Utilities.dataType(new Map())).toEqual("map");
+      });
     });
   });
   describe("compareObjectByProperty", () => {
@@ -945,54 +989,58 @@ describe("Tools", () => {
       {a: [42]}
     ];
 
-    it('can manage a missing item in a null object', () => {
-      const lookup = Utilities.lens('a');
-      expect(lookup(testObjects[0])).not.toBeDefined();
+    describe('with missing item', () => {
+      it('can be managed in a null object', () => {
+        const lookup = Utilities.lens('a');
+        expect(lookup(testObjects[0])).not.toBeDefined();
+      });
+
+      it('can be managed in an object', () => {
+        const lookup = Utilities.lens('a');
+        expect(lookup(testObjects[1])).not.toBeDefined();
+      });
+
+      it('can be managed in an array', () => {
+        const lookup = Utilities.lens(0);
+        expect(lookup(testObjects[2])).not.toBeDefined();
+      });
     });
 
-    it('can manage a missing item in an object', () => {
-      const lookup = Utilities.lens('a');
-      expect(lookup(testObjects[1])).not.toBeDefined();
-    });
+    describe('locate an item', () => {
+      it('can be managed in an object', () => {
+        const lookup = Utilities.lens('a');
+        expect(lookup(testObjects[3])).toBe(42);
+      });
 
-    it('can manage a missing item in an array', () => {
-      const lookup = Utilities.lens(0);
-      expect(lookup(testObjects[2])).not.toBeDefined();
-    });
+      it('can be managed in an array', () => {
+        const lookup = Utilities.lens(0);
+        expect(lookup(testObjects[4])).toBe(42);
+      });
 
-    it('can locate an item in an object', () => {
-      const lookup = Utilities.lens('a');
-      expect(lookup(testObjects[3])).toBe(42);
-    });
+      it('can be managed in an object of an object (args)', () => {
+        const lookup = Utilities.lens('a', 'b');
+        expect(lookup(testObjects[5])).toBe(42);
+      });
 
-    it('can locate an item in an array', () => {
-      const lookup = Utilities.lens(0);
-      expect(lookup(testObjects[4])).toBe(42);
-    });
+      it('can be managed in an object of an array (args)', () => {
+        const lookup = Utilities.lens(0, 'b');
+        expect(lookup(testObjects[6])).toBe(42);
+      });
 
-    it('can locate an item in an object of an object (args)', () => {
-      const lookup = Utilities.lens('a', 'b');
-      expect(lookup(testObjects[5])).toBe(42);
-    });
+      it('can be managed in an array of an array (string)', () => {
+        const lookup = Utilities.lens('[0][0]');
+        expect(lookup(testObjects[7])).toBe(42);
+      });
 
-    it('can locate an item in an object of an array (args)', () => {
-      const lookup = Utilities.lens(0, 'b');
-      expect(lookup(testObjects[6])).toBe(42);
-    });
+      it('can be managed in an array of an object (string)', () => {
+        const lookup = Utilities.lens('a[0]');
+        expect(lookup(testObjects[8])).toBe(42);
+      });
 
-    it('can locate an item in an array of an array (string)', () => {
-      const lookup = Utilities.lens('[0][0]');
-      expect(lookup(testObjects[7])).toBe(42);
-    });
-
-    it('can locate an item in an array of an object (string)', () => {
-      const lookup = Utilities.lens('a[0]');
-      expect(lookup(testObjects[8])).toBe(42);
-    });
-
-    it('can locate an item in an array of an object (args)', () => {
-      const lookup = Utilities.lens('a', 0);
-      expect(lookup(testObjects[8])).toBe(42);
+      it('can be managed in an array of an object (args)', () => {
+        const lookup = Utilities.lens('a', 0);
+        expect(lookup(testObjects[8])).toBe(42);
+      });
     });
   });
   describe('Compose', () => {

@@ -83,10 +83,7 @@ function rangeBetween(max, min = 0, step = 1) {
 }
 
 function dataType(subject) {
-	return Object.prototype.toString
-		.call(subject)
-		.match(/\s(?<T>[^\]]*)/)
-		.groups.T.toLowerCase();
+	return Object.prototype.toString.call(subject).slice(8, -1).toLowerCase();
 }
 
 function replaceArray(targetArray, arrayContent = []) {
