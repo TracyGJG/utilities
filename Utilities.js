@@ -406,16 +406,16 @@ function curry(fn, _args = []) {
 }
 
 function lens(...props) {
+	const _props = props
+		.join('.')
+		.split(/[\[\]\.]+/)
+		.filter(item => item !== '');
 	return obj =>
-		props
-			.join('.')
-			.split(/[\[\]\.]+/)
-			.filter(item => item !== '')
-			.reduce(
-				(ob, pr) =>
-					typeof ob === 'object' && ob != null && pr in ob ? ob[pr] : undefined,
-				obj
-			);
+		_props.reduce(
+			(ob, pr) =>
+				typeof ob === 'object' && ob != null && pr in ob ? ob[pr] : undefined,
+			obj
+		);
 }
 
 function compose(...functions) {
