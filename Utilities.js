@@ -397,25 +397,18 @@ function memoize(fn, _cache = {}) {
 		(key => (_cache[key] = _cache[key] || fn(...args)))(JSON.stringify(args));
 }
 
-function curry(fn, _args = []) {
-	return (...args) =>
-		(a => (a.length === fn.length ? fn(...a) : curry(fn, a)))([
-			..._args,
-			...args,
-		]);
+function curry(fn, ...args) {
+	return args.length === fn.length
+		? fn(...args)
+		: (..._args) => curry(fn, ...args, ..._args);
 }
 
 function lens(...props) {
 	const _props = props
 		.join('.')
-		.split(/[\[\]\.]+/)
+		.split(/[\[\]?\.]+/)
 		.filter(item => item !== '');
-	return obj =>
-		_props.reduce(
-			(ob, pr) =>
-				typeof ob === 'object' && ob != null && pr in ob ? ob[pr] : undefined,
-			obj
-		);
+	return obj => _props.reduce((ob, pr) => ob?.[pr], obj);
 }
 
 function compose(...functions) {

@@ -951,29 +951,52 @@ describe("Tools", () => {
     function cube(x, y, z) {
       return x * y * z;
     }
-    const cube_ = Utilities.curry(cube);
 
-    it("can create a curried function that will accept, all args all at once", () => {
-      expect(cube_(2, 3, 7)).toBe(42);
+    describe("with no predefined args", () => {
+      const cube_ = Utilities.curry(cube);
+
+      it("can create a curried function that will accept, all args all at once", () => {
+        expect(cube_(2, 3, 7)).toBe(42);
+      });
+
+      it("can create a curried function that will accept, an arg followed by last two", () => {
+        expect(cube_(2)(3, 7)).toBe(42);
+        const cube_one = cube_(2);
+        expect(cube_one(3, 7)).toBe(42);
+      });
+
+      it("can create a curried function that will accept, two args then last", () => {
+        expect(cube_(2, 3)(7)).toBe(42);
+        const cube_two = cube_(2, 3);
+        expect(cube_two(7)).toBe(42);
+      });
+
+      it("can create a curried function that will accept, all args one at a time", () => {
+        expect(cube_(2)(3)(7)).toBe(42);
+        const cube_one = cube_(2);
+        const cube_two = cube_one(3);
+        expect(cube_two(7)).toBe(42);
+      });
     });
 
-    it("can create a curried function that will accept, an arg followed by last two", () => {
-      expect(cube_(2)(3, 7)).toBe(42);
-      const cube_one = cube_(2);
-      expect(cube_one(3, 7)).toBe(42);
+    describe("with a single argument", () => {
+      const cube2_ = Utilities.curry(cube, 2);
+
+      it("can create a curried function that will accept, all remaining args at once", () => {
+        expect(cube2_(3, 7)).toBe(42);
+      });
+
+      it("can create a curried function that will accept, remaining args in subsequent calls", () => {
+        expect(cube2_(3)(7)).toBe(42);
+      });
     });
 
-    it("can create a curried function that will accept, two args then last", () => {
-      expect(cube_(2, 3)(7)).toBe(42);
-      const cube_two = cube_(2, 3);
-      expect(cube_two(7)).toBe(42);
-    });
+    describe("with a couple of arguments", () => {
+      const cube2_3_ = Utilities.curry(cube, 2, 3);
 
-    it("can create a curried function that will accept, all args one at a time", () => {
-      expect(cube_(2)(3)(7)).toBe(42);
-      const cube_one = cube_(2);
-      const cube_two = cube_one(3);
-      expect(cube_two(7)).toBe(42);
+      it("can create a curried function that will accept, the remaining arg in the subsequent call", () => {
+        expect(cube2_3_(7)).toBe(42);
+      });
     });
   });
   describe('Lens', () => {
@@ -1000,6 +1023,21 @@ describe("Tools", () => {
         expect(lookup(testObjects[1])).not.toBeDefined();
       });
 
+      it('can be managed in an object (indirect args)', () => {
+        const lookup = Utilities.lens('a', 'c');
+        expect(lookup(testObjects[1])).not.toBeDefined();
+      });
+
+      it('can be managed in an object (direct args)', () => {
+        const lookup = Utilities.lens('a.c');
+        expect(lookup(testObjects[1])).not.toBeDefined();
+      });
+
+      it('can be managed in an object (optional args)', () => {
+        const lookup = Utilities.lens('a?.c');
+        expect(lookup(testObjects[1])).not.toBeDefined();
+      });
+
       it('can be managed in an array', () => {
         const lookup = Utilities.lens(0);
         expect(lookup(testObjects[2])).not.toBeDefined();
@@ -1017,9 +1055,24 @@ describe("Tools", () => {
         expect(lookup(testObjects[4])).toBe(42);
       });
 
-      it('can be managed in an object of an object (args)', () => {
+      it('can be managed in an object of an object (individual property args)', () => {
         const lookup = Utilities.lens('a', 'b');
         expect(lookup(testObjects[5])).toBe(42);
+      });
+
+      it('can be managed in an object of an object (mandatory property args)', () => {
+        const lookup = Utilities.lens('a.b');
+        expect(lookup(testObjects[5])).toBe(42);
+      });
+
+      it('can be managed in an object of an object (optional property args)', () => {
+        const lookup = Utilities.lens('a?.b');
+        expect(lookup(testObjects[5])).toBe(42);
+      });
+
+      it('can be managed in an object of an object (optional array args)', () => {
+        const lookup = Utilities.lens('a?.[0]');
+        expect(lookup(testObjects[8])).toBe(42);
       });
 
       it('can be managed in an object of an array (args)', () => {
