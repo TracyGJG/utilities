@@ -24,13 +24,13 @@ const expectedTableHtml = [
 describe("Ranges", () => {
   describe("Accumulated Average", () => {
     it("can calculate with a single call", () => {
-      var result1 = Utilities.accumulatedAverage(9, 5)(9);
+      const result1 = Utilities.accumulatedAverage(9, 5)(9);
       expect(result1).toEqual(9);
-      var result2 = Utilities.accumulatedAverage(9, 5)(45);
+      const result2 = Utilities.accumulatedAverage(9, 5)(45);
       expect(result2).toEqual(15);
     });
     it("can calculate with incremental calls", () => {
-      var newAverage = Utilities.accumulatedAverage();
+      const newAverage = Utilities.accumulatedAverage();
       expect(newAverage(1)).toEqual(1.0);
       expect(newAverage(2)).toEqual(1.5);
       expect(newAverage(3)).toEqual(2.0);
@@ -38,13 +38,13 @@ describe("Ranges", () => {
       expect(newAverage(5)).toEqual(3.0);
     });
     it("can re-calculate an average", () => {
-      var newAverage = Utilities.accumulatedAverage();
+      const newAverage = Utilities.accumulatedAverage();
       expect(newAverage(45, 9, 6)).toEqual(15);
     });
   });
   describe("Clamp Range", () => {
     it("can clamp the range between 50 and 60", () => {
-      var clampedRange = Utilities.clampRange(50, 60);
+      const clampedRange = Utilities.clampRange(50, 60);
       expect(clampedRange(45)).toEqual(50);
       expect(clampedRange(50)).toEqual(50);
       expect(clampedRange(55)).toEqual(55);
@@ -54,7 +54,7 @@ describe("Ranges", () => {
   });
   describe("Normalise Range", () => {
     it("can normalise the range between 50 and 60", () => {
-      var normalisedRange = Utilities.normaliseRange(50, 60);
+      const normalisedRange = Utilities.normaliseRange(50, 60);
       expect(normalisedRange(45)).toEqual(-0.5);
       expect(normalisedRange(50)).toEqual(0);
       expect(normalisedRange(55)).toEqual(0.5);
@@ -64,7 +64,7 @@ describe("Ranges", () => {
   });
   describe("Liniar Interpolate", () => {
     it("can liniarly interpolate the range between 50 and 60", () => {
-      var liniarInterlopated = Utilities.liniarInterpolate(50, 60);
+      const liniarInterlopated = Utilities.liniarInterpolate(50, 60);
       expect(liniarInterlopated(0)).toEqual(50);
       expect(liniarInterlopated(0.25)).toEqual(52.5);
       expect(liniarInterlopated(0.5)).toEqual(55);
@@ -74,7 +74,7 @@ describe("Ranges", () => {
   });
   describe("Map Ranges", () => {
     it("can map from a range between 50 and 60 to the range 80 to 100", () => {
-      var mappedRanges = Utilities.mapRanges(50, 60, 80, 100);
+      const mappedRanges = Utilities.mapRanges(50, 60, 80, 100);
       expect(mappedRanges(45)).toEqual(70);
       expect(mappedRanges(50)).toEqual(80);
       expect(mappedRanges(55)).toEqual(90);
@@ -83,7 +83,7 @@ describe("Ranges", () => {
     });
 
     it("can map Celsius to Fahrenheit", () => {
-      var mappedRanges = Utilities.mapRanges(0, 100, 32, 212);
+      const mappedRanges = Utilities.mapRanges(0, 100, 32, 212);
       expect(mappedRanges(-40).toFixed(0)).toEqual("-40");
       expect(mappedRanges(0)).toEqual(32);
       expect(mappedRanges(15)).toEqual(59);
@@ -129,14 +129,14 @@ describe("Ranges", () => {
       expect(Utilities.rangeFrom(10, 20, 2)[19]).toEqual(48);
     });
     it("can generate a range - pair of arguments, with step function", () => {
-      var fn = (_) => 2 ** _;
+      const fn = (_) => 2 ** _;
       expect(Utilities.rangeFrom(10, 20, fn).length).toEqual(20);
       expect(Utilities.rangeFrom(10, 20, fn)[2]).toEqual(14);
       expect(Utilities.rangeFrom(10, 20, fn)[19]).toEqual(524298);
     });
   });
   describe("In Range", () => {
-    var inRange = Utilities.inRange(100, 200);
+    const inRange = Utilities.inRange(100, 200);
     it("can identify points between 100 and 200", () => {
       expect(inRange(50)).toBeFalsy();
       expect(inRange(99)).toBeFalsy();
@@ -157,15 +157,15 @@ describe("Ranges", () => {
       expect(inRange(201, 250)).toBeFalsy();
     });
     it("can throw an exception when supplied with invalid input", () => {
-      var expectionTestNoArgs = () => {
+      const expectionTestNoArgs = () => {
         Utilities.inRange();
       };
       expect(expectionTestNoArgs).toThrow();
-      var expectionTestOneArg = () => {
+      const expectionTestOneArg = () => {
         Utilities.inRange(100);
       };
       expect(expectionTestNoArgs).toThrow();
-      var expectionTestThreeArg = () => {
+      const expectionTestThreeArg = () => {
         Utilities.inRange(100, 200, 300);
       };
       expect(expectionTestThreeArg).toThrow();
@@ -173,27 +173,27 @@ describe("Ranges", () => {
   });
   describe("Loop Range", () => {
     describe("zero indexed", () => {
-      var zeroIndexed = Utilities.loopRange(9);
+      const zeroIndexed = Utilities.loopRange(9);
       it("can be increased", () => {
-        var dir = 1;
+        const dir = 1;
         expect(zeroIndexed(4, dir)).toEqual(5);
         expect(zeroIndexed(8, dir)).toEqual(0);
       });
       it("can be decreased", () => {
-        var dir = -1;
+        const dir = -1;
         expect(zeroIndexed(4, dir)).toEqual(3);
         expect(zeroIndexed(0, dir)).toEqual(8);
       });
     });
     describe("one indexed", () => {
-      var oneIndexed = Utilities.loopRange(9, 1);
+      const oneIndexed = Utilities.loopRange(9, 1);
       it("can be increased", () => {
-        var dir = 1;
+        const dir = 1;
         expect(oneIndexed(4, dir)).toEqual(5);
         expect(oneIndexed(9, dir)).toEqual(1);
       });
       it("can be decreased", () => {
-        var dir = -1;
+        const dir = -1;
         expect(oneIndexed(4, dir)).toEqual(3);
         expect(oneIndexed(1, dir)).toEqual(9);
       });
@@ -203,10 +203,10 @@ describe("Ranges", () => {
 
 describe("Arrays", () => {
   describe("Intersect Array", () => {
-    var alpha = Utilities.rangeFrom(1, 4); // [1, 2, 3, 4]
-    var beta = Utilities.rangeFrom(2, 4); // [2, 3, 4, 5]
-    var delta = Utilities.rangeFrom(3, 4); // [3, 4, 5, 6]
-    var zeta = Utilities.rangeFrom(10, 4, 10); // [10, 20, 30, 40]
+    const alpha = Utilities.rangeFrom(1, 4); // [1, 2, 3, 4]
+    const beta = Utilities.rangeFrom(2, 4); // [2, 3, 4, 5]
+    const delta = Utilities.rangeFrom(3, 4); // [3, 4, 5, 6]
+    const zeta = Utilities.rangeFrom(10, 4, 10); // [10, 20, 30, 40]
     it("can intersect a single array", () => {
       const result = [1, 2, 3, 4];
       expect(Utilities.intersectArrays(alpha)).toEqual(result);
@@ -229,10 +229,10 @@ describe("Arrays", () => {
     });
   });
   describe("Union Array", () => {
-    var alpha = Utilities.rangeFrom(1, 4); // [1, 2, 3, 4]
-    var beta = Utilities.rangeFrom(2, 4); // [2, 3, 4, 5]
-    var delta = Utilities.rangeFrom(3, 4); // [3, 4, 5, 6]
-    var zeta = Utilities.rangeFrom(10, 4, 10); // [10, 20, 30, 40]
+    const alpha = Utilities.rangeFrom(1, 4); // [1, 2, 3, 4]
+    const beta = Utilities.rangeFrom(2, 4); // [2, 3, 4, 5]
+    const delta = Utilities.rangeFrom(3, 4); // [3, 4, 5, 6]
+    const zeta = Utilities.rangeFrom(10, 4, 10); // [10, 20, 30, 40]
     it("can union a single array", () => {
       const result = [1, 2, 3, 4];
       expect(Utilities.unionArrays(alpha)).toEqual(result);
@@ -439,8 +439,8 @@ describe("Arrays", () => {
 
 describe("Converters", () => {
   describe("Base 64", () => {
-    var rawData = "Hello World!";
-    var base64Data = "SGVsbG8gV29ybGQh";
+    const rawData = "Hello World!";
+    const base64Data = "SGVsbG8gV29ybGQh";
     it("can encode", () => {
       expect(Utilities.base64Encode(rawData)).toEqual(base64Data);
     });
@@ -466,81 +466,12 @@ describe("Converters", () => {
       expect(Utilities.longMonth("gb-GB", 9)).toEqual("October");
     });
   });
-  describe("Case Converter", () => {
-    var testText = "This__is  an EXAMPLE test-case";
-
-    it("can throw an exception for invalid case specification.", () => {
-      var testExec = () => {
-        var camelCase = Utilities.caseConverter();
-      };
-
-      expect(testExec).toThrowError(
-        "caseConverter: Invalid case specified. Must be one of the expected constants."
-      );
-    });
-
-    it("can convert to UPPER CASE", () => {
-      var upperCase = Utilities.caseConverter(Utilities.UPPER);
-
-      var result = upperCase(testText);
-
-      expect(result).toEqual("THIS_IS AN EXAMPLE TEST-CASE");
-    });
-
-    it("can convert to lower case", () => {
-      var lowerCase = Utilities.caseConverter(Utilities.LOWER);
-
-      var result = lowerCase(testText);
-
-      expect(result).toEqual("this_is an example test-case");
-    });
-
-    it("can convert to Title Case", () => {
-      var titleCase = Utilities.caseConverter(Utilities.TITLE);
-
-      var result = titleCase(testText);
-
-      expect(result).toEqual("This Is An EXAMPLE Test-case");
-    });
-
-    it("can convert to camelCase", () => {
-      var camelCase = Utilities.caseConverter(Utilities.CAMEL);
-
-      var result = camelCase(testText);
-
-      expect(result).toEqual("thisIsAnExampleTestCase");
-    });
-
-    it("can convert to GLOBAL_CASE", () => {
-      var globalCase = Utilities.caseConverter(Utilities.GLOBAL);
-
-      var result = globalCase(testText);
-
-      expect(result).toEqual("THIS_IS_AN_EXAMPLE_TEST_CASE");
-    });
-
-    it("can convert to kabab-case", () => {
-      var kababCase = Utilities.caseConverter(Utilities.KABAB);
-
-      var result = kababCase(testText);
-
-      expect(result).toEqual("this-is-an-example-test-case");
-    });
-
-    it("can convert to PascalCase", () => {
-      var pascalCase = Utilities.caseConverter(Utilities.PASCAL);
-
-      var result = pascalCase(testText);
-
-      expect(result).toEqual("ThisIsAnExampleTestCase");
-    });
-  });
 });
 
 describe("Comparison and Cloning", () => {
   describe("Object Equality", () => {
-    describe("can compare similar nested objects", () => {
-      var obj1 = {
+    it("can compare similar nested objects", () => {
+      const obj1 = {
         strProp: "Property 1",
         numProp: 2,
         blnProp: true,
@@ -549,13 +480,13 @@ describe("Comparison and Cloning", () => {
           subProp: "Sub Property",
         },
       };
-      var obj2 = JSON.parse(JSON.stringify(obj1));
+      const obj2 = JSON.parse(JSON.stringify(obj1));
 
       expect(Utilities.objectEquality(obj1, obj2)).toBeTruthy();
     });
 
-    describe("can compare objects that vary only be a single nested property value", () => {
-      var obj1 = {
+    it("can compare objects that vary only be a single nested property value", () => {
+      const obj1 = {
         strProp: "Property 1",
         numProp: 2,
         blnProp: true,
@@ -564,14 +495,14 @@ describe("Comparison and Cloning", () => {
           subProp: "Sub Property",
         },
       };
-      var obj2 = JSON.parse(JSON.stringify(obj1));
+      const obj2 = JSON.parse(JSON.stringify(obj1));
       obj2.objProp.subProp = "Dif Property";
 
       expect(Utilities.objectEquality(obj1, obj2)).toBeFalsy();
     });
 
-    describe("can compare objects that vary in structure by a single nested property", () => {
-      var obj1 = {
+    it("can compare objects that vary in structure by a single nested property", () => {
+      const obj1 = {
         strProp: "Property 1",
         numProp: 2,
         blnProp: true,
@@ -580,7 +511,7 @@ describe("Comparison and Cloning", () => {
           subProp: "Sub Property",
         },
       };
-      var obj2 = JSON.parse(JSON.stringify(obj1));
+      const obj2 = JSON.parse(JSON.stringify(obj1));
       obj2.objProp.subProp2 = "Additional Property";
 
       expect(Utilities.objectEquality(obj1, obj2)).toBeFalsy();
@@ -1114,6 +1045,67 @@ describe("Tools", () => {
     it('can provide the identify function by default ', () => {
       const composedFn = Utilities.compose();
       expect(composedFn(42)).toBe(42);
+    });
+  });
+  describe('Enumerate', () => {
+    it('can handle null or undefined input', () => {
+      expect(Object.keys(Utilities.enumerate()).length).toBe(0);
+    });
+
+    it('can handle an empty array as input', () => {
+      expect(Object.keys(Utilities.enumerate([])).length).toBe(0);
+    });
+
+    it('can handle an empty object as input', () => {
+      expect(Object.keys(Utilities.enumerate({})).length).toBe(0);
+    });
+
+    it('can create an object using a populated array as input', () => {
+      const result = Utilities.enumerate(['alpha', 'beta', 'deltaGamma']);
+      expect(Object.keys(result).length).toBe(3);
+      expect(result.alpha).toBe('alpha');
+      expect(result.beta).toBe('beta');
+      expect(result.deltaGamma).toBe('deltaGamma');
+    });
+
+    it('can create an object using a populated object as input', () => {
+      const result = Utilities.enumerate({alpha: 'a', beta: 'b', deltaGamma: 'dG'});
+      expect(Object.keys(result).length).toBe(3);
+      expect(result.alpha).toBe('alpha');
+      expect(result.beta).toBe('beta');
+      expect(result.deltaGamma).toBe('deltaGamma');
+    });
+
+    it('can create an object with numeric values using a populated array as input', () => {
+      const result = Utilities.enumerate(['alpha', 'beta', 'deltaGamma'], {numericValues: true});
+      expect(Object.keys(result).length).toBe(3);
+      expect(result.alpha).toBe(0);
+      expect(result.beta).toBe(1);
+      expect(result.deltaGamma).toBe(2);
+    });
+
+    it('can create an object with numeric values using a populated object as input', () => {
+      const result = Utilities.enumerate({alpha: 'a', beta: 'b', deltaGamma: 'dG'}, {numericValues: true});
+      expect(Object.keys(result).length).toBe(3);
+      expect(result.alpha).toBe(0);
+      expect(result.beta).toBe(1);
+      expect(result.deltaGamma).toBe(2);
+    });
+
+    it('can create an object with constant properties using a populated array as input', () => {
+      const result = Utilities.enumerate(['alpha', 'BETA', 'deltaGamma'], {constatntProperties: true});
+      expect(Object.keys(result).length).toBe(3);
+      expect(result.ALPHA).toBe('alpha');
+      expect(result.BETA).toBe('BETA');
+      expect(result.DELTA_GAMMA).toBe('deltaGamma');
+    });
+
+    it('can create an object with constant properties using a populated object as input', () => {
+      const result = Utilities.enumerate({alpha: 'a', BETA: 'b', deltaGamma: 'dG'}, {constatntProperties: true});
+      expect(Object.keys(result).length).toBe(3);
+      expect(result.ALPHA).toBe('alpha');
+      expect(result.BETA).toBe('BETA');
+      expect(result.DELTA_GAMMA).toBe('deltaGamma');
     });
   });
 });

@@ -21,7 +21,6 @@ var IUtility = {
 	longDay,
 	shortMonth,
 	longMonth,
-	caseConverter,
 
 	objectEquality,
 	cloneObject,
@@ -37,6 +36,7 @@ var IUtility = {
 	curry,
 	lens,
 	compose,
+	enumerate,
 
 	CAMEL: 'C',
 	GLOBAL: 'G',
@@ -303,60 +303,6 @@ function extractProperty(...propertyNames) {
 		propertyNames.reduce((o, p) => (o.hasOwnProperty(p) ? o[p] : null), obj);
 }
 
-function caseConverter(textCase) {
-	var textConversion = textCase && textCase.toUpperCase();
-	var conversionCheck = _ => text => _.includes(text);
-	var isValidConversion = conversionCheck('CGHKLPTU');
-	var isSplitAtUnderscore = conversionCheck('CGHKPT');
-	var isSplitAtHyphen = conversionCheck('CGKP');
-	var isJoinWithSpace = conversionCheck('HLTU');
-	var isJoinWithHyphen = conversionCheck('K');
-	var isJoinWithUnderscore = conversionCheck('G');
-	var isUppercaseConversion = conversionCheck('GU');
-	var isLowercaseConversion = conversionCheck('KL');
-	var isFirstCamel = (conversionCase, index) =>
-		conversionCase == IUtility.CAMEL && !index;
-	var isTitleAcronym = (conversionCase, text) =>
-		conversionCase == IUtility.TITLE && !/[a-z]/.test(text);
-
-	if (!isValidConversion(textConversion)) {
-		throw Error(
-			'caseConverter: Invalid case specified. Must be one of the expected constants.'
-		);
-	}
-
-	return function convertString(subjectText) {
-		var trimedText = subjectText.trim();
-		var dedupedText = trimedText
-			.replace(/_+/g, '_')
-			.replace(/-+/g, '-')
-			.replace(/\s+/g, ' ');
-
-		var splitDelimiters = `[${isSplitAtUnderscore(textConversion) ? '_' : ''}${
-			isSplitAtHyphen(textConversion) ? '-' : ''
-		}\\s]`;
-		var joinDelimiter = isJoinWithSpace(textConversion)
-			? ' '
-			: isJoinWithUnderscore(textConversion)
-			? '_'
-			: isJoinWithHyphen(textConversion)
-			? '-'
-			: '';
-
-		var splitPattern = new RegExp(splitDelimiters, 'g');
-		var splitText = dedupedText.split(splitPattern);
-		var convertedText = splitText.map((text, index) => {
-			if (isUppercaseConversion(textConversion)) return text.toUpperCase();
-			if (isLowercaseConversion(textConversion)) return text.toLowerCase();
-			if (isFirstCamel(textConversion, index)) return text.toLowerCase();
-			if (isTitleAcronym(textConversion, text)) return text.toUpperCase();
-			return `${text[0].toUpperCase()}${text.slice(1).toLowerCase()}`;
-		});
-		var joinedText = convertedText.join(joinDelimiter);
-		return joinedText;
-	};
-}
-
 function console_table(arr, domNode) {
 	function getHeading(row) {
 		return Array.isArray(row)
@@ -413,4 +359,23 @@ function lens(...props) {
 
 function compose(...functions) {
 	return args => functions.reduce((arg, fn) => fn(arg), args);
+}
+
+function enumerate(source = [], options = {}) {
+	const { numericValues = false, constatntProperties = false } = options;
+
+	return (Array.isArray(source) ? source : Object.keys(source)).reduce(
+		(obj, key, index) => {
+			const propertyName = constatntProperties ? toGlobal(key) : key;
+			return { ...obj, [propertyName]: numericValues ? index : key };
+		},
+		{}
+	);
+
+	function toGlobal(_propertyName) {
+		const hasLowerCase = /[a-z]/.test(_propertyName);
+		return hasLowerCase
+			? _propertyName.replace(/([A-Z/])/g, '_$1').toUpperCase()
+			: _propertyName;
+	}
 }

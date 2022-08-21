@@ -21,7 +21,6 @@ A collection of utility functions I find useful.
 | [base64encoding](#base64encoding) | [base64decoding](#base64decoding) |
 |       [shortDay](#shortDay)       |        [longDay](#longDay)        |
 |     [shortMonth](#shortMonth)     |      [longMonth](#longMonth)      |
-|  [caseConverter](#caseConverter)  |                                   |
 
 |     Data Comparison and Cloning     |                                                     |
 | :---------------------------------: | :-------------------------------------------------: |
@@ -37,13 +36,18 @@ A collection of utility functions I find useful.
 | :-----------------: | :-------------: |
 |   [sleep](#sleep)   |  [lens](#lens)  |
 | [memoise](#memoise) | [curry](#curry) |
-| [compose](#compose) | |
+| [compose](#compose) | [enumerate](#enumerate) |
 
 The above functions make considerable use of the technique called currying to return a specialised function. This saves on suppling parameters that are not expected to change.
 
 ### NB: The functions have been prepared with no input validation or additional error checking.
 
 ## Change Log
+
+### Update 20th August 2022
+
+- Added `enumerate` to generate an object to support Enumeration in JS.
+- Removed `caseConverter` as it is of very little utility.
 
 ### Update 22nd April 2022
 
@@ -652,50 +656,6 @@ Performs a comparison of all the values in the properties of both of the objects
 
 ---
 
-## [caseConverter](:#caseConverter)
-
-### Parameters
-
-#### Initial call
-
-- case - The type of text conversion to be performed (use the Utilities constants.)
-
-#### Subsequent calls
-
-- sub - Subject string to be converted.
-
-### Return Value
-
-The converted string.
-
-### Description
-
-Converts input strings according to a pre-defined format.
-
-- CASE_C: camelCase: The first word is all lowercase with the remaining words all capitalised. All separation is removed (spaces, hyphens and underscores.)
-- CASE_G: GLOBAL_CASE; All text is uppercase and all separators made underscores.
-- CASE_H: Heading Case, where each word is changed to leading letter uppercase, rest lowercase. Hyphes and spaces are preserved but duplicates are removed.
-- CASE_K: kabab-case; All lowercase text with hyphen separation only.
-- CASE_L: lower case; All text is converted to lowercase, duplicate separators reduced but retained.
-- CASE_P: PascalCase; Like Camel-case but even the first word is capitalised.
-- CASE_T: Title Case; like Heading case but preserving acronyms in all upper case (this is the default.)
-- CASE_U: UPPER CASE; All text is converted to uppercase, duplicate separators reduced to single characters but retained.
-
-#### Examples
-
-Example text "This\_\_is \ an \ EXAMPLE test--case"
-
-- Camel case: "thisIsAnExampleTestCase"
-- Global case: "THIS_IS_AN_EXAMPLE_TEST_CASE"
-- Heading case: "This Is An Example Test-case"
-- Kabab case: "this-is-an-example-test-case"
-- Lower case: "this_is an example test-case"
-- Pascal case: "ThisIsAnExampleTestCase"
-- Title case: "This Is An EXAMPLE Test-case"
-- Upper case: "THIS_IS AN EXAMPLE TEST-CASE"
-
----
-
 # Exercising
 
 ## [exercise](:#exercise)
@@ -814,5 +774,30 @@ A new monadic function that is a combination of all those provided.
 ### Description
 
 Combines a list of monadic (single parameter) functions into a single new function that expects a single input parameter.
+
+---
+
+## [enumerate](:#enumerate)
+
+### Parameters
+
+- source - an array or object to be used to extract the enumeration labels and values.
+- options - an optional structure used to instruct the function of its behaviour.
+- - globalCase - Boolean flag; true to convert, false (default) to leave as is.
+- - numericValues - Boolean flag: true to provide incremental numeric values, false (default) to use the original keys.
+
+### Return Value
+
+An object containing the enumerated values.
+
+### Description
+
+Extracts keys from the source to construct an object of enumerated values. The value of each enumeration can be the same as the original key or a number increamenting from 0.
+Options enable the enumeration keys to be converted to GLOBAL_CASE, or configure the values as numeric.
+
+#### Use Cases
+
+1. Create an object from an array of strings to be used as an Enumeration set.
+2. Create a lookup object of constants (strings) that maps to properties of a function map obejcts. 
 
 ---
