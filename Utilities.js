@@ -37,15 +37,6 @@ var IUtility = {
 	lens,
 	compose,
 	enumerate,
-
-	CAMEL: 'C',
-	GLOBAL: 'G',
-	HEADER: 'H',
-	KABAB: 'K',
-	LOWER: 'L',
-	PASCAL: 'P',
-	TITLE: 'T',
-	UPPER: 'U',
 };
 
 export default IUtility;
