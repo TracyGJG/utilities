@@ -14,6 +14,7 @@ var IUtility = {
 	replaceArray,
 	reconcileArrays,
 	transposeArray,
+	groupBy,
 
 	base64Encode,
 	base64Decode,
@@ -109,6 +110,15 @@ function transposeArray(matrix) {
 		(_, row) => row.map((__, i) => [...(_[i] || []), row[i]]),
 		[]
 	);
+}
+
+function groupBy(lookupFn, sourceArray) {
+	return sourceArray
+		? sourceArray.reduce((groupObj, obj) => {
+				const group = lookupFn(obj);
+				return { ...groupObj, [group]: [...(groupObj[group] ?? []), obj] };
+		  }, {})
+		: groupBy.bind(null, lookupFn);
 }
 
 function rangeFrom(init = 0, len = 1, step = 1) {

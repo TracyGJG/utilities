@@ -435,6 +435,46 @@ describe("Arrays", () => {
       expect(resultMatrix[2][2]).toBe("gamma");
     });
   });
+  describe("groupBy", () => {
+    test('returns an empty object when given an empty array', () => {
+      const groupFunction = ({ name }) => name;
+      const sourceArray = [];
+      const resultGroupObject = Utilities.groupBy(groupFunction, sourceArray);
+      expect(Object.keys(resultGroupObject).length).toBe(0);
+    });
+    test('returns an object with a single property when given an array containing objects of the same group (same time args)', () => {
+      const groupFunction = ({ name }) => name;
+      const sourceArray = [
+        {name: 'alpha'},
+        {name: 'alpha'},
+        {name: 'alpha'}
+      ];
+      const resultGroupObject = Utilities.groupBy(groupFunction, sourceArray);
+
+      expect(Object.keys(resultGroupObject).length).toBe(1);
+      expect(Object.keys(resultGroupObject)[0]).toBe('alpha');
+      expect(resultGroupObject.alpha.length).toBe(3);
+    });
+    test('returns an object with multiple properties when given an array containing objects of different groups (different time args)', () => {
+      const groupFunction = ({ name }) => name;
+      const sourceArray = [
+        {id: 1, name: 'alpha'},
+        {id: 2, name: 'beta'},
+        {id: 3, name: 'alpha'}
+      ];
+      const resultGroupFunction = Utilities.groupBy(groupFunction);
+      const resultGroupObject = resultGroupFunction(sourceArray);
+
+      expect(Object.keys(resultGroupObject).length).toBe(2);
+      expect(Object.keys(resultGroupObject)[0]).toBe('alpha');
+      expect(Object.keys(resultGroupObject)[1]).toBe('beta');
+      expect(resultGroupObject.alpha.length).toBe(2);
+      expect(resultGroupObject.beta.length).toBe(1);
+      expect(resultGroupObject.alpha[0].id).toBe(1);
+      expect(resultGroupObject.alpha[1].id).toBe(3);
+      expect(resultGroupObject.beta[0].id).toBe(2);
+    });
+  });
 });
 
 describe("Converters", () => {

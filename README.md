@@ -14,7 +14,7 @@ A collection of utility functions I find useful.
 | :---------------------------------: | :-------------------------------: |
 | [intersectArrays](#intersectArrays) |    [unionArrays](#unionArrays)    |
 |    [replaceArray](#replaceArray)    | [reconcileArray](#reconcileArray) |
-|  [transposeArray](#transposeArray)  |                                   |
+|  [transposeArray](#transposeArray)  |        [groupBy](#groupBy)        |
 
 |          Data Converters          |                                   |
 | :-------------------------------: | :-------------------------------: |
@@ -43,6 +43,10 @@ The above functions make considerable use of the technique called currying to re
 ### NB: The functions have been prepared with no input validation or additional error checking.
 
 ## Change Log
+
+### Update 29th August 2022
+
+- Added Array 'groupBy' function.
 
 ### Update 20th August 2022
 
@@ -439,6 +443,25 @@ e.g. [['A1', 'A2', 'A3'], ['B1', 'B2', 'B3'], ['C1', 'C2', 'C3']]
 ### Description
 
 Takes a 2-dimensional array (matrix) and produces a new array where the rows of the initial array become the columns of the new array and vice-a-verse.
+
+---
+
+## [groupBy](:groupBy)
+
+### Parameters
+
+- Function the identifies the group of a object in the array
+- Source array of objects
+
+The arguments can be supplied at the same time or one at a time.
+
+### Return Value
+
+An object with a property for each group found. Each property has an array of objects as its value.
+
+### Description
+
+Given a source array of objects and a function used to identify to which group an object belongs, this function creates an obejct with a property for each group of objects.
 
 ---
 
