@@ -1,48 +1,4 @@
-var IUtility = {
-	accumulatedAverage,
-	clampRange,
-	normaliseRange,
-	liniarInterpolate,
-	mapRanges,
-	rangeBetween,
-	rangeFrom,
-	inRange,
-	loopRange,
-
-	intersectArrays,
-	unionArrays,
-	replaceArray,
-	reconcileArrays,
-	transposeArray,
-	groupBy,
-
-	base64Encode,
-	base64Decode,
-	shortDay,
-	longDay,
-	shortMonth,
-	longMonth,
-
-	objectEquality,
-	cloneObject,
-	duplicateObject,
-	dataType,
-	compareObjectByProperty,
-	extractProperty,
-
-	exercise,
-	consoleTable: console_table,
-	sleep,
-	memoize,
-	curry,
-	lens,
-	compose,
-	enumerate,
-};
-
-export default IUtility;
-
-function accumulatedAverage(averageToDate = 0, sampleSize = 0) {
+export function accumulatedAverage(averageToDate = 0, sampleSize = 0) {
 	var runningTotal = averageToDate * (sampleSize || 1);
 	var currentSampleSize = sampleSize;
 	return (newValue, newAverage, newSampleSize) => {
@@ -55,35 +11,35 @@ function accumulatedAverage(averageToDate = 0, sampleSize = 0) {
 	};
 }
 
-function clampRange(min, max) {
+export function clampRange(min, max) {
 	return value => Math.min(Math.max(value, min), max);
 }
-function normaliseRange(start, end) {
+export function normaliseRange(start, end) {
 	return value => (value - start) / (end - start);
 }
-function liniarInterpolate(start, end) {
+export function liniarInterpolate(start, end) {
 	return factor => start * (1 - factor) + end * factor;
 }
-function mapRanges(fromMin, fromMax, toMin, toMax) {
+export function mapRanges(fromMin, fromMax, toMin, toMax) {
 	var norlaise = normaliseRange(fromMin, fromMax);
 	var interpolate = liniarInterpolate(toMin, toMax);
 	return value => interpolate(norlaise(value));
 }
 
-function rangeBetween(max, min = 0, step = 1) {
+export function rangeBetween(max, min = 0, step = 1) {
 	return [...Array((max - min) / step).keys()].map(index => index * step + min);
 }
 
-function dataType(subject) {
+export function dataType(subject) {
 	return Object.prototype.toString.call(subject).slice(8, -1).toLowerCase();
 }
 
-function replaceArray(targetArray, arrayContent = []) {
+export function replaceArray(targetArray, arrayContent = []) {
 	targetArray.splice(0, targetArray.length, ...arrayContent);
 	return targetArray;
 }
 
-function reconcileArrays(sourceArray, targetArray, objectKey = 'id') {
+export function reconcileArrays(sourceArray, targetArray, objectKey = 'id') {
 	const compareProperties = target => source =>
 		source[objectKey] === target[objectKey];
 
@@ -105,14 +61,14 @@ function reconcileArrays(sourceArray, targetArray, objectKey = 'id') {
 	}
 }
 
-function transposeArray(matrix) {
+export function transposeArray(matrix) {
 	return matrix.reduce(
 		(_, row) => row.map((__, i) => [...(_[i] || []), row[i]]),
 		[]
 	);
 }
 
-function groupBy(lookupFn, sourceArray) {
+export function groupBy(lookupFn, sourceArray) {
 	return sourceArray
 		? sourceArray.reduce((groupObj, obj) => {
 				const group = lookupFn(obj);
@@ -121,13 +77,13 @@ function groupBy(lookupFn, sourceArray) {
 		: groupBy.bind(null, lookupFn);
 }
 
-function rangeFrom(init = 0, len = 1, step = 1) {
+export function rangeFrom(init = 0, len = 1, step = 1) {
 	var stepFn = (_, inc) =>
 		(typeof step == 'number' ? step * inc : step(inc)) + init;
 	return [...Array(len)].map(stepFn);
 }
 
-function inRange(from, to) {
+export function inRange(from, to) {
 	if (arguments.length != 2)
 		throw new SyntaxError(
 			'overlappingRanges needs to be provided with two primary values.'
@@ -141,22 +97,22 @@ function inRange(from, to) {
 		return !(bTo < aFrom || bFrom > aTo);
 	};
 }
-function loopRange(max, min = 0) {
+export function loopRange(max, min = 0) {
 	return function move(cur, dir) {
 		return ((cur + dir + max - min) % max) + min;
 	};
 }
 
-function intersectArrays(...arrays) {
+export function intersectArrays(...arrays) {
 	return arrays.reduce((arrAcc, arrN) =>
 		[...new Set(arrAcc)].filter(item => arrN.includes(item))
 	);
 }
-function unionArrays(...arrays) {
+export function unionArrays(...arrays) {
 	return [...new Set(arrays.flat())];
 }
 
-function exercise(expected, actual, id = '') {
+export function exercise(expected, actual, id = '') {
 	var expectedResult = JSON.stringify(expected);
 	var actualResult = JSON.stringify(actual);
 	var exerId = id ? ` ${id}` : '';
@@ -174,7 +130,7 @@ function exercise(expected, actual, id = '') {
 	return false;
 }
 
-function base64Encode(bin) {
+export function base64Encode(bin) {
 	const BTOA = str => Buffer.from(str).toString('base64');
 	return BTOA(
 		encodeURIComponent(bin).replace(/%([\dA-F]{2})/g, (_, p1) =>
@@ -182,7 +138,7 @@ function base64Encode(bin) {
 		)
 	);
 }
-function base64Decode(b64) {
+export function base64Decode(b64) {
 	return decodeURIComponent(
 		[...b64.replace(/=*$/, '')]
 			.map(char =>
@@ -199,30 +155,30 @@ function base64Decode(b64) {
 	);
 }
 
-function shortDay(lang = 'en-GB', idx) {
+export function shortDay(lang = 'en-GB', idx) {
 	var dateString = _ =>
 		new Date(1970, 0, 4 + _).toLocaleString(lang, {
 			weekday: 'short',
 		});
 	return arguments.length == 2 ? dateString(idx) : dateString;
 }
-function longDay(lang = 'en-GB', idx) {
+export function longDay(lang = 'en-GB', idx) {
 	var dateString = _ =>
 		new Date(1970, 0, 4 + _).toLocaleString(lang, { weekday: 'long' });
 	return arguments.length == 2 ? dateString(idx) : dateString;
 }
-function shortMonth(lang = 'en-GB', idx) {
+export function shortMonth(lang = 'en-GB', idx) {
 	var dateString = _ =>
 		new Date(1970, _, 1).toLocaleString(lang, { month: 'short' });
 	return arguments.length == 2 ? dateString(idx) : dateString;
 }
-function longMonth(lang = 'en-GB', idx) {
+export function longMonth(lang = 'en-GB', idx) {
 	var dateString = _ =>
 		new Date(1970, _, 1).toLocaleString(lang, { month: 'long' });
 	return arguments.length == 2 ? dateString(idx) : dateString;
 }
 
-function objectEquality(obj1, obj2) {
+export function objectEquality(obj1, obj2) {
 	return deepEquality(obj1, obj2);
 
 	function deepEquality(object1, object2) {
@@ -252,7 +208,7 @@ function objectEquality(obj1, obj2) {
 	}
 }
 
-function cloneObject(obj) {
+export function cloneObject(obj) {
 	if (obj === null || typeof obj !== 'object' || '__isActiveClone' in obj)
 		return obj;
 
@@ -268,7 +224,7 @@ function cloneObject(obj) {
 	return temp;
 }
 
-function duplicateObject(srcObj) {
+export function duplicateObject(srcObj) {
 	if (Array.isArray(srcObj)) {
 		return srcObj.map(duplicateObject);
 	}
@@ -291,7 +247,7 @@ function duplicateObject(srcObj) {
 	}
 }
 
-function compareObjectByProperty(propName, ascending = true) {
+export function compareObjectByProperty(propName, ascending = true) {
 	return (objA, objB) =>
 		(ascending ? 1 : -1) *
 		(objA[propName] < objB[propName]
@@ -299,12 +255,12 @@ function compareObjectByProperty(propName, ascending = true) {
 			: 1 * (objA[propName] > objB[propName]));
 }
 
-function extractProperty(...propertyNames) {
+export function extractProperty(...propertyNames) {
 	return obj =>
 		propertyNames.reduce((o, p) => (o.hasOwnProperty(p) ? o[p] : null), obj);
 }
 
-function console_table(arr, domNode) {
+export function consoleTable(arr) {
 	function getHeading(row) {
 		return Array.isArray(row)
 			? row.map((_, idx) => `<th>${idx + 1}</th>`).join('')
@@ -323,7 +279,7 @@ function console_table(arr, domNode) {
 			: htmlData(row);
 	}
 
-	domNode.innerHTML += arr.length
+	return arr.length
 		? `<table border="1">
 <tr><th>#</th>${getHeading(arr[0])}</tr>
 ${arr
@@ -335,22 +291,22 @@ ${arr
 		: '';
 }
 
-async function sleep(ms) {
+export async function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function memoize(fn, _cache = {}) {
+export function memoize(fn, _cache = {}) {
 	return (...args) =>
 		(key => (_cache[key] = _cache[key] || fn(...args)))(JSON.stringify(args));
 }
 
-function curry(fn, ...args) {
+export function curry(fn, ...args) {
 	return args.length === fn.length
 		? fn(...args)
 		: (..._args) => curry(fn, ...args, ..._args);
 }
 
-function lens(...props) {
+export function lens(...props) {
 	const _props = props
 		.join('.')
 		.split(/[\[\]?\.]+/)
@@ -358,11 +314,11 @@ function lens(...props) {
 	return obj => _props.reduce((ob, pr) => ob?.[pr], obj);
 }
 
-function compose(...functions) {
+export function compose(...functions) {
 	return args => functions.reduce((arg, fn) => fn(arg), args);
 }
 
-function enumerate(source = [], options = {}) {
+export function enumerate(source = [], options = {}) {
 	const { numericValues = false, constatntProperties = false } = options;
 
 	return (Array.isArray(source) ? source : Object.keys(source)).reduce(

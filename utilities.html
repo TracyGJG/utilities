@@ -1,36 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Utilities</title>
+    <style>
+        .table {
+            margin: 2em;
+            border-collapse: collapse;
+        }
+    </style>
 </head>
-<body>
-    <script type="module">
-        import utils from './utilities.min.js';
 
-        console.group('\nbase64 Encode/Decode');
-		var rawData = 'Hello World!';
-        var base64Data = 'SGVsbG8gV29ybGQh';
-        console.log(`base64Encode('${rawData}') = "${utils.base64Encode(rawData)}"`);
-        console.log(`base64Decode('${base64Data}') = "${utils.base64Decode(base64Data)}"`);
-        console.groupEnd();
+<body>
+    <div class="table"></div>
+    <div class="table"></div>
+    <div class="table"></div>
+
+    <script type="module">
+        import { exercise, consoleTable } from './utilities.min.js';
 
         console.group('\nexercise');
-        utils.exercise(true, true);
-        utils.exercise(!!{}, true, 'Object');
-        utils.exercise(!![], true, 'Array');
-        utils.exercise(!!1, true, 'Positive number');
-        utils.exercise(!!-1, true, 'Negative number');
-        utils.exercise(!!"_", true, 'Non-empty string');
+        exercise(true, true);
+        exercise(!!{}, true, 'Object');
+        exercise(!![], true, 'Array');
+        exercise(!!1, true, 'Positive number');
+        exercise(!!-1, true, 'Negative number');
+        exercise(!!"_", true, 'Non-empty string');
         console.log(`\n`);
-        utils.exercise(false, true);
-        utils.exercise(!!undefined, true, 'undefined');
-        utils.exercise(!!null, true, 'null');
-        utils.exercise(!!NaN, true, 'NaN');
-        utils.exercise(!!0, true, 'Zero');
-        utils.exercise(!!"", true, 'Empty string');
+        exercise(false, true);
+        exercise(!!undefined, true, 'undefined');
+        exercise(!!null, true, 'null');
+        exercise(!!NaN, true, 'NaN');
+        exercise(!!0, true, 'Zero');
+        exercise(!!"", true, 'Empty string');
         console.groupEnd();
+
+        const testData = [
+            [1, 2, 3, 4, 5],
+            [
+                [1, 2, 3, 4],
+                [5, 6, 7, 8],
+            ],
+            [
+                { alpha: 1, beta: 2, gamma: 3, delta: 4 },
+                { alpha: 5, beta: 6, gamma: 7, delta: 8 },
+            ]
+        ];
+        const targets = document.querySelectorAll('.table');
+        testData.forEach((testDatum, index) => targets[index].innerHTML = consoleTable(testDatum));
+
     </script>
 </body>
+
 </html>

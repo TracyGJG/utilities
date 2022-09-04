@@ -1,4 +1,4 @@
-import Utilities from "./utilities";
+import * as Utilities from "./utilities";
 
 const expectedTableHtml = [
   `<table border="1">
@@ -833,21 +833,19 @@ describe("Exercising", () => {
       expect(Utilities.exercise([10], [1], "Errors")).toBeFalsy();
     });
   });
-  describe("console_table", () => {
+  describe("consoleTable", () => {
     it("with an empty array", () => {
       const testData = [];
-      const testTarget = { innerHTML: "" };
       const expectedResult = "";
-      Utilities.consoleTable(testData, testTarget);
-      expect(testTarget.innerHTML).toEqual(expectedResult);
+      const actualResult = Utilities.consoleTable(testData);
+      expect(actualResult).toEqual(expectedResult);
     });
 
     it("with an array of values", () => {
       const testData = [1, 2, 3, 4, 5];
-      const testTarget = { innerHTML: "" };
       const expectedResult = expectedTableHtml[0];
-      Utilities.consoleTable(testData, testTarget);
-      expect(testTarget.innerHTML).toEqual(expectedResult);
+      const actualResult = Utilities.consoleTable(testData);
+      expect(actualResult).toEqual(expectedResult);
     });
 
     it("with an array of arrays", () => {
@@ -855,10 +853,9 @@ describe("Exercising", () => {
         [1, 2, 3, 4],
         [5, 6, 7, 8],
       ];
-      const testTarget = { innerHTML: "" };
       const expectedResult = expectedTableHtml[1];
-      Utilities.consoleTable(testData, testTarget);
-      expect(testTarget.innerHTML).toEqual(expectedResult);
+      const actualResult = Utilities.consoleTable(testData);
+      expect(actualResult).toEqual(expectedResult);
     });
 
     it("with an array of object", () => {
@@ -866,10 +863,9 @@ describe("Exercising", () => {
         { alpha: 1, beta: 2, gamma: 3, delta: 4 },
         { alpha: 5, beta: 6, gamma: 7, delta: 8 },
       ];
-      const testTarget = { innerHTML: "" };
       const expectedResult = expectedTableHtml[2];
-      Utilities.consoleTable(testData, testTarget);
-      expect(testTarget.innerHTML).toEqual(expectedResult);
+      const actualResult = Utilities.consoleTable(testData);
+      expect(actualResult).toEqual(expectedResult);
     });
   });
 });
