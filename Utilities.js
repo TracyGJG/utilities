@@ -27,7 +27,9 @@ export function mapRanges(fromMin, fromMax, toMin, toMax) {
 }
 
 export function rangeBetween(max, min = 0, step = 1) {
-	return [...Array((max - min) / step).keys()].map(index => index * step + min);
+	return [...Array((max - min) / step).keys()].map(
+		index => index * step + min
+	);
 }
 
 export function dataType(subject) {
@@ -70,11 +72,15 @@ export function transposeArray(matrix) {
 
 export function groupBy(lookupFn, sourceArray) {
 	return sourceArray
-		? sourceArray.reduce((groupObj, obj) => {
-				const group = lookupFn(obj);
-				return { ...groupObj, [group]: [...(groupObj[group] ?? []), obj] };
-		  }, {})
+		? sourceArray.reduce(_groupBy, {})
 		: groupBy.bind(null, lookupFn);
+	function _groupBy(groupObj, obj) {
+		const group = lookupFn(obj);
+		return {
+			...groupObj,
+			[group]: [...(groupObj[group] ?? []), obj],
+		};
+	}
 }
 
 export function rangeFrom(init = 0, len = 1, step = 1) {
@@ -257,7 +263,10 @@ export function compareObjectByProperty(propName, ascending = true) {
 
 export function extractProperty(...propertyNames) {
 	return obj =>
-		propertyNames.reduce((o, p) => (o.hasOwnProperty(p) ? o[p] : null), obj);
+		propertyNames.reduce(
+			(o, p) => (o.hasOwnProperty(p) ? o[p] : null),
+			obj
+		);
 }
 
 export function consoleTable(arr) {
@@ -297,7 +306,9 @@ export async function sleep(ms) {
 
 export function memoize(fn, _cache = {}) {
 	return (...args) =>
-		(key => (_cache[key] = _cache[key] || fn(...args)))(JSON.stringify(args));
+		(key => (_cache[key] = _cache[key] || fn(...args)))(
+			JSON.stringify(args)
+		);
 }
 
 export function curry(fn, ...args) {
