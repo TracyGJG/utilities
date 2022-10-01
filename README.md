@@ -819,11 +819,13 @@ An object containing the enumerated values.
 
 ### Exceptions
 
--   E-IS The source argument supplied is not an Array or an Object.
--   E-NP The source argument supplied is not populated.
--   E-NS The source argument supplied is not populated with string keys.
--   E-NR The option '${option}' is not a recognised option.
--   E-NB The option '${option}' is not a Boolean value.
+| Code |Description |
+|------|------------|
+| E-IS |_The source argument supplied is not an Array or an Object._|
+| E-NP |_The source argument supplied is not populated._|
+| E-NS |_The source argument supplied is not populated with string keys._|
+| E-NR |_The option 'option' is not a recognised option._|
+| E-NB |_The option 'option' is not a Boolean value._|
 
 ### Description
 
@@ -833,6 +835,6 @@ Options enable the enumeration keys to be converted to GLOBAL_CASE, or configure
 #### Use Cases
 
 1. Create an object from an array of strings to be used as an Enumeration set.
-2. Create a lookup object of constants (strings) that maps to properties of a function map obejcts.
+2. Create a lookup object of constants (strings) that map to properties of a function map object.
 
 ---
