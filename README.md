@@ -44,6 +44,10 @@ The above functions make considerable use of the technique called currying to re
 
 ## Change Log
 
+### Update 1st October 2022
+
+-   Enhance the `enumerate` function to support capitalisation of snake and sentence|title case keys.
+
 ### Update 29th August 2022
 
 -   Added Array 'groupBy' function.
@@ -806,12 +810,20 @@ Combines a list of monadic (single parameter) functions into a single new functi
 
 -   source - an array or object to be used to extract the enumeration labels and values.
 -   options - an optional structure used to instruct the function of its behaviour.
--   -   globalCase - Boolean flag; true to convert, false (default) to leave as is.
+-   -   constantProperties - Boolean flag; true to convert, false (default) to leave as is.
 -   -   numericValues - Boolean flag: true to provide incremental numeric values, false (default) to use the original keys.
 
 ### Return Value
 
 An object containing the enumerated values.
+
+### Exceptions
+
+-   E-IS The source argument supplied is not an Array or an Object.
+-   E-NP The source argument supplied is not populated.
+-   E-NS The source argument supplied is not populated with string keys.
+-   E-NR The option '${option}' is not a recognised option.
+-   E-NB The option '${option}' is not a Boolean value.
 
 ### Description
 

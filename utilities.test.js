@@ -225,7 +225,9 @@ describe('Arrays', () => {
 		});
 		it('can intersect three arrays', () => {
 			const result = [3, 4];
-			expect(Utilities.intersectArrays(alpha, beta, delta)).toEqual(result);
+			expect(Utilities.intersectArrays(alpha, beta, delta)).toEqual(
+				result
+			);
 		});
 	});
 	describe('Union Array', () => {
@@ -439,7 +441,10 @@ describe('Arrays', () => {
 		test('returns an empty object when given an empty array', () => {
 			const groupFunction = ({ name }) => name;
 			const sourceArray = [];
-			const resultGroupObject = Utilities.groupBy(groupFunction, sourceArray);
+			const resultGroupObject = Utilities.groupBy(
+				groupFunction,
+				sourceArray
+			);
 			expect(Object.keys(resultGroupObject).length).toBe(0);
 		});
 		test('returns an object with a single property when given an array containing objects of the same group (same time args)', () => {
@@ -449,7 +454,10 @@ describe('Arrays', () => {
 				{ name: 'alpha' },
 				{ name: 'alpha' },
 			];
-			const resultGroupObject = Utilities.groupBy(groupFunction, sourceArray);
+			const resultGroupObject = Utilities.groupBy(
+				groupFunction,
+				sourceArray
+			);
 
 			expect(Object.keys(resultGroupObject).length).toBe(1);
 			expect(Object.keys(resultGroupObject)[0]).toBe('alpha');
@@ -621,6 +629,20 @@ describe('Comparison and Cloning', () => {
 		});
 	});
 	describe('dataType', () => {
+		describe('Enumerations', () => {
+			it('has a values for 14 data types', () => {
+				expect(Object.keys(Utilities.DATA_TYPES).length).toBe(14);
+			});
+
+			it('has a value for the Array data type', () => {
+				expect(Utilities.DATA_TYPES.ARRAY).toBe('array');
+			});
+
+			it('has a value for the Undefined data type', () => {
+				expect(Utilities.DATA_TYPES.UNDEFINED).toBe('undefined');
+			});
+		});
+
 		describe('Primitive Values', () => {
 			it('can detect Undefined', () => {
 				expect(Utilities.dataType()).toEqual('undefined');
@@ -1087,79 +1109,151 @@ describe('Tools', () => {
 			expect(composedFn(42)).toBe(42);
 		});
 	});
+
 	describe('Enumerate', () => {
-		it('can handle null or undefined input', () => {
-			expect(Object.keys(Utilities.enumerate()).length).toBe(0);
-		});
-
-		it('can handle an empty array as input', () => {
-			expect(Object.keys(Utilities.enumerate([])).length).toBe(0);
-		});
-
-		it('can handle an empty object as input', () => {
-			expect(Object.keys(Utilities.enumerate({})).length).toBe(0);
-		});
-
-		it('can create an object using a populated array as input', () => {
-			const result = Utilities.enumerate(['alpha', 'beta', 'deltaGamma']);
-			expect(Object.keys(result).length).toBe(3);
-			expect(result.alpha).toBe('alpha');
-			expect(result.beta).toBe('beta');
-			expect(result.deltaGamma).toBe('deltaGamma');
-		});
-
-		it('can create an object using a populated object as input', () => {
-			const result = Utilities.enumerate({
-				alpha: 'a',
-				beta: 'b',
-				deltaGamma: 'dG',
+		describe('will throw an exception then called with', () => {
+			it('a source parameter other than an Array or Object (E-IS)', () => {
+				const exceptionTest = () =>
+					Object.keys(Utilities.enumerate('INVALID SOURCE ARGUMENT'));
+				expect(exceptionTest).toThrow(
+					'Error: E-IS The source argument supplied is not an Array or an Object.'
+				);
 			});
-			expect(Object.keys(result).length).toBe(3);
-			expect(result.alpha).toBe('alpha');
-			expect(result.beta).toBe('beta');
-			expect(result.deltaGamma).toBe('deltaGamma');
-		});
 
-		it('can create an object with numeric values using a populated array as input', () => {
-			const result = Utilities.enumerate(['alpha', 'beta', 'deltaGamma'], {
-				numericValues: true,
+			it('a source parameter of null (E-IS)', () => {
+				const exceptionTest = () =>
+					Object.keys(Utilities.enumerate(null));
+				expect(exceptionTest).toThrow(
+					'Error: E-IS The source argument supplied is not an Array or an Object.'
+				);
 			});
-			expect(Object.keys(result).length).toBe(3);
-			expect(result.alpha).toBe(0);
-			expect(result.beta).toBe(1);
-			expect(result.deltaGamma).toBe(2);
-		});
 
-		it('can create an object with numeric values using a populated object as input', () => {
-			const result = Utilities.enumerate(
-				{ alpha: 'a', beta: 'b', deltaGamma: 'dG' },
-				{ numericValues: true }
-			);
-			expect(Object.keys(result).length).toBe(3);
-			expect(result.alpha).toBe(0);
-			expect(result.beta).toBe(1);
-			expect(result.deltaGamma).toBe(2);
-		});
-
-		it('can create an object with constant properties using a populated array as input', () => {
-			const result = Utilities.enumerate(['alpha', 'BETA', 'deltaGamma'], {
-				constatntProperties: true,
+			it('a source parameter of undefined (E-IS)', () => {
+				const exceptionTest = () =>
+					Object.keys(Utilities.enumerate(undefined));
+				expect(exceptionTest).toThrow(
+					'Error: E-IS The source argument supplied is not an Array or an Object.'
+				);
 			});
-			expect(Object.keys(result).length).toBe(3);
-			expect(result.ALPHA).toBe('alpha');
-			expect(result.BETA).toBe('BETA');
-			expect(result.DELTA_GAMMA).toBe('deltaGamma');
+
+			it('an empty Object as source argument (E-NP)', () => {
+				const exceptionTest = () =>
+					Object.keys(Utilities.enumerate({}));
+				expect(exceptionTest).toThrow(
+					'Error: E-NP The source argument supplied is not populated.'
+				);
+			});
+
+			it('an empty Array as source argument (E-NP)', () => {
+				const exceptionTest = () =>
+					Object.keys(Utilities.enumerate([]));
+				expect(exceptionTest).toThrow(
+					'Error: E-NP The source argument supplied is not populated.'
+				);
+			});
+
+			it('a source argument Array populated with non-string data (E-NS)', () => {
+				const exceptionTest = () =>
+					Object.keys(Utilities.enumerate([42, false]));
+				expect(exceptionTest).toThrow(
+					'Error: E-NS The source argument supplied is not populated with string keys.'
+				);
+			});
+
+			it('an unrecognised options (E-NR)', () => {
+				const exceptionTest = () =>
+					Utilities.enumerate(['alpha', 'beta'], {
+						unrecognisedOption: true,
+					});
+				expect(exceptionTest).toThrow(
+					`Error: E-NR The option 'unrecognisedOption' is not a recognised option.`
+				);
+			});
+
+			it('non-Boolean options (E-NB)', () => {
+				const exceptionTest = () =>
+					Utilities.enumerate(['alpha', 'beta'], {
+						numericValues: 0,
+					});
+				expect(exceptionTest).toThrow(
+					`Error: E-NB The option 'numericValues' is not a Boolean value.`
+				);
+			});
 		});
 
-		it('can create an object with constant properties using a populated object as input', () => {
-			const result = Utilities.enumerate(
-				{ alpha: 'a', BETA: 'b', deltaGamma: 'dG' },
-				{ constatntProperties: true }
-			);
-			expect(Object.keys(result).length).toBe(3);
-			expect(result.ALPHA).toBe('alpha');
-			expect(result.BETA).toBe('BETA');
-			expect(result.DELTA_GAMMA).toBe('deltaGamma');
+		describe('will return an object of Enumerated keys', () => {
+			it('using a populated source string array', () => {
+				const result = Utilities.enumerate([
+					'alpha',
+					'beta',
+					'deltaGamma',
+				]);
+				expect(Object.keys(result).length).toBe(3);
+				expect(result.alpha).toBe('alpha');
+				expect(result.beta).toBe('beta');
+				expect(result.deltaGamma).toBe('deltaGamma');
+			});
+
+			it('using a populated source object', () => {
+				const result = Utilities.enumerate({
+					alpha: 'a',
+					beta: 'b',
+					deltaGamma: 'dG',
+				});
+				expect(Object.keys(result).length).toBe(3);
+				expect(result.alpha).toBe('alpha');
+				expect(result.beta).toBe('beta');
+				expect(result.deltaGamma).toBe('deltaGamma');
+			});
+
+			it('with numeric values, using a populated source array', () => {
+				const result = Utilities.enumerate(
+					['alpha', 'beta', 'deltaGamma'],
+					{
+						numericValues: true,
+					}
+				);
+				expect(Object.keys(result).length).toBe(3);
+				expect(result.alpha).toBe(0);
+				expect(result.beta).toBe(1);
+				expect(result.deltaGamma).toBe(2);
+			});
+
+			it('with numeric values, using a populated source object', () => {
+				const result = Utilities.enumerate(
+					{ alpha: 'a', beta: 'b', deltaGamma: 'dG' },
+					{ numericValues: true }
+				);
+				expect(Object.keys(result).length).toBe(3);
+				expect(result.alpha).toBe(0);
+				expect(result.beta).toBe(1);
+				expect(result.deltaGamma).toBe(2);
+			});
+
+			it('with constant properties, using a populated array', () => {
+				const result = Utilities.enumerate(
+					[
+						'alpha',
+						'BETA',
+						'deltaGamma',
+						'Epsilon zeta',
+						'EtaTheta',
+						'  Iota  ',
+						'Kappa_Lambda',
+					],
+					{
+						constantProperties: true,
+					}
+				);
+				expect(Object.keys(result).length).toBe(7);
+				expect(result.ALPHA).toBe('alpha');
+				expect(result.BETA).toBe('BETA');
+				expect(result.DELTA_GAMMA).toBe('deltaGamma');
+				expect(result.EPSILON_ZETA).toBe('Epsilon zeta');
+				expect(result.ETA_THETA).toBe('EtaTheta');
+				expect(result.__IOTA__).toBe('  Iota  ');
+				expect(result.KAPPA_LAMBDA).toBe('Kappa_Lambda');
+			});
 		});
 	});
 });
