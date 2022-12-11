@@ -681,7 +681,7 @@ Lowercase string representation of the type of data held in the variable. This i
 
 ### Description
 
-Performs a comparison of all the values in the properties of both of the objects supplied.
+Identifies which of the above Standard data Type being used by the supplied argument.   
 
 ---
 
@@ -855,9 +855,9 @@ The sum of all the provided values.
 
 ### Exceptions
 
-| Code | Description                 |
-|------|-----------------------------|
-| E-NN | Non-numeric value supplied. |
+| Code | Description                   |
+|------|-------------------------------|
+| E-NN | _Non-numeric value supplied._ |
 
 ### Description
 
