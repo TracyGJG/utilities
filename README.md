@@ -2,47 +2,49 @@
 
 A collection of utility functions I find useful.
 
-|                 Ranges                  |                                   |
-| :-------------------------------------: | :-------------------------------: |
-|  [acculatedAverage](#acculatedAverage)  |                                   |
-|        [clampRange](#clampRange)        | [normaliseRange](#normaliseRange) |
-| [liniarInterpolate](#liniarInterpolate) |      [mapRanges](#mapRanges)      |
-|      [rangeBetween](#rangeBetween)      |      [rangeFrom](#rangeFrom)      |
-|           [inRange](#inRange)           |      [loopRange](#loopRange)      |
+|                 Ranges                  |                           |                                   |
+| :-------------------------------------: | :-----------------------: | :-------------------------------: |
+|  [acculatedAverage](#acculatedAverage)  | [clampRange](#clampRange) | [normaliseRange](#normaliseRange) |
+| [liniarInterpolate](#liniarInterpolate) |  [mapRanges](#mapRanges)  |   [rangeBetween](#rangeBetween)   |
+|         [rangeFrom](#rangeFrom)         |    [inRange](#inRange)    |      [loopRange](#loopRange)      |
 
-|               Arrays                |                                   |
-| :---------------------------------: | :-------------------------------: |
-| [intersectArrays](#intersectArrays) |    [unionArrays](#unionArrays)    |
-|    [replaceArray](#replaceArray)    | [reconcileArray](#reconcileArray) |
-|  [transposeArray](#transposeArray)  |        [groupBy](#groupBy)        |
+|               Arrays                |                                   |                               |
+| :---------------------------------: | :-------------------------------: | :---------------------------: |
+| [intersectArrays](#intersectArrays) |    [unionArrays](#unionArrays)    | [replaceArray](#replaceArray) |
+|  [reconcileArray](#reconcileArray)  | [transposeArray](#transposeArray) |      [groupBy](#groupBy)      |
 
-|          Data Converters          |                                   |
-| :-------------------------------: | :-------------------------------: |
-| [base64encoding](#base64encoding) | [base64decoding](#base64decoding) |
-|       [shortDay](#shortDay)       |        [longDay](#longDay)        |
-|     [shortMonth](#shortMonth)     |      [longMonth](#longMonth)      |
+|          Data Converters          |                                   |                         |
+| :-------------------------------: | :-------------------------------: | :---------------------: |
+| [base64encoding](#base64encoding) | [base64decoding](#base64decoding) |  [shortDay](#shortDay)  |
+|        [longDay](#longDay)        |     [shortMonth](#shortMonth)     | [longMonth](#longMonth) |
 
-|     Data Comparison and Cloning     |                                                     |
-| :---------------------------------: | :-------------------------------------------------: |
-|  [objectEquality](#objectEquality)  |                [dataType](#dataType)                |
-|     [cloneObject](#cloneObject)     |         [duplicateObject](#duplicateObject)         |
-| [extractProperty](#extractProperty) | [compareObjectByProperty](#compareObjectByProperty) |
+|     Data Comparison and Cloning     |                                     |                                                     |
+| :---------------------------------: | :---------------------------------: | :-------------------------------------------------: |
+|  [objectEquality](#objectEquality)  |        [dataType](#dataType)        |             [cloneObject](#cloneObject)             |
+| [duplicateObject](#duplicateObject) | [extractProperty](#extractProperty) | [compareObjectByProperty](#compareObjectByProperty) |
 
 |      Exercising       |                               |
 | :-------------------: | :---------------------------: |
 | [exercise](#exercise) | [consoleTable](#consoleTable) |
 
-|        Tools        |                         |
-| :-----------------: | :---------------------: |
-|   [sleep](#sleep)   |      [lens](#lens)      |
-| [memoise](#memoise) |     [curry](#curry)     |
-| [compose](#compose) | [enumerate](#enumerate) |
+|      Tools      |                     |                         |
+| :-------------: | :-----------------: | :---------------------: |
+| [sleep](#sleep) |    [lens](#lens)    |   [memoise](#memoise)   |
+| [curry](#curry) | [compose](#compose) | [enumerate](#enumerate) |
+
+|  Ancillary  |
+| :---------: |
+| [sum](#sum) |
 
 The above functions make considerable use of the technique called currying to return a specialised function. This saves on suppling parameters that are not expected to change.
 
 ### NB: The functions have been prepared with no input validation or additional error checking.
 
 ## Change Log
+
+### Update 11th December 2022
+
+-   Added the absentee `sum` function.
 
 ### Update 1st October 2022
 
@@ -836,5 +838,29 @@ Options enable the enumeration keys to be converted to GLOBAL_CASE, or configure
 
 1. Create an object from an array of strings to be used as an Enumeration set.
 2. Create a lookup object of constants (strings) that map to properties of a function map object.
+
+---
+
+# Ancillaries
+
+## [sum](:#sum)
+
+### Parameters
+
+-   ...nums - a (rest) array of numbers.
+
+### Return Value
+
+The sum of all the provided values.
+
+### Exceptions
+
+| Code | Description                 |
+|------|-----------------------------|
+| E-NN | Non-numeric value supplied. |
+
+### Description
+
+Calculates the sum of all arguments supplied.
 
 ---

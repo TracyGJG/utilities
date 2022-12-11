@@ -225,9 +225,7 @@ describe('Arrays', () => {
 		});
 		it('can intersect three arrays', () => {
 			const result = [3, 4];
-			expect(Utilities.intersectArrays(alpha, beta, delta)).toEqual(
-				result
-			);
+			expect(Utilities.intersectArrays(alpha, beta, delta)).toEqual(result);
 		});
 	});
 	describe('Union Array', () => {
@@ -441,10 +439,7 @@ describe('Arrays', () => {
 		test('returns an empty object when given an empty array', () => {
 			const groupFunction = ({ name }) => name;
 			const sourceArray = [];
-			const resultGroupObject = Utilities.groupBy(
-				groupFunction,
-				sourceArray
-			);
+			const resultGroupObject = Utilities.groupBy(groupFunction, sourceArray);
 			expect(Object.keys(resultGroupObject).length).toBe(0);
 		});
 		test('returns an object with a single property when given an array containing objects of the same group (same time args)', () => {
@@ -454,10 +449,7 @@ describe('Arrays', () => {
 				{ name: 'alpha' },
 				{ name: 'alpha' },
 			];
-			const resultGroupObject = Utilities.groupBy(
-				groupFunction,
-				sourceArray
-			);
+			const resultGroupObject = Utilities.groupBy(groupFunction, sourceArray);
 
 			expect(Object.keys(resultGroupObject).length).toBe(1);
 			expect(Object.keys(resultGroupObject)[0]).toBe('alpha');
@@ -1121,32 +1113,28 @@ describe('Tools', () => {
 			});
 
 			it('a source parameter of null (E-IS)', () => {
-				const exceptionTest = () =>
-					Object.keys(Utilities.enumerate(null));
+				const exceptionTest = () => Object.keys(Utilities.enumerate(null));
 				expect(exceptionTest).toThrow(
 					'Error: E-IS The source argument supplied is not an Array or an Object.'
 				);
 			});
 
 			it('a source parameter of undefined (E-IS)', () => {
-				const exceptionTest = () =>
-					Object.keys(Utilities.enumerate(undefined));
+				const exceptionTest = () => Object.keys(Utilities.enumerate(undefined));
 				expect(exceptionTest).toThrow(
 					'Error: E-IS The source argument supplied is not an Array or an Object.'
 				);
 			});
 
 			it('an empty Object as source argument (E-NP)', () => {
-				const exceptionTest = () =>
-					Object.keys(Utilities.enumerate({}));
+				const exceptionTest = () => Object.keys(Utilities.enumerate({}));
 				expect(exceptionTest).toThrow(
 					'Error: E-NP The source argument supplied is not populated.'
 				);
 			});
 
 			it('an empty Array as source argument (E-NP)', () => {
-				const exceptionTest = () =>
-					Object.keys(Utilities.enumerate([]));
+				const exceptionTest = () => Object.keys(Utilities.enumerate([]));
 				expect(exceptionTest).toThrow(
 					'Error: E-NP The source argument supplied is not populated.'
 				);
@@ -1183,11 +1171,7 @@ describe('Tools', () => {
 
 		describe('will return an object of Enumerated keys', () => {
 			it('using a populated source string array', () => {
-				const result = Utilities.enumerate([
-					'alpha',
-					'beta',
-					'deltaGamma',
-				]);
+				const result = Utilities.enumerate(['alpha', 'beta', 'deltaGamma']);
 				expect(Object.keys(result).length).toBe(3);
 				expect(result.alpha).toBe('alpha');
 				expect(result.beta).toBe('beta');
@@ -1207,12 +1191,9 @@ describe('Tools', () => {
 			});
 
 			it('with numeric values, using a populated source array', () => {
-				const result = Utilities.enumerate(
-					['alpha', 'beta', 'deltaGamma'],
-					{
-						numericValues: true,
-					}
-				);
+				const result = Utilities.enumerate(['alpha', 'beta', 'deltaGamma'], {
+					numericValues: true,
+				});
 				expect(Object.keys(result).length).toBe(3);
 				expect(result.alpha).toBe(0);
 				expect(result.beta).toBe(1);
@@ -1254,6 +1235,28 @@ describe('Tools', () => {
 				expect(result.__IOTA__).toBe('  Iota  ');
 				expect(result.KAPPA_LAMBDA).toBe('Kappa_Lambda');
 			});
+		});
+	});
+});
+
+describe('Ancillaries', () => {
+	describe('sum', () => {
+		test('will throw an exception is arguments include a non-numeric', () => {
+			const exceptionTest = () => {
+				Utilities.sum('Not A Number');
+			};
+			expect(exceptionTest).toThrow(
+				'Error: E-NN An argument supplied is not a Numeric value.'
+			);
+		});
+		test('will return zero is no arguments are supplied', () => {
+			expect(Utilities.sum()).toBe(0);
+		});
+		test('will return the total if one or more arguments are supplied (positive)', () => {
+			expect(Utilities.sum(2, 4, 6, 8, 10, 12)).toBe(42);
+		});
+		test('will return the total if one or more arguments are supplied (negative)', () => {
+			expect(Utilities.sum(-2, -4, -6, -8, -10, -12)).toBe(-42);
 		});
 	});
 });

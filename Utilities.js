@@ -27,9 +27,7 @@ export function mapRanges(fromMin, fromMax, toMin, toMax) {
 }
 
 export function rangeBetween(max, min = 0, step = 1) {
-	return [...Array((max - min) / step).keys()].map(
-		index => index * step + min
-	);
+	return [...Array((max - min) / step).keys()].map(index => index * step + min);
 }
 
 export const DATA_TYPES = {
@@ -280,10 +278,7 @@ export function compareObjectByProperty(propName, ascending = true) {
 
 export function extractProperty(...propertyNames) {
 	return obj =>
-		propertyNames.reduce(
-			(o, p) => (o.hasOwnProperty(p) ? o[p] : null),
-			obj
-		);
+		propertyNames.reduce((o, p) => (o.hasOwnProperty(p) ? o[p] : null), obj);
 }
 
 export function consoleTable(arr) {
@@ -323,9 +318,7 @@ export async function sleep(ms) {
 
 export function memoize(fn, _cache = {}) {
 	return (...args) =>
-		(key => (_cache[key] = _cache[key] || fn(...args)))(
-			JSON.stringify(args)
-		);
+		(key => (_cache[key] = _cache[key] || fn(...args)))(JSON.stringify(args));
 }
 
 export function curry(fn, ...args) {
@@ -357,9 +350,7 @@ export function enumerate(source, options = {}) {
 		: Object.keys(source).length;
 
 	if (!keysCount)
-		throw Error(
-			'Error: E-NP The source argument supplied is not populated.'
-		);
+		throw Error('Error: E-NP The source argument supplied is not populated.');
 
 	const filterStringKeys = key => dataType(key) === DATA_TYPES.STRING;
 	const keys = (Array.isArray(source) ? source : Object.keys(source)).filter(
@@ -378,9 +369,7 @@ export function enumerate(source, options = {}) {
 				`Error: E-NR The option '${option}' is not a recognised option.`
 			);
 		if (dataType(options[option]) !== DATA_TYPES.BOOLEAN)
-			throw Error(
-				`Error: E-NB The option '${option}' is not a Boolean value.`
-			);
+			throw Error(`Error: E-NB The option '${option}' is not a Boolean value.`);
 	}
 
 	const { numericValues = false, constantProperties = false } = options;
@@ -397,4 +386,13 @@ export function enumerate(source, options = {}) {
 			: _propertyName.replace(/([a-z])([A-Z])/g, '$1_$2');
 		return globalPropertyName.toUpperCase();
 	}
+}
+
+export function sum(...nums) {
+	nums.forEach(num => {
+		if (dataType(num) !== DATA_TYPES.NUMBER) {
+			throw Error(`Error: E-NN An argument supplied is not a Numeric value.`);
+		}
+	});
+	return nums.reduce((tot, num) => tot + num, 0);
 }
