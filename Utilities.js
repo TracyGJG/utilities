@@ -30,6 +30,33 @@ export function rangeBetween(max, min = 0, step = 1) {
 	return [...Array((max - min) / step).keys()].map(index => index * step + min);
 }
 
+export function rangeFrom(init = 0, len = 1, step = 1) {
+	var stepFn = (_, inc) =>
+		(typeof step == 'number' ? step * inc : step(inc)) + init;
+	return [...Array(len)].map(stepFn);
+}
+
+export function inRange(from, to) {
+	if (arguments.length != 2)
+		throw new SyntaxError(
+			'overlappingRanges needs to be provided with two primary values.'
+		);
+	var aFrom = Math.min(from, to);
+	var aTo = Math.max(from, to);
+	return function check(from, to) {
+		var xTo = arguments.length == 1 ? from : to;
+		var bFrom = Math.min(from, xTo);
+		var bTo = Math.max(from, xTo);
+		return !(bTo < aFrom || bFrom > aTo);
+	};
+}
+
+export function loopRange(max, min = 0) {
+	return function move(cur, dir = 1) {
+		return ((cur + dir + max - min) % max) + min;
+	};
+}
+
 export const DATA_TYPES = {
 	ARRAY: 'array',
 	BIGINT: 'bigint',
@@ -96,32 +123,6 @@ export function groupBy(lookupFn, sourceArray) {
 			[group]: [...(groupObj[group] ?? []), obj],
 		};
 	}
-}
-
-export function rangeFrom(init = 0, len = 1, step = 1) {
-	var stepFn = (_, inc) =>
-		(typeof step == 'number' ? step * inc : step(inc)) + init;
-	return [...Array(len)].map(stepFn);
-}
-
-export function inRange(from, to) {
-	if (arguments.length != 2)
-		throw new SyntaxError(
-			'overlappingRanges needs to be provided with two primary values.'
-		);
-	var aFrom = Math.min(from, to);
-	var aTo = Math.max(from, to);
-	return function check(from, to) {
-		var xTo = arguments.length == 1 ? from : to;
-		var bFrom = Math.min(from, xTo);
-		var bTo = Math.max(from, xTo);
-		return !(bTo < aFrom || bFrom > aTo);
-	};
-}
-export function loopRange(max, min = 0) {
-	return function move(cur, dir) {
-		return ((cur + dir + max - min) % max) + min;
-	};
 }
 
 export function intersectArrays(...arrays) {

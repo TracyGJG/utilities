@@ -94,19 +94,22 @@ describe('Ranges', () => {
 	});
 	describe('Ranges Between', () => {
 		it('can generate a range of 10 values between 0 and 9', () => {
-			Utilities.rangeBetween(10).forEach((value, index) => {
-				expect(value).toEqual(index);
-			});
+			const result = Utilities.rangeBetween(10);
+			expect(result.length).toEqual(10);
+			expect(result[0]).toEqual(0);
+			expect(result[9]).toEqual(9);
 		});
 		it('can generate a range of 10 values between 10 and 20', () => {
-			Utilities.rangeBetween(20, 10).forEach((value, index) => {
-				expect(value).toEqual(10 + index);
-			});
+			const result = Utilities.rangeBetween(20, 10);
+			expect(result.length).toEqual(10);
+			expect(result[0]).toEqual(10);
+			expect(result[9]).toEqual(19);
 		});
 		it('can generate a range of 10 values between 10 and 20, in steps of 2', () => {
-			Utilities.rangeBetween(20, 10, 2).forEach((value, index) => {
-				expect(value).toEqual(10 + 2 * index);
-			});
+			const result = Utilities.rangeBetween(20, 10, 2);
+			expect(result.length).toEqual(5);
+			expect(result[0]).toEqual(10);
+			expect(result[4]).toEqual(18);
 		});
 	});
 	describe('Ranges From', () => {
@@ -175,9 +178,8 @@ describe('Ranges', () => {
 		describe('zero indexed', () => {
 			const zeroIndexed = Utilities.loopRange(9);
 			it('can be increased', () => {
-				const dir = 1;
-				expect(zeroIndexed(4, dir)).toEqual(5);
-				expect(zeroIndexed(8, dir)).toEqual(0);
+				expect(zeroIndexed(4)).toEqual(5);
+				expect(zeroIndexed(8)).toEqual(0);
 			});
 			it('can be decreased', () => {
 				const dir = -1;

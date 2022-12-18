@@ -144,7 +144,7 @@ The new calculated average.
 
 Utility for recalculating an average as the sample size increased. There are two ways of using the function, one-off and incremental, but both employ partial application.
 
-One-off, involves calling acculmulateAverage with the current average and the size of the sample (number of values from which the average is calculated.) This provides the partial application (specilised function) that can then be called with the value to the included in the average.
+One-off, involves calling _acculmulateAverage_ with the current average and the size of the sample (number of values from which the average is calculated.) This provides the partial application (specialised function) that can then be called with the value to be included in the average.
 
 `Utility.accumulatedAverage(currentAverage, sampleSize)(newValue)`
 
@@ -154,7 +154,7 @@ The incremental appraoch of using the function involves placing the initial call
 
 `var newAverage = accumulateAverage(newSample)); // newAverage = (0 + newSample) / (0 + 1)`
 
-Subsequent calls to accumulateAverage with include additional values as part of the new average.
+Subsequent calls to _accumulateAverage_ with include additional values as part of the new average.
 
 ---
 
@@ -164,8 +164,8 @@ Subsequent calls to accumulateAverage with include additional values as part of 
 
 #### Initial call
 
--   min - lower boundry of the range.
--   max - upper boundry of the range.
+-   min - lower boundary of the range.
+-   max - upper boundary of the range.
 
 #### Subsequent calls
 
@@ -177,13 +177,13 @@ A value within the clamped range.
 
 ### Description
 
-Function that restricts a value to within a given numeric range. Initialised with the lower and upper boundries of a range, this function returns another specialised function.
+Function that restricts a value to within a given numeric range. Initialised with the lower and upper boundaries of a range, this function returns another specialised function.
 
 When the specialised function is called with a single number, the value may be changed to bring it within the predefined range.
 
-If the input value is below the lower boundries the output from the function will be the lower boundary. Likewise, if the input value is above the upper boundries the output from the function will be the upper boundary.
+If the input value is below the lower boundary the output from the function will be the lower boundary. Likewise, if the input value exceeds the upper boundary the output from the function will be the upper boundary.
 
-If the input value is within the boundries the output from the function will be the input value.
+If the input value is within the boundaries the output from the function will be the input value.
 
 ---
 
@@ -206,11 +206,11 @@ A value between 0 and 1.
 
 ### Description
 
-The NormaliseRange function takes in the min and max values of a range in which future values are to be normalised, and returns a specialised function.
+The _normaliseRange_ function takes in the _min_ and _max_ values of a range within which future values are to be normalised, and returns a specialised function.
 
 When the specialised function is called with a value within the range the result is a value proportional to the range (between 0 and 1.)
 
-Input values outside the expected range will be either less than 0 or greater than 1.
+Input values outside the expected range will be either less than 0 or greater than 1, but still proportional.
 
 ---
 
@@ -229,11 +229,11 @@ Input values outside the expected range will be either less than 0 or greater th
 
 ### Return Value
 
-A value between the start and end values, proportional to the input value.
+A value between the _start_ and _end_ values, proportional to the input value.
 
 ### Description
 
-This function converts a normalised value (beweet 0 and 1), and initilised with a given range, returns a value within the range proportional to the input value.
+This function converts a normalised value (between 0 and 1), initilised with a given range, and returns a value within the range proportional to the input value.
 
 ---
 
@@ -254,7 +254,7 @@ This function converts a normalised value (beweet 0 and 1), and initilised with 
 
 ### Return Value
 
-A value in the target range, when the input value is from the source range, otherwise unknown.
+When the input value is from the source range, a value in the target range is returned, otherwise unknown.
 
 ### Description
 
@@ -272,12 +272,19 @@ The Map Ranges function is quite self explanatory. Initialised with a source and
 
 ### Return Value
 
-A new array containing the numbers between min and max - 1, in step intervals.
+A new array containing the numbers between _min_ and _max - 1_, in _step_ intervals.
 
 ### Description
 
-RangeBetween is a generator function that produces an array of numbers between _min_ and _max_ (- 1) in _step_ intervals (default value is 1.)
+_RangeBetween_ is a generator function that produces an array of numbers between _min_ and _max (- 1)_ in _step_ intervals (default value is 1.)
 
+```
+Utilities.rangeBetween(10); // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+Utilities.rangeBetween(20, 10); // [10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+
+Utilities.rangeBetween(20, 10, 3); // [10, 13, 16, 19]
+```
 ---
 
 ## [rangeFrom](:#rangeFrom)
@@ -290,12 +297,20 @@ RangeBetween is a generator function that produces an array of numbers between _
 
 ### Return Value
 
-A new array containing len numbers starting from init, in step intervals.
+A new array containing _len_ numbers starting from _init_, in _step_ intervals.
 
 ### Description
 
-Similar to the RangeBetween function, this function generates an array of len numbers commencing with init and varying by step. The step parameter can be a fixed value (defaulted to 1) or a function using the index as an input.
+Similar to the _RangeBetween_ function, this function generates an array of _len_ numbers commencing with _init_ and varying by _step_. The _step_ parameter can be a fixed value (defaulted to 1) or a function using the index (starting from zero) as its input.
 
+```
+Utilities.rangeFrom(10, 10); // [10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+
+Utilities.rangeFrom(10, 10, 2); // [10, 12, 14, 16, 18, 20, 22, 24, 26, 28]
+
+const fn = x => 2 ** x;
+Utilities.rangeFrom(10, 10, x); // [1, 2, 4, 8, 16, 32, 64, 128, 256, 512]
+```
 ---
 
 ## [inRange](:#inRange)
@@ -320,7 +335,7 @@ Boolean value indicating the ranges overlap or a value is within a given range.
 
 This function supports two use cases:
 
-1. Confirm two ranges overloap.
+1. Confirm two ranges overlap.
 2. Confirm a value lies within a primary range.
 
 ---
@@ -349,6 +364,24 @@ Calculates a new value in a sequence based on the current (_cur_) input. The val
 
 When the value exceeds the bounds of the range it loops round to the opposite end of the range.
 
+```
+const zeroIndexed = Utilities.loopRange(9); // Range 0 .. 8
+
+zeroIndexed(4); // 5
+zeroIndexed(8); // 0
+
+zeroIndexed(4, -1); // 3
+zeroIndexed(0, -1); // 8
+
+const oneIndexed = Utilities.loopRange(9, 1); // Range 1 .. 9
+
+oneIndexed(4, 2); // 6
+oneIndexed(9, 2); // 2
+
+oneIndexed(4, -1); // 3
+oneIndexed(1, -1); // 9
+```
+
 ---
 
 # Arrays
@@ -367,6 +400,9 @@ A new array containing only those values found in all the given arrays.
 
 Extracts the common values of all the input arrays into a new array of distinct values.
 
+```
+Utilities.intersectArrays([1, 2, 3, 4], [3, 4, 5, 6]); // [3, 4]
+```
 ---
 
 ## [unionArrays](:#unionArrays)
@@ -383,6 +419,10 @@ A new array containing a distinct list of values from all of the given arrays.
 
 Extracts a list of all the values from the input arrays into a new array of distinct values.
 
+```
+Utilities.unionArrays([1, 2, 3, 4], [3, 4, 5, 6]); // [1, 2, 3, 4, 5 ,6]
+```
+
 ---
 
 ## [replaceArray](:#replaceArray)
@@ -394,11 +434,11 @@ Extracts a list of all the values from the input arrays into a new array of dist
 
 ### Return Value
 
-None - updates the targetArray directly by reference.
+None - updates the _targetArray_ directly by reference.
 
 ### Description
 
-Replaces the content of the targetArray with the (optional) content of the arrayContent.
+Replaces the content of the _targetArray_ with the (optional) content of the _arrayContent_.
 
 ---
 
@@ -416,7 +456,7 @@ None - updates the targetArray directly by reference.
 
 ### Description
 
-Replaces the content of the targetArray with content from the sourceArray using the objectKey to locate common objects. Object in the sourceArray but not in target are added, those in target but not source are removed. Objects that appear in both arrays, as identified by the objectKey property, are updated with any array properties also preserved.
+Replaces the content of the _targetArray_ with content from the _sourceArray_ using the _objectKey_ to locate common objects. Object in the _sourceArray_ but not in target are added, those in target but not source are removed. Objects that appear in both arrays, as identified by the _objectKey_ property, are updated with any array properties also preserved.
 
 ---
 
@@ -810,10 +850,10 @@ Combines a list of monadic (single parameter) functions into a single new functi
 
 ### Parameters
 
--   source - an array or object to be used to extract the enumeration labels and values.
--   options - an optional structure used to instruct the function of its behaviour.
--   -   constantProperties - Boolean flag; true to convert, false (default) to leave as is.
--   -   numericValues - Boolean flag: true to provide incremental numeric values, false (default) to use the original keys.
+*   source - an array or object to be used to extract the enumeration labels and values.
+*   options - an optional structure used to instruct the function of its behaviour.
+    -   constantProperties - Boolean flag; true to convert, false (default) to leave as is.
+    -   numericValues - Boolean flag: true to provide incremental numeric values, false (default) to use the original keys.
 
 ### Return Value
 
