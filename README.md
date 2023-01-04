@@ -781,10 +781,10 @@ The primary use case for this function is to provide a known input (array) for a
 
 ### Exceptions
 
-_adhocArray parameter 1 needs to be of type Number._
-_adhocArray parameter 1 needs to be greater than zero._
-_adhocArray parameter 2 needs to be of type Function._
-_adhocArray parameter 2 needs a single parameter._
+* _adhocArray parameter 1 needs to be of type Number._
+* _adhocArray parameter 1 needs to be greater than zero._
+* _adhocArray parameter 2 needs to be of type Function._
+* _adhocArray parameter 2 needs a single parameter._
 
 ### Description
 
