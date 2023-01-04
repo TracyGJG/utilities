@@ -625,7 +625,7 @@ describe('Comparison and Cloning', () => {
 	describe('dataType', () => {
 		describe('Enumerations', () => {
 			it('has a values for 14 data types', () => {
-				expect(Object.keys(Utilities.DATA_TYPES).length).toBe(14);
+				expect(Object.keys(Utilities.DATA_TYPES).length).toBe(15);
 			});
 
 			it('has a value for the Array data type', () => {
@@ -839,14 +839,73 @@ describe('Comparison and Cloning', () => {
 });
 
 describe('Exercising', () => {
-	describe('Pure function Exercise', () => {
-		it('can test without an id', () => {
-			expect(Utilities.exercise([10], [10])).toBeTruthy();
-			expect(Utilities.exercise([10], [1])).toBeFalsy();
+	describe('ad-hoc array', () => {
+		test('reports an exception if the first argument is not a number', () => {
+			const testException = () => Utilities.adhocArray('X');
+
+			expect(testException).toThrow(
+				'Error: adhocArray parameter 1 needs to be of type Number.'
+			);
 		});
-		it('can test with an id', () => {
-			expect(Utilities.exercise([10], [10], 'Works')).toBeTruthy();
-			expect(Utilities.exercise([10], [1], 'Errors')).toBeFalsy();
+
+		test('reports an exception if the first argument is less than one', () => {
+			const testException = () => Utilities.adhocArray(-1);
+
+			expect(testException).toThrow(
+				'Error: adhocArray parameter 1 needs to be greater than zero.'
+			);
+		});
+
+		test('reports an exception if the second argument is not a function', () => {
+			const testException = () => Utilities.adhocArray(1, 'X');
+
+			expect(testException).toThrow(
+				'Error: adhocArray parameter 2 needs to be of type Function.'
+			);
+		});
+
+		test('reports an exception if the second argument is a function with no parameters', () => {
+			const testException = () => Utilities.adhocArray(1, () => {});
+
+			expect(testException).toThrow(
+				'Error: adhocArray parameter 2 needs a single parameter.'
+			);
+		});
+
+		test('reports an exception if the second argument is a function with more than one parameters', () => {
+			const testException = () => Utilities.adhocArray(1, (a, b) => {});
+
+			expect(testException).toThrow(
+				'Error: adhocArray parameter 2 needs a single parameter.'
+			);
+		});
+
+		test('Using the default transform yields [0, 1, 2, 3, 4]', () => {
+			const result = Utilities.adhocArray(5);
+
+			expect(result.length).toBe(5);
+		});
+
+		test('Using custom transform yields [2, 4, 6, 8, 10]', () => {
+			const result = Utilities.adhocArray(5, i => (i + 1) * 2);
+
+			expect(result.length).toBe(5);
+		});
+
+		test('Using the default transform with a filter yields ["2", "12", "20", "21", "22", "23", "24"]', () => {
+			const result = Utilities.adhocArray(25);
+			const filteredResult = result.filter(i => `${i}`.includes('2'));
+
+			expect(result.length).toBe(25);
+			expect(filteredResult.length).toBe(7);
+		});
+
+		test('Using custom transform with a reducer yields 42', () => {
+			const result = Utilities.adhocArray(6, i => (i + 1) * 2);
+			const reducedResult = result.reduce((total, value) => total + value, 0);
+
+			expect(result.length).toBe(6);
+			expect(reducedResult).toBe(42);
 		});
 	});
 	describe('consoleTable', () => {
@@ -882,6 +941,16 @@ describe('Exercising', () => {
 			const expectedResult = expectedTableHtml[2];
 			const actualResult = Utilities.consoleTable(testData);
 			expect(actualResult).toEqual(expectedResult);
+		});
+	});
+	describe('Pure function Exercise', () => {
+		it('can test without an id', () => {
+			expect(Utilities.exercise([10], [10])).toBeTruthy();
+			expect(Utilities.exercise([10], [1])).toBeFalsy();
+		});
+		it('can test with an id', () => {
+			expect(Utilities.exercise([10], [10], 'Works')).toBeTruthy();
+			expect(Utilities.exercise([10], [1], 'Errors')).toBeFalsy();
 		});
 	});
 });
@@ -1103,7 +1172,6 @@ describe('Tools', () => {
 			expect(composedFn(42)).toBe(42);
 		});
 	});
-
 	describe('Enumerate', () => {
 		describe('will throw an exception then called with', () => {
 			it('a source parameter other than an Array or Object (E-IS)', () => {

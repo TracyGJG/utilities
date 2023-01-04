@@ -2,35 +2,35 @@
 
 A collection of utility functions I find useful.
 
-|                 Ranges                  |                           |                                   |
-| :-------------------------------------: | :-----------------------: | :-------------------------------: |
-|  [acculatedAverage](#acculatedAverage)  | [clampRange](#clampRange) | [normaliseRange](#normaliseRange) |
-| [liniarInterpolate](#liniarInterpolate) |  [mapRanges](#mapRanges)  |   [rangeBetween](#rangeBetween)   |
-|         [rangeFrom](#rangeFrom)         |    [inRange](#inRange)    |      [loopRange](#loopRange)      |
+|                 Ranges                  |                               |                         |
+| :-------------------------------------: | :---------------------------: | :---------------------: |
+|  [acculatedAverage](#acculatedAverage)  |   [clampRange](#clampRange)   |   [inRange](#inRange)   |
+| [liniarInterpolate](#liniarInterpolate) |    [loopRange](#loopRange)    | [mapRanges](#mapRanges) |
+|    [normaliseRange](#normaliseRange)    | [rangeBetween](#rangeBetween) | [rangeFrom](#rangeFrom) |
 
-|               Arrays                |                                   |                               |
-| :---------------------------------: | :-------------------------------: | :---------------------------: |
-| [intersectArrays](#intersectArrays) |    [unionArrays](#unionArrays)    | [replaceArray](#replaceArray) |
-|  [reconcileArray](#reconcileArray)  | [transposeArray](#transposeArray) |      [groupBy](#groupBy)      |
+|           Arrays              |                                     |                                   |
+| :---------------------------: | :---------------------------------: | :-------------------------------: |
+|      [groupBy](#groupBy)      | [intersectArrays](#intersectArrays) | [reconcileArray](#reconcileArray) |
+| [replaceArray](#replaceArray) |  [transposeArray](#transposeArray)  |    [unionArrays](#unionArrays)    |
 
-|          Data Converters          |                                   |                         |
-| :-------------------------------: | :-------------------------------: | :---------------------: |
-| [base64encoding](#base64encoding) | [base64decoding](#base64decoding) |  [shortDay](#shortDay)  |
-|        [longDay](#longDay)        |     [shortMonth](#shortMonth)     | [longMonth](#longMonth) |
+|          Data Converters          |                                   |                           |
+| :-------------------------------: | :-------------------------------: | :-----------------------: |
+| [base64decoding](#base64decoding) | [base64encoding](#base64encoding) |    [longDay](#longDay)    |
+|      [longMonth](#longMonth)      |       [shortDay](#shortDay)       | [shortMonth](#shortMonth) |
 
-|     Data Comparison and Cloning     |                                     |                                                     |
-| :---------------------------------: | :---------------------------------: | :-------------------------------------------------: |
-|  [objectEquality](#objectEquality)  |        [dataType](#dataType)        |             [cloneObject](#cloneObject)             |
-| [duplicateObject](#duplicateObject) | [extractProperty](#extractProperty) | [compareObjectByProperty](#compareObjectByProperty) |
+|     Data Comparison and Cloning     |                                                     |                                   |
+| :---------------------------------: | :-------------------------------------------------: | :-------------------------------: |
+|     [cloneObject](#cloneObject)     | [compareObjectByProperty](#compareObjectByProperty) |       [dataType](#dataType)       |
+| [duplicateObject](#duplicateObject) |         [extractProperty](#extractProperty)         | [objectEquality](#objectEquality) |
 
-|      Exercising       |                               |
-| :-------------------: | :---------------------------: |
-| [exercise](#exercise) | [consoleTable](#consoleTable) |
+|         Exercising        |                               |                       |
+| :-----------------------: | :---------------------------: | :-------------------: |
+| [adhocArray](#adhocArray) | [consoleTable](#consoleTable) | [exercise](#exercise) |
 
-|      Tools      |                     |                         |
-| :-------------: | :-----------------: | :---------------------: |
-| [sleep](#sleep) |    [lens](#lens)    |   [memoise](#memoise)   |
-| [curry](#curry) | [compose](#compose) | [enumerate](#enumerate) |
+|        Tools        |                     |                         |
+| :-----------------: | :-----------------: | :---------------------: |
+| [compose](#compose) |   [curry](#curry)   | [enumerate](#enumerate) |
+|    [lens](#lens)    | [memoise](#memoise) |     [sleep](#sleep)     |
 
 |  Ancillary  |
 | :---------: |
@@ -41,6 +41,10 @@ The above functions make considerable use of the technique called currying to re
 ### NB: The functions have been prepared with no input validation or additional error checking.
 
 ## Change Log
+
+### Update 4th January 2023
+
+-   Added the `adhocArray` function to the Exercising group.
 
 ### Update 11th December 2022
 
@@ -759,6 +763,82 @@ None.
 ### Description
 
 An alternative to the console.table function but generates HTML.
+
+---
+
+## [adhocArray](:#adhocArray)
+
+### Parameters
+
+-   length - [number >= 0], size of the array to generate
+-   transform - (optional) function for convering the incremental values in the array to something more meaningful to the test scenario.
+
+### Return Value
+
+An array of (length) elements. Using the defult transform the array will contain a list of numbers from zero to length - 1, incrementing by one each time. Given a valid transform function this will convert the default array to whatever is required.
+
+The primary use case for this function is to provide a known input (array) for a map, filter or reduce (etc.) method to exercise the associated transform, predicate or reducer functions.
+
+### Exceptions
+
+_adhocArray parameter 1 needs to be of type Number._
+_adhocArray parameter 1 needs to be greater than zero._
+_adhocArray parameter 2 needs to be of type Function._
+_adhocArray parameter 2 needs a single parameter._
+
+### Description
+
+A function for generating an array on demand and for a specific purpose, largely for testing but could have other applications.
+
+#### Example One
+```javascript
+console.log(`Using the default transform yields [0, 1, 2, 3, 4]`);
+console.table(Utility.adhocArray(5));
+```
+| index | value |
+| :---: | :---: |
+|   0   |   0   |
+|   1   |   1   |
+|   2   |   2   |
+|   3   |   3   |
+|   4   |   4   |
+
+#### Example Two
+```javascript
+console.log(`Using custom transform yields [2, 4, 6, 8, 10]`);
+console.table(Utility.adhocArray(5, i => (i + 1) * 2));
+```
+| index | value |
+| :---: | :---: |
+|   0   |   2   |
+|   1   |   4   |
+|   2   |   6   |
+|   3   |   8   |
+|   4   |  10   |
+
+#### Example Three
+```javascript
+console.log(`Using the default transform with a filter yields
+    ["2", "12", "20", "21", "22", "23", "24"]`);
+console.table(Utility.adhocArray(25).filter(i => `${i}`.includes('2')));
+```
+| index | value |
+| :---: | :---: |
+|   0   |   2   |
+|   1   |  12   |
+|   2   |  20   |
+|   3   |  21   |
+|   4   |  22   |
+|   5   |  23   |
+|   6   |  24   |
+
+#### Example Four
+```javascript
+console.log(`Using custom transform with a reducer yields 42`);
+console.log('Sum:', Utility.adhocArray(6, i => (i + 1) * 2))
+  .reduce((total, value) => total + value, 0);
+```
+Sum: 42
 
 ---
 
