@@ -4,7 +4,6 @@
   "description": "Collection of utility functions",
   "main": "utilities.js",
   "scripts": {
-    "min": "jsmin -o utilities.min.js utilities.js",
     "coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
     "watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
@@ -21,9 +20,6 @@
     "url": "https://github.com/TracyGJG/utilities/issues"
   },
   "homepage": "https://github.com/TracyGJG/utilities#readme",
-  "dependencies": {
-    "jsmin": "^1.0.1"
-  },
   "devDependencies": {
     "jest": "^28.1.3"
   }
