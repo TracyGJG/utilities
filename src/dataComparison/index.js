@@ -16,6 +16,12 @@ export const DATA_TYPES = JSON.parse(`{
 	"UNDEFINED": "undefined"
 }`);
 
+/*
+let isObjEmpty = (obj) => {
+    return Object.getOwnPropertyNames(obj).length === 0 && obj.constructor === Object
+}
+*/
+
 export function cloneObject(obj) {
 	if (obj === null || typeof obj !== 'object' || '__isActiveClone' in obj)
 		return obj;

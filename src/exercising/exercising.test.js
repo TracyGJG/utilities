@@ -106,6 +106,7 @@ describe('Exercising', () => {
 			expect(reducedResult).toBe(42);
 		});
 	});
+
 	describe('consoleTable', () => {
 		it('with an empty array', () => {
 			const testData = [];
@@ -141,6 +142,7 @@ describe('Exercising', () => {
 			expect(actualResult).toEqual(expectedResult);
 		});
 	});
+	
 	describe('Pure function Exercise', () => {
 		it('can test without an id', () => {
 			expect(exercise([10], [10])).toBeTruthy();

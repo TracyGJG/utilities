@@ -1,6 +1,27 @@
-import { sum } from './index.js';
+import { accumulatedAverage, sum } from './index.js';
 
 describe('Ancillaries', () => {
+	describe('Accumulated Average', () => {
+		it('can calculate with a single call', () => {
+			const result1 = accumulatedAverage(9, 5)(9);
+			expect(result1).toEqual(9);
+			const result2 = accumulatedAverage(9, 5)(45);
+			expect(result2).toEqual(15);
+		});
+		it('can calculate with incremental calls', () => {
+			const newAverage = accumulatedAverage();
+			expect(newAverage(1)).toEqual(1.0);
+			expect(newAverage(2)).toEqual(1.5);
+			expect(newAverage(3)).toEqual(2.0);
+			expect(newAverage(4)).toEqual(2.5);
+			expect(newAverage(5)).toEqual(3.0);
+		});
+		it('can re-calculate an average', () => {
+			const newAverage = accumulatedAverage();
+			expect(newAverage(45, 9, 6)).toEqual(15);
+		});
+	});
+
 	describe('sum', () => {
 		test('will throw an exception is arguments include a non-numeric', () => {
 			const exceptionTest = () => {

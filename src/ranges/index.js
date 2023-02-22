@@ -1,16 +1,3 @@
-export function accumulatedAverage(averageToDate = 0, sampleSize = 0) {
-	var runningTotal = averageToDate * (sampleSize || 1);
-	var currentSampleSize = sampleSize;
-	return (newValue, newAverage, newSampleSize) => {
-		currentSampleSize = newSampleSize || currentSampleSize + 1;
-		runningTotal =
-			(newAverage && newSampleSize
-				? newAverage * (newSampleSize - 1)
-				: runningTotal) + newValue;
-		return runningTotal / currentSampleSize;
-	};
-}
-
 export function clampRange(min, max) {
 	return value => Math.min(Math.max(value, min), max);
 }

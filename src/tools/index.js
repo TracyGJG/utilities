@@ -62,7 +62,7 @@ export function enumerate(source, options = {}) {
 export function lens(...props) {
 	const _props = props
 		.join('.')
-		.split(/[\[\]?\.]+/)
+		.split(/\]?\??\.\[?|\]?\[|\]/)
 		.filter(item => item !== '');
 	return obj => _props.reduce((ob, pr) => ob?.[pr], obj);
 }

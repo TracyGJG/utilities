@@ -97,99 +97,108 @@ describe('Tools', () => {
 		});
 	});
 	describe('Lens', () => {
-		const testObjects = [
-			null,
-			{},
-			[],
-			{ a: 42 },
-			[42],
-			{ a: { b: 42 } },
-			[{ b: 42 }],
-			[[42]],
-			{ a: [42] },
-		];
+		const testObjects = {
+			nullTest: null,
+			emptyObject: {},
+			emptyArray: [],
+
+			simpleObject: { a: 42 },
+			nestedObject: { a: { b: 42 } },
+			arrayInObject: { a: [42] },
+
+			simpleArray: [42],
+			nestedArray: [[42]],
+			objectInArray: [{ b: 42 }],
+		};
 
 		describe('with missing item', () => {
 			it('can be managed in a null object', () => {
 				const lookup = lens('a');
-				expect(lookup(testObjects[0])).not.toBeDefined();
+				expect(lookup(testObjects.nullTest)).not.toBeDefined();
 			});
 
 			it('can be managed in an object', () => {
 				const lookup = lens('a');
-				expect(lookup(testObjects[1])).not.toBeDefined();
+				expect(lookup(testObjects.emptyObject)).not.toBeDefined();
 			});
 
 			it('can be managed in an object (indirect args)', () => {
 				const lookup = lens('a', 'c');
-				expect(lookup(testObjects[1])).not.toBeDefined();
+				expect(lookup(testObjects.emptyObject)).not.toBeDefined();
 			});
 
 			it('can be managed in an object (direct args)', () => {
 				const lookup = lens('a.c');
-				expect(lookup(testObjects[1])).not.toBeDefined();
+				expect(lookup(testObjects.emptyObject)).not.toBeDefined();
 			});
 
 			it('can be managed in an object (optional args)', () => {
 				const lookup = lens('a?.c');
-				expect(lookup(testObjects[1])).not.toBeDefined();
+				expect(lookup(testObjects.emptyObject)).not.toBeDefined();
 			});
 
 			it('can be managed in an array', () => {
 				const lookup = lens(0);
-				expect(lookup(testObjects[2])).not.toBeDefined();
+				expect(lookup(testObjects.emptyArray)).not.toBeDefined();
 			});
 		});
 
-		describe('locate an item', () => {
+		describe('locate an object property', () => {
 			it('can be managed in an object', () => {
 				const lookup = lens('a');
-				expect(lookup(testObjects[3])).toBe(42);
-			});
-
-			it('can be managed in an array', () => {
-				const lookup = lens(0);
-				expect(lookup(testObjects[4])).toBe(42);
+				expect(lookup(testObjects.simpleObject)).toBe(42);
 			});
 
 			it('can be managed in an object of an object (individual property args)', () => {
 				const lookup = lens('a', 'b');
-				expect(lookup(testObjects[5])).toBe(42);
+				expect(lookup(testObjects.nestedObject)).toBe(42);
 			});
 
 			it('can be managed in an object of an object (mandatory property args)', () => {
 				const lookup = lens('a.b');
-				expect(lookup(testObjects[5])).toBe(42);
+				expect(lookup(testObjects.nestedObject)).toBe(42);
 			});
 
 			it('can be managed in an object of an object (optional property args)', () => {
 				const lookup = lens('a?.b');
-				expect(lookup(testObjects[5])).toBe(42);
-			});
-
-			it('can be managed in an object of an object (optional array args)', () => {
-				const lookup = lens('a?.[0]');
-				expect(lookup(testObjects[8])).toBe(42);
-			});
-
-			it('can be managed in an object of an array (args)', () => {
-				const lookup = lens(0, 'b');
-				expect(lookup(testObjects[6])).toBe(42);
-			});
-
-			it('can be managed in an array of an array (string)', () => {
-				const lookup = lens('[0][0]');
-				expect(lookup(testObjects[7])).toBe(42);
-			});
-
-			it('can be managed in an array of an object (string)', () => {
-				const lookup = lens('a[0]');
-				expect(lookup(testObjects[8])).toBe(42);
+				expect(lookup(testObjects.nestedObject)).toBe(42);
 			});
 
 			it('can be managed in an array of an object (args)', () => {
 				const lookup = lens('a', 0);
-				expect(lookup(testObjects[8])).toBe(42);
+				expect(lookup(testObjects.arrayInObject)).toBe(42);
+			});
+
+			it('can be managed in an array of an object (string)', () => {
+				const lookup = lens('a[0]');
+				expect(lookup(testObjects.arrayInObject)).toBe(42);
+			});
+
+			it('can be managed in an object of an object (optional array args)', () => {
+				const lookup = lens('a?.[0]');
+				expect(lookup(testObjects.arrayInObject)).toBe(42);
+			});
+		});
+
+		describe('locate an element of an array', () => {
+			it('can be managed in an array', () => {
+				const lookup = lens(0);
+				expect(lookup(testObjects.simpleArray)).toBe(42);
+			});
+
+			it('can be managed in an object of an array (args)', () => {
+				const lookup = lens(0, 'b');
+				expect(lookup(testObjects.objectInArray)).toBe(42);
+			});
+
+			it('can be managed in an array of an array (string)', () => {
+				const lookup = lens('[0][0]');
+				expect(lookup(testObjects.nestedArray)).toBe(42);
+			});
+
+			it('can be managed in an array of an array (indexes)', () => {
+				const lookup = lens(0, 0);
+				expect(lookup(testObjects.nestedArray)).toBe(42);
 			});
 		});
 	});

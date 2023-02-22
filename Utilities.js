@@ -1,4 +1,4 @@
-import { sum } from './src/ancillaries/index.js';
+import { accumulatedAverage, sum } from './src/ancillaries/index.js';
 import {
 	groupBy,
 	intersectArrays,
@@ -26,7 +26,6 @@ import {
 } from './src/dataConverters/index.js';
 import { adhocArray, consoleTable, exercise } from './src/exercising/index.js';
 import {
-	accumulatedAverage,
 	clampRange,
 	inRange,
 	liniarInterpolate,

@@ -1,5 +1,4 @@
 import {
-	accumulatedAverage,
 	clampRange,
 	inRange,
 	liniarInterpolate,
@@ -11,26 +10,6 @@ import {
 } from './index.js';
 
 describe('Ranges', () => {
-	describe('Accumulated Average', () => {
-		it('can calculate with a single call', () => {
-			const result1 = accumulatedAverage(9, 5)(9);
-			expect(result1).toEqual(9);
-			const result2 = accumulatedAverage(9, 5)(45);
-			expect(result2).toEqual(15);
-		});
-		it('can calculate with incremental calls', () => {
-			const newAverage = accumulatedAverage();
-			expect(newAverage(1)).toEqual(1.0);
-			expect(newAverage(2)).toEqual(1.5);
-			expect(newAverage(3)).toEqual(2.0);
-			expect(newAverage(4)).toEqual(2.5);
-			expect(newAverage(5)).toEqual(3.0);
-		});
-		it('can re-calculate an average', () => {
-			const newAverage = accumulatedAverage();
-			expect(newAverage(45, 9, 6)).toEqual(15);
-		});
-	});
 	describe('Clamp Range', () => {
 		it('can clamp the range between 50 and 60', () => {
 			const clampedRange = clampRange(50, 60);

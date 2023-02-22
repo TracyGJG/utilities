@@ -1,4 +1,4 @@
-import { DATA_TYPES, dataType } from '../dataComparison/index.js';
+import { DATA_TYPES, dataType } from '../dataComparison';
 
 export function adhocArray(length = 1, transform = _ => _) {
 	if (dataType(length) !== DATA_TYPES.NUMBER)
@@ -10,7 +10,7 @@ export function adhocArray(length = 1, transform = _ => _) {
 	if (transform.length !== 1)
 		throw Error('Error: adhocArray parameter 2 needs a single parameter.');
 
-	return [...Array(length)].map((_, i) => transform(i));
+	return [...Array(length).keys()].map(transform);
 }
 
 export function consoleTable(arr) {
