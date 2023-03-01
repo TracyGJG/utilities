@@ -1,4 +1,4 @@
-import { accumulatedAverage, sum } from './src/ancillaries/index.js';
+import { accumulatedAverage, mapGetter, sum } from './src/ancillaries/index.js';
 import {
 	groupBy,
 	intersectArrays,
@@ -69,6 +69,7 @@ export {
 	longDay,
 	longMonth,
 	loopRange,
+	mapGetter,
 	mapRanges,
 	memoize,
 	normaliseRange,

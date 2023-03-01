@@ -2,11 +2,11 @@
 
 A collection of utility functions I find useful.
 
-|                 Ranges                  |                               |                         |
-| :-------------------------------------: | :---------------------------: | :---------------------: |
-|  [acculatedAverage](#acculatedAverage)  |   [clampRange](#clampRange)   |   [inRange](#inRange)   |
-| [liniarInterpolate](#liniarInterpolate) |    [loopRange](#loopRange)    | [mapRanges](#mapRanges) |
-|    [normaliseRange](#normaliseRange)    | [rangeBetween](#rangeBetween) | [rangeFrom](#rangeFrom) |
+|            Ranges             |                         |                                         |
+| :---------------------------: | :---------------------: | :-------------------------------------: |
+|    clampRange](#clampRange)   |   [inRange](#inRange)   | [liniarInterpolate](#liniarInterpolate) |
+|    [loopRange](#loopRange)    | [mapRanges](#mapRanges) |    [normaliseRange](#normaliseRange)    |
+| [rangeBetween](#rangeBetween) | [rangeFrom](#rangeFrom) |                                         |
 
 |           Arrays              |                                     |                                   |
 | :---------------------------: | :---------------------------------: | :-------------------------------: |
@@ -32,15 +32,19 @@ A collection of utility functions I find useful.
 | [compose](#compose) |   [curry](#curry)   | [enumerate](#enumerate) |
 |    [lens](#lens)    | [memoise](#memoise) |     [sleep](#sleep)     |
 
-|  Ancillary  |
-| :---------: |
-| [sum](#sum) |
+|  Ancillary                              |                         |             |
+| :-------------------------------------: | :---------------------: | :---------: |
+|  [acculatedAverage](#acculatedAverage)  | [mapGetter](#mapGetter) | [sum](#sum) |
 
 The above functions make considerable use of the technique called currying to return a specialised function. This saves on suppling parameters that are not expected to change.
 
 ### NB: The functions have been prepared with no input validation or additional error checking.
 
 ## Change Log
+
+### Update 1st March 2023
+
+-   Added the `mapGetter` function to the Ancillaries group.
 
 ### Update 4th January 2023
 
@@ -124,43 +128,6 @@ Following the advice given in [Valentino Gagliardi's article](https://www.valent
 ---
 
 # Ranges
-
-## [acculatedAverage](:#acculatedAverage)
-
-### Parameters
-
-#### Initial call
-
--   averageToDate: Current average before the new Value arrived. (defaulted to 0)
--   sampleSize: Number of values in the sample, including the new Value. (defaulted to 0)
-
-#### Subsequent calls
-
--   newValue - New data point to be included in the average calculation.
--   newAverge - Replacement value of the averageToDate. (optional)
--   newSampleSize - Replacement value of the sampleSize. (optional)
-
-### Return Value
-
-The new calculated average.
-
-### Description
-
-Utility for recalculating an average as the sample size increased. There are two ways of using the function, one-off and incremental, but both employ partial application.
-
-One-off, involves calling _acculmulateAverage_ with the current average and the size of the sample (number of values from which the average is calculated.) This provides the partial application (specialised function) that can then be called with the value to be included in the average.
-
-`Utility.accumulatedAverage(currentAverage, sampleSize)(newValue)`
-
-The incremental appraoch of using the function involves placing the initial call without parameters (or with the defaults), to get the specialised function.
-
-`var accumulateAverage = Utility.accumulatedAverage();`
-
-`var newAverage = accumulateAverage(newSample)); // newAverage = (0 + newSample) / (0 + 1)`
-
-Subsequent calls to _accumulateAverage_ with include additional values as part of the new average.
-
----
 
 ## [clampRange](:#clampRange)
 
@@ -962,6 +929,67 @@ Options enable the enumeration keys to be converted to GLOBAL_CASE, or configure
 ---
 
 # Ancillaries
+
+## [acculatedAverage](:#acculatedAverage)
+
+### Parameters
+
+#### Initial call
+
+-   averageToDate: Current average before the new Value arrived. (defaulted to 0)
+-   sampleSize: Number of values in the sample, including the new Value. (defaulted to 0)
+
+#### Subsequent calls
+
+-   newValue - New data point to be included in the average calculation.
+-   newAverge - Replacement value of the averageToDate. (optional)
+-   newSampleSize - Replacement value of the sampleSize. (optional)
+
+### Return Value
+
+The new calculated average.
+
+### Description
+
+Utility for recalculating an average as the sample size increased. There are two ways of using the function, one-off and incremental, but both employ partial application.
+
+One-off, involves calling _acculmulateAverage_ with the current average and the size of the sample (number of values from which the average is calculated.) This provides the partial application (specialised function) that can then be called with the value to be included in the average.
+
+`Utility.accumulatedAverage(currentAverage, sampleSize)(newValue)`
+
+The incremental appraoch of using the function involves placing the initial call without parameters (or with the defaults), to get the specialised function.
+
+`var accumulateAverage = Utility.accumulatedAverage();`
+
+`var newAverage = accumulateAverage(newSample)); // newAverage = (0 + newSample) / (0 + 1)`
+
+Subsequent calls to _accumulateAverage_ with include additional values as part of the new average.
+
+---
+
+## [mapGetter](:#mapGetter)
+
+### Parameters
+
+#### Initial call
+
+-   mapInstance: The map instance potentially containing an entity. 
+-   entityFactory: Function for creating a new entity when not found in the map.
+
+#### Subsequent calls
+
+-   entityId - The Id of the entity to be retrieved from the map or created.
+-   entityParams - An object containing additional paraeters required to create an entity. (optional)
+
+### Return Value
+
+The entity retrieved from the map or created anew.
+
+### Description
+
+Utility for creating and retrieving entities from a map object.
+
+---
 
 ## [sum](:#sum)
 

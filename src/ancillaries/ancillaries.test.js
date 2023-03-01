@@ -1,4 +1,4 @@
-import { accumulatedAverage, sum } from './index.js';
+import { accumulatedAverage, mapGetter, sum } from './index.js';
 
 describe('Ancillaries', () => {
 	describe('Accumulated Average', () => {
@@ -19,6 +19,36 @@ describe('Ancillaries', () => {
 		it('can re-calculate an average', () => {
 			const newAverage = accumulatedAverage();
 			expect(newAverage(45, 9, 6)).toEqual(15);
+		});
+	});
+
+	describe('Map Getter', () => {
+		const entityGetter = mapGetter(entityMap, (id, { who }) => ({
+			id,
+			who,
+		}));
+
+		it('can obtain a brand new entity', () => {
+			const entityMap = new Map();
+			expect(entityMap.has('hello')).toStrictEqual(false);
+
+			const entity = entityGetter('hello', { who: 'World' });
+			expect(entityMap.has('hello')).toStrictEqual(true);
+			expect(entity.who).toBe('World');
+		});
+
+		it('can obtain a pre-existing entity', () => {
+			const entityMap = new Map();
+			expect(entityMap.has('hello')).toStrictEqual(false);
+
+			entityMap.set('hello', {
+				id: 'hello',
+				who: 'World',
+			});
+			expect(entityMap.has('hello')).toStrictEqual(true);
+
+			const entity = entityGetter('hello');
+			expect(entity.who).toBe('World');
 		});
 	});
 

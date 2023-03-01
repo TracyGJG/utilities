@@ -13,6 +13,14 @@ export function accumulatedAverage(averageToDate = 0, sampleSize = 0) {
 	};
 }
 
+export function mapGetter(mapInstance, entityFactory) {
+	return (entityId, entityParams) =>
+		mapInstance.get(entityId) ||
+		mapInstance
+			.set(entityId, entityFactory(entityId, entityParams))
+			.get(entityId);
+}
+
 export function sum(...nums) {
 	let _sum = 0;
 	nums.forEach(num => {
