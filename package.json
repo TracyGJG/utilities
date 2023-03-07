@@ -2,7 +2,7 @@
   "name": "utilities",
   "version": "1.0.0",
   "description": "Collection of utility functions",
-  "main": "utilities.js",
+  "main": "utilities.html",
   "scripts": {
     "coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
     "watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",

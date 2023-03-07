@@ -16,12 +16,6 @@ export const DATA_TYPES = JSON.parse(`{
 	"UNDEFINED": "undefined"
 }`);
 
-/*
-let isObjEmpty = (obj) => {
-    return Object.getOwnPropertyNames(obj).length === 0 && obj.constructor === Object
-}
-*/
-
 export function cloneObject(obj) {
 	if (obj === null || typeof obj !== 'object' || '__isActiveClone' in obj)
 		return obj;
@@ -76,6 +70,12 @@ export function duplicateObject(srcObj) {
 export function extractProperty(...propertyNames) {
 	return obj =>
 		propertyNames.reduce((o, p) => (o.hasOwnProperty(p) ? o[p] : null), obj);
+}
+
+export function isEmptyObject(obj) {
+	return (
+		obj && !Object.getOwnPropertyNames(obj).length && obj.constructor === Object
+	);
 }
 
 export function objectEquality(obj1, obj2) {

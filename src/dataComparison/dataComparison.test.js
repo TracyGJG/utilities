@@ -5,10 +5,34 @@ import {
 	dataType,
 	duplicateObject,
 	extractProperty,
+	isEmptyObject,
 	objectEquality,
 } from './index.js';
 
 describe('Comparison and Cloning', () => {
+	describe('Object is empty', () => {
+		it('is false for a populated object', () => {
+			let userDetails = {
+				name: 'John Doe',
+				username: 'jonnydoe',
+				age: 14,
+			};
+			expect(isEmptyObject(userDetails)).toStrictEqual(false);
+		});
+		it('is true for a default object', () => {
+			let myEmptyObj = {};
+			expect(isEmptyObject(myEmptyObj)).toStrictEqual(true);
+		});
+		it('is null for a variable with a null value', () => {
+			let nullObj = null;
+			expect(isEmptyObject(nullObj)).toBeNull();
+		});
+		it('is undefined for a variable of undefined value', () => {
+			let undefinedObj;
+			expect(isEmptyObject(undefinedObj)).not.toBeDefined();
+		});
+	});
+
 	describe('Object Equality', () => {
 		it('can compare similar nested objects', () => {
 			const obj1 = {

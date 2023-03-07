@@ -1,4 +1,4 @@
-import { DATA_TYPES, dataType } from '../dataComparison';
+import { DATA_TYPES, dataType } from '../dataComparison/index.js';
 
 export function adhocArray(length = 1, transform = _ => _) {
 	if (dataType(length) !== DATA_TYPES.NUMBER)

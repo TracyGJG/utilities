@@ -1,4 +1,10 @@
-import { accumulatedAverage, mapGetter, sum } from './src/ancillaries/index.js';
+import {
+	accumulatedAverage,
+	mapGetter,
+	random,
+	sum,
+	webStore,
+} from './src/ancillaries/index.js';
 import {
 	groupBy,
 	intersectArrays,
@@ -14,6 +20,7 @@ import {
 	dataType,
 	duplicateObject,
 	extractProperty,
+	// isObjectEmpty,
 	objectEquality,
 } from './src/dataComparison/index.js';
 import {
@@ -74,6 +81,7 @@ export {
 	memoize,
 	normaliseRange,
 	objectEquality,
+	random,
 	rangeBetween,
 	rangeFrom,
 	reconcileArrays,
@@ -84,4 +92,5 @@ export {
 	sum,
 	transposeArray,
 	unionArrays,
+	webStore,
 };

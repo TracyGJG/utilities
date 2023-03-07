@@ -1,4 +1,4 @@
-import { accumulatedAverage, mapGetter, sum } from './index.js';
+import { accumulatedAverage, mapGetter, random, sum } from './index.js';
 
 describe('Ancillaries', () => {
 	describe('Accumulated Average', () => {
@@ -23,13 +23,12 @@ describe('Ancillaries', () => {
 	});
 
 	describe('Map Getter', () => {
-		const entityGetter = mapGetter(entityMap, (id, { who }) => ({
-			id,
-			who,
-		}));
-
 		it('can obtain a brand new entity', () => {
 			const entityMap = new Map();
+			const entityGetter = mapGetter(entityMap, (id, { who }) => ({
+				id,
+				who,
+			}));
 			expect(entityMap.has('hello')).toStrictEqual(false);
 
 			const entity = entityGetter('hello', { who: 'World' });
@@ -39,6 +38,10 @@ describe('Ancillaries', () => {
 
 		it('can obtain a pre-existing entity', () => {
 			const entityMap = new Map();
+			const entityGetter = mapGetter(entityMap, (id, { who }) => ({
+				id,
+				who,
+			}));
 			expect(entityMap.has('hello')).toStrictEqual(false);
 
 			entityMap.set('hello', {
@@ -49,6 +52,33 @@ describe('Ancillaries', () => {
 
 			const entity = entityGetter('hello');
 			expect(entity.who).toBe('World');
+		});
+	});
+
+	describe('random', () => {
+		test('using default parameters', () => {
+			const randomTwo = random(2);
+			const result = randomTwo();
+			expect(result).toBeGreaterThanOrEqual(0);
+			expect(result).toBeLessThan(2);
+		});
+
+		test('using minimal limit', () => {
+			const random1_3 = random(2, 1);
+			const result = random1_3();
+			expect(result).toBeGreaterThanOrEqual(1);
+			expect(result).toBeLessThan(3);
+		});
+
+		test('using minimal limit and precision', () => {
+			const random1_3_to_2dp = random(2, 1, 2);
+			const result = random1_3_to_2dp();
+			expect(result).toBeGreaterThanOrEqual(1);
+			expect(result).toBeLessThan(3);
+
+			const rnd = (max, min, mul, rand) =>
+				Math.floor(rand * (max - min) * mul) / mul + min;
+			expect(rnd(2, 1, 100, 0.54321)).toEqual(1.54);
 		});
 	});
 

@@ -2,45 +2,50 @@
 
 A collection of utility functions I find useful.
 
-|            Ranges             |                         |                                         |
-| :---------------------------: | :---------------------: | :-------------------------------------: |
-|    clampRange](#clampRange)   |   [inRange](#inRange)   | [liniarInterpolate](#liniarInterpolate) |
-|    [loopRange](#loopRange)    | [mapRanges](#mapRanges) |    [normaliseRange](#normaliseRange)    |
-| [rangeBetween](#rangeBetween) | [rangeFrom](#rangeFrom) |                                         |
+<!-- #region Collection -->
+|            Ranges                     |                                                     |                                         |
+| :-----------------------------------: | :-------------------------------------------------: | :-------------------------------------: |
+|   [clampRange](#clampRange)           |   [inRange](#inRange)                               | [liniarInterpolate](#liniarInterpolate) |
+|    [loopRange](#loopRange)            | [mapRanges](#mapRanges)                             |    [normaliseRange](#normaliseRange)    |
+| [rangeBetween](#rangeBetween)         | [rangeFrom](#rangeFrom)                             |                                         |
+|                                       |                                                     |                                         |
+|           Arrays                      |                                                     |                                         |
+|      [groupBy](#groupBy)              | [intersectArrays](#intersectArrays)                 | [reconcileArray](#reconcileArray)       |
+| [replaceArray](#replaceArray)         |  [transposeArray](#transposeArray)                  |    [unionArrays](#unionArrays)          |
+|                                       |                                                     |                                         |
+|          Data Converters              |                                                     |                                         |
+| [base64decoding](#base64decoding)     | [base64encoding](#base64encoding)                   |    [longDay](#longDay)                  |
+|      [longMonth](#longMonth)          |       [shortDay](#shortDay)                         | [shortMonth](#shortMonth)               |
+|                                       |                                                     |                                         |
+|     Data Comparison and Cloning       |                                                     |                                         |
+|     [cloneObject](#cloneObject)       | [compareObjectByProperty](#compareObjectByProperty) |      [dataType](#dataType)              |
+| [duplicateObject](#duplicateObject)   |         [extractProperty](#extractProperty)         | [isEmptyObject](#isEmptyObject)         |
+|  [objectEquality](#objectEquality)    |                                                     |                                         |
+|                                       |                                                     |                                         |
+|         Exercising                    |                                                     |                                         |
+| [adhocArray](#adhocArray)             | [consoleTable](#consoleTable)                       | [exercise](#exercise)                   |
+|                                       |                                                     |                                         |
+|        Tools                          |                                                     |                                         |
+| [compose](#compose)                   |   [curry](#curry)                                   | [enumerate](#enumerate)                 |
+|    [lens](#lens)                      | [memoise](#memoise)                                 |     [sleep](#sleep)                     |
+|                                       |                                                     |                                         |
+|  Ancillary                            |                                                     |                                         |
+| [acculatedAverage](#acculatedAverage) | [mapGetter](#mapGetter)                             | [random](#random)                       |
+|              [sum](#sum)              |  [webStore](#webStore)                              |                                         |
 
-|           Arrays              |                                     |                                   |
-| :---------------------------: | :---------------------------------: | :-------------------------------: |
-|      [groupBy](#groupBy)      | [intersectArrays](#intersectArrays) | [reconcileArray](#reconcileArray) |
-| [replaceArray](#replaceArray) |  [transposeArray](#transposeArray)  |    [unionArrays](#unionArrays)    |
-
-|          Data Converters          |                                   |                           |
-| :-------------------------------: | :-------------------------------: | :-----------------------: |
-| [base64decoding](#base64decoding) | [base64encoding](#base64encoding) |    [longDay](#longDay)    |
-|      [longMonth](#longMonth)      |       [shortDay](#shortDay)       | [shortMonth](#shortMonth) |
-
-|     Data Comparison and Cloning     |                                                     |                                   |
-| :---------------------------------: | :-------------------------------------------------: | :-------------------------------: |
-|     [cloneObject](#cloneObject)     | [compareObjectByProperty](#compareObjectByProperty) |       [dataType](#dataType)       |
-| [duplicateObject](#duplicateObject) |         [extractProperty](#extractProperty)         | [objectEquality](#objectEquality) |
-
-|         Exercising        |                               |                       |
-| :-----------------------: | :---------------------------: | :-------------------: |
-| [adhocArray](#adhocArray) | [consoleTable](#consoleTable) | [exercise](#exercise) |
-
-|        Tools        |                     |                         |
-| :-----------------: | :-----------------: | :---------------------: |
-| [compose](#compose) |   [curry](#curry)   | [enumerate](#enumerate) |
-|    [lens](#lens)    | [memoise](#memoise) |     [sleep](#sleep)     |
-
-|  Ancillary                              |                         |             |
-| :-------------------------------------: | :---------------------: | :---------: |
-|  [acculatedAverage](#acculatedAverage)  | [mapGetter](#mapGetter) | [sum](#sum) |
-
-The above functions make considerable use of the technique called currying to return a specialised function. This saves on suppling parameters that are not expected to change.
+The above functions make considerable use of the technique called currying/partial-application to return a specialised function. This saves on suppling parameters that are not expected to change.
 
 ### NB: The functions have been prepared with no input validation or additional error checking.
 
+---
+<!-- #endregion --> 
+
 ## Change Log
+
+### Update 7th March 2023
+
+-   Added `isEmptyObject` function to Data Comparison group.
+-   Added Ancillary functions `random` and `webStore`.
 
 ### Update 1st March 2023
 
@@ -588,23 +593,6 @@ Provides the long form of the month of year in the given locale, based in a nume
 
 # Data Comparison and Cloning
 
-## [objectEquality](:#objectEquality)
-
-### Parameters
-
--   obj1 - first object in comparison
--   obj2 - second object in comparison
-
-### Return Value
-
-Boolean flag indication if the values held withint _obj1_ are the same as those in _obj2_.
-
-### Description
-
-Compares two objects and reports in they are equivalent (contain the same primitives.)
-
----
-
 ## [cloneObject](:#cloneObject)
 
 ### Parameters
@@ -618,22 +606,6 @@ A new object with the same structure as the input object and copies of the primi
 ### Description
 
 Creates a renew object with the same structure of the input, containing copies of the primitive values.
-
----
-
-## [duplicateObject](:#duplicateObject)
-
-### Parameters
-
--   obj - source object to be duplicated
-
-### Return Value
-
-A new object with the same structure as the input object and copies of the primitive values and more complicated objects.
-
-### Description
-
-Creates a renew object with the same structure of the input, containing copies of the primitive values and objects such as RegExp, Date and Function.
 
 ---
 
@@ -654,21 +626,6 @@ Creates a comparator function for use with an array of objects containing the gi
 
 ---
 
-## [extractProperty](:#extractProperty)
-
-### Parameters
-
--   propertyNames - a series of property names (strings) provided as arguments that define the path within an object from where the value/object can be extracted.
-
-### Return Value
-
-A extractor function that returns the value/object from a given object, using the intial property path.
-
-### Description
-
-Creates an extractor function that, given an object, will use the list of property names to extract the end property value/object.
-
----
 
 ## [dataType](:#dataType)
 
@@ -693,6 +650,69 @@ Lowercase string representation of the type of data held in the variable. This i
 ### Description
 
 Identifies which of the above Standard data Type being used by the supplied argument.   
+
+## [duplicateObject](:#duplicateObject)
+
+### Parameters
+
+-   obj - source object to be duplicated
+
+### Return Value
+
+A new object with the same structure as the input object and copies of the primitive values and more complicated objects.
+
+### Description
+
+Creates a renew object with the same structure of the input, containing copies of the primitive values and objects such as RegExp, Date and Function.
+
+---
+
+## [extractProperty](:#extractProperty)
+
+### Parameters
+
+-   propertyNames - a series of property names (strings) provided as arguments that define the path within an object from where the value/object can be extracted.
+
+### Return Value
+
+A extractor function that returns the value/object from a given object, using the intial property path.
+
+### Description
+
+Creates an extractor function that, given an object, will use the list of property names to extract the end property value/object.
+
+---
+
+## [isEmptyObject](:#isEmptyObject)
+
+### Parameters
+
+-   obj - An object that could be empty, populated, null or undefined.
+
+### Return Value
+
+Boolean flag indication if the value is an object, null or undefined.
+
+### Description
+
+Compares two objects and reports in they are equivalent (contain the same primitives.)
+
+---
+
+## [objectEquality](:#objectEquality)
+
+### Parameters
+
+-   obj1 - first object in comparison
+-   obj2 - second object in comparison
+
+### Return Value
+
+Boolean flag indication if the values held withint _obj1_ are the same as those in _obj2_.
+
+### Description
+
+Compares two objects and reports in they are equivalent (contain the same primitives.)
 
 ---
 
@@ -991,6 +1011,20 @@ Utility for creating and retrieving entities from a map object.
 
 ---
 
+## [random](:#random)
+
+### Parameters
+
+-   max - Highest value of the random range
+-   min - Lowest value of the random range (default 0)
+-   precision - Number of decimal digits allowed in the random value as a power of 10 (default 0 = 10^0)
+
+### Return Value
+
+A function that generates a random value within the `min` and `max` range with a given decimal precision.
+
+---
+
 ## [sum](:#sum)
 
 ### Parameters
@@ -1010,5 +1044,27 @@ The sum of all the provided values.
 ### Description
 
 Calculates the sum of all arguments supplied.
+
+---
+
+## [webStore](:#webStore)
+
+### Parameters
+
+-   keyName - storage key
+-   localWebStorage - flag indicating the type of web storage (default true = localStorage, false = sessionStorage)
+
+### Return Value
+
+An object of functions for the manipulation of data in Web Storage.
+
+-   clear: Wipes all keys and values from web storage.
+-   get: Retrieves the value from web storage with the previously given key.
+-   remove: Wipes the specified key and value from the web storage.
+-   set: Stores the value in web storage with the previously given key.
+
+### Description
+
+Provides an object of web storage utility methods.
 
 ---
