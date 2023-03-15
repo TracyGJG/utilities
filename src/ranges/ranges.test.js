@@ -33,11 +33,11 @@ describe('Ranges', () => {
 	describe('Liniar Interpolate', () => {
 		it('can liniarly interpolate the range between 50 and 60', () => {
 			const liniarInterlopated = liniarInterpolate(50, 60);
+			expect(liniarInterlopated(-0.5)).toEqual(45);
 			expect(liniarInterlopated(0)).toEqual(50);
-			expect(liniarInterlopated(0.25)).toEqual(52.5);
 			expect(liniarInterlopated(0.5)).toEqual(55);
-			expect(liniarInterlopated(0.75)).toEqual(57.5);
 			expect(liniarInterlopated(1)).toEqual(60);
+			expect(liniarInterlopated(1.5)).toEqual(65);
 		});
 	});
 	describe('Map Ranges', () => {
@@ -100,10 +100,10 @@ describe('Ranges', () => {
 			expect(rangeFrom(10, 20, 2)[19]).toEqual(48);
 		});
 		it('can generate a range - pair of arguments, with step function', () => {
-			const fn = _ => 2 ** _;
-			expect(rangeFrom(10, 20, fn).length).toEqual(20);
-			expect(rangeFrom(10, 20, fn)[2]).toEqual(14);
-			expect(rangeFrom(10, 20, fn)[19]).toEqual(524298);
+			const transformFn = _ => 2 ** _;
+			expect(rangeFrom(10, 20, transformFn).length).toEqual(20);
+			expect(rangeFrom(10, 20, transformFn)[2]).toEqual(14);
+			expect(rangeFrom(10, 20, transformFn)[19]).toEqual(524298);
 		});
 	});
 	describe('In Range', () => {
@@ -127,19 +127,19 @@ describe('Ranges', () => {
 			expect(_inRange(200, 250)).toBeTruthy();
 			expect(_inRange(201, 250)).toBeFalsy();
 		});
-		it('can throw an exception when supplied with invalid input', () => {
+		it('can throw a SyntaxError exception when supplied with invalid input', () => {
 			const expectionTestNoArgs = () => {
 				inRange();
 			};
-			expect(expectionTestNoArgs).toThrow();
+			expect(expectionTestNoArgs).toThrow(SyntaxError);
 			const expectionTestOneArg = () => {
 				inRange(100);
 			};
-			expect(expectionTestNoArgs).toThrow();
+			expect(expectionTestNoArgs).toThrow(SyntaxError);
 			const expectionTestThreeArg = () => {
 				inRange(100, 200, 300);
 			};
-			expect(expectionTestThreeArg).toThrow();
+			expect(expectionTestThreeArg).toThrow(SyntaxError);
 		});
 	});
 	describe('Loop Range', () => {

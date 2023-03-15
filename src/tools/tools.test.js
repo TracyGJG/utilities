@@ -1,5 +1,7 @@
 import { compose, curry, enumerate, lens, memoize, sleep } from './index.js';
 
+import { jest } from '@jest/globals';
+
 describe('Tools', () => {
 	describe('Sleep', () => {
 		it('can delay progress by a given interval (within a period)', async () => {
@@ -17,31 +19,45 @@ describe('Tools', () => {
 		});
 	});
 	describe('Memoise', () => {
-		let globalCount = 0;
-		function delayedCube(x, y, z) {
-			globalCount++;
-			return x * y * z;
-		}
+		const mockDelayedCube = (x, y, z) => x * y * z;
+		let delayedCube;
+
+		beforeEach(() => {
+			delayedCube = jest.fn(mockDelayedCube);
+		});
+
+		afterEach(() => {
+			jest.resetAllMocks();
+		});
 
 		it('can increase globalCount for each call (not memoised)', () => {
-			globalCount = 0;
-			expect(delayedCube(2, 3, 7)).toBe(42);
-			expect(globalCount).toBe(1);
-			expect(delayedCube(2, 3, 7)).toBe(42);
-			expect(globalCount).toBe(2);
-			expect(delayedCube(2, 3, 7)).toBe(42);
-			expect(globalCount).toBe(3);
+			const callDelayedCube = () => delayedCube(2, 3, 7);
+			expect(delayedCube).toHaveBeenCalledTimes(0);
+
+			expect(callDelayedCube()).toBe(42);
+			expect(delayedCube).toHaveBeenCalledTimes(1);
+
+			expect(callDelayedCube()).toBe(42);
+			expect(delayedCube).toHaveBeenCalledTimes(2);
+
+			expect(callDelayedCube()).toBe(42);
+			expect(delayedCube).toHaveBeenCalledTimes(3);
 		});
 
 		it('can increase globalCount just once for each call (memoised)', () => {
-			globalCount = 0;
-			const delayedCube_ = memoize(delayedCube);
-			expect(delayedCube_(2, 3, 7)).toBe(42);
-			expect(globalCount).toBe(1);
-			expect(delayedCube_(2, 3, 7)).toBe(42);
-			expect(globalCount).toBe(1);
-			expect(delayedCube_(2, 3, 7)).toBe(42);
-			expect(globalCount).toBe(1);
+			const cache = new Map();
+			const delayedCube_ = memoize(delayedCube, cache);
+			const callDelayedCube = () => delayedCube_(2, 3, 7);
+			expect(delayedCube).toHaveBeenCalledTimes(0);
+
+			expect(callDelayedCube()).toBe(42);
+			expect(delayedCube).toHaveBeenCalledTimes(1);
+
+			expect(callDelayedCube()).toBe(42);
+			expect(delayedCube).toHaveBeenCalledTimes(1);
+
+			expect(callDelayedCube()).toBe(42);
+			expect(delayedCube).toHaveBeenCalledTimes(1);
 		});
 	});
 	describe('Curry', () => {

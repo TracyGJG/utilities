@@ -472,7 +472,7 @@ Takes a 2-dimensional array (matrix) and produces a new array where the rows of 
 
 ### Parameters
 
--   Function the identifies the group of a object in the array
+-   Function that identifies the group of an object in the array
 -   Source array of objects
 
 The arguments can be supplied at the same time or one at a time.
@@ -979,9 +979,9 @@ One-off, involves calling _acculmulateAverage_ with the current average and the 
 
 The incremental appraoch of using the function involves placing the initial call without parameters (or with the defaults), to get the specialised function.
 
-`var accumulateAverage = Utility.accumulatedAverage();`
+`const accumulateAverage = Utility.accumulatedAverage();`
 
-`var newAverage = accumulateAverage(newSample)); // newAverage = (0 + newSample) / (0 + 1)`
+`const newAverage = accumulateAverage(newSample)); // newAverage = (0 + newSample) / (0 + 1)`
 
 Subsequent calls to _accumulateAverage_ with include additional values as part of the new average.
 

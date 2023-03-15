@@ -67,9 +67,11 @@ export function lens(...props) {
 	return obj => _props.reduce((ob, pr) => ob?.[pr], obj);
 }
 
-export function memoize(fn, _cache = {}) {
-	return (...args) =>
-		(key => (_cache[key] = _cache[key] || fn(...args)))(JSON.stringify(args));
+export function memoize(fn, _cache = new Map()) {
+	return (...args) => {
+		const key = JSON.stringify(args);
+		return (_cache.has(key) ? _cache : _cache.set(key, fn(...args))).get(key);
+	};
 }
 
 export async function sleep(ms) {

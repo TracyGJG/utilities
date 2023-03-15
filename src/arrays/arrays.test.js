@@ -280,6 +280,7 @@ describe('Arrays', () => {
 			expect(Object.keys(resultGroupObject).length).toBe(2);
 			expect(Object.keys(resultGroupObject)[0]).toBe('alpha');
 			expect(Object.keys(resultGroupObject)[1]).toBe('beta');
+
 			expect(resultGroupObject.alpha.length).toBe(2);
 			expect(resultGroupObject.beta.length).toBe(1);
 			expect(resultGroupObject.alpha[0].id).toBe(1);

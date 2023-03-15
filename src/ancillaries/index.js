@@ -1,8 +1,8 @@
 import { DATA_TYPES, dataType } from '../dataComparison/index.js';
 
 export function accumulatedAverage(averageToDate = 0, sampleSize = 0) {
-	var runningTotal = averageToDate * (sampleSize || 1);
-	var currentSampleSize = sampleSize;
+	let runningTotal = averageToDate * (sampleSize || 1);
+	let currentSampleSize = sampleSize;
 	return (newValue, newAverage, newSampleSize) => {
 		currentSampleSize = newSampleSize || currentSampleSize + 1;
 		runningTotal =

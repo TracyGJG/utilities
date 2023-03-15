@@ -7,12 +7,12 @@ export function inRange(from, to) {
 		throw new SyntaxError(
 			'overlappingRanges needs to be provided with two primary values.'
 		);
-	var aFrom = Math.min(from, to);
-	var aTo = Math.max(from, to);
+	const aFrom = Math.min(from, to);
+	const aTo = Math.max(from, to);
 	return function check(from, to) {
-		var xTo = arguments.length == 1 ? from : to;
-		var bFrom = Math.min(from, xTo);
-		var bTo = Math.max(from, xTo);
+		const xTo = arguments.length === 1 ? from : to;
+		const bFrom = Math.min(from, xTo);
+		const bTo = Math.max(from, xTo);
 		return !(bTo < aFrom || bFrom > aTo);
 	};
 }
@@ -28,8 +28,8 @@ export function loopRange(max, min = 0) {
 }
 
 export function mapRanges(fromMin, fromMax, toMin, toMax) {
-	var norlaise = normaliseRange(fromMin, fromMax);
-	var interpolate = liniarInterpolate(toMin, toMax);
+	const norlaise = normaliseRange(fromMin, fromMax);
+	const interpolate = liniarInterpolate(toMin, toMax);
 	return value => interpolate(norlaise(value));
 }
 
@@ -42,7 +42,7 @@ export function rangeBetween(max, min = 0, step = 1) {
 }
 
 export function rangeFrom(init = 0, len = 1, step = 1) {
-	var stepFn = (_, inc) =>
-		(typeof step == 'number' ? step * inc : step(inc)) + init;
+	const stepFn = (_, inc) =>
+		(typeof step === 'number' ? step * inc : step(inc)) + init;
 	return [...Array(len)].map(stepFn);
 }

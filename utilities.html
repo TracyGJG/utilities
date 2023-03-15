@@ -10,55 +10,70 @@
             margin: 2em;
             border-collapse: collapse;
         }
+
+        body>div {
+            margin: 2em;
+        }
     </style>
 </head>
 
 <body>
     <h1>Utilities Test Screen</h1>
 
-    <div id="table1" class="table"></div>
-    <div id="table2" class="table"></div>
-    <div id="table3" class="table"></div>
+    <div id="example1" class="table"></div>
+    <div id="example2" class="table"></div>
+    <div id="example3" class="table"></div>
+    <div id="example4" class="table"></div>
+    <div id="svgDemo"></div>
 
     <script type="module">
-        import { exercise, consoleTable, random, webStore } from './utilities.js';
-
-        console.group('\nExercise - positive');
-        exercise(true, true);
-        exercise(!!{}, true, 'Object');
-        exercise(!![], true, 'Array');
-        exercise(!!1, true, 'Positive number');
-        exercise(!!-1, true, 'Negative number');
-        exercise(!!"_", true, 'Non-empty string');
-        console.groupEnd();
-
-        console.group('\nExercise - negative');
-        exercise(false, true);
-        exercise(!!undefined, true, 'undefined');
-        exercise(!!null, true, 'null');
-        exercise(!!NaN, true, 'NaN');
-        exercise(!!0, true, 'Zero');
-        exercise(!!"", true, 'Empty string');
-        console.groupEnd();
-
-        const testData = [
-            [1, 2, 3, 4, 5],
-            [
-                [1, 2, 3, 4],
-                [5, 6, 7, 8],
-            ],
-            [
-                { alpha: 1, beta: 2, gamma: 3, delta: 4 },
-                { alpha: 5, beta: 6, gamma: 7, delta: 8 },
-            ]
-        ];
-        const targets = document.querySelectorAll('.table');
-        testData.forEach((testDatum, index) => targets[index].innerHTML = consoleTable(testDatum));
+        import { exercise, consoleTable, random, webStore, ace, cde, cse, qs, qsa, ael } from './utilities.js';
 
         {
+            console.groupCollapsed('\nExercise');
+            console.group('\n\tpositive');
+            exercise(true, true);
+            exercise(!!{}, true, 'Object');
+            exercise(!![], true, 'Array');
+            exercise(!!1, true, 'Positive number');
+            exercise(!!-1, true, 'Negative number');
+            exercise(!!"_", true, 'Non-empty string');
+            console.groupEnd();
+
+            console.group('\n\tnegative');
+            exercise(false, true);
+            exercise(!!undefined, true, 'undefined');
+            exercise(!!null, true, 'null');
+            exercise(!!NaN, true, 'NaN');
+            exercise(!!0, true, 'Zero');
+            exercise(!!"", true, 'Empty string');
+            console.groupEnd();
+            console.groupEnd();
+        }
+
+        {
+            console.groupCollapsed('\nconsoleTable');
+            const testData = [
+                [1, 2, 3, 4, 5],
+                [
+                    [1, 2, 3, 4],
+                    [5, 6, 7, 8],
+                ],
+                [
+                    { alpha: 1, beta: 2, gamma: 3, delta: 4 },
+                    { alpha: 5, beta: 6, gamma: 7, delta: 8 },
+                ]
+            ];
+            const targets = document.querySelectorAll('.table');
+            testData.forEach((testDatum, index) => targets[index].innerHTML = consoleTable(testDatum));
+            console.groupEnd();
+        }
+
+        {
+            console.groupCollapsed(`\nrandom`);
             const randTwo = random(2);
             const randTwoValue = randTwo();
-            console.group(`\nrandTwo (${randTwoValue})`);
+            console.group(`\trandTwo (${randTwoValue})`);
             console.log(`randTwoValue >= 0 = ${randTwoValue >= 0}`);
             console.log(`randTwoValue < 2 = ${randTwoValue < 2}`);
             console.log(`randTwoValue = 0 or 1 = ${[0, 1].includes(randTwoValue)}`);
@@ -68,7 +83,7 @@
         {
             const randTwoFour = random(4, 2);
             const randTwoFourValue = randTwoFour();
-            console.group(`\nrandTwoFour (${randTwoFourValue})`);
+            console.group(`\trandTwoFour (${randTwoFourValue})`);
             console.log(`randTwoFourValue >= 2 = ${randTwoFourValue >= 2}`);
             console.log(`randTwoFourValue < 4 = ${randTwoFourValue < 4}`);
             console.log(`randTwoFourValue = 2 or 3 = ${[2, 3].includes(randTwoFourValue)}`);
@@ -78,15 +93,17 @@
         {
             const randTwoFourToOneDp = random(4, 2, 1);
             const randTwoFourToOneDpValue = randTwoFourToOneDp();
-            console.group(`\nrandTwoFourToOneDp (${randTwoFourToOneDpValue})`);
+            console.group(`\trandTwoFourToOneDp (${randTwoFourToOneDpValue})`);
             console.log(`randTwoFourToOneDpValue >= 2 = ${randTwoFourToOneDpValue >= 2}`);
             console.log(`randTwoFourToOneDpValue < 4 = ${randTwoFourToOneDpValue < 4}`);
             console.log(`randTwoFourToOneDpValue = 2 or 3 = ${[2, 3].includes(randTwoFourToOneDpValue)}`);
             console.groupEnd();
+            console.groupEnd();
         }
 
         {
-            console.group('\nLocal Web Storage');
+            console.groupCollapsed('\nWeb Storage');
+            console.group('\tLocal Web Storage');
             const utilityOneLocalStore = webStore('Utility1');
             const utilityTwoLocalStore = webStore('Utility2');
 
@@ -97,7 +114,7 @@
             console.groupEnd();
 
             setTimeout(() => {
-                console.group('\nLocal Web Storage - clean-up');
+                console.group('\tLocal Web Storage - clean-up');
                 utilityOneLocalStore.remove();
                 console.log(utilityOneLocalStore.get() === null);
                 utilityOneLocalStore.clear();
@@ -107,7 +124,7 @@
         }
 
         {
-            console.group('\nSession Web Storage');
+            console.group('\tSession Web Storage');
             const utilityOneSessionStore = webStore('Utility1', webStore.sessionWebStorage);
             const utilityTwoSessionStore = webStore('Utility2', webStore.sessionWebStorage);
 
@@ -118,13 +135,53 @@
             console.groupEnd();
 
             setTimeout(() => {
-                console.group('\nSession Web Storage - clean-up');
+                console.group('\tSession Web Storage - clean-up');
                 utilityOneSessionStore.remove();
                 console.log(utilityOneSessionStore.get() === null);
                 utilityOneSessionStore.clear();
                 console.log(utilityTwoSessionStore.get() === null);
                 console.groupEnd();
+                console.groupEnd();
             }, 4000);
+        }
+
+        {
+            console.log(`qs('h1'):`, qs('h1').textContent);
+            console.log(`qsa('div'):`, qsa('div').length);
+            const newButton = cde('button', {
+                id: 'btnNew',
+                text: 'Click Me'
+            });
+            ael('click', '#btnNew', (evt) => alert('Hello, World!'))
+            ael('click', '#btnNew', (evt) => alert('Hello, Once'), { once: true })
+            ael('click', 'h1', (evt) => alert(evt.target.textContent))
+            qs('#example4').appendChild(newButton);
+        }
+
+        {
+            const domSvgTarget = qs('#svgDemo');
+            const svgElement = cse('svg', {
+                width: 200,
+                viewBox: '0 0 100 100',
+                xmlns: 'http://www.w3.org/2000/svg',
+            });
+
+            ace(svgElement, cse('rect', {
+                x: '0',
+                y: '0',
+                width: '100',
+                height: '100',
+                fill: 'green',
+            }));
+
+            ace(svgElement, cse('circle', {
+                cx: '50',
+                cy: '50',
+                r: '40',
+                fill: 'red',
+            }));
+
+            domSvgTarget.appendChild(svgElement);
         }
     </script>
 </body>

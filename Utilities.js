@@ -20,7 +20,7 @@ import {
 	dataType,
 	duplicateObject,
 	extractProperty,
-	// isObjectEmpty,
+	isEmptyObject,
 	objectEquality,
 } from './src/dataComparison/index.js';
 import {
@@ -32,6 +32,7 @@ import {
 	shortMonth,
 } from './src/dataConverters/index.js';
 import { adhocArray, consoleTable, exercise } from './src/exercising/index.js';
+import { ace, cde, cse, qs, qsa, ael } from './src/dom/index.js';
 import {
 	clampRange,
 	inRange,
@@ -54,14 +55,18 @@ import {
 export {
 	DATA_TYPES,
 	accumulatedAverage,
+	ace,
 	adhocArray,
+	ael,
 	base64Decode,
 	base64Encode,
+	cde,
 	clampRange,
 	cloneObject,
 	compareObjectByProperty,
 	compose,
 	consoleTable,
+	cse,
 	curry,
 	dataType,
 	duplicateObject,
@@ -71,6 +76,7 @@ export {
 	groupBy,
 	inRange,
 	intersectArrays,
+	isEmptyObject,
 	lens,
 	liniarInterpolate,
 	longDay,
@@ -81,6 +87,8 @@ export {
 	memoize,
 	normaliseRange,
 	objectEquality,
+	qs,
+	qsa,
 	random,
 	rangeBetween,
 	rangeFrom,

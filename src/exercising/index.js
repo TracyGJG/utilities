@@ -45,10 +45,10 @@ ${arr
 }
 
 export function exercise(expected, actual, id = '') {
-	var expectedResult = JSON.stringify(expected);
-	var actualResult = JSON.stringify(actual);
-	var exerId = id ? ` ${id}` : '';
-	if (expectedResult == actualResult) {
+	const expectedResult = JSON.stringify(expected);
+	const actualResult = JSON.stringify(actual);
+	const exerId = id ? ` ${id}` : '';
+	if (expectedResult === actualResult) {
 		console.info(
 			`%cEXERCISE${exerId} - Passed:	Expected (${expectedResult}), Received (${actualResult}).`,
 			'color: green;'
