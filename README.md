@@ -1,6 +1,6 @@
 # Utilities
 
-A collection of utility functions I find useful.
+A collection of 50 utility functions I find useful.
 
 <!-- #region Collection -->
 
