@@ -1,3 +1,5 @@
+import { jest } from '@jest/globals';
+
 import {
 	DATA_TYPES,
 	cloneObject,

@@ -39,7 +39,9 @@ export function sum(...nums) {
 }
 
 export function webStore(keyName, localWebStorage = true) {
-	const webStorage = localWebStorage ? localStorage : sessionStorage;
+	const webStorage = localWebStorage
+		? window.localStorage
+		: window.sessionStorage;
 	const clear = () => webStorage.clear();
 	const get = (defaultValue = null) => {
 		const value = webStorage.getItem(keyName);

@@ -1,3 +1,5 @@
+import { jest } from '@jest/globals';
+
 import {
 	base64Decode,
 	base64Encode,

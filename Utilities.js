@@ -31,8 +31,13 @@ import {
 	shortDay,
 	shortMonth,
 } from './src/dataConverters/index.js';
-import { adhocArray, consoleTable, exercise } from './src/exercising/index.js';
-import { ace, cde, cse, qs, qsa, ael } from './src/dom/index.js';
+import { ace, ael, cde, cse, qs, qsa } from './src/dom/index.js';
+import {
+	adhocArray,
+	consoleGroup,
+	consoleTable,
+	exercise,
+} from './src/exercising/index.js';
 import {
 	clampRange,
 	inRange,
@@ -45,10 +50,12 @@ import {
 } from './src/ranges/index.js';
 import {
 	compose,
+	copyText,
 	curry,
 	enumerate,
 	lens,
 	memoize,
+	pasteText,
 	sleep,
 } from './src/tools/index.js';
 
@@ -65,7 +72,9 @@ export {
 	cloneObject,
 	compareObjectByProperty,
 	compose,
+	consoleGroup,
 	consoleTable,
+	copyText,
 	cse,
 	curry,
 	dataType,
@@ -87,6 +96,7 @@ export {
 	memoize,
 	normaliseRange,
 	objectEquality,
+	pasteText,
 	qs,
 	qsa,
 	random,

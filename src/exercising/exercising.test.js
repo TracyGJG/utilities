@@ -1,4 +1,6 @@
-import { adhocArray, consoleTable, exercise } from './index.js';
+import { jest } from '@jest/globals';
+
+import { adhocArray, consoleGroup, consoleTable, exercise } from './index.js';
 
 const expectedTableHtml = [
 	`<table border="1">
@@ -20,6 +22,11 @@ const expectedTableHtml = [
 <tr><td>1</td><td>5</td><td>6</td><td>7</td><td>8</td></tr>
 </table>`,
 ];
+
+const expectedDetailsSummmaryHtml = `<details>
+<summary>Console Group</summary>
+<div style="padding: 0.25rem 1.25rem">Console Log</div>
+</details>`;
 
 describe('Exercising', () => {
 	describe('ad-hoc array', () => {
@@ -107,6 +114,14 @@ describe('Exercising', () => {
 		});
 	});
 
+	describe('consoleGroup', () => {
+		it('can produce a Details/Summary fragment', () => {
+			const consoleLog = consoleGroup('Console Group');
+			const actualResult = consoleLog('Console Log');
+			expect(consoleLog()).toEqual(expectedDetailsSummmaryHtml);
+		});
+	});
+
 	describe('consoleTable', () => {
 		it('with an empty array', () => {
 			const testData = [];
@@ -142,7 +157,7 @@ describe('Exercising', () => {
 			expect(actualResult).toEqual(expectedResult);
 		});
 	});
-	
+
 	describe('Pure function Exercise', () => {
 		it('can test without an id', () => {
 			expect(exercise([10], [10])).toBeTruthy();

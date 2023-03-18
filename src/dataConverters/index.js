@@ -32,18 +32,18 @@ const dateString =
 			period === 'weekday' ? idx : 1
 		).toLocaleString(lang, { [period]: len });
 
-export function shortDay(lang) {
-	return dateString(lang, 'short', 'weekday');
-}
-
 export function longDay(lang) {
 	return dateString(lang, 'long', 'weekday');
 }
 
-export function shortMonth(lang) {
-	return dateString(lang, 'short', 'month');
-}
-
 export function longMonth(lang) {
 	return dateString(lang, 'long', 'month');
+}
+
+export function shortDay(lang) {
+	return dateString(lang, 'short', 'weekday');
+}
+
+export function shortMonth(lang) {
+	return dateString(lang, 'short', 'month');
 }

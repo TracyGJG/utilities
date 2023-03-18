@@ -21,6 +21,8 @@
   },
   "homepage": "https://github.com/TracyGJG/utilities#readme",
   "devDependencies": {
-    "jest": "^29.4.3"
+    "jest": "^29.4.3",
+    "jest-environment-jsdom": "^29.5.0",
+    "jsdom": "^21.1.1"
   }
 }

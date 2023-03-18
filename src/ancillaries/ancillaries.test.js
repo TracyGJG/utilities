@@ -1,4 +1,16 @@
-import { accumulatedAverage, mapGetter, random, sum } from './index.js';
+/**
+ * @jest-environment jsdom
+ */
+
+import { jest } from '@jest/globals';
+
+import {
+	accumulatedAverage,
+	mapGetter,
+	random,
+	sum,
+	webStore,
+} from './index.js';
 
 describe('Ancillaries', () => {
 	describe('Accumulated Average', () => {
@@ -99,6 +111,106 @@ describe('Ancillaries', () => {
 		});
 		test('will return the total if one or more arguments are supplied (negative)', () => {
 			expect(sum(-2, -4, -6, -8, -10, -12)).toBe(-42);
+		});
+	});
+
+	describe('webStore', () => {
+		describe('using localStorage (default)', () => {
+			const localWebStore1 = webStore('test');
+			const localWebStore2 = webStore('test2');
+
+			beforeEach(() => {
+				localStorage.clear();
+			});
+
+			test('store data', () => {
+				expect(localWebStore1.get()).toBeNull();
+				localWebStore1.set('Hello, Wolrd!');
+				expect(localWebStore1.get()).toBe('Hello, Wolrd!');
+			});
+
+			test('retrieve data', () => {
+				expect(localWebStore1.get()).toBeNull();
+				localWebStore1.set('Hello, Wolrd!');
+				expect(localWebStore1.get()).toBe('Hello, Wolrd!');
+			});
+
+			test('remove data', () => {
+				expect(localWebStore1.get()).toBeNull();
+				expect(localWebStore2.get()).toBeNull();
+				localWebStore1.set('Hello, Wolrd!');
+				localWebStore2.set('Hello, Wolrd!');
+				expect(localWebStore1.get()).toBe('Hello, Wolrd!');
+				expect(localWebStore2.get()).toBe('Hello, Wolrd!');
+
+				localWebStore1.remove();
+
+				expect(localWebStore1.get()).toBeNull();
+				expect(localWebStore2.get()).toBe('Hello, Wolrd!');
+			});
+
+			test('clear all data', () => {
+				expect(localWebStore1.get()).toBeNull();
+				expect(localWebStore2.get()).toBeNull();
+				localWebStore1.set('Hello, Wolrd!');
+				localWebStore2.set('Hello, Wolrd!');
+				expect(localWebStore1.get()).toBe('Hello, Wolrd!');
+				expect(localWebStore2.get()).toBe('Hello, Wolrd!');
+
+				localWebStore1.clear();
+
+				expect(localWebStore1.get()).toBeNull();
+				expect(localWebStore2.get()).toBeNull();
+			});
+		});
+
+		describe('using sessionStorage (webStore.sessionWebStorage)', () => {
+			const sessionWebStore1 = webStore('test', webStore.sessionWebStorage);
+			const sessionWebStore2 = webStore('test2', webStore.sessionWebStorage);
+
+			beforeEach(() => {
+				sessionStorage.clear();
+			});
+
+			test('store data', () => {
+				expect(sessionWebStore1.get()).toBeNull();
+				sessionWebStore1.set('Hello, Wolrd!');
+				expect(sessionWebStore1.get()).toBe('Hello, Wolrd!');
+			});
+
+			test('retrieve data', () => {
+				expect(sessionWebStore1.get()).toBeNull();
+				sessionWebStore1.set('Hello, Wolrd!');
+				expect(sessionWebStore1.get()).toBe('Hello, Wolrd!');
+			});
+
+			test('remove data', () => {
+				expect(sessionWebStore1.get()).toBeNull();
+				expect(sessionWebStore2.get()).toBeNull();
+				sessionWebStore1.set('Hello, Wolrd!');
+				sessionWebStore2.set('Hello, Wolrd!');
+				expect(sessionWebStore1.get()).toBe('Hello, Wolrd!');
+				expect(sessionWebStore2.get()).toBe('Hello, Wolrd!');
+
+				sessionWebStore1.remove();
+
+				expect(sessionWebStore1.get()).toBeNull();
+				expect(sessionWebStore2.get()).toBe('Hello, Wolrd!');
+			});
+
+			test('clear all data', () => {
+				expect(sessionWebStore1.get()).toBeNull();
+				expect(sessionWebStore2.get()).toBeNull();
+				sessionWebStore1.set('Hello, Wolrd!');
+				sessionWebStore2.set('Hello, Wolrd!');
+				expect(sessionWebStore1.get()).toBe('Hello, Wolrd!');
+				expect(sessionWebStore2.get()).toBe('Hello, Wolrd!');
+
+				sessionWebStore1.clear();
+
+				expect(sessionWebStore1.get()).toBeNull();
+				expect(sessionWebStore2.get()).toBeNull();
+			});
 		});
 	});
 });

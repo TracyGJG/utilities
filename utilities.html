@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Utilities</title>
     <style>
+        #consoleExample,
         .table {
             margin: 2em;
             border-collapse: collapse;
@@ -20,6 +21,7 @@
 <body>
     <h1>Utilities Test Screen</h1>
 
+    <div id="consoleExample"></div>
     <div id="example1" class="table"></div>
     <div id="example2" class="table"></div>
     <div id="example3" class="table"></div>
@@ -27,7 +29,7 @@
     <div id="svgDemo"></div>
 
     <script type="module">
-        import { exercise, consoleTable, random, webStore, ace, cde, cse, qs, qsa, ael } from './utilities.js';
+        import { exercise, consoleGroup, consoleTable, random, webStore, ace, cde, cse, qs, qsa, ael } from './utilities.js';
 
         {
             console.groupCollapsed('\nExercise');
@@ -49,6 +51,31 @@
             exercise(!!"", true, 'Empty string');
             console.groupEnd();
             console.groupEnd();
+        }
+
+        {
+            const exercise_ = (test, result, title = '') => `${test}, ${result} = ${exercise(test, result, title)} "${title}"`;
+            const consoleLog = consoleGroup('Console Group');
+
+            const consoleLogPositive = consoleGroup('Positive');
+            consoleLogPositive(exercise_(true, true));
+            consoleLogPositive(exercise_(!!{}, true, 'Object'));
+            consoleLogPositive(exercise_(!![], true, 'Array'));
+            consoleLogPositive(exercise_(!!1, true, 'Positive number'));
+            consoleLogPositive(exercise_(!!-1, true, 'Negative number'));
+            consoleLogPositive(exercise_(!!"_", true, 'Non-empty string'));
+            consoleLog(consoleLogPositive());
+
+            const consoleLogNegative = consoleGroup('Negative');
+            consoleLogNegative(exercise_(false, true));
+            consoleLogNegative(exercise_(!!undefined, true, 'undefined'));
+            consoleLogNegative(exercise_(!!null, true, 'null'));
+            consoleLogNegative(exercise_(!!NaN, true, 'NaN'));
+            consoleLogNegative(exercise_(!!0, true, 'Zero'));
+            consoleLogNegative(exercise_(!!"", true, 'Empty string'));
+            consoleLog(consoleLogNegative());
+
+            document.querySelector('#consoleExample').innerHTML = consoleLog();
         }
 
         {
@@ -166,20 +193,20 @@
                 xmlns: 'http://www.w3.org/2000/svg',
             });
 
-            ace(svgElement, cse('rect', {
+            ace(cse('rect', {
                 x: '0',
                 y: '0',
                 width: '100',
                 height: '100',
                 fill: 'green',
-            }));
+            }), svgElement);
 
-            ace(svgElement, cse('circle', {
+            ace(cse('circle', {
                 cx: '50',
                 cy: '50',
                 r: '40',
                 fill: 'red',
-            }));
+            }), svgElement);
 
             domSvgTarget.appendChild(svgElement);
         }

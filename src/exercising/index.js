@@ -13,6 +13,23 @@ export function adhocArray(length = 1, transform = _ => _) {
 	return [...Array(length).keys()].map(transform);
 }
 
+export function consoleGroup(groupName) {
+	const htmlFragment = ['<details>', `<summary>${groupName}</summary>`];
+	const htmlFragmentEnd = '</details>';
+
+	return consoleLog;
+
+	function consoleLog(logMessage) {
+		if (!logMessage) {
+			htmlFragment.push(htmlFragmentEnd);
+			return htmlFragment.join('\n');
+		}
+		htmlFragment.push(
+			`<div style="padding: 0.25rem 1.25rem">${logMessage}</div>`
+		);
+	}
+}
+
 export function consoleTable(arr) {
 	function getHeading(row) {
 		return Array.isArray(row)

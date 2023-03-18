@@ -4,6 +4,10 @@ export function compose(...functions) {
 	return args => functions.reduce((arg, fn) => fn(arg), args);
 }
 
+export function copyText(text) {
+	navigator.clipboard.writeText(text);
+}
+
 export function curry(fn, ...args) {
 	return args.length === fn.length
 		? fn(...args)
@@ -72,6 +76,10 @@ export function memoize(fn, _cache = new Map()) {
 		const key = JSON.stringify(args);
 		return (_cache.has(key) ? _cache : _cache.set(key, fn(...args))).get(key);
 	};
+}
+
+export async function pasteText() {
+	return await navigator.clipboard.readText();
 }
 
 export async function sleep(ms) {

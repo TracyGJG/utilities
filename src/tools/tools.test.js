@@ -1,6 +1,19 @@
-import { compose, curry, enumerate, lens, memoize, sleep } from './index.js';
+/**
+ * @jest-environment jsdom
+ */
 
 import { jest } from '@jest/globals';
+
+import {
+	compose,
+	copyText,
+	curry,
+	enumerate,
+	lens,
+	memoize,
+	pasteText,
+	sleep,
+} from './index.js';
 
 describe('Tools', () => {
 	describe('Sleep', () => {
@@ -16,48 +29,6 @@ describe('Tools', () => {
 			await sleep(1000);
 			const timeStamp2 = new Date();
 			expect(timeStamp2 - timeStamp1).toBeGreaterThan(999);
-		});
-	});
-	describe('Memoise', () => {
-		const mockDelayedCube = (x, y, z) => x * y * z;
-		let delayedCube;
-
-		beforeEach(() => {
-			delayedCube = jest.fn(mockDelayedCube);
-		});
-
-		afterEach(() => {
-			jest.resetAllMocks();
-		});
-
-		it('can increase globalCount for each call (not memoised)', () => {
-			const callDelayedCube = () => delayedCube(2, 3, 7);
-			expect(delayedCube).toHaveBeenCalledTimes(0);
-
-			expect(callDelayedCube()).toBe(42);
-			expect(delayedCube).toHaveBeenCalledTimes(1);
-
-			expect(callDelayedCube()).toBe(42);
-			expect(delayedCube).toHaveBeenCalledTimes(2);
-
-			expect(callDelayedCube()).toBe(42);
-			expect(delayedCube).toHaveBeenCalledTimes(3);
-		});
-
-		it('can increase globalCount just once for each call (memoised)', () => {
-			const cache = new Map();
-			const delayedCube_ = memoize(delayedCube, cache);
-			const callDelayedCube = () => delayedCube_(2, 3, 7);
-			expect(delayedCube).toHaveBeenCalledTimes(0);
-
-			expect(callDelayedCube()).toBe(42);
-			expect(delayedCube).toHaveBeenCalledTimes(1);
-
-			expect(callDelayedCube()).toBe(42);
-			expect(delayedCube).toHaveBeenCalledTimes(1);
-
-			expect(callDelayedCube()).toBe(42);
-			expect(delayedCube).toHaveBeenCalledTimes(1);
 		});
 	});
 	describe('Curry', () => {
@@ -374,6 +345,89 @@ describe('Tools', () => {
 				expect(result.__IOTA__).toBe('  Iota  ');
 				expect(result.KAPPA_LAMBDA).toBe('Kappa_Lambda');
 			});
+		});
+	});
+	describe('Clipboard Operations', () => {
+		const mockReadText = jest.fn(() => Promise.resolve('Hello, World!'));
+		beforeEach(() => {
+			navigator.clipboard = {
+				readText: mockReadText,
+				writeText: jest.fn(),
+			};
+		});
+
+		test('Copy Text', () => {
+			expect(navigator.clipboard.writeText).toHaveBeenCalledTimes(0);
+			copyText('Hello, World!');
+
+			expect(navigator.clipboard.writeText).toHaveBeenCalledTimes(1);
+			expect(navigator.clipboard.writeText).toHaveBeenLastCalledWith(
+				'Hello, World!'
+			);
+		});
+		test('Paste Text', async () => {
+			expect.assertions(3);
+			expect(navigator.clipboard.readText).toHaveBeenCalledTimes(0);
+			const result = await pasteText();
+			expect(navigator.clipboard.readText).toHaveBeenCalledTimes(1);
+			expect(result).toBe('Hello, World!');
+		});
+	});
+	describe('Memoise', () => {
+		const mockDelayedCube = (x, y, z) => x * y * z;
+		let delayedCube;
+
+		beforeEach(() => {
+			delayedCube = jest.fn(mockDelayedCube);
+		});
+
+		afterEach(() => {
+			jest.resetAllMocks();
+		});
+
+		it('can increase globalCount for each call (not memoised)', () => {
+			const callDelayedCube = () => delayedCube(2, 3, 7);
+			expect(delayedCube).toHaveBeenCalledTimes(0);
+
+			expect(callDelayedCube()).toBe(42);
+			expect(delayedCube).toHaveBeenCalledTimes(1);
+
+			expect(callDelayedCube()).toBe(42);
+			expect(delayedCube).toHaveBeenCalledTimes(2);
+
+			expect(callDelayedCube()).toBe(42);
+			expect(delayedCube).toHaveBeenCalledTimes(3);
+		});
+
+		it('can increase globalCount just once for each call (memoised)', () => {
+			const cache = new Map();
+			const delayedCube_ = memoize(delayedCube, cache);
+			const callDelayedCube = () => delayedCube_(2, 3, 7);
+			expect(delayedCube).toHaveBeenCalledTimes(0);
+
+			expect(callDelayedCube()).toBe(42);
+			expect(delayedCube).toHaveBeenCalledTimes(1);
+
+			expect(callDelayedCube()).toBe(42);
+			expect(delayedCube).toHaveBeenCalledTimes(1);
+
+			expect(callDelayedCube()).toBe(42);
+			expect(delayedCube).toHaveBeenCalledTimes(1);
+		});
+
+		it('can increase globalCount just once for each call (memoised, default cache)', () => {
+			const delayedCube_ = memoize(delayedCube);
+			const callDelayedCube = () => delayedCube_(2, 3, 7);
+			expect(delayedCube).toHaveBeenCalledTimes(0);
+
+			expect(callDelayedCube()).toBe(42);
+			expect(delayedCube).toHaveBeenCalledTimes(1);
+
+			expect(callDelayedCube()).toBe(42);
+			expect(delayedCube).toHaveBeenCalledTimes(1);
+
+			expect(callDelayedCube()).toBe(42);
+			expect(delayedCube).toHaveBeenCalledTimes(1);
 		});
 	});
 });
