@@ -14,9 +14,8 @@ A collection of 50 utility functions I find useful.
 | [replaceArray](#replaceArray)         |  [transposeArray](#transposeArray)                  |    [unionArrays](#unionArrays)          |
 |                                       |                                                     |                                         |
 |   **Data Comparison and Cloning**     |                                                     |                                         |
-|     [cloneObject](#cloneObject)       | [compareObjectByProperty](#compareObjectByProperty) |      [dataType](#dataType)              |
-| [duplicateObject](#duplicateObject)   |         [extractProperty](#extractProperty)         | [isEmptyObject](#isEmptyObject)         |
-|  [objectEquality](#objectEquality)    |                                                     |                                         |
+|     [cloneObject](#cloneObject)       | [compareObjectByProperty](#compareObjectByProperty) |       [dataType](#dataType)             |
+| [duplicateObject](#duplicateObject)   |           [isEmptyObject](#isEmptyObject)           | [objectEquality](#objectEquality)       |
 |                                       |                                                     |                                         |
 |        **Data Converters**            |                                                     |                                         |
 | [base64decoding](#base64decoding)     | [base64encoding](#base64encoding)                   |    [longDay](#longDay)                  |
@@ -36,9 +35,9 @@ A collection of 50 utility functions I find useful.
 | [rangeBetween](#rangeBetween)         | [rangeFrom](#rangeFrom)                             |                                         |
 |                                       |                                                     |                                         |
 |      **Tools**                        |                                                     |                                         |
-|   [compose](#compose)                 | [copyText](#copyText)                               | [curry](#curry)                         |
-| [enumerate](#enumerate)               | [lens](#lens)                                       | [memoise](#memoise)                     |
-| [pasteText](#pasteText)               | [sleep](#sleep)                                     |                                         |
+|   [compose](#compose)                 | [copyText](#copyText)                               |   [curry](#curry)                       |
+| [enumerate](#enumerate)               |     [lens](#lens)                                   | [memoise](#memoise)                     |
+| [pasteText](#pasteText)               |     [simd](#simd)                                   |   [sleep](#sleep)                       |
 |                                       |                                                     |                                         |
 
 The above functions make considerable use of the technique called currying/partial-application to return a specialised function. This saves on suppling parameters that are not expected to change.
@@ -331,18 +330,6 @@ Creates a renew object with the same structure of the input, containing copies o
 ### Return Value
 
 A new object with the same structure as the input object and copies of the primitive values and more complicated objects.
-
-## [extractProperty](:#extractProperty)
-
-Creates an extractor function that, given an object, will use the list of property names to extract the end property value/object.
-
-### Parameters
-
--   propertyNames - a series of property names (strings) provided as arguments that define the path within an object from where the value/object can be extracted.
-
-### Return Value
-
-A extractor function that returns the value/object from a given object, using the intial property path.
 
 ## [isEmptyObject](:#isEmptyObject)
 
@@ -943,6 +930,24 @@ None.
 
 The text from the clipboard.
 
+## [simd](:simd)
+
+Single-Instruction-Multiple-Data - Generates a function based on the intial input that well be applied to all data subsequently supplied. The function is called from within a Promise to all data is processes in parallel.
+
+### Paremeters
+
+#### Initial call
+
+-   instruction - the function to be applied to each datum. Returns a reusable function.
+
+#### Subsequent calls
+
+-   data - One or more datum.
+
+### Return Value
+
+An array of return values for each datum passed through the instruction (function).
+
 ## [sleep](:sleep)
 
 Delays processing of the current thread or a set period of time (approximately.)
@@ -958,6 +963,11 @@ None
 ---
 
 # Change Log
+
+### Update 1st April
+
+-   simd added to tools.
+-   extractProperty removed from dataComparison (duplicate of tools/lens).
 
 ### Update 17th March 2023
 

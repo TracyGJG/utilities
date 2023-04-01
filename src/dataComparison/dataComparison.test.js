@@ -6,7 +6,6 @@ import {
 	compareObjectByProperty,
 	dataType,
 	duplicateObject,
-	extractProperty,
 	isEmptyObject,
 	objectEquality,
 } from './index.js';
@@ -34,7 +33,6 @@ describe('Comparison and Cloning', () => {
 			expect(isEmptyObject(undefinedObj)).not.toBeDefined();
 		});
 	});
-
 	describe('Object Equality', () => {
 		it('can compare similar nested objects', () => {
 			const obj1 = {
@@ -309,55 +307,6 @@ describe('Comparison and Cloning', () => {
 			expect(testObjArray[4].id).toEqual(5);
 			expect(testObjArray[5].name).toEqual('Alpha');
 			expect(testObjArray[5].id).toEqual(1);
-		});
-	});
-	describe('extractProperty', () => {
-		const tests = [
-			{
-				alpha: 1,
-				beta: {
-					gamma: 10,
-				},
-			},
-			{
-				alpha: 2,
-				beta: {
-					gamma: 20,
-				},
-			},
-			{
-				alpha: 3,
-				delta: ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'],
-			},
-		];
-
-		it('can extract shallow property value', () => {
-			const extractAlpha = extractProperty('alpha');
-			expect(extractAlpha(tests[0])).toBe(1);
-			expect(extractAlpha(tests[1])).toBe(2);
-		});
-
-		it('can extract property object', () => {
-			const extractAlpha = extractProperty('beta');
-			expect(extractAlpha(tests[0]).gamma).toBe(10);
-			expect(extractAlpha(tests[1]).gamma).toBe(20);
-		});
-
-		it('can an array element value', () => {
-			const extractAlpha = extractProperty('2', 'delta', '2');
-			expect(extractAlpha(tests)).toBe('Wed');
-		});
-
-		it('can extract deep property value', () => {
-			const extractAlpha = extractProperty('beta', 'gamma');
-			expect(extractAlpha(tests[0])).toBe(10);
-			expect(extractAlpha(tests[1])).toBe(20);
-		});
-
-		it('can abort when the property is missing', () => {
-			const extractDelta = extractProperty('delta');
-			expect(extractDelta).toBeDefined();
-			expect(extractDelta(tests[0])).toBeNull();
 		});
 	});
 });

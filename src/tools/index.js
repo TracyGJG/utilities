@@ -82,6 +82,22 @@ export async function pasteText() {
 	return await navigator.clipboard.readText();
 }
 
+export function simd(instruction) {
+	return function (...data) {
+		const executions = data.map(
+			datum =>
+				new Promise((resolve, reject) => {
+					try {
+						resolve(instruction(datum));
+					} catch (error) {
+						reject(error);
+					}
+				})
+		);
+		return Promise.allSettled(executions);
+	};
+}
+
 export async function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }

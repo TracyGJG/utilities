@@ -12,23 +12,59 @@ import {
 	lens,
 	memoize,
 	pasteText,
+	simd,
 	sleep,
 } from './index.js';
 
 describe('Tools', () => {
-	describe('Sleep', () => {
-		it('can delay progress by a given interval (within a period)', async () => {
-			const timeStamp1 = new Date();
-			await sleep(1000);
-			const timeStamp2 = new Date();
-			expect(timeStamp2 - timeStamp1).toBeLessThan(1021);
+	describe('Clipboard Operations', () => {
+		const mockReadText = jest.fn(() => Promise.resolve('Hello, World!'));
+		beforeEach(() => {
+			navigator.clipboard = {
+				readText: mockReadText,
+				writeText: jest.fn(),
+			};
 		});
 
-		it('can delay progress by a given interval (greater than period)', async () => {
-			const timeStamp1 = new Date();
-			await sleep(1000);
-			const timeStamp2 = new Date();
-			expect(timeStamp2 - timeStamp1).toBeGreaterThan(999);
+		test('Copy Text', () => {
+			expect(navigator.clipboard.writeText).toHaveBeenCalledTimes(0);
+			copyText('Hello, World!');
+
+			expect(navigator.clipboard.writeText).toHaveBeenCalledTimes(1);
+			expect(navigator.clipboard.writeText).toHaveBeenLastCalledWith(
+				'Hello, World!'
+			);
+		});
+		test('Paste Text', async () => {
+			expect.assertions(3);
+			expect(navigator.clipboard.readText).toHaveBeenCalledTimes(0);
+			const result = await pasteText();
+			expect(navigator.clipboard.readText).toHaveBeenCalledTimes(1);
+			expect(result).toBe('Hello, World!');
+		});
+	});
+	describe('Compose', () => {
+		it('can combine functions', () => {
+			function plusNine(int) {
+				return int + 9;
+			}
+			const timesTweleve = int => int * 12;
+
+			const composedFn = compose(
+				plusNine,
+				timesTweleve,
+				function minusSix(int) {
+					return int - 6;
+				},
+				int => int / 3
+			);
+			expect(((2 + 9) * 12 - 6) / 3).toBe(42);
+			expect(composedFn(2)).toBe(42);
+		});
+
+		it('can provide the identify function by default ', () => {
+			const composedFn = compose();
+			expect(composedFn(42)).toBe(42);
 		});
 	});
 	describe('Curry', () => {
@@ -81,136 +117,6 @@ describe('Tools', () => {
 			it('can create a curried function that will accept, the remaining arg in the subsequent call', () => {
 				expect(cube2_3_(7)).toBe(42);
 			});
-		});
-	});
-	describe('Lens', () => {
-		const testObjects = {
-			nullTest: null,
-			emptyObject: {},
-			emptyArray: [],
-
-			simpleObject: { a: 42 },
-			nestedObject: { a: { b: 42 } },
-			arrayInObject: { a: [42] },
-
-			simpleArray: [42],
-			nestedArray: [[42]],
-			objectInArray: [{ b: 42 }],
-		};
-
-		describe('with missing item', () => {
-			it('can be managed in a null object', () => {
-				const lookup = lens('a');
-				expect(lookup(testObjects.nullTest)).not.toBeDefined();
-			});
-
-			it('can be managed in an object', () => {
-				const lookup = lens('a');
-				expect(lookup(testObjects.emptyObject)).not.toBeDefined();
-			});
-
-			it('can be managed in an object (indirect args)', () => {
-				const lookup = lens('a', 'c');
-				expect(lookup(testObjects.emptyObject)).not.toBeDefined();
-			});
-
-			it('can be managed in an object (direct args)', () => {
-				const lookup = lens('a.c');
-				expect(lookup(testObjects.emptyObject)).not.toBeDefined();
-			});
-
-			it('can be managed in an object (optional args)', () => {
-				const lookup = lens('a?.c');
-				expect(lookup(testObjects.emptyObject)).not.toBeDefined();
-			});
-
-			it('can be managed in an array', () => {
-				const lookup = lens(0);
-				expect(lookup(testObjects.emptyArray)).not.toBeDefined();
-			});
-		});
-
-		describe('locate an object property', () => {
-			it('can be managed in an object', () => {
-				const lookup = lens('a');
-				expect(lookup(testObjects.simpleObject)).toBe(42);
-			});
-
-			it('can be managed in an object of an object (individual property args)', () => {
-				const lookup = lens('a', 'b');
-				expect(lookup(testObjects.nestedObject)).toBe(42);
-			});
-
-			it('can be managed in an object of an object (mandatory property args)', () => {
-				const lookup = lens('a.b');
-				expect(lookup(testObjects.nestedObject)).toBe(42);
-			});
-
-			it('can be managed in an object of an object (optional property args)', () => {
-				const lookup = lens('a?.b');
-				expect(lookup(testObjects.nestedObject)).toBe(42);
-			});
-
-			it('can be managed in an array of an object (args)', () => {
-				const lookup = lens('a', 0);
-				expect(lookup(testObjects.arrayInObject)).toBe(42);
-			});
-
-			it('can be managed in an array of an object (string)', () => {
-				const lookup = lens('a[0]');
-				expect(lookup(testObjects.arrayInObject)).toBe(42);
-			});
-
-			it('can be managed in an object of an object (optional array args)', () => {
-				const lookup = lens('a?.[0]');
-				expect(lookup(testObjects.arrayInObject)).toBe(42);
-			});
-		});
-
-		describe('locate an element of an array', () => {
-			it('can be managed in an array', () => {
-				const lookup = lens(0);
-				expect(lookup(testObjects.simpleArray)).toBe(42);
-			});
-
-			it('can be managed in an object of an array (args)', () => {
-				const lookup = lens(0, 'b');
-				expect(lookup(testObjects.objectInArray)).toBe(42);
-			});
-
-			it('can be managed in an array of an array (string)', () => {
-				const lookup = lens('[0][0]');
-				expect(lookup(testObjects.nestedArray)).toBe(42);
-			});
-
-			it('can be managed in an array of an array (indexes)', () => {
-				const lookup = lens(0, 0);
-				expect(lookup(testObjects.nestedArray)).toBe(42);
-			});
-		});
-	});
-	describe('Compose', () => {
-		it('can combine functions', () => {
-			function plusNine(int) {
-				return int + 9;
-			}
-			const timesTweleve = int => int * 12;
-
-			const composedFn = compose(
-				plusNine,
-				timesTweleve,
-				function minusSix(int) {
-					return int - 6;
-				},
-				int => int / 3
-			);
-			expect(((2 + 9) * 12 - 6) / 3).toBe(42);
-			expect(composedFn(2)).toBe(42);
-		});
-
-		it('can provide the identify function by default ', () => {
-			const composedFn = compose();
-			expect(composedFn(42)).toBe(42);
 		});
 	});
 	describe('Enumerate', () => {
@@ -347,30 +253,107 @@ describe('Tools', () => {
 			});
 		});
 	});
-	describe('Clipboard Operations', () => {
-		const mockReadText = jest.fn(() => Promise.resolve('Hello, World!'));
-		beforeEach(() => {
-			navigator.clipboard = {
-				readText: mockReadText,
-				writeText: jest.fn(),
-			};
-		});
+	describe('Lens', () => {
+		const testObjects = {
+			nullTest: null,
+			emptyObject: {},
+			emptyArray: [],
 
-		test('Copy Text', () => {
-			expect(navigator.clipboard.writeText).toHaveBeenCalledTimes(0);
-			copyText('Hello, World!');
+			simpleObject: { a: 42 },
+			nestedObject: { a: { b: 42 } },
+			arrayInObject: { a: [42] },
 
-			expect(navigator.clipboard.writeText).toHaveBeenCalledTimes(1);
-			expect(navigator.clipboard.writeText).toHaveBeenLastCalledWith(
-				'Hello, World!'
-			);
+			simpleArray: [42],
+			nestedArray: [[42]],
+			objectInArray: [{ b: 42 }],
+		};
+		describe('with missing item', () => {
+			it('can be managed in a null object', () => {
+				const lookup = lens('a');
+				expect(lookup(testObjects.nullTest)).not.toBeDefined();
+			});
+
+			it('can be managed in an object', () => {
+				const lookup = lens('a');
+				expect(lookup(testObjects.emptyObject)).not.toBeDefined();
+			});
+
+			it('can be managed in an object (indirect args)', () => {
+				const lookup = lens('a', 'c');
+				expect(lookup(testObjects.emptyObject)).not.toBeDefined();
+			});
+
+			it('can be managed in an object (direct args)', () => {
+				const lookup = lens('a.c');
+				expect(lookup(testObjects.emptyObject)).not.toBeDefined();
+			});
+
+			it('can be managed in an object (optional args)', () => {
+				const lookup = lens('a?.c');
+				expect(lookup(testObjects.emptyObject)).not.toBeDefined();
+			});
+
+			it('can be managed in an array', () => {
+				const lookup = lens(0);
+				expect(lookup(testObjects.emptyArray)).not.toBeDefined();
+			});
 		});
-		test('Paste Text', async () => {
-			expect.assertions(3);
-			expect(navigator.clipboard.readText).toHaveBeenCalledTimes(0);
-			const result = await pasteText();
-			expect(navigator.clipboard.readText).toHaveBeenCalledTimes(1);
-			expect(result).toBe('Hello, World!');
+		describe('locate an object property', () => {
+			it('can be managed in an object', () => {
+				const lookup = lens('a');
+				expect(lookup(testObjects.simpleObject)).toBe(42);
+			});
+
+			it('can be managed in an object of an object (individual property args)', () => {
+				const lookup = lens('a', 'b');
+				expect(lookup(testObjects.nestedObject)).toBe(42);
+			});
+
+			it('can be managed in an object of an object (mandatory property args)', () => {
+				const lookup = lens('a.b');
+				expect(lookup(testObjects.nestedObject)).toBe(42);
+			});
+
+			it('can be managed in an object of an object (optional property args)', () => {
+				const lookup = lens('a?.b');
+				expect(lookup(testObjects.nestedObject)).toBe(42);
+			});
+
+			it('can be managed in an array of an object (args)', () => {
+				const lookup = lens('a', 0);
+				expect(lookup(testObjects.arrayInObject)).toBe(42);
+			});
+
+			it('can be managed in an array of an object (string)', () => {
+				const lookup = lens('a[0]');
+				expect(lookup(testObjects.arrayInObject)).toBe(42);
+			});
+
+			it('can be managed in an object of an object (optional array args)', () => {
+				const lookup = lens('a?.[0]');
+				expect(lookup(testObjects.arrayInObject)).toBe(42);
+			});
+		});
+		describe('locate an element of an array', () => {
+			it('can be managed in an array', () => {
+				const lookup = lens(0);
+				expect(lookup(testObjects.simpleArray)).toBe(42);
+			});
+
+			it('can be managed in an object of an array (args)', () => {
+				const lookup = lens(0, 'b');
+				expect(lookup(testObjects.objectInArray)).toBe(42);
+			});
+
+			it('can be managed in an array of an array (string)', () => {
+				const lookup = lens('[0][0]');
+				expect(lookup(testObjects.nestedArray)).toBe(42);
+			});
+
+			it('can be managed in an array of an array (indexes)', () => {
+				const lookup = lens(0, 0);
+				expect(lookup(testObjects.nestedArray)).toBe(42);
+			});
 		});
 	});
 	describe('Memoise', () => {
@@ -428,6 +411,47 @@ describe('Tools', () => {
 
 			expect(callDelayedCube()).toBe(42);
 			expect(delayedCube).toHaveBeenCalledTimes(1);
+		});
+	});
+	describe('SIMD', () => {
+		async function is42({ title, args, func }) {
+			const result = func(args);
+			await sleep(500);
+			if (result === 42) {
+				return title;
+			} else {
+				throw Error(`${title} did not yield 42 but ${result}`);
+			}
+		}
+		const is42Simd = simd(is42);
+
+		test('examples', async () => {
+			const results = await is42Simd(
+				{ title: 'identity true', args: 42, func: _ => _ },
+				{ title: 'identity false', args: 7, func: _ => _ }
+			);
+			expect(results.length).toBe(2);
+			expect(results[0].status).toBe('fulfilled');
+			expect(results[0].value).toBe('identity true');
+			expect(results[1].status).toBe('rejected');
+			expect(results[1].reason.message).toBe(
+				'identity false did not yield 42 but 7'
+			);
+		});
+	});
+	describe('Sleep', () => {
+		it('can delay progress by a given interval (within a period)', async () => {
+			const timeStamp1 = new Date();
+			await sleep(1000);
+			const timeStamp2 = new Date();
+			expect(timeStamp2 - timeStamp1).toBeLessThan(1021);
+		});
+
+		it('can delay progress by a given interval (greater than period)', async () => {
+			const timeStamp1 = new Date();
+			await sleep(1000);
+			const timeStamp2 = new Date();
+			expect(timeStamp2 - timeStamp1).toBeGreaterThan(999);
 		});
 	});
 });

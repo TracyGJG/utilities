@@ -19,7 +19,6 @@ import {
 	compareObjectByProperty,
 	dataType,
 	duplicateObject,
-	extractProperty,
 	isEmptyObject,
 	objectEquality,
 } from './src/dataComparison/index.js';
@@ -56,6 +55,7 @@ import {
 	lens,
 	memoize,
 	pasteText,
+	simd,
 	sleep,
 } from './src/tools/index.js';
 
@@ -81,7 +81,6 @@ export {
 	duplicateObject,
 	enumerate,
 	exercise,
-	extractProperty,
 	groupBy,
 	inRange,
 	intersectArrays,
@@ -106,6 +105,7 @@ export {
 	replaceArray,
 	shortDay,
 	shortMonth,
+	simd,
 	sleep,
 	sum,
 	transposeArray,

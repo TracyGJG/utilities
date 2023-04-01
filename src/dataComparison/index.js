@@ -67,11 +67,6 @@ export function duplicateObject(srcObj) {
 	}
 }
 
-export function extractProperty(...propertyNames) {
-	return obj =>
-		propertyNames.reduce((o, p) => (o.hasOwnProperty(p) ? o[p] : null), obj);
-}
-
 export function isEmptyObject(obj) {
 	return (
 		obj && !Object.getOwnPropertyNames(obj).length && obj.constructor === Object
