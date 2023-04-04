@@ -164,27 +164,34 @@ Both methods follow the same pattern: They take a single number and return a fun
 * size - splits a given array into a number of batches of the stipulated size.
 * number - splits a given array into the stipulated number of evenly distributed batches.
 
+```javascript
+const sourceArray = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3 ];
 
-E.g. Input array [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3 ]
+const batchByThree = batchBy.size(3);
 
-batchBy.size(3) = [
+const batchesOfThree = batchByThree(sourceArray);
+
+// Five batches with as many as possible containing three items.
+/* batchesOfThree = [
   [ 1, 2, 3 ],
   [ 4, 5, 6 ],
   [ 7, 8, 9 ],
   [ 0, 1, 2 ],
   [ 3 ]
 ]
+*/
 
-// Batches containing no more than 3 items each.
+const fourBatches = batchBy.number(4)(sourceArray);
 
-batchBy.number(4) = [
+// Four evenly (as possible) distributed batches.
+/* fourBatches = [
   [ 1, 2, 3, 4 ],
   [ 5, 6, 7 ],
   [ 8, 9, 0 ],
   [ 1, 2, 3 ]
 ]
-
-// Four evenly distributed batches.
+*/
+```
 
 ### Parameters
 
