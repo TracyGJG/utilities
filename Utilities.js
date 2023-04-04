@@ -6,6 +6,7 @@ import {
 	webStore,
 } from './src/ancillaries/index.js';
 import {
+	batchBy,
 	groupBy,
 	intersectArrays,
 	reconcileArrays,
@@ -67,6 +68,7 @@ export {
 	ael,
 	base64Decode,
 	base64Encode,
+	batchBy,
 	cde,
 	clampRange,
 	cloneObject,

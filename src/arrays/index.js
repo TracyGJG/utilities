@@ -1,3 +1,43 @@
+export const batchBy = {
+	size: batchBySize,
+	number: batchByNumber,
+};
+
+function batchBySize(batchSize) {
+	return function (sourceData) {
+		const _sourceData = [...sourceData];
+		const batches = [];
+		let batchStart = 0;
+		while (batchStart < _sourceData.length) {
+			batches.push(_sourceData.slice(batchStart, (batchStart += batchSize)));
+		}
+		return batches;
+	};
+}
+
+function batchByNumber(numberOfBatches) {
+	return function (sourceData) {
+		const batches = [];
+		if (sourceData.length) {
+			const _sourceData = [...sourceData];
+			const batchSize = Math.floor(_sourceData.length / numberOfBatches);
+			const batchRemainder = _sourceData.length % numberOfBatches;
+			let batchStart = 0;
+
+			for (let batchIndex = 0; batchIndex < numberOfBatches; batchIndex++) {
+				batches.push(
+					_sourceData.slice(
+						batchStart,
+						(batchStart +=
+							batchSize + +(batchRemainder && batchIndex < batchRemainder))
+					)
+				);
+			}
+		}
+		return batches;
+	};
+}
+
 export function groupBy(lookupFn, sourceArray) {
 	return sourceArray
 		? sourceArray.reduce(_groupBy, {})

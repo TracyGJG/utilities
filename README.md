@@ -4,41 +4,42 @@ A collection of 50 utility functions I find useful.
 
 <!-- #region Collection -->
 
-|  Ancillary                            |                                                     |                                         |
-| :-----------------------------------: | :-------------------------------------------------: | :-------------------------------------: |
-| [acculatedAverage](#acculatedAverage) | [mapGetter](#mapGetter)                             | [random](#random)                       |
-|              [sum](#sum)              |  [webStore](#webStore)                              |                                         |
-|                                       |                                                     |                                         |
-|           **Arrays**                  |                                                     |                                         |
-|      [groupBy](#groupBy)              | [intersectArrays](#intersectArrays)                 | [reconcileArray](#reconcileArray)       |
-| [replaceArray](#replaceArray)         |  [transposeArray](#transposeArray)                  |    [unionArrays](#unionArrays)          |
-|                                       |                                                     |                                         |
-|   **Data Comparison and Cloning**     |                                                     |                                         |
-|     [cloneObject](#cloneObject)       | [compareObjectByProperty](#compareObjectByProperty) |       [dataType](#dataType)             |
-| [duplicateObject](#duplicateObject)   |           [isEmptyObject](#isEmptyObject)           | [objectEquality](#objectEquality)       |
-|                                       |                                                     |                                         |
-|        **Data Converters**            |                                                     |                                         |
-| [base64decoding](#base64decoding)     | [base64encoding](#base64encoding)                   |    [longDay](#longDay)                  |
-|      [longMonth](#longMonth)          |       [shortDay](#shortDay)                         | [shortMonth](#shortMonth)               |
-|                                       |                                                     |                                         |
-| **Document Object Model (DOM)**       |                                                     |                                         |
-| [ace](#ace)                           | [ael](#ael)                                         | [cde](#cde)                             |
-| [cse](#cse)                           | [qs](#qs)                                           | [qsa](#qsa)                             |
-|                                       |                                                     |                                         |
-|       **Exercising**                  |                                                     |                                         |
-| [adhocArray](#adhocArray)             | [consoleGroup](#consoleGroup)                       | [consoleTable](#consoleTable)           |
-| [exercise](#exercise)                 |                                                     |                                         |
-|                                       |                                                     |                                         |
-|          **Ranges**                   |                                                     |                                         |
-|   [clampRange](#clampRange)           |   [inRange](#inRange)                               | [liniarInterpolate](#liniarInterpolate) |
-|    [loopRange](#loopRange)            | [mapRanges](#mapRanges)                             |    [normaliseRange](#normaliseRange)    |
-| [rangeBetween](#rangeBetween)         | [rangeFrom](#rangeFrom)                             |                                         |
-|                                       |                                                     |                                         |
-|      **Tools**                        |                                                     |                                         |
-|   [compose](#compose)                 | [copyText](#copyText)                               |   [curry](#curry)                       |
-| [enumerate](#enumerate)               |     [lens](#lens)                                   | [memoise](#memoise)                     |
-| [pasteText](#pasteText)               |     [simd](#simd)                                   |   [sleep](#sleep)                       |
-|                                       |                                                     |                                         |
+|  Ancillary                                |                                                     |                                         |
+| :---------------------------------------: | :-------------------------------------------------: | :-------------------------------------: |
+| [accumulatedAverage](#accumulatedAverage) | [mapGetter](#mapGetter)                             | [random](#random)                       |
+|                [sum](#sum)                |  [webStore](#webStore)                              |                                         |
+|                                           |                                                     |                                         |
+|           **Arrays**                      |                                                     |                                         |
+|        [batchBy](#batchBy)                |      [groupBy](#groupBy)                            | [intersectArrays](#intersectArrays)     |
+| [reconcileArray](#reconcileArray)         | [replaceArray](#replaceArray)                       |  [transposeArray](#transposeArray)      |
+|    [unionArrays](#unionArrays)            |                                                     |                                         |
+|                                           |                                                     |                                         |
+|   **Data Comparison and Cloning**         |                                                     |                                         |
+|     [cloneObject](#cloneObject)           | [compareObjectByProperty](#compareObjectByProperty) |       [dataType](#dataType)             |
+| [duplicateObject](#duplicateObject)       |           [isEmptyObject](#isEmptyObject)           | [objectEquality](#objectEquality)       |
+|                                           |                                                     |                                         |
+|        **Data Converters**                |                                                     |                                         |
+| [base64decoding](#base64decoding)         | [base64encoding](#base64encoding)                   |    [longDay](#longDay)                  |
+|      [longMonth](#longMonth)              |       [shortDay](#shortDay)                         | [shortMonth](#shortMonth)               |
+|                                           |                                                     |                                         |
+| **Document Object Model (DOM)**           |                                                     |                                         |
+| [ace](#ace)                               | [ael](#ael)                                         | [cde](#cde)                             |
+| [cse](#cse)                               | [qs](#qs)                                           | [qsa](#qsa)                             |
+|                                           |                                                     |                                         |
+|       **Exercising**                      |                                                     |                                         |
+| [adhocArray](#adhocArray)                 | [consoleGroup](#consoleGroup)                       | [consoleTable](#consoleTable)           |
+| [exercise](#exercise)                     |                                                     |                                         |
+|                                           |                                                     |                                         |
+|          **Ranges**                       |                                                     |                                         |
+|   [clampRange](#clampRange)               |   [inRange](#inRange)                               | [liniarInterpolate](#liniarInterpolate) |
+|    [loopRange](#loopRange)                | [mapRanges](#mapRanges)                             |    [normaliseRange](#normaliseRange)    |
+| [rangeBetween](#rangeBetween)             | [rangeFrom](#rangeFrom)                             |                                         |
+|                                           |                                                     |                                         |
+|      **Tools**                            |                                                     |                                         |
+|   [compose](#compose)                     | [copyText](#copyText)                               |   [curry](#curry)                       |
+| [enumerate](#enumerate)                   |     [lens](#lens)                                   | [memoise](#memoise)                     |
+| [pasteText](#pasteText)                   |     [simd](#simd)                                   |   [sleep](#sleep)                       |
+|                                           |                                                     |                                         |
 
 The above functions make considerable use of the technique called currying/partial-application to return a specialised function. This saves on suppling parameters that are not expected to change.
 
@@ -49,7 +50,7 @@ The above functions make considerable use of the technique called currying/parti
 
 # Ancillaries
 
-## [acculatedAverage](:#acculatedAverage)
+## [accumulatedAverage](:#accumulatedAverage)
 
 Utility for recalculating an average as the sample size increased. There are two ways of using the function, one-off and incremental, but both employ partial application.
 
@@ -156,16 +157,85 @@ An object of functions for the manipulation of data in Web Storage.
 
 # Arrays
 
+## [batchBy](:batchBy) methods
+
+Both methods follow the same pattern: They take a single number and return a function. The generated function takes an array and returns an array of batches (arrays).
+
+* size - splits a given array into a number of batches of the stipulated size.
+* number - splits a given array into the stipulated number of evenly distributed batches.
+
+
+E.g. Input array [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3 ]
+
+batchBy.size(3) = [
+  [ 1, 2, 3 ],
+  [ 4, 5, 6 ],
+  [ 7, 8, 9 ],
+  [ 0, 1, 2 ],
+  [ 3 ]
+]
+
+// Batches containing no more than 3 items each.
+
+batchBy.number(4) = [
+  [ 1, 2, 3, 4 ],
+  [ 5, 6, 7 ],
+  [ 8, 9, 0 ],
+  [ 1, 2, 3 ]
+]
+
+// Four evenly distributed batches.
+
+### Parameters
+
+* size: The maximum content of each batch with the minimum being one less.
+* number: The maximum number of batches to split the input array with;
+   - The batch size to vary by no more than one item.
+   - The number of batches to only be less than the given argument when it exceeds the size of the input array.
+
+### Return Value
+
+Arrays of batches (array) populated with content of the input array.
+
 ## [groupBy](:groupBy)
 
-Given a source array of objects and a function used to identify to which group an object belongs, this function creates an obejct with a property for each group of objects.
+Given a source array of objects and a function used to identify to which group an object belongs, this function creates an object with a property for each group of objects.
+
+```javascript
+  const groupFunction = ({ name }) => name;
+  const sourceArray = [
+    { id: 1, name: 'alpha' },
+    { id: 2, name: 'beta' },
+    { id: 3, name: 'alpha' },
+  ];
+  const resultGroupFunction = groupBy(groupFunction);
+  const resultGroupObject = resultGroupFunction(sourceArray);
+```
+
+The variable `resultGroupObject` with contain the following object:
+
+```javascript
+{
+  alpha: [
+    { id: 1, name: 'alpha' },
+    { id: 3, name: 'alpha' },
+  ],
+  beta: [
+    { id: 2, name: 'beta' },
+  ]
+}
+```
 
 ### Parameters
 
 -   Function that identifies the group of an object in the array
 -   Source array of objects
 
-The arguments can be supplied at the same time or one at a time.
+The arguments can be supplied at the same time or one at a time. So the above example could be performed as follows:
+
+```javascript
+  const resultGroupObject = groupBy(groupFunction, sourceArray);
+```
 
 ### Return Value
 
@@ -175,7 +245,7 @@ An object with a property for each group found. Each property has an array of ob
 
 Extracts the common values of all the input arrays into a new array of distinct values.
 
-```
+```javascript
 Utilities.intersectArrays([1, 2, 3, 4], [3, 4, 5, 6]); // [3, 4]
 ```
 
@@ -246,7 +316,7 @@ e.g. [['A1', 'A2', 'A3'], ['B1', 'B2', 'B3'], ['C1', 'C2', 'C3']]
 
 Extracts a list of all the values from the input arrays into a new array of distinct values.
 
-```
+```javascript
 Utilities.unionArrays([1, 2, 3, 4], [3, 4, 5, 6]); // [1, 2, 3, 4, 5 ,6]
 ```
 
@@ -700,7 +770,7 @@ Calculates a new value in a sequence based on the current (_cur_) input. The val
 
 When the value exceeds the bounds of the range it loops round to the opposite end of the range.
 
-```
+```javascript
 const zeroIndexed = Utilities.loopRange(9); // Range 0 .. 8
 
 zeroIndexed(4); // 5
@@ -782,7 +852,7 @@ A value between 0 and 1.
 
 _RangeBetween_ is a generator function that produces an array of numbers between _min_ and _max (- 1)_ in _step_ intervals (default value is 1.)
 
-```
+```javascript
 Utilities.rangeBetween(10); // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 Utilities.rangeBetween(20, 10); // [10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
@@ -804,7 +874,7 @@ A new array containing the numbers between _min_ and _max - 1_, in _step_ interv
 
 Similar to the _RangeBetween_ function, this function generates an array of _len_ numbers commencing with _init_ and varying by _step_. The _step_ parameter can be a fixed value (defaulted to 1) or a function using the index (starting from zero) as its input.
 
-```
+```javascript
 Utilities.rangeFrom(10, 10); // [10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
 
 Utilities.rangeFrom(10, 10, 2); // [10, 12, 14, 16, 18, 20, 22, 24, 26, 28]
@@ -964,15 +1034,19 @@ None
 
 # Change Log
 
+### Update 2nd April
+
+-   Array methods `batchBy.size` and `batchBy.number` added.
+
 ### Update 1st April
 
--   simd added to tools.
--   extractProperty removed from dataComparison (duplicate of tools/lens).
+-   `simd` added to tools.
+-   `extractProperty` removed from dataComparison (duplicate of tools/`lens`).
 
 ### Update 17th March 2023
 
 -   DOM manipulation functions added.
--   Clipboard functions copy and paste added.
+-   Clipboard functions `copy` and `paste` added.
 -   Exercise function `consoleGroup` added. 
 
 ### Update 7th March 2023
@@ -998,7 +1072,7 @@ None
 
 ### Update 29th August 2022
 
--   Added Array 'groupBy' function.
+-   Added Array `groupBy` function.
 
 ### Update 20th August 2022
 
@@ -1020,47 +1094,47 @@ None
 
 ### Update: 21st September 2021
 
-Added `compareObjectByProperty` to generate an object comparator function based on a given property name.
+-   Added `compareObjectByProperty` to generate an object comparator function based on a given property name.
 
 ### Update: 22nd August 2021
 
-Added `cloneObject` to enable deep duplication of objects including data types not supported by JSON.
+-   Added `cloneObject` to enable deep duplication of objects including data types not supported by JSON.
 
 ### Update: 19th August 2021
 
-Added `transposeArray` to pivot the rows with columns of a 2D array.
+-   Added `transposeArray` to pivot the rows with columns of a 2D array.
 
 ### Update: 11th August 2021
 
-Added `reconcileArray` to update an array based on a second without losing reference.
+-   Added `reconcileArray` to update an array based on a second without losing reference.
 
 ### Update: 7th July 2021
 
-Added `memoise` and `curry` functions.
+-   Added `memoise` and `curry` functions.
 
 ### Update: 5th June 2021
 
-Added `sleep` function.
+-   Added `sleep` function.
 
 ### Update: 17th April 2021
 
-Revised `unionArrays` function.
+-   Revised `unionArrays` function.
 
 ### Update: 3rd April 2021
 
-Applied patch to address the report by Snyk of a vulnerability in the y18n package version 4.0.0.
+-   Applied patch to address the report by Snyk of a vulnerability in the y18n package version 4.0.0.
 
 ### Update: 5th March 2021
 
-New function `replaceArray` added to replace the content of an array in place, without reassignment.
+-   New function `replaceArray` added to replace the content of an array in place, without reassignment.
 
 ### Update: 29th December 2020
 
-New function `dataType` added to report the type of data held in a variable as a string.
+-   New function `dataType` added to report the type of data held in a variable as a string.
 
 ### Update: 5th September 2020
 
-This library was originally developed as an ES Module but had to be converted to Common.JS to make it compatible and testable with Jest.
+-   This library was originally developed as an ES Module but had to be converted to Common.JS to make it compatible and testable with Jest.
 Following the advice given in [Valentino Gagliardi's article](https://www.valentinog.com/blog/jest/), I have been able to to convert it back to an ES Module; making it usable by Node and in the web browser.
 
 ---

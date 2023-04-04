@@ -1,6 +1,7 @@
 import { jest } from '@jest/globals';
 
 import {
+	batchBy,
 	groupBy,
 	intersectArrays,
 	reconcileArrays,
@@ -11,6 +12,93 @@ import {
 import { rangeFrom } from '../ranges/index.js';
 
 describe('Arrays', () => {
+	describe('batchBy', () => {
+		const testData = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'];
+
+		describe('Size', () => {
+			const batchesOfThree = batchBy.size(3);
+
+			test('with an empty input array', () => {
+				const batches = batchesOfThree([]);
+				expect(batches.length).toBe(0);
+			});
+
+			test('with an even input array', () => {
+				const batches = batchesOfThree([...testData, 'L']);
+				expect(batches.length).toBe(4);
+				expect(batches[3].length).toBe(3);
+			});
+
+			test('with an uneven input array', () => {
+				const batches = batchesOfThree([...testData]);
+				expect(batches.length).toBe(4);
+				expect(batches[3].length).toBe(2);
+			});
+		});
+		describe('Number', () => {
+			const fourBatches = batchBy.number(4);
+
+			test('with an empty input array', () => {
+				const batches = fourBatches([]);
+				expect(batches.length).toBe(0);
+			});
+
+			test('with an even input array', () => {
+				const batches = fourBatches([...testData, 'L']);
+				expect(batches.length).toBe(4);
+				expect(batches[3].length).toBe(3);
+			});
+
+			test('with an uneven input array', () => {
+				const batches = fourBatches([...testData]);
+				expect(batches.length).toBe(4);
+				expect(batches[3].length).toBe(2);
+			});
+		});
+	});
+
+	describe('groupBy', () => {
+		test('returns an empty object when given an empty array', () => {
+			const groupFunction = ({ name }) => name;
+			const sourceArray = [];
+			const resultGroupObject = groupBy(groupFunction, sourceArray);
+			expect(Object.keys(resultGroupObject).length).toBe(0);
+		});
+		test('returns an object with a single property when given an array containing objects of the same group (same time args)', () => {
+			const groupFunction = ({ name }) => name;
+			const sourceArray = [
+				{ name: 'alpha' },
+				{ name: 'alpha' },
+				{ name: 'alpha' },
+			];
+			const resultGroupObject = groupBy(groupFunction, sourceArray);
+
+			expect(Object.keys(resultGroupObject).length).toBe(1);
+			expect(Object.keys(resultGroupObject)[0]).toBe('alpha');
+			expect(resultGroupObject.alpha.length).toBe(3);
+		});
+		test('returns an object with multiple properties when given an array containing objects of different groups (different time args)', () => {
+			const groupFunction = ({ name }) => name;
+			const sourceArray = [
+				{ id: 1, name: 'alpha' },
+				{ id: 2, name: 'beta' },
+				{ id: 3, name: 'alpha' },
+			];
+			const resultGroupFunction = groupBy(groupFunction);
+			const resultGroupObject = resultGroupFunction(sourceArray);
+
+			expect(Object.keys(resultGroupObject).length).toBe(2);
+			expect(Object.keys(resultGroupObject)[0]).toBe('alpha');
+			expect(Object.keys(resultGroupObject)[1]).toBe('beta');
+
+			expect(resultGroupObject.alpha.length).toBe(2);
+			expect(resultGroupObject.beta.length).toBe(1);
+			expect(resultGroupObject.alpha[0].id).toBe(1);
+			expect(resultGroupObject.alpha[1].id).toBe(3);
+			expect(resultGroupObject.beta[0].id).toBe(2);
+		});
+	});
+
 	describe('Intersect Array', () => {
 		const alpha = rangeFrom(1, 4); // [1, 2, 3, 4]
 		const beta = rangeFrom(2, 4); // [2, 3, 4, 5]
@@ -35,54 +123,6 @@ describe('Arrays', () => {
 		it('can intersect three arrays', () => {
 			const result = [3, 4];
 			expect(intersectArrays(alpha, beta, delta)).toEqual(result);
-		});
-	});
-
-	describe('Union Array', () => {
-		const alpha = rangeFrom(1, 4); // [1, 2, 3, 4]
-		const beta = rangeFrom(2, 4); // [2, 3, 4, 5]
-		const delta = rangeFrom(3, 4); // [3, 4, 5, 6]
-		const zeta = rangeFrom(10, 4, 10); // [10, 20, 30, 40]
-		it('can union a single array', () => {
-			const result = [1, 2, 3, 4];
-			expect(unionArrays(alpha)).toEqual(result);
-		});
-		it('can union an array with an empty array', () => {
-			const result = [1, 2, 3, 4];
-			expect(unionArrays(alpha, [])).toEqual(result);
-		});
-		it('can union two (non-intersecting arrays)', () => {
-			const result = [1, 2, 3, 4, 10, 20, 30, 40];
-			expect(unionArrays(alpha, zeta)).toEqual(result);
-		});
-		it('can union three (intesecting) arrays', () => {
-			const result = [1, 2, 3, 4, 5, 6];
-			expect(unionArrays(alpha, beta, delta)).toEqual(result);
-		});
-	});
-
-	describe('replaceArray', () => {
-		it('can populate an empty array', () => {
-			const tgtArr = [];
-			const srcArr = [1, 2, 3];
-
-			replaceArray(tgtArr, srcArr);
-			expect(tgtArr.length).toEqual(3);
-		});
-
-		it('can empty a populated array', () => {
-			const tgtArr = [1, 2, 3];
-
-			replaceArray(tgtArr);
-			expect(tgtArr.length).toEqual(0);
-		});
-
-		it('can replace a populated array', () => {
-			const tgtArr = [1, 2, 3];
-			const srcArr = [4, 5, 6, 7];
-
-			replaceArray(tgtArr, srcArr);
-			expect(tgtArr.length).toEqual(4);
 		});
 	});
 
@@ -197,6 +237,31 @@ describe('Arrays', () => {
 		});
 	});
 
+	describe('replaceArray', () => {
+		it('can populate an empty array', () => {
+			const tgtArr = [];
+			const srcArr = [1, 2, 3];
+
+			replaceArray(tgtArr, srcArr);
+			expect(tgtArr.length).toEqual(3);
+		});
+
+		it('can empty a populated array', () => {
+			const tgtArr = [1, 2, 3];
+
+			replaceArray(tgtArr);
+			expect(tgtArr.length).toEqual(0);
+		});
+
+		it('can replace a populated array', () => {
+			const tgtArr = [1, 2, 3];
+			const srcArr = [4, 5, 6, 7];
+
+			replaceArray(tgtArr, srcArr);
+			expect(tgtArr.length).toEqual(4);
+		});
+	});
+
 	describe('transposeArray', () => {
 		it('can process an empty array', () => {
 			const testMatrix = [];
@@ -249,45 +314,26 @@ describe('Arrays', () => {
 		});
 	});
 
-	describe('groupBy', () => {
-		test('returns an empty object when given an empty array', () => {
-			const groupFunction = ({ name }) => name;
-			const sourceArray = [];
-			const resultGroupObject = groupBy(groupFunction, sourceArray);
-			expect(Object.keys(resultGroupObject).length).toBe(0);
+	describe('Union Array', () => {
+		const alpha = rangeFrom(1, 4); // [1, 2, 3, 4]
+		const beta = rangeFrom(2, 4); // [2, 3, 4, 5]
+		const delta = rangeFrom(3, 4); // [3, 4, 5, 6]
+		const zeta = rangeFrom(10, 4, 10); // [10, 20, 30, 40]
+		it('can union a single array', () => {
+			const result = [1, 2, 3, 4];
+			expect(unionArrays(alpha)).toEqual(result);
 		});
-		test('returns an object with a single property when given an array containing objects of the same group (same time args)', () => {
-			const groupFunction = ({ name }) => name;
-			const sourceArray = [
-				{ name: 'alpha' },
-				{ name: 'alpha' },
-				{ name: 'alpha' },
-			];
-			const resultGroupObject = groupBy(groupFunction, sourceArray);
-
-			expect(Object.keys(resultGroupObject).length).toBe(1);
-			expect(Object.keys(resultGroupObject)[0]).toBe('alpha');
-			expect(resultGroupObject.alpha.length).toBe(3);
+		it('can union an array with an empty array', () => {
+			const result = [1, 2, 3, 4];
+			expect(unionArrays(alpha, [])).toEqual(result);
 		});
-		test('returns an object with multiple properties when given an array containing objects of different groups (different time args)', () => {
-			const groupFunction = ({ name }) => name;
-			const sourceArray = [
-				{ id: 1, name: 'alpha' },
-				{ id: 2, name: 'beta' },
-				{ id: 3, name: 'alpha' },
-			];
-			const resultGroupFunction = groupBy(groupFunction);
-			const resultGroupObject = resultGroupFunction(sourceArray);
-
-			expect(Object.keys(resultGroupObject).length).toBe(2);
-			expect(Object.keys(resultGroupObject)[0]).toBe('alpha');
-			expect(Object.keys(resultGroupObject)[1]).toBe('beta');
-
-			expect(resultGroupObject.alpha.length).toBe(2);
-			expect(resultGroupObject.beta.length).toBe(1);
-			expect(resultGroupObject.alpha[0].id).toBe(1);
-			expect(resultGroupObject.alpha[1].id).toBe(3);
-			expect(resultGroupObject.beta[0].id).toBe(2);
+		it('can union two (non-intersecting arrays)', () => {
+			const result = [1, 2, 3, 4, 10, 20, 30, 40];
+			expect(unionArrays(alpha, zeta)).toEqual(result);
+		});
+		it('can union three (intesecting) arrays', () => {
+			const result = [1, 2, 3, 4, 5, 6];
+			expect(unionArrays(alpha, beta, delta)).toEqual(result);
 		});
 	});
 });
