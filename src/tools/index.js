@@ -49,10 +49,12 @@ export function enumerate(source, options = {}) {
 
 	const { numericValues = false, constantProperties = false } = options;
 
-	return keys.reduce((obj, key, index) => {
-		const propertyName = constantProperties ? toGlobal(key) : key;
-		return { ...obj, [propertyName]: numericValues ? index : key };
-	}, {});
+	return Object.freeze(
+		keys.reduce((obj, key, index) => {
+			const propertyName = constantProperties ? toGlobal(key) : key;
+			return { ...obj, [propertyName]: numericValues ? index : key };
+		}, {})
+	);
 
 	function toGlobal(_propertyName) {
 		const hasSpaces = /\s/.test(_propertyName);
