@@ -75,11 +75,13 @@ describe('Ranges', () => {
 			expect(result[0]).toEqual(10);
 			expect(result[9]).toEqual(19);
 		});
-		it('can generate a range of 10 values between 10 and 20, in steps of 2', () => {
-			const result = rangeBetween(20, 10, 2);
-			expect(result.length).toEqual(5);
+		it('can generate a range of 10 values between 10 and 20, in steps of 3', () => {
+			const result = rangeBetween(20, 10, 3);
+			expect(result.length).toEqual(4);
 			expect(result[0]).toEqual(10);
-			expect(result[4]).toEqual(18);
+			expect(result[1]).toEqual(13);
+			expect(result[2]).toEqual(16);
+			expect(result[3]).toEqual(19);
 		});
 	});
 	describe('Ranges From', () => {
@@ -87,25 +89,26 @@ describe('Ranges', () => {
 			expect(rangeFrom().length).toEqual(1);
 			expect(rangeFrom()[0]).toEqual(0);
 		});
-		it('can generate a range - single argument', () => {
-			expect(rangeFrom(10).length).toEqual(1);
-			expect(rangeFrom(10)[0]).toEqual(10);
+		it('can generate a range - single argument (length)', () => {
+			expect(rangeFrom(10).length).toEqual(10);
+			expect(rangeFrom(10)[0]).toEqual(0);
+			expect(rangeFrom(10)[9]).toEqual(9);
 		});
-		it('can generate a range - pair of arguments', () => {
-			expect(rangeFrom(10, 20).length).toEqual(20);
-			expect(rangeFrom(10, 20)[2]).toEqual(12);
-			expect(rangeFrom(10, 20)[19]).toEqual(29);
+		it('can generate a range - pair of arguments (length and initial)', () => {
+			expect(rangeFrom(12, 10).length).toEqual(12);
+			expect(rangeFrom(12, 10)[0]).toEqual(10);
+			expect(rangeFrom(12, 10)[11]).toEqual(21);
 		});
 		it('can generate a range - pair of arguments, with step value', () => {
-			expect(rangeFrom(10, 20, 2).length).toEqual(20);
-			expect(rangeFrom(10, 20, 2)[2]).toEqual(14);
-			expect(rangeFrom(10, 20, 2)[19]).toEqual(48);
+			expect(rangeFrom(12, 10, 2).length).toEqual(12);
+			expect(rangeFrom(12, 10, 2)[0]).toEqual(10);
+			expect(rangeFrom(12, 10, 2)[11]).toEqual(32);
 		});
 		it('can generate a range - pair of arguments, with step function', () => {
-			const transformFn = _ => 2 ** _;
-			expect(rangeFrom(10, 20, transformFn).length).toEqual(20);
-			expect(rangeFrom(10, 20, transformFn)[2]).toEqual(14);
-			expect(rangeFrom(10, 20, transformFn)[19]).toEqual(524298);
+			const transformFn = _ => 2 * _;
+			expect(rangeFrom(12, 10, transformFn).length).toEqual(12);
+			expect(rangeFrom(12, 10, transformFn)[0]).toEqual(10);
+			expect(rangeFrom(12, 10, transformFn)[11]).toEqual(32);
 		});
 	});
 	describe('In Range', () => {

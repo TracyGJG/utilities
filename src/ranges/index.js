@@ -38,11 +38,13 @@ export function normaliseRange(start, end) {
 }
 
 export function rangeBetween(max, min = 0, step = 1) {
-	return [...Array((max - min) / step).keys()].map(index => index * step + min);
+	return Array.from(
+		{ length: Math.ceil((max - min) / step) },
+		(_, i) => min + i * step
+	);
 }
 
-export function rangeFrom(init = 0, len = 1, step = 1) {
-	const stepFn = (_, inc) =>
-		(typeof step === 'number' ? step * inc : step(inc)) + init;
-	return [...Array(len)].map(stepFn);
+export function rangeFrom(length = 1, init = 0, step = 1) {
+	const stepFn = typeof step === 'function' ? step : _ => _ * step;
+	return Array.from({ length }, (_, i) => init + stepFn(i));
 }

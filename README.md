@@ -857,7 +857,7 @@ A value between 0 and 1.
 
 ## [rangeBetween](:#rangebetween)
 
-_RangeBetween_ is a generator function that produces an array of numbers between _min_ and _max (- 1)_ in _step_ intervals (default value is 1.)
+_RangeBetween_ is a function that produces an array of numbers between _min_ and _max (- 1)_ in _step_ intervals (default value is 1.)
 
 ```javascript
 Utilities.rangeBetween(10); // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -882,12 +882,16 @@ A new array containing the numbers between _min_ and _max - 1_, in _step_ interv
 Similar to the _RangeBetween_ function, this function generates an array of _len_ numbers commencing with _init_ and varying by _step_. The _step_ parameter can be a fixed value (defaulted to 1) or a function using the index (starting from zero) as its input.
 
 ```javascript
-Utilities.rangeFrom(10, 10); // [10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+Utilities.rangeFrom(); // [0]
 
-Utilities.rangeFrom(10, 10, 2); // [10, 12, 14, 16, 18, 20, 22, 24, 26, 28]
+Utilities.rangeFrom(10); // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-const fn = x => 2 ** x;
-Utilities.rangeFrom(10, 10, x); // [1, 2, 4, 8, 16, 32, 64, 128, 256, 512]
+Utilities.rangeFrom(12, 10); // [10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+
+Utilities.rangeFrom(12, 10, 2); // [10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32]
+
+const fn = x => 2 * x;
+Utilities.rangeFrom(12, 10, fn); // [10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32]
 ```
 
 ### Parameters

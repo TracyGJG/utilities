@@ -100,10 +100,10 @@ describe('Arrays', () => {
 	});
 
 	describe('Intersect Array', () => {
-		const alpha = rangeFrom(1, 4); // [1, 2, 3, 4]
-		const beta = rangeFrom(2, 4); // [2, 3, 4, 5]
-		const delta = rangeFrom(3, 4); // [3, 4, 5, 6]
-		const zeta = rangeFrom(10, 4, 10); // [10, 20, 30, 40]
+		const alpha = rangeFrom(4, 1); // [1, 2, 3, 4]
+		const beta = rangeFrom(4, 2); // [2, 3, 4, 5]
+		const delta = rangeFrom(4, 3); // [3, 4, 5, 6]
+		const zeta = rangeFrom(4, 10, 10); // [10, 20, 30, 40]
 		it('can intersect a single array', () => {
 			const result = [1, 2, 3, 4];
 			expect(intersectArrays(alpha)).toEqual(result);
@@ -315,10 +315,10 @@ describe('Arrays', () => {
 	});
 
 	describe('Union Array', () => {
-		const alpha = rangeFrom(1, 4); // [1, 2, 3, 4]
-		const beta = rangeFrom(2, 4); // [2, 3, 4, 5]
-		const delta = rangeFrom(3, 4); // [3, 4, 5, 6]
-		const zeta = rangeFrom(10, 4, 10); // [10, 20, 30, 40]
+		const alpha = rangeFrom(4, 1); // [1, 2, 3, 4]
+		const beta = rangeFrom(4, 2); // [2, 3, 4, 5]
+		const delta = rangeFrom(4, 3); // [3, 4, 5, 6]
+		const zeta = rangeFrom(4, 10, 10); // [10, 20, 30, 40]
 		it('can union a single array', () => {
 			const result = [1, 2, 3, 4];
 			expect(unionArrays(alpha)).toEqual(result);
