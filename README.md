@@ -4,39 +4,39 @@ A collection of 50 utility functions I find useful.
 
 <!-- #region Collection -->
 
-|  Ancillary                                |                                                     |                                         |
+|  **Ancillary**                            |                                                     |                                         |
 | :---------------------------------------: | :-------------------------------------------------: | :-------------------------------------: |
-| [accumulatedAverage](#accumulatedAverage) | [mapGetter](#mapGetter)                             | [random](#random)                       |
-|                [sum](#sum)                |  [webStore](#webStore)                              |                                         |
+| [accumulatedAverage](#accumulatedaverage) | [mapGetter](#mapgetter)                             | [random](#random)                       |
+|                [sum](#sum)                |  [webStore](#webstore)                              |                                         |
 |                                           |                                                     |                                         |
 |           **Arrays**                      |                                                     |                                         |
-|        [batchBy](#batchBy)                |      [groupBy](#groupBy)                            | [intersectArrays](#intersectArrays)     |
-| [reconcileArray](#reconcileArray)         | [replaceArray](#replaceArray)                       |  [transposeArray](#transposeArray)      |
-|    [unionArrays](#unionArrays)            |                                                     |                                         |
+|        [batchBy](#batchby)                |      [groupBy](#groupby)                            | [intersectArrays](#intersectarrays)     |
+| [reconcileArray](#reconcilearray)         | [replaceArray](#replacearray)                       |  [transposeArray](#transposearray)      |
+|    [unionArrays](#unionarrays)            |                                                     |                                         |
 |                                           |                                                     |                                         |
 |   **Data Comparison and Cloning**         |                                                     |                                         |
-|     [cloneObject](#cloneObject)           | [compareObjectByProperty](#compareObjectByProperty) |       [dataType](#dataType)             |
-| [duplicateObject](#duplicateObject)       |           [isEmptyObject](#isEmptyObject)           | [objectEquality](#objectEquality)       |
+|     [cloneObject](#cloneobject)           | [compareObjectByProperty](#compareobjectbyproperty) |       [dataType](#datatype)             |
+| [duplicateObject](#duplicateobject)       |           [isEmptyObject](#isemptyobject)           | [objectEquality](#objectequality)       |
 |                                           |                                                     |                                         |
 |        **Data Converters**                |                                                     |                                         |
-| [base64decoding](#base64decoding)         | [base64encoding](#base64encoding)                   |    [longDay](#longDay)                  |
-|      [longMonth](#longMonth)              |       [shortDay](#shortDay)                         | [shortMonth](#shortMonth)               |
+| [base64decoding](#base64decoding)         | [base64encoding](#base64encoding)                   |    [longDay](#longday)                  |
+|      [longMonth](#longmonth)              |       [shortDay](#shortday)                         | [shortMonth](#shortmonth)               |
 |                                           |                                                     |                                         |
 | **Document Object Model (DOM)**           |                                                     |                                         |
 | [ace](#ace)                               | [ael](#ael)                                         | [cde](#cde)                             |
 | [cse](#cse)                               | [qs](#qs)                                           | [qsa](#qsa)                             |
 |                                           |                                                     |                                         |
 |       **Exercising**                      |                                                     |                                         |
-| [adhocArray](#adhocArray)                 | [consoleGroup](#consoleGroup)                       | [consoleTable](#consoleTable)           |
+| [adhocArray](#adhocarray)                 | [consoleGroup](#consolegroup)                       | [consoleTable](#consoletable)           |
 | [exercise](#exercise)                     |                                                     |                                         |
 |                                           |                                                     |                                         |
 |          **Ranges**                       |                                                     |                                         |
-|   [clampRange](#clampRange)               |   [inRange](#inRange)                               | [liniarInterpolate](#liniarInterpolate) |
-|    [loopRange](#loopRange)                | [mapRanges](#mapRanges)                             |    [normaliseRange](#normaliseRange)    |
-| [rangeBetween](#rangeBetween)             | [rangeFrom](#rangeFrom)                             |                                         |
+|   [clampRange](#clamprange)               |   [inRange](#inrange)                               | [liniarInterpolate](#liniarinterpolate) |
+|    [loopRange](#looprange)                | [mapRanges](#mapranges)                             |    [normaliseRange](#normaliserange)    |
+| [rangeBetween](#rangebetween)             | [rangeFrom](#rangefrom)                             |                                         |
 |                                           |                                                     |                                         |
 |      **Tools**                            |                                                     |                                         |
-|   [compose](#compose)                     | [copyText](#copyText)                               |   [curry](#curry)                       |
+|   [compose](#compose)                     | [copyText](#copytext)                               |   [curry](#curry)                       |
 | [enumerate](#enumerate)                   |     [lens](#lens)                                   | [memoise](#memoise)                     |
 | [pasteText](#pasteText)                   |     [simd](#simd)                                   |   [sleep](#sleep)                       |
 |                                           |                                                     |                                         |
@@ -50,7 +50,7 @@ The above functions make considerable use of the technique called currying/parti
 
 # Ancillaries
 
-## [accumulatedAverage](:#accumulatedAverage)
+## [accumulatedAverage](:#accumulatedaverage)
 
 Utility for recalculating an average as the sample size increased. There are two ways of using the function, one-off and incremental, but both employ partial application.
 
@@ -83,7 +83,7 @@ Subsequent calls to _accumulateAverage_ with include additional values as part o
 
 The new calculated average.
 
-## [mapGetter](:#mapGetter)
+## [mapGetter](:#mapgetter)
 
 Utility for creating and retrieving entities from a map object.
 
@@ -135,7 +135,7 @@ The sum of all the provided values.
 | :--: | :---------------------------: |
 | E-NN | _Non-numeric value supplied._ |
 
-## [webStore](:#webStore)
+## [webStore](:#webstore)
 
 Provides an object of web storage utility methods.
 
@@ -157,7 +157,7 @@ An object of functions for the manipulation of data in Web Storage.
 
 # Arrays
 
-## [batchBy](:batchBy) methods
+## [batchBy](:#batchby) methods
 
 Both methods follow the same pattern: They take a single number and return a function. The generated function takes an array and returns an array of batches (arrays).
 
@@ -204,7 +204,7 @@ const fourBatches = batchBy.number(4)(sourceArray);
 
 Arrays of batches (array) populated with content of the input array.
 
-## [groupBy](:groupBy)
+## [groupBy](:#groupby)
 
 Given a source array of objects and a function used to identify to which group an object belongs, this function creates an object with a property for each group of objects.
 
@@ -248,7 +248,7 @@ The arguments can be supplied at the same time or one at a time. So the above ex
 
 An object with a property for each group found. Each property has an array of objects as its value.
 
-## [intersectArrays](:#intersectArrays)
+## [intersectArrays](:#intersectarrays)
 
 Extracts the common values of all the input arrays into a new array of distinct values.
 
@@ -264,7 +264,7 @@ Utilities.intersectArrays([1, 2, 3, 4], [3, 4, 5, 6]); // [3, 4]
 
 A new array containing only those values found in all the given arrays.
 
-## [reconcileArray](:reconcileArray)
+## [reconcileArray](:#reconcilearray)
 
 Replaces the content of the _targetArray_ with content from the _sourceArray_ using the _objectKey_ to locate common objects. Object in the _sourceArray_ but not in target are added, those in target but not source are removed. Objects that appear in both arrays, as identified by the _objectKey_ property, are updated with any array properties also preserved.
 
@@ -278,7 +278,7 @@ Replaces the content of the _targetArray_ with content from the _sourceArray_ us
 
 None - updates the targetArray directly by reference.
 
-## [replaceArray](:#replaceArray)
+## [replaceArray](:#replacearray)
 
 Replaces the content of the _targetArray_ with the (optional) content of the _arrayContent_.
 
@@ -291,7 +291,7 @@ Replaces the content of the _targetArray_ with the (optional) content of the _ar
 
 None - updates the _targetArray_ directly by reference.
 
-## [transposeArray](:#transposeArray)
+## [transposeArray](:#transposearray)
 
 Takes a 2-dimensional array (matrix) and produces a new array where the rows of the initial array become the columns of the new array and vice-a-verse.
 
@@ -349,7 +349,7 @@ This module exposes a constant object `DATA_TYPES` that is a collection of enume
 |DATE     | date      |NUMBER   | number    |SYMBOL   | symbol    |
 |ERROR    | error     |OBJECT   | object    |UNDEFINED| undefined |
 
-## [cloneObject](:#cloneObject)
+## [cloneObject](:#cloneobject)
 
 Creates a renew object with the same structure of the input, containing copies of the primitive values.
 
@@ -374,7 +374,7 @@ Creates a comparator function for use with an array of objects containing the gi
 
 A comparator function used to sort objects containing the given property.
 
-## [dataType](:#dataType)
+## [dataType](:#datatype)
 
 Identifies which of the above Standard data Type being used by the supplied argument.   
 
@@ -396,7 +396,7 @@ Lowercase string representation of the type of data held in the variable. This i
 |    date            | error  | set    |
 |    map             | symbol | bigint |
 
-## [duplicateObject](:#duplicateObject)
+## [duplicateObject](:#duplicateobject)
 
 Creates a renew object with the same structure of the input, containing copies of the primitive values and objects such as RegExp, Date and Function.
 
@@ -408,7 +408,7 @@ Creates a renew object with the same structure of the input, containing copies o
 
 A new object with the same structure as the input object and copies of the primitive values and more complicated objects.
 
-## [isEmptyObject](:#isEmptyObject)
+## [isEmptyObject](:#isEmptyobject)
 
 Compares two objects and reports in they are equivalent (contain the same primitives.)
 
@@ -420,7 +420,7 @@ Compares two objects and reports in they are equivalent (contain the same primit
 
 Boolean flag indication if the value is an object, null or undefined.
 
-## [objectEquality](:#objectEquality)
+## [objectEquality](:#objectequality)
 
 Compares two objects and reports in they are equivalent (contain the same primitives.)
 
@@ -459,7 +459,7 @@ Applies Base64 decoding of supplied encloded data.
 
 Decodes version of the Base64 encoded input data.
 
-## [longDay](:#longDay)
+## [longDay](:#longday)
 
 Provides the long form of the day of week in the given locale, based in a numeric value in the range of 0 to 6.
 
@@ -472,7 +472,7 @@ Provides the long form of the day of week in the given locale, based in a numeri
 
 String representing the long form of the day of week in the language of the given locale code.
 
-## [longMonth](:#longMonth)
+## [longMonth](:#longmonth)
 
 Provides the long form of the month of year in the given locale, based in a numeric value in the range of 0 to 11.
 
@@ -485,7 +485,7 @@ Provides the long form of the month of year in the given locale, based in a nume
 
 String representing the long form of the month of year in the language of the given locale code.
 
-## [shortDay](:#shortDay)
+## [shortDay](:#shortday)
 
 Provides the short form of the day of week in the given locale, based in a numeric value in the range of 0 to 6.
 
@@ -498,7 +498,7 @@ Provides the short form of the day of week in the given locale, based in a numer
 
 String representing the short form of the day of week in the language of the given locale code.
 
-## [shortMonth](:#shortMonth)
+## [shortMonth](:#shortmonth)
 
 Provides the short form of the month of year in the given locale, based in a numeric value in the range of 0 to 11.
 
@@ -513,7 +513,7 @@ String representing the short form of the month of year in the language of the g
 
 # DOM - Document Object Model
 
-## ace - append child element
+## [ace](:#ace) - append child element
 
 Appends the childElement to the given parentElement.
 
@@ -526,7 +526,7 @@ Appends the childElement to the given parentElement.
 
 None.
 
-## ael - add event listener
+## [ael](:#ael) - add event listener
 
 Appends a function as listener for an event off a selected element on a parent element
 
@@ -542,7 +542,7 @@ Appends a function as listener for an event off a selected element on a parent e
 
 None.
 
-## cde - create DOM element
+## [cde](:#cde) - create DOM element
 
 Creates a DOM element and assigns the list of attribute values.
 
@@ -556,7 +556,7 @@ Creates a DOM element and assigns the list of attribute values.
 
 The newly created DOM element
 
-## cse - create SVG element
+## [cse](:#cse) - create SVG element
 
 Creates a SVG element and assigns the list of attribute values.
 
@@ -570,7 +570,7 @@ Creates a SVG element and assigns the list of attribute values.
 
 The newly created SVG element
 
-## qs - query selector
+## [qs](:#qs) - query selector
 
 Locates the first DOM element that matches the CSS selector.
 
@@ -583,7 +583,7 @@ Locates the first DOM element that matches the CSS selector.
 
 Either null or the matching DOM element.
 
-## qsa - query selector all
+## [qsa](:#qsa) - query selector all
 
 Locates all DOM elements that matche the CSS selector.
 
@@ -598,7 +598,7 @@ An array of zero or more DOM elements.
 
 # Exercising
 
-## [adhocArray](:#adhocArray)
+## [adhocArray](:#adhocarray)
 
 A function for generating an array on demand and for a specific purpose, largely for testing but could have other applications.
 
@@ -657,7 +657,7 @@ The primary use case for this function is to provide a known input (array) for a
 * _adhocArray parameter 2 needs to be of type Function._
 * _adhocArray parameter 2 needs a single parameter._
 
-## [consoleGroup](:#consoleGroup)
+## [consoleGroup](:#consolegroup)
 
 An alternative to the console.group and console.log functions but generates HTML.
 
@@ -675,7 +675,7 @@ An alternative to the console.group and console.log functions but generates HTML
 
 An HTML fragment ready for insertion into the Document.
 
-## [consoleTable](:#consoleTable)
+## [consoleTable](:#consoletable)
 
 An alternative to the console.table function but generates HTML.
 
@@ -704,7 +704,7 @@ Result of the comparison (true or false.)
 
 # Ranges
 
-## [clampRange](:#clampRange)
+## [clampRange](:#clamprange)
 
 Function that restricts a value to within a given numeric range. Initialised with the lower and upper boundaries of a range, this function returns another specialised function.
 
@@ -729,7 +729,7 @@ If the input value is within the boundaries the output from the function will be
 
 A value within the clamped range.
 
-## [inRange](:#inRange)
+## [inRange](:#inrange)
 
 This function supports two use cases:
 
@@ -752,7 +752,7 @@ This function supports two use cases:
 
 Boolean value indicating the ranges overlap or a value is within a given range.
 
-## [liniarInterpolate](:#liniarInterpolate)
+## [liniarInterpolate](:#liniarinterpolate)
 
 This function converts a normalised value (between 0 and 1), initilised with a given range, and returns a value within the range proportional to the input value.
 
@@ -771,7 +771,7 @@ This function converts a normalised value (between 0 and 1), initilised with a g
 
 A value between the _start_ and _end_ values, proportional to the input value.
 
-## [loopRange](:#loopRange)
+## [loopRange](:#looprange)
 
 Calculates a new value in a sequence based on the current (_cur_) input. The value increases or decreases based on the direction (_dir_) value (1 to increase, -1 to decrease.) The value changes within a defined range up to a maximum (_max_) and minimum (_min_), which is an optional input with a default of zero.
 
@@ -811,7 +811,7 @@ oneIndexed(1, -1); // 9
 
 Calculated new value within the range.
 
-## [mapRanges](:#mapRanges)
+## [mapRanges](:#mapranges)
 
 The Map Ranges function is quite self explanatory. Initialised with a source and target range, and given an input value (within the source range), it returns a value in the target range with the same normalised proportion.
 
@@ -832,7 +832,7 @@ The Map Ranges function is quite self explanatory. Initialised with a source and
 
 When the input value is from the source range, a value in the target range is returned, otherwise unknown.
 
-## [normaliseRange](:#normaliseRange)
+## [normaliseRange](:#normaliserange)
 
 The _normaliseRange_ function takes in the _min_ and _max_ values of a range within which future values are to be normalised, and returns a specialised function.
 
@@ -855,7 +855,7 @@ Input values outside the expected range will be either less than 0 or greater th
 
 A value between 0 and 1.
 
-## [rangeBetween](:#rangeBetween)
+## [rangeBetween](:#rangebetween)
 
 _RangeBetween_ is a generator function that produces an array of numbers between _min_ and _max (- 1)_ in _step_ intervals (default value is 1.)
 
@@ -877,7 +877,7 @@ Utilities.rangeBetween(20, 10, 3); // [10, 13, 16, 19]
 
 A new array containing the numbers between _min_ and _max - 1_, in _step_ intervals.
 
-## [rangeFrom](:#rangeFrom)
+## [rangeFrom](:#rangefrom)
 
 Similar to the _RangeBetween_ function, this function generates an array of _len_ numbers commencing with _init_ and varying by _step_. The _step_ parameter can be a fixed value (defaulted to 1) or a function using the index (starting from zero) as its input.
 
@@ -914,7 +914,7 @@ Combines a list of monadic (single parameter) functions into a single new functi
 
 A new monadic function that is a combination of all those provided.
 
-## [copyText](:#copyText)
+## [copyText](:#copytext)
 
 Copies the given text string to the browser's clipboard.
 
@@ -995,7 +995,7 @@ Converts the given pure function into on that is optimised using memoisation (ca
 
 A memoised function.
 
-## [pasteText](:pasteText)
+## [pasteText](:#pastetext)
 
 Copies text from the clipboard and returns it. This is an asynchronous operation.
 
@@ -1007,7 +1007,7 @@ None.
 
 The text from the clipboard.
 
-## [simd](:simd)
+## [simd](:#simd)
 
 Single-Instruction-Multiple-Data - Generates a function based on the intial input that well be applied to all data subsequently supplied. The function is called from within a Promise to all data is processes in parallel.
 
@@ -1025,7 +1025,7 @@ Single-Instruction-Multiple-Data - Generates a function based on the intial inpu
 
 An array of return values for each datum passed through the instruction (function).
 
-## [sleep](:sleep)
+## [sleep](:#sleep)
 
 Delays processing of the current thread or a set period of time (approximately.)
 
