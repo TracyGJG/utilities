@@ -143,17 +143,17 @@ describe('Tools', () => {
 				);
 			});
 
-			it('an empty Object as source argument (E-NP)', () => {
+			it('an empty Object as source argument (E-NS)', () => {
 				const exceptionTest = () => Object.keys(enumerate({}));
 				expect(exceptionTest).toThrow(
-					'Error: E-NP The source argument supplied is not populated.'
+					'Error: E-NS The source argument supplied is not populated with string keys.'
 				);
 			});
 
-			it('an empty Array as source argument (E-NP)', () => {
+			it('an empty Array as source argument (E-NS)', () => {
 				const exceptionTest = () => Object.keys(enumerate([]));
 				expect(exceptionTest).toThrow(
-					'Error: E-NP The source argument supplied is not populated.'
+					'Error: E-NS The source argument supplied is not populated with string keys.'
 				);
 			});
 

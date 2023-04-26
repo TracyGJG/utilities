@@ -969,7 +969,6 @@ An object containing the enumerated values.
 | Code |Description |
 | :--: | :---------: |
 | E-IS |_The source argument supplied is not an Array or an Object._|
-| E-NP |_The source argument supplied is not populated._|
 | E-NS |_The source argument supplied is not populated with string keys._|
 | E-NR |_The option 'option' is not a recognised option._|
 | E-NB |_The option 'option' is not a Boolean value._|
