@@ -433,6 +433,8 @@ Compares two objects and reports in they are equivalent (contain the same primit
 
 Boolean flag indication if the values held withint _obj1_ are the same as those in _obj2_.
 
+--- 
+
 # Data Converters
 
 ## [base64Encoding](:#base64encoding)
@@ -510,6 +512,8 @@ Provides the short form of the month of year in the given locale, based in a num
 ### Return Value
 
 String representing the short form of the month of year in the language of the given locale code.
+
+---
 
 # DOM - Document Object Model
 
@@ -595,6 +599,8 @@ Locates all DOM elements that matche the CSS selector.
 ### Return Value
 
 An array of zero or more DOM elements.
+
+---
 
 # Exercising
 
@@ -701,6 +707,8 @@ A simple mechanism for ad-hoc testing of a pure function.
 ### Return Value
 
 Result of the comparison (true or false.)
+
+---
 
 # Ranges
 
@@ -935,7 +943,8 @@ for (i of Utilities.rangeGenerator(10, 0, 2)) {
 
 An array of numbers starting with the _start_ value and ending with the nearest value less than or equal to _end_, in increments of _step_.
 
---- 
+---
+
 # Tools
 
 ## [compose](:#compose)
