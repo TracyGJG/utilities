@@ -1076,6 +1076,10 @@ None
 
 # Change Log
 
+### Update 29th April
+
+-   Range methods `rangeGenerator` added.
+
 ### Update 2nd April
 
 -   Array methods `batchBy.size` and `batchBy.number` added.
