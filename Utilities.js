@@ -47,6 +47,7 @@ import {
 	normaliseRange,
 	rangeBetween,
 	rangeFrom,
+	rangeGenerator,
 } from './src/ranges/index.js';
 import {
 	compose,
@@ -103,6 +104,7 @@ export {
 	random,
 	rangeBetween,
 	rangeFrom,
+	rangeGenerator,
 	reconcileArrays,
 	replaceArray,
 	shortDay,

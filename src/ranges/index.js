@@ -48,3 +48,13 @@ export function rangeFrom(length = 1, init = 0, step = 1) {
 	const stepFn = typeof step === 'function' ? step : _ => _ * step;
 	return Array.from({ length }, (_, i) => init + stepFn(i));
 }
+
+export function rangeGenerator(end, start = 0, step = 1) {
+	return [..._range(end, start, step)];
+	function* _range(_end, _start, _step) {
+		yield _start;
+		_start += _step;
+		if (_start > _end) return;
+		yield* _range(_end, _start, _step);
+	}
+}

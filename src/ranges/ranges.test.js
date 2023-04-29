@@ -9,6 +9,7 @@ import {
 	normaliseRange,
 	rangeBetween,
 	rangeFrom,
+	rangeGenerator,
 } from './index.js';
 
 describe('Ranges', () => {
@@ -62,7 +63,7 @@ describe('Ranges', () => {
 			expect(mappedRanges(100)).toEqual(212);
 		});
 	});
-	describe('Ranges Between', () => {
+	describe('Range Between', () => {
 		it('can generate a range of 10 values between 0 and 9', () => {
 			const result = rangeBetween(10);
 			expect(result.length).toEqual(10);
@@ -84,7 +85,7 @@ describe('Ranges', () => {
 			expect(result[3]).toEqual(19);
 		});
 	});
-	describe('Ranges From', () => {
+	describe('Range From', () => {
 		it('can generate a range - no arguments', () => {
 			expect(rangeFrom().length).toEqual(1);
 			expect(rangeFrom()[0]).toEqual(0);
@@ -109,6 +110,37 @@ describe('Ranges', () => {
 			expect(rangeFrom(12, 10, transformFn).length).toEqual(12);
 			expect(rangeFrom(12, 10, transformFn)[0]).toEqual(10);
 			expect(rangeFrom(12, 10, transformFn)[11]).toEqual(32);
+		});
+	});
+	describe('Range Generator', () => {
+		it('can generate a range of values 0 to N, just given N', () => {
+			const result = rangeGenerator(10);
+			expect(result.length).toEqual(11);
+			expect(result[0]).toEqual(0);
+			expect(result[10]).toEqual(10);
+		});
+
+		it('can generate a range of values M to N, given N & M', () => {
+			const result = rangeGenerator(10, 1);
+			expect(result.length).toEqual(10);
+			expect(result[0]).toEqual(1);
+			expect(result[9]).toEqual(10);
+		});
+
+		it('can generate a range of values M to N in increments of S', () => {
+			const result = rangeGenerator(10, 1, 2);
+			expect(result.length).toEqual(5);
+			expect(result[0]).toEqual(1);
+			expect(result[4]).toEqual(9);
+		});
+		it('can generate a range as an itterable', () => {
+			const result = [];
+			for (let i of rangeGenerator(10, 0, 2)) {
+				result.push(i);
+			}
+			expect(result.length).toEqual(6);
+			expect(result[0]).toEqual(0);
+			expect(result[5]).toEqual(10);
 		});
 	});
 	describe('In Range', () => {

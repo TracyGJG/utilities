@@ -33,7 +33,7 @@ A collection of 50 utility functions I find useful.
 |          **Ranges**                       |                                                     |                                         |
 |   [clampRange](#clamprange)               |   [inRange](#inrange)                               | [liniarInterpolate](#liniarinterpolate) |
 |    [loopRange](#looprange)                | [mapRanges](#mapranges)                             |    [normaliseRange](#normaliserange)    |
-| [rangeBetween](#rangebetween)             | [rangeFrom](#rangefrom)                             |                                         |
+| [rangeBetween](#rangebetween)             | [rangeFrom](#rangefrom)                             |    [rangeGenerator](#rangegenerator)    |
 |                                           |                                                     |                                         |
 |      **Tools**                            |                                                     |                                         |
 |   [compose](#compose)                     | [copyText](#copytext)                               |   [curry](#curry)                       |
@@ -904,6 +904,38 @@ Utilities.rangeFrom(12, 10, fn); // [10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30,
 
 A new array containing _len_ numbers starting from _init_, in _step_ intervals.
 
+## [rangeGenerator](:#rangegenerator)
+
+A generator function for the production of a prepopulated array or itterable.
+
+
+```javascript
+Utilities.rangeGenerator(10); // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+Utilities.rangeGenerator(10, 1); // [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+Utilities.rangeGenerator(10, 1, 2); // [1, 3, 5, 7, 9]
+
+Utilities.rangeGenerator(10, 0, 2); // [0, 2, 4, 6, 8, 10]
+
+for (i of Utilities.rangeGenerator(10, 0, 2)) {
+	console.log(i);
+}
+
+// Output: 0, 2, 4, 6, 8, 10
+```
+
+### Parameters
+
+-   end - the highest number in the range of numbers in the array.
+-   start - _optional (defaulted to 0)_ the value of the first item in the output array.
+-   step - _optional (defaulted to 1)_ the size of increment between values in the array
+
+### Return value
+
+An array of numbers starting with the _start_ value and ending with the nearest value less than or equal to _end_, in increments of _step_.
+
+--- 
 # Tools
 
 ## [compose](:#compose)
