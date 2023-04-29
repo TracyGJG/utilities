@@ -1,6 +1,6 @@
 # Utilities
 
-A collection of 50 utility functions I find useful.
+A collection of 50+ utility functions I find useful.
 
 <!-- #region Collection -->
 
@@ -1102,7 +1102,10 @@ None
 
 -   DOM manipulation functions added.
 -   Clipboard functions `copy` and `paste` added.
--   Exercise function `consoleGroup` added. 
+-   Exercise function `consoleGroup` added.
+
+* DOM manipulation functions inspired but Kyle Cook's YouTube video [Stop Wasting Your Time - Use These 16 JS Utility Functions Instead
+](https://youtu.be/EoUIS2PxKCs) on his [Web Dev Simplified](https://www.youtube.com/@WebDevSimplified) channel.
 
 ### Update 7th March 2023
 
