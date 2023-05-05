@@ -94,3 +94,7 @@ export function transposeArray(matrix) {
 export function unionArrays(...arrays) {
 	return [...new Set(arrays.flat())];
 }
+
+export function shuffleArray(array) {
+	return array.sort(() => Math.random() - 0.5);
+}

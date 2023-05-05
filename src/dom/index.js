@@ -2,14 +2,24 @@ const _document = document;
 const _body = document.body;
 const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
 
+export function acc(selector, className, dom = _document) {
+	dom.querySelector(selector).classList.add(className);
+}
+
 export function ace(childElement, parent = _body) {
 	parent.appendChild(childElement);
 }
 
-export function ael(type, selector, callback, options, parent = _document) {
+export function ael(
+	eventType,
+	callback,
+	selector,
+	options,
+	parent = _document
+) {
 	parent.addEventListener(
-		type,
-		evt => evt.target.matches(selector) && callback(evt),
+		eventType,
+		selector ? evt => evt.target.matches(selector) && callback(evt) : callback,
 		options
 	);
 }
@@ -41,10 +51,24 @@ function _ce(type, options, parent, namespace) {
 	return element;
 }
 
+export function dce(parentElement) {
+	let child = parentElement.lastElementChild;
+	while (child) {
+		parentElement.removeChild(child);
+		child = parentElement.lastElementChild;
+	}
+}
+
 export function qs(selector, parent = _document) {
 	return parent.querySelector(selector);
 }
 
 export function qsa(selector, parent = _document) {
 	return [...parent.querySelectorAll(selector)];
+}
+
+export function sui(text, dom = _document) {
+	const div = dom.createElement('div');
+	div.textContent = text;
+	return div.innerHTML;
 }

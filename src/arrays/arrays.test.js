@@ -6,6 +6,7 @@ import {
 	intersectArrays,
 	reconcileArrays,
 	replaceArray,
+	shuffleArray,
 	transposeArray,
 	unionArrays,
 } from './index.js';
@@ -334,6 +335,14 @@ describe('Arrays', () => {
 		it('can union three (intesecting) arrays', () => {
 			const result = [1, 2, 3, 4, 5, 6];
 			expect(unionArrays(alpha, beta, delta)).toEqual(result);
+		});
+	});
+
+	describe('Shuffle Array', () => {
+		test('can mix an array', () => {
+			const testCase = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+			shuffleArray(testCase);
+			expect(testCase).not.toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 		});
 	});
 });

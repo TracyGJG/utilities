@@ -6,7 +6,9 @@ import {
 	compareObjectByProperty,
 	dataType,
 	duplicateObject,
+	isBase,
 	isEmptyObject,
+	isObject,
 	objectEquality,
 } from './index.js';
 
@@ -34,6 +36,31 @@ describe('Comparison and Cloning', () => {
 		});
 	});
 	describe('Object Equality', () => {
+		it('can compare primitive strings (true)', () => {
+			expect(objectEquality('42', '42')).toStrictEqual(true);
+		});
+		it('can compare primitive strings (false)', () => {
+			expect(objectEquality('42', '_42_')).toStrictEqual(false);
+		});
+		it('can compare arrays (of strings) (true)', () => {
+			expect(objectEquality(['42'], ['42'])).toStrictEqual(true);
+		});
+		it('can compare arrays (of strings) (false)', () => {
+			expect(objectEquality(['42'], ['_42_'])).toStrictEqual(false);
+		});
+		it('can compare simple matching objects', () => {
+			expect(objectEquality({ val: '42' }, { val: '42' })).toStrictEqual(true);
+		});
+		it('can compare simple non-matching objects (property)', () => {
+			expect(objectEquality({ val: '42' }, { val_: '42' })).toStrictEqual(
+				false
+			);
+		});
+		it('can compare simple non-matching objects (value)', () => {
+			expect(objectEquality({ val: '42' }, { val: '_42_' })).toStrictEqual(
+				false
+			);
+		});
 		it('can compare similar nested objects', () => {
 			const obj1 = {
 				strProp: 'Property 1',
@@ -47,6 +74,66 @@ describe('Comparison and Cloning', () => {
 			const obj2 = JSON.parse(JSON.stringify(obj1));
 
 			expect(objectEquality(obj1, obj2)).toBeTruthy();
+		});
+		it('can compare object structures (same)', () => {
+			const obj1 = {
+				strProp: 'Property 1',
+				numProp: 2,
+				blnProp: true,
+				arrProp: ['alpha', 'beta', 'gamma'],
+				objProp: {
+					subProp: 'Sub Property',
+				},
+			};
+			const obj2 = JSON.parse(JSON.stringify(obj1));
+
+			expect(objectEquality(obj1, obj2, true)).toBeTruthy();
+		});
+		it('can compare object structures (different value)', () => {
+			const obj1 = {
+				strProp: 'Property 1',
+				numProp: 2,
+				blnProp: true,
+				arrProp: ['alpha', 'beta', 'gamma'],
+				objProp: {
+					subProp: 'Sub Property',
+				},
+			};
+			const obj2 = JSON.parse(JSON.stringify(obj1));
+			obj2.arrProp[2] = 'delta';
+
+			expect(objectEquality(obj1, obj2, true)).toBeTruthy();
+		});
+		it('can compare object structures (different value)', () => {
+			const obj1 = {
+				strProp: 'Property 1',
+				numProp: 2,
+				blnProp: true,
+				arrProp: ['alpha', 'beta', 'gamma'],
+				objProp: {
+					subProp: 'Sub Property',
+				},
+			};
+			const obj2 = JSON.parse(JSON.stringify(obj1));
+			obj2.arrProp[2] = 42;
+
+			expect(objectEquality(obj1, obj2, true)).toBeFalsy();
+		});
+
+		it('can compare objects with dissimilar array lengths', () => {
+			const obj1 = {
+				strProp: 'Property 1',
+				numProp: 2,
+				blnProp: true,
+				arrProp: ['alpha', 'beta', 'gamma'],
+				objProp: {
+					subProp: 'Sub Property',
+				},
+			};
+			const obj2 = JSON.parse(JSON.stringify(obj1));
+			obj2.arrProp.push('delta');
+
+			expect(objectEquality(obj1, obj2)).toBeFalsy();
 		});
 
 		it('can compare objects that vary only be a single nested property value', () => {
@@ -307,6 +394,81 @@ describe('Comparison and Cloning', () => {
 			expect(testObjArray[4].id).toEqual(5);
 			expect(testObjArray[5].name).toEqual('Alpha');
 			expect(testObjArray[5].id).toEqual(1);
+		});
+	});
+	describe('isBase', () => {
+		test('can confirm undefined is a base value', () => {
+			expect(isBase(undefined)).toStrictEqual(true);
+		});
+		test('can confirm null is a base value', () => {
+			expect(isBase(null)).toStrictEqual(true);
+		});
+		test('can confirm false is not a base value', () => {
+			expect(isBase(false)).toStrictEqual(false);
+		});
+		test('can confirm true is not a base value', () => {
+			expect(isBase(true)).toStrictEqual(false);
+		});
+		test('can confirm zero is not a base value', () => {
+			expect(isBase(0)).toStrictEqual(false);
+		});
+		test('can confirm one is not a base value', () => {
+			expect(isBase(1)).toStrictEqual(false);
+		});
+		test('can confirm minus one is not a base value', () => {
+			expect(isBase(-1)).toStrictEqual(false);
+		});
+		test('can confirm an empty string is not a base value', () => {
+			expect(isBase('')).toStrictEqual(false);
+		});
+		test('can confirm a populated string is not a base value', () => {
+			expect(isBase('42')).toStrictEqual(false);
+		});
+		test('can confirm an empty array is not a base value', () => {
+			expect(isBase([])).toStrictEqual(false);
+		});
+		test('can confirm an empty object is not a base value', () => {
+			expect(isBase({})).toStrictEqual(false);
+		});
+	});
+	describe('isObject', () => {
+		test('can confirm an empty object is an object', () => {
+			const testCase = {};
+			expect(isObject(testCase)).toStrictEqual(true);
+		});
+		test('can confirm a populated object is an object', () => {
+			expect(isObject({ message: 'Hello World' })).toStrictEqual(true);
+		});
+		test('can confirm undefined is not an object', () => {
+			expect(isObject(undefined)).toStrictEqual(false);
+		});
+		test('can confirm null is not an object', () => {
+			expect(isObject(null)).toStrictEqual(false);
+		});
+		test('can confirm false is not an object', () => {
+			expect(isObject(false)).toStrictEqual(false);
+		});
+		test('can confirm true is not an object', () => {
+			expect(isObject(true)).toStrictEqual(false);
+		});
+		test('can confirm zero is not an object', () => {
+			expect(isObject(0)).toStrictEqual(false);
+		});
+		test('can confirm one is not an object', () => {
+			expect(isObject(1)).toStrictEqual(false);
+		});
+		test('can confirm minus one is not an object', () => {
+			expect(isObject(-1)).toStrictEqual(false);
+		});
+		test('can confirm an empty string is not an object', () => {
+			expect(isObject('')).toStrictEqual(false);
+		});
+		test('can confirm a populated string is not an object', () => {
+			expect(isObject('42')).toStrictEqual(false);
+		});
+		test('can confirm an empty array is not an object', () => {
+			const testCase = [];
+			expect(isObject(testCase)).toStrictEqual(false);
 		});
 	});
 });

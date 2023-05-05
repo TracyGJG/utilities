@@ -11,20 +11,22 @@ A collection of 50+ utility functions I find useful.
 |                                           |                                                     |                                         |
 |           **Arrays**                      |                                                     |                                         |
 |        [batchBy](#batchby)                |      [groupBy](#groupby)                            | [intersectArrays](#intersectarrays)     |
-| [reconcileArray](#reconcilearray)         | [replaceArray](#replacearray)                       |  [transposeArray](#transposearray)      |
-|    [unionArrays](#unionarrays)            |                                                     |                                         |
+| [reconcileArray](#reconcilearray)         | [replaceArray](#replacearray)                       |    [shuffleArray](#shufflearray)        |
+| [transposeArray](#transposearray)         |  [unionArrays](#unionarrays)                        |                                         |
 |                                           |                                                     |                                         |
 |   **Data Comparison and Cloning**         |                                                     |                                         |
 |     [cloneObject](#cloneobject)           | [compareObjectByProperty](#compareobjectbyproperty) |       [dataType](#datatype)             |
-| [duplicateObject](#duplicateobject)       |           [isEmptyObject](#isemptyobject)           | [objectEquality](#objectequality)       |
+| [duplicateObject](#duplicateobject)       |           [isBase](#isbase)                         |  [isEmptyObject](#isemptyobject)        |
+|        [isObject](#isobject)              |                                                     |                                         |
 |                                           |                                                     |                                         |
 |        **Data Converters**                |                                                     |                                         |
 | [base64decoding](#base64decoding)         | [base64encoding](#base64encoding)                   |    [longDay](#longday)                  |
 |      [longMonth](#longmonth)              |       [shortDay](#shortday)                         | [shortMonth](#shortmonth)               |
 |                                           |                                                     |                                         |
 | **Document Object Model (DOM)**           |                                                     |                                         |
-| [ace](#ace)                               | [ael](#ael)                                         | [cde](#cde)                             |
-| [cse](#cse)                               | [qs](#qs)                                           | [qsa](#qsa)                             |
+| [acc](#acc)                               | [ace](#ace)                                         | [ael](#ael)                             |
+| [cde](#cde)                               | [cse](#cse)                                         | [dce](#dce)                             | 
+|  [qs](#qs)                                | [qsa](#qsa)                                         | [sui](#sui)                             |
 |                                           |                                                     |                                         |
 |       **Exercising**                      |                                                     |                                         |
 | [adhocArray](#adhocarray)                 | [consoleGroup](#consolegroup)                       | [consoleTable](#consoletable)           |
@@ -291,6 +293,12 @@ Replaces the content of the _targetArray_ with the (optional) content of the _ar
 
 None - updates the _targetArray_ directly by reference.
 
+## [shuffleArray](:#shufflearray)
+
+### Parameters
+
+### Return Value
+
 ## [transposeArray](:#transposearray)
 
 Takes a 2-dimensional array (matrix) and produces a new array where the rows of the initial array become the columns of the new array and vice-a-verse.
@@ -408,6 +416,12 @@ Creates a renew object with the same structure of the input, containing copies o
 
 A new object with the same structure as the input object and copies of the primitive values and more complicated objects.
 
+## [isBase](:#isbase)
+
+### Parameters
+
+### Return Value
+
 ## [isEmptyObject](:#isEmptyobject)
 
 Compares two objects and reports in they are equivalent (contain the same primitives.)
@@ -419,6 +433,12 @@ Compares two objects and reports in they are equivalent (contain the same primit
 ### Return Value
 
 Boolean flag indication if the value is an object, null or undefined.
+
+## [isObject](:#isobject)
+
+### Parameters
+
+### Return Value
 
 ## [objectEquality](:#objectequality)
 
@@ -517,6 +537,20 @@ String representing the short form of the month of year in the language of the g
 
 # DOM - Document Object Model
 
+## [acc](:#acc) - add CSS Class
+
+Add the stipulated CSS Class to the element of the given selector within the optional dom.
+
+### Parameters
+
+-   selector - A CSS selector identifying the target for the CSS Class
+-   className - The CSS Class to be added
+-   dom - The document or DOM element containing the target (optional, default Document)
+
+### Return Value
+
+None.
+
 ## [ace](:#ace) - append child element
 
 Appends the childElement to the given parentElement.
@@ -574,6 +608,18 @@ Creates a SVG element and assigns the list of attribute values.
 
 The newly created SVG element
 
+## [dce](:#dce) - delete child elements
+
+Removes all the child elements contained within a given parentElement.
+
+### Parameters
+
+-   parentElement - The DOM element containing the child elements to be deleted.
+
+### Return Value
+
+None.
+
 ## [qs](:#qs) - query selector
 
 Locates the first DOM element that matches the CSS selector.
@@ -599,6 +645,19 @@ Locates all DOM elements that matche the CSS selector.
 ### Return Value
 
 An array of zero or more DOM elements.
+
+## [sui](:#sui) - sanitize Untrusted/User input
+
+Uses a brand new DIV elment in the DOM to convert the untrusted text into HTML text.
+
+### Parameters
+
+-   text - The untrusted user input text to be sanitized
+-   dom - The document or DOM element containing the target (optional, defaulted to the Document element)
+
+### Return Value
+
+The sanitized text. 
 
 ---
 
@@ -1085,6 +1144,20 @@ None
 
 # Change Log
 
+### Update 5th May
+
+-   Added DOM functions inspired from the work of [Dave Gray](https://youtu.be/LDgPTw6tePk).
+    * Arrays
+      -   shuffleArray - Shuffle an array of numbers
+    * DOM
+      -   acc - add CSS class
+      -   dce - delete child elements
+      -   sui - sanitive untrusted/user input
+    * Data Comparison
+      -   isBase - confirms if the given datum has a value of null or undefined.
+      -   isObject - confirms if the given datum is an Object.
+- Tools
+  *   SIMD - refined.
 ### Update 29th April
 
 -   Range methods `rangeGenerator` added.

@@ -73,32 +73,36 @@ export function isEmptyObject(obj) {
 	);
 }
 
-export function objectEquality(obj1, obj2) {
+export function objectEquality(obj1, obj2, testStructureOnly = false) {
+	const keysString = obj => Object.keys(obj).join();
+	const typeCompare = (val1, val2) => dataType(val1) === dataType(val2);
 	return deepEquality(obj1, obj2);
 
-	function deepEquality(object1, object2) {
-		const keys1 = Object.keys(object1);
-		const keys2 = Object.keys(object2);
-
-		if (keys1.length !== keys2.length) {
-			return false;
+	function deepEquality(val1, val2) {
+		if (isObject(val1)) {
+			return (
+				isObject(val2) &&
+				keysString(val1) === keysString(val2) &&
+				Object.entries(val1).every(([key, val]) =>
+					deepEquality(val, val2?.[key])
+				)
+			);
 		}
-
-		for (const key of keys1) {
-			const val1 = object1[key];
-			const val2 = object2[key];
-			const areObjects = isObject(val1) && isObject(val2);
-			if (
-				(areObjects && !deepEquality(val1, val2)) ||
-				(!areObjects && val1 !== val2)
-			) {
-				return false;
-			}
+		if (Array.isArray(val1)) {
+			return (
+				Array.isArray(val2) &&
+				val1.length === val2.length &&
+				val1.every((val, idx) => deepEquality(val, val2?.[idx]))
+			);
 		}
-		return true;
+		return typeCompare(val1, val2) && (testStructureOnly || val1 === val2);
 	}
+}
 
-	function isObject(object) {
-		return object != null && typeof object === 'object';
-	}
+export function isObject(obj) {
+	return obj === Object(obj) && !Array.isArray(obj);
+}
+
+export function isBase(val) {
+	return val == null;
 }

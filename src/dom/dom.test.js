@@ -4,11 +4,41 @@
 
 import { jest } from '@jest/globals';
 
-import { ace, ael, cde, cse, qs, qsa } from './index.js';
+import { acc, ace, ael, cde, cse, dce, qs, qsa, sui } from './index.js';
 
 describe('DOM utilities', () => {
 	afterAll(() => {
 		jest.resetAllMocks();
+	});
+
+	describe('add CSS Class (acc)', () => {
+		test('can be performed using a parent element', () => {
+			let callResult = '';
+			const parent = {
+				querySelector(_domElement) {
+					return {
+						classList: {
+							add(className) {
+								callResult = className;
+							},
+						},
+					};
+				},
+			};
+			expect(callResult).toBe('');
+
+			const result = acc(null, 'testCssClass', parent);
+
+			expect(callResult).toBe('testCssClass');
+		});
+		test('can be performed using the default document', () => {
+			const main = document.createElement('main');
+			ace(main);
+			expect(main.outerHTML).toBe('<main></main>');
+
+			acc('main', 'testCssClass');
+			expect(main.outerHTML).toBe('<main class="testCssClass"></main>');
+		});
 	});
 
 	describe('append Child to element (ace)', () => {
@@ -26,7 +56,7 @@ describe('DOM utilities', () => {
 	});
 
 	describe('add Event Listener (ael)', () => {
-		test('for an element', () => {
+		test('for multiple elements', () => {
 			const buttonElement = document.createElement('button');
 			const callback = jest.fn();
 
@@ -37,7 +67,25 @@ describe('DOM utilities', () => {
 			});
 
 			ace(buttonElement);
-			ael('click', 'button', callback, { once: true });
+			ael('click', callback, 'button', { once: true });
+			expect(callback).toHaveBeenCalledTimes(0);
+
+			buttonElement.dispatchEvent(evt);
+			expect(callback).toHaveBeenCalledTimes(1);
+		});
+
+		test('for a single element', () => {
+			const buttonElement = document.createElement('button');
+			const callback = jest.fn();
+
+			const evt = new MouseEvent('click', {
+				bubbles: true,
+				cancelable: true,
+				view: window,
+			});
+
+			ace(buttonElement);
+			ael('click', callback);
 			expect(callback).toHaveBeenCalledTimes(0);
 
 			buttonElement.dispatchEvent(evt);
@@ -55,7 +103,7 @@ describe('DOM utilities', () => {
 			});
 
 			ace(buttonElement);
-			ael('click', 'button', callback, undefined, buttonElement);
+			ael('click', callback, 'button', undefined, buttonElement);
 			expect(callback).toHaveBeenCalledTimes(0);
 
 			buttonElement.dispatchEvent(evt);
@@ -132,6 +180,22 @@ describe('DOM utilities', () => {
 		});
 	});
 
+	describe('delete child elements (dce)', () => {
+		test('from a parent element', () => {
+			const parent = document.createElement('main');
+			const child = document.createElement('div');
+			const gchild = document.createElement('span');
+			ace(child, parent);
+			ace(gchild, child);
+
+			expect(parent.children.length).toBe(1);
+			expect(parent.children[0].children.length).toBe(1);
+
+			dce(parent);
+			expect(parent.children.length).toBe(0);
+		});
+	});
+
 	describe('query Selector (qs)', () => {
 		test('can select a child element from a parent', () => {
 			const parent = document.createElement('div');
@@ -166,6 +230,42 @@ describe('DOM utilities', () => {
 
 			expect(result).toBeDefined();
 			expect(result.length).toBe(1);
+		});
+	});
+
+	describe('sanitize user/untrusted input (sui)', () => {
+		const untrustedText = `<script>
+	(() => {
+		alert('Hello World')
+	})();
+</script>`;
+		test('can be performed using a parent element', () => {
+			const parent = {
+				createElement(_domElement) {
+					return {
+						textContent: '',
+						innerHTML: 'Sanitised Text',
+					};
+				},
+			};
+
+			const result = sui(untrustedText, parent);
+
+			expect(result).toBeDefined();
+			expect(result.length).toBe(14);
+			expect(result).toBe('Sanitised Text');
+		});
+
+		test('can be performed using the default Document', () => {
+			const result = sui(untrustedText);
+
+			expect(result).toBeDefined();
+			expect(result.length).toBe(73);
+			expect(result).toBe(`&lt;script&gt;
+	(() =&gt; {
+		alert('Hello World')
+	})();
+&lt;/script&gt;`);
 		});
 	});
 });
