@@ -1183,7 +1183,7 @@ None
 
 ### Update 7th May
 
--   Added the `regExpFromString`, `parseJson`, `stringifyJson` and `generateEnums` functions to the tool section.
+-   Added the `regExpFromString`, `parseJson`, `stringifyJson` and `generateEnums` functions to the tools section.
 
 ### Update 5th May
 
