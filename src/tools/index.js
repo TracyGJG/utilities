@@ -93,3 +93,30 @@ export function simd(instruction) {
 export async function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+export function regExpFromString(regExpString, regExpFlags) {
+	return new RegExp(regExpString.replaceAll(/\s*/g, ''), regExpFlags);
+}
+
+export function stringifyJson(jsonObject, replacer, spaces) {
+	try {
+		return { data: JSON.stringify(jsonObject, replacer, spaces) };
+	} catch (error) {
+		return { error: error.message };
+	}
+}
+
+export function parseJson(jsonString, reviver) {
+	try {
+		return { data: JSON.parse(jsonString, reviver) };
+	} catch (error) {
+		return { error: error.message };
+	}
+}
+
+export function generateEnums(enumsJson, options) {
+	return Object.entries(enumsJson).reduce((enums, [enumKey, enumVals]) => {
+		enums[enumKey] = enumerate(enumVals, options);
+		return enums;
+	}, {});
+}

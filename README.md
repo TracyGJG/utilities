@@ -1,6 +1,6 @@
 # Utilities
 
-A collection of 50+ utility functions I find useful.
+A collection of 60+ utility functions I find useful.
 
 <!-- #region Collection -->
 
@@ -38,10 +38,10 @@ A collection of 50+ utility functions I find useful.
 | [rangeBetween](#rangebetween)             | [rangeFrom](#rangefrom)                             |    [rangeGenerator](#rangegenerator)    |
 |                                           |                                                     |                                         |
 |      **Tools**                            |                                                     |                                         |
-|   [compose](#compose)                     | [copyText](#copytext)                               |   [curry](#curry)                       |
-| [enumerate](#enumerate)                   |     [lens](#lens)                                   | [memoise](#memoise)                     |
-| [pasteText](#pasteText)                   |     [simd](#simd)                                   |   [sleep](#sleep)                       |
-|                                           |                                                     |                                         |
+|   [compose](#compose)                     |      [copyText](#copytext)                          |            [curry](#curry)              |
+| [enumerate](#enumerate)                   | [generateEnums](#generateenums)                     |             [lens](#lens)               |
+|   [memoise](#memoise)                     |     [pasteText](#pasteText)                         | [regExpFromString](#regexpfromstring)   |
+|      [simd](#simd)                        |         [sleep](#sleep)                             |                                         |
 
 The above functions make considerable use of the technique called currying/partial-application to return a specialised function. This saves on suppling parameters that are not expected to change.
 
@@ -1073,6 +1073,30 @@ An object containing the enumerated values.
 | E-NR |_The option 'option' is not a recognised option._|
 | E-NB |_The option 'option' is not a Boolean value._|
 
+## [generateEnums](:#generateenums)
+
+Creates an object containing a collection of Enumerated values taken from a JSON stringified object.
+
+### Usage
+
+```javascript
+const {shortDays, shortMonths, longDays, longMonths} = generateEnums(`{
+  "shortDays": { "Sun": 0, "Mon": 1, "Tue": 2, "Wed": 3, "Thu": 4, "Fri": 5, "Sat": 6},
+  "longDays": { "Sunday": 0, "Monday": 1, "Tuesday": 2, "Wednesday": 3,
+    "Thursday": 4, "Friday": 5, "Saturday": 6}
+}`);
+```
+### Parameters
+
+-   enumJson - a JSON stringified object containing arrays and/or objects to be used to extract the enumeration labels and values.
+*   options - an optional structure used to instruct the function of its behaviour.
+    -   constantProperties - Boolean flag; true to convert, false (default) to leave as is.
+    -   numericValues - Boolean flag: true to provide incremental numeric values, false (default) to use the original keys.
+
+### Return Value
+
+An object is returned containing a collection of enumerated data values for destructuring.
+
 ## [lens](:#lens)
 
 Creates a repeatable function for extracting values out of objects/arrays at a given location (property/subscript).
@@ -1128,6 +1152,19 @@ Single-Instruction-Multiple-Data - Generates a function based on the intial inpu
 
 An array of return values for each datum passed through the instruction (function).
 
+## [regExpFromString](:#regexpfromstring)
+
+Enables the production of Regular Expression objects using more easily readable patterns based on template litterals. This function is based on Douglas Crockford's mega_regexp function.
+
+### Parameters
+
+-  regExpString - the regular expression string (template litteral).
+-  regExpFlags - the optional string containing any flags to be applied when creating the RegExp object.
+
+### Return Value
+
+A new RegExp object based on the supplied arguments.
+
 ## [sleep](:#sleep)
 
 Delays processing of the current thread or a set period of time (approximately.)
@@ -1143,6 +1180,10 @@ None
 ---
 
 # Change Log
+
+### Update 7th May
+
+-   Added the `regExpFromString`, `parseJson`, `stringifyJson` and `generateEnums` functions to the tool section.
 
 ### Update 5th May
 

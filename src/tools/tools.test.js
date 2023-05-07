@@ -9,11 +9,15 @@ import {
 	copyText,
 	curry,
 	enumerate,
+	generateEnums,
 	lens,
 	memoize,
+	parseJson,
 	pasteText,
+	regExpFromString,
 	simd,
 	sleep,
+	stringifyJson,
 } from './index.js';
 
 describe('Tools', () => {
@@ -452,6 +456,93 @@ describe('Tools', () => {
 			await sleep(1000);
 			const timeStamp2 = new Date();
 			expect(timeStamp2 - timeStamp1).toBeGreaterThan(999);
+		});
+	});
+	describe('regExpFromString', () => {
+		it('can use an expanded pattern with default flags', () => {
+			const testString = 'Hello, WorLd!';
+			const testPattern = `(
+				[\\sl]
+			)`;
+			const testRegExp = regExpFromString(testPattern);
+
+			const result = testString.split(testRegExp);
+			expect(result.length).toBe(7);
+		});
+
+		it('can use an expanded pattern with custom flags', () => {
+			const testString = 'Hello, WorLd!';
+			const testPattern = `(
+				[\\sl]
+			)`;
+			const testRegExp = regExpFromString(testPattern, 'i');
+
+			const result = testString.split(testRegExp);
+			expect(result.length).toBe(9);
+		});
+	});
+
+	describe('stringifyJson', () => {
+		it('will return a data property containing a valid object as a JSON string', () => {
+			expect(stringifyJson({ message: 'Hello, World!' })).toEqual({
+				data: '{"message":"Hello, World!"}',
+			});
+		});
+		it('will return an error property reporting the issue with an invalid object (circular structure)', () => {
+			const obj1 = {};
+			const obj2 = { obj1 };
+			obj1.obj2 = obj2;
+
+			const { error } = stringifyJson(obj2);
+			expect(error).toBeDefined();
+			expect(error).toEqual(`Converting circular structure to JSON
+    --> starting at object with constructor 'Object'
+    |     property 'obj1' -> object with constructor 'Object'
+    --- property 'obj2' closes the circle`);
+		});
+		it('will return an error property reporting the issue with an invalid object (bigInt)', () => {
+			const { error } = stringifyJson({ bigint: 42n });
+			expect(error).toBeDefined();
+			expect(error).toEqual(`Do not know how to serialize a BigInt`);
+		});
+	});
+
+	describe('parseJson', () => {
+		it('will return a data property containing a JSON string from a valid object', () => {
+			expect(parseJson('{"message":"Hello, World!"}')).toEqual({
+				data: { message: 'Hello, World!' },
+			});
+		});
+		it('will return an error property reporting the issue with an invalid JSON string', () => {
+			const { error } = parseJson(`{ "bigint": 42n }`);
+			expect(error).toBeDefined();
+			expect(error).toEqual(
+				`Expected ',' or '}' after property value in JSON at position 14`
+			);
+		});
+	});
+
+	describe('generateEnums', () => {
+		it('can generate enums from a compound object', () => {
+			const result = generateEnums({
+				shortDays: { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 },
+				longDays: [
+					'Sunday',
+					'Monday',
+					'Tuesday',
+					'Wednesday',
+					'Thursday',
+					'Friday',
+					'Saturday',
+				],
+			});
+			expect(result).toBeDefined();
+			expect(result.shortDays).toBeDefined();
+			expect(result.longDays).toBeDefined();
+
+			const { shortDays, longDays } = result;
+			expect(Object.keys(shortDays).length).toBe(7);
+			expect(Object.keys(longDays).length).toBe(7);
 		});
 	});
 });

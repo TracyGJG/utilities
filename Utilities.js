@@ -13,6 +13,7 @@ import {
 	replaceArray,
 	transposeArray,
 	unionArrays,
+	shuffleArray,
 } from './src/arrays/index.js';
 import {
 	DATA_TYPES,
@@ -20,7 +21,9 @@ import {
 	compareObjectByProperty,
 	dataType,
 	duplicateObject,
+	isBase,
 	isEmptyObject,
+	isObject,
 	objectEquality,
 } from './src/dataComparison/index.js';
 import {
@@ -31,7 +34,7 @@ import {
 	shortDay,
 	shortMonth,
 } from './src/dataConverters/index.js';
-import { ace, ael, cde, cse, qs, qsa } from './src/dom/index.js';
+import { acc, ace, ael, cde, cse, dce, qs, qsa, sui } from './src/dom/index.js';
 import {
 	adhocArray,
 	consoleGroup,
@@ -57,12 +60,14 @@ import {
 	lens,
 	memoize,
 	pasteText,
+	regExpFromString,
 	simd,
 	sleep,
 } from './src/tools/index.js';
 
 export {
 	DATA_TYPES,
+	acc,
 	accumulatedAverage,
 	ace,
 	adhocArray,
@@ -81,13 +86,16 @@ export {
 	cse,
 	curry,
 	dataType,
+	dce,
 	duplicateObject,
 	enumerate,
 	exercise,
 	groupBy,
 	inRange,
 	intersectArrays,
+	isBase,
 	isEmptyObject,
+	isObject,
 	lens,
 	liniarInterpolate,
 	longDay,
@@ -106,11 +114,14 @@ export {
 	rangeFrom,
 	rangeGenerator,
 	reconcileArrays,
+	regExpFromString,
 	replaceArray,
 	shortDay,
 	shortMonth,
+	shuffleArray,
 	simd,
 	sleep,
+	sui,
 	sum,
 	transposeArray,
 	unionArrays,
