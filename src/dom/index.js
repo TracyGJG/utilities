@@ -1,6 +1,7 @@
 const _document = document;
 const _body = document.body;
 const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
+const DEFAULT_DELAY = 1000;
 
 export function acc(selector, className, dom = _document) {
 	dom.querySelector(selector).classList.add(className);
@@ -71,4 +72,27 @@ export function sui(text, dom = _document) {
 	const div = dom.createElement('div');
 	div.textContent = text;
 	return div.innerHTML;
+}
+
+export function debounce(callback, delay = DEFAULT_DELAY) {
+	let timeout;
+	return (...args) => {
+		clearTimeout(timeout);
+		timeout = setTimeout(() => {
+			callback(...args);
+		}, delay);
+	};
+}
+
+export function throttle(callback, delay = DEFAULT_DELAY) {
+	let shouldWait = false;
+	return (...args) => {
+		if (!shouldWait) {
+			callback(...args);
+			shouldWait = true;
+			setTimeout(() => {
+				shouldWait = false;
+			}, delay);
+		}
+	};
 }

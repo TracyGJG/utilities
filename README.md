@@ -24,9 +24,10 @@ A collection of 60+ utility functions I find useful.
 |      [longMonth](#longmonth)              |       [shortDay](#shortday)                         | [shortMonth](#shortmonth)               |
 |                                           |                                                     |                                         |
 | **Document Object Model (DOM)**           |                                                     |                                         |
-| [acc](#acc)                               | [ace](#ace)                                         | [ael](#ael)                             |
-| [cde](#cde)                               | [cse](#cse)                                         | [dce](#dce)                             | 
-|  [qs](#qs)                                | [qsa](#qsa)                                         | [sui](#sui)                             |
+|      [acc](#acc)                          |      [ace](#ace)                                    | [ael](#ael)                             |
+|      [cde](#cde)                          |      [cse](#cse)                                    | [dce](#dce)                             | 
+|       [qs](#qs)                           |      [qsa](#qsa)                                    | [sui](#sui)                             |
+| [debounce](#debounce)                     | [throttle](#throttle)                               |                                         |
 |                                           |                                                     |                                         |
 |       **Exercising**                      |                                                     |                                         |
 | [adhocArray](#adhocarray)                 | [consoleGroup](#consolegroup)                       | [consoleTable](#consoletable)           |
@@ -659,6 +660,41 @@ Uses a brand new DIV elment in the DOM to convert the untrusted text into HTML t
 
 The sanitized text. 
 
+## [debounce](:#debounce) - debounce
+
+Converts the given callback function to one that is debounced for a specific period of time in ms.
+
+### Parameters
+
+-   callback - The callback function to be debounced
+-   delay - The optional period before the callback is actually executed (default 1000ms).
+
+### Return Value
+
+The debounced callback function. 
+
+## [throttle](:#throttle) - throttle
+
+Converts the given callback function to one that is throttled for a specific period of time in ms.
+
+### Parameters
+
+-   callback - The callback function to be trottled
+-   delay - The optional period before the callback can be re-executed (default 1000ms).
+
+### Return Value
+
+The trottled callback function. 
+
+
+
+
+
+
+
+
+
+
 ---
 
 # Exercising
@@ -1180,6 +1216,10 @@ None
 ---
 
 # Change Log
+
+### Update 10th June
+
+-   Added the `debounce` and `throttle` functions to the DOM section.
 
 ### Update 7th May
 

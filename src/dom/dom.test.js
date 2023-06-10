@@ -4,7 +4,51 @@
 
 import { jest } from '@jest/globals';
 
-import { acc, ace, ael, cde, cse, dce, qs, qsa, sui } from './index.js';
+import {
+	acc,
+	ace,
+	ael,
+	cde,
+	cse,
+	dce,
+	qs,
+	qsa,
+	sui,
+	debounce,
+	throttle,
+} from './index.js';
+
+import { sleep } from '../tools';
+
+const untrustedText = `<script>
+	(() => {
+		alert('Hello World')
+	})();
+</script>`;
+
+const trustedText = `&lt;script&gt;
+	(() =&gt; {
+		alert('Hello World')
+	})();
+&lt;/script&gt;`;
+
+function mockTimerFunctions() {
+	const timers = {};
+
+	return {
+		clearTimeout,
+		setTimeout,
+	};
+
+	function clearTimeout(timerRef) {
+		delete timers.timer;
+	}
+	function setTimeout(callBack, duration) {
+		const timer = Date.now();
+		timers[timer];
+		sleep(duration).then(_ => timers?.timer && callback());
+	}
+}
 
 describe('DOM utilities', () => {
 	afterAll(() => {
@@ -234,11 +278,6 @@ describe('DOM utilities', () => {
 	});
 
 	describe('sanitize user/untrusted input (sui)', () => {
-		const untrustedText = `<script>
-	(() => {
-		alert('Hello World')
-	})();
-</script>`;
 		test('can be performed using a parent element', () => {
 			const parent = {
 				createElement(_domElement) {
@@ -261,11 +300,102 @@ describe('DOM utilities', () => {
 
 			expect(result).toBeDefined();
 			expect(result.length).toBe(73);
-			expect(result).toBe(`&lt;script&gt;
-	(() =&gt; {
-		alert('Hello World')
-	})();
-&lt;/script&gt;`);
+			expect(result).toBe(trustedText);
+		});
+	});
+
+	describe('debounce a callback', () => {
+		let callCount;
+		function incCount() {
+			callCount += 1;
+			console.log(callCount);
+		}
+		const { clearTimeout, setTimeout } = mockTimerFunctions();
+
+		beforeEach(() => {
+			callCount = 0;
+		});
+
+		test('will only be called after being idle for the default 1 second', async () => {
+			const debounced = debounce(incCount);
+			expect(callCount).toBe(0);
+
+			debounced();
+			await sleep(500);
+
+			debounced();
+			await sleep(500);
+			expect(callCount).toBe(0);
+
+			await sleep(600);
+			expect(callCount).toBe(1);
+		});
+
+		test('will only be called after being idle for the stipulated 2 second', async () => {
+			const debounced = debounce(incCount, 2000);
+			expect(callCount).toBe(0);
+
+			debounced();
+			await sleep(500);
+
+			debounced();
+			await sleep(500);
+			expect(callCount).toBe(0);
+
+			await sleep(600);
+			expect(callCount).toBe(0);
+
+			await sleep(1000);
+			expect(callCount).toBe(1);
+		});
+	});
+
+	describe('throttle a callback', () => {
+		let callCount;
+		function incCount() {
+			callCount += 1;
+			console.log(callCount);
+		}
+		const { setTimeout } = mockTimerFunctions();
+
+		beforeEach(() => {
+			callCount = 0;
+		});
+
+		test('will only be called once every default 1 second', async () => {
+			const throttled = throttle(incCount);
+			expect(callCount).toBe(0);
+
+			throttled();
+			expect(callCount).toBe(1);
+
+			throttled();
+			expect(callCount).toBe(1);
+			await sleep(1200);
+
+			expect(callCount).toBe(1);
+			throttled();
+			expect(callCount).toBe(2);
+		});
+
+		test('will only be called once every stipulated 2 second', async () => {
+			const throttled = throttle(incCount, 2000);
+			expect(callCount).toBe(0);
+
+			throttled();
+			expect(callCount).toBe(1);
+
+			throttled();
+			expect(callCount).toBe(1);
+			await sleep(1200);
+
+			expect(callCount).toBe(1);
+			throttled();
+			expect(callCount).toBe(1);
+
+			await sleep(1200);
+			throttled();
+			expect(callCount).toBe(2);
 		});
 	});
 });
