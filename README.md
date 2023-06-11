@@ -16,8 +16,8 @@ A collection of 60+ utility functions I find useful.
 |                                           |                                                     |                                         |
 |   **Data Comparison and Cloning**         |                                                     |                                         |
 |     [cloneObject](#cloneobject)           | [compareObjectByProperty](#compareobjectbyproperty) |       [dataType](#datatype)             |
-| [duplicateObject](#duplicateobject)       |           [isBase](#isbase)                         |  [isEmptyObject](#isemptyobject)        |
-|        [isObject](#isobject)              |  [objectEquality](#objectEquality)                                                   |                                         |
+| [duplicateObject](#duplicateobject)       |                  [isBase](#isbase)                  |  [isEmptyObject](#isemptyobject)        |
+|        [isObject](#isobject)              |          [objectEquality](#objectEquality)          |                                         |
 |                                           |                                                     |                                         |
 |        **Data Converters**                |                                                     |                                         |
 | [base64decoding](#base64decoding)         | [base64encoding](#base64encoding)                   |    [longDay](#longday)                  |
@@ -39,10 +39,11 @@ A collection of 60+ utility functions I find useful.
 | [rangeBetween](#rangebetween)             | [rangeFrom](#rangefrom)                             |    [rangeGenerator](#rangegenerator)    |
 |                                           |                                                     |                                         |
 |      **Tools**                            |                                                     |                                         |
-|   [compose](#compose)                     |      [copyText](#copytext)                          |            [curry](#curry)              |
-| [enumerate](#enumerate)                   | [generateEnums](#generateenums)                     |             [lens](#lens)               |
-|   [memoise](#memoise)                     |    [parseJson](#parseJson)  | [pasteText](#pasteText)                         | [regExpFromString](#regexpfromstring)   |
-|      [simd](#simd)                        |         [sleep](#sleep)                             |      [stringifyJson](#stringifyJson)                                   |
+|          [compose](#compose)              |      [copyText](#copytext)                          |     [curry](#curry)                     |
+|        [enumerate](#enumerate)            | [generateEnums](#generateenums)                     |      [lens](#lens)                      |
+|          [memoise](#memoise)              |     [parseJson](#parseJson)                         | [pasteText](#pasteText)                 |
+| [regExpFromString](#regexpfromstring)     |          [simd](#simd)                              |     [sleep](#sleep)                     |
+|    [stringifyJson](#stringifyJson)        |                                                     |                                         |
 
 The above functions make considerable use of the technique called currying/partial-application to return a specialised function. This saves on suppling parameters that are not expected to change.
 
