@@ -17,7 +17,7 @@ A collection of 60+ utility functions I find useful.
 |   **Data Comparison and Cloning**         |                                                     |                                         |
 |     [cloneObject](#cloneobject)           | [compareObjectByProperty](#compareobjectbyproperty) |       [dataType](#datatype)             |
 | [duplicateObject](#duplicateobject)       |           [isBase](#isbase)                         |  [isEmptyObject](#isemptyobject)        |
-|        [isObject](#isobject)              |                                                     |                                         |
+|        [isObject](#isobject)              |  [objectEquality](#objectEquality)                                                   |                                         |
 |                                           |                                                     |                                         |
 |        **Data Converters**                |                                                     |                                         |
 | [base64decoding](#base64decoding)         | [base64encoding](#base64encoding)                   |    [longDay](#longday)                  |
@@ -41,8 +41,8 @@ A collection of 60+ utility functions I find useful.
 |      **Tools**                            |                                                     |                                         |
 |   [compose](#compose)                     |      [copyText](#copytext)                          |            [curry](#curry)              |
 | [enumerate](#enumerate)                   | [generateEnums](#generateenums)                     |             [lens](#lens)               |
-|   [memoise](#memoise)                     |     [pasteText](#pasteText)                         | [regExpFromString](#regexpfromstring)   |
-|      [simd](#simd)                        |         [sleep](#sleep)                             |                                         |
+|   [memoise](#memoise)                     |    [parseJson](#parseJson)  | [pasteText](#pasteText)                         | [regExpFromString](#regexpfromstring)   |
+|      [simd](#simd)                        |         [sleep](#sleep)                             |      [stringifyJson](#stringifyJson)                                   |
 
 The above functions make considerable use of the technique called currying/partial-application to return a specialised function. This saves on suppling parameters that are not expected to change.
 
@@ -1158,6 +1158,19 @@ Converts the given pure function into on that is optimised using memoisation (ca
 
 A memoised function.
 
+## [parseJson](:#parseJson)
+
+Safer implementation of the JSON.parse method that return an error when an exception is encountered. 
+
+### Parameters
+
+-   jsonString (JS String) subject of the String to Object convertion.
+-   reviver (function) used to intercept the convertion process.
+
+### Return Value
+
+An object is returned containing either a data property when successful, or an error property to report the cause of an exception.
+
 ## [pasteText](:#pastetext)
 
 Copies text from the clipboard and returns it. This is an asynchronous operation.
@@ -1212,6 +1225,20 @@ Delays processing of the current thread or a set period of time (approximately.)
 ### Return Value
 
 None
+
+## [stringifyJson](:#stringifyJson)
+
+Safer implementation of the JSON.stringify method that return an error when an exception is encountered. 
+
+### Parameters
+
+-   jsonObject (JS Object) subject of the Object to String convertion.
+-   replacer (function) used to intercept the convertion process.
+-   spaces (number) of spaces used to indent scopes of the Object. 
+
+### Return Value
+
+An object is returned containing either a data property when successful, or an error property to report the cause of an exception.
 
 ---
 

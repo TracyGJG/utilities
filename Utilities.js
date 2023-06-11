@@ -11,9 +11,9 @@ import {
 	intersectArrays,
 	reconcileArrays,
 	replaceArray,
+	shuffleArray,
 	transposeArray,
 	unionArrays,
-	shuffleArray,
 } from './src/arrays/index.js';
 import {
 	DATA_TYPES,
@@ -69,12 +69,15 @@ import {
 	copyText,
 	curry,
 	enumerate,
+	generateEnums,
 	lens,
 	memoize,
+	parseJson,
 	pasteText,
 	regExpFromString,
 	simd,
 	sleep,
+	stringifyJson,
 } from './src/tools/index.js';
 
 export {
@@ -108,49 +111,52 @@ export {
 	duplicateObject,
 	enumerate,
 	exercise,
-	groupBy,
+	generateEnums,
 	// 25
+	groupBy,
 	inRange,
 	intersectArrays,
 	isBase,
 	isEmptyObject,
-	isObject,
 	// 30
+	isObject,
 	lens,
 	liniarInterpolate,
 	longDay,
 	longMonth,
-	loopRange,
 	// 35
+	loopRange,
 	mapGetter,
 	mapRanges,
 	memoize,
 	normaliseRange,
-	objectEquality,
 	// 40
+	objectEquality,
+	parseJson,
 	pasteText,
 	qs,
 	qsa,
+	// 45
 	random,
 	rangeBetween,
-	// 45
 	rangeFrom,
 	rangeGenerator,
 	reconcileArrays,
+	// 50
 	regExpFromString,
 	replaceArray,
-	// 50
 	shortDay,
 	shortMonth,
 	shuffleArray,
+	// 55
 	simd,
 	sleep,
-	// 55
+	stringifyJson,
 	sui,
 	sum,
+	// 60
 	throttle,
 	transposeArray,
 	unionArrays,
-	// 60
 	webStore,
 };
