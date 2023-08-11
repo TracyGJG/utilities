@@ -1,15 +1,21 @@
 import { jest } from '@jest/globals';
 
+import flatData from './flatData.json';
+import permuteSpec from './permuteSpec.json';
+
 import {
 	batchBy,
 	groupBy,
 	intersectArrays,
+	permute,
 	reconcileArrays,
 	replaceArray,
 	shuffleArray,
 	transposeArray,
+	unflatten,
 	unionArrays,
 } from './index.js';
+
 import { rangeFrom } from '../ranges/index.js';
 
 describe('Arrays', () => {
@@ -127,7 +133,39 @@ describe('Arrays', () => {
 		});
 	});
 
-	describe('reconcileArrays', () => {
+	describe('Permute a set of arrays', () => {
+		test('In three dimensions', () => {
+			expect(permuteSpec.length).toBe(3);
+			expect(permuteSpec[0].length).toBe(2);
+			expect(permuteSpec[1].length).toBe(3);
+			expect(permuteSpec[2].length).toBe(4);
+
+			const result = permute(...permuteSpec);
+			expect(Array.isArray(result)).toStrictEqual(true);
+			expect(result.length).toBe(2);
+
+			expect(Array.isArray(result[0])).toStrictEqual(true);
+			expect(result[0].length).toBe(3);
+			expect(result[1].length).toBe(3);
+
+			expect(Array.isArray(result[0][0])).toStrictEqual(true);
+			expect(result[0][0].length).toBe(4);
+			expect(result[0][1].length).toBe(4);
+			expect(result[0][2].length).toBe(4);
+			expect(result[1][0].length).toBe(4);
+			expect(result[1][1].length).toBe(4);
+			expect(result[1][2].length).toBe(4);
+
+			expect(Array.isArray(result[0][0][0])).toStrictEqual(true);
+			expect(result[0][0][0].length).toBe(3);
+
+			expect(typeof result[0][0][0][0]).toStrictEqual('string');
+			expect(result[0][0][0][0].length).toBe(1);
+			expect(result[0][0][0][0]).toBe('A');
+		});
+	});
+
+	describe('Reconcile Arrays', () => {
 		it('can accommodate when both arrays are empty', () => {
 			const source = [];
 			const target = [];
@@ -238,7 +276,7 @@ describe('Arrays', () => {
 		});
 	});
 
-	describe('replaceArray', () => {
+	describe('Replace Array', () => {
 		it('can populate an empty array', () => {
 			const tgtArr = [];
 			const srcArr = [1, 2, 3];
@@ -263,7 +301,15 @@ describe('Arrays', () => {
 		});
 	});
 
-	describe('transposeArray', () => {
+	describe('Shuffle Array', () => {
+		test('can mix an array', () => {
+			const testCase = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+			shuffleArray(testCase);
+			expect(testCase).not.toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+		});
+	});
+
+	describe('Transpose Array', () => {
 		it('can process an empty array', () => {
 			const testMatrix = [];
 			const resultMatrix = transposeArray(testMatrix);
@@ -315,6 +361,51 @@ describe('Arrays', () => {
 		});
 	});
 
+	describe('Unflatten', () => {
+		test('can restructure a flat array (little-endian)', () => {
+			expect(flatData.length).toBe(72);
+
+			const result = unflatten(2, 3, 4)(flatData);
+			expect(result.length).toEqual(2);
+			expect(result[0].length).toEqual(3);
+			expect(result[1].length).toEqual(3);
+			expect(result[0][0].length).toEqual(4);
+			expect(result[0][1].length).toEqual(4);
+			expect(result[0][2].length).toEqual(4);
+			expect(result[1][0].length).toEqual(4);
+			expect(result[1][1].length).toEqual(4);
+			expect(result[1][2].length).toEqual(4);
+			expect(result.flat().length).toEqual(6);
+			expect(result.flat(2).length).toEqual(24);
+		});
+
+		test('can restructure a flat array (big-endian)', () => {
+			expect(flatData.length).toBe(72);
+
+			const specialisedFunction = unflatten(4, 3, 2);
+			const result = specialisedFunction(flatData);
+			expect(result.length).toEqual(4);
+			expect(result[0].length).toEqual(3);
+			expect(result[1].length).toEqual(3);
+			expect(result[2].length).toEqual(3);
+			expect(result[3].length).toEqual(3);
+			expect(result[0][0].length).toEqual(2);
+			expect(result[0][1].length).toEqual(2);
+			expect(result[0][2].length).toEqual(2);
+			expect(result[1][0].length).toEqual(2);
+			expect(result[1][1].length).toEqual(2);
+			expect(result[1][2].length).toEqual(2);
+			expect(result[2][0].length).toEqual(2);
+			expect(result[2][1].length).toEqual(2);
+			expect(result[2][2].length).toEqual(2);
+			expect(result[3][0].length).toEqual(2);
+			expect(result[3][1].length).toEqual(2);
+			expect(result[3][2].length).toEqual(2);
+			expect(result.flat().length).toEqual(12);
+			expect(result.flat(2).length).toEqual(24);
+		});
+	});
+
 	describe('Union Array', () => {
 		const alpha = rangeFrom(4, 1); // [1, 2, 3, 4]
 		const beta = rangeFrom(4, 2); // [2, 3, 4, 5]
@@ -338,11 +429,4 @@ describe('Arrays', () => {
 		});
 	});
 
-	describe('Shuffle Array', () => {
-		test('can mix an array', () => {
-			const testCase = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-			shuffleArray(testCase);
-			expect(testCase).not.toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-		});
-	});
 });

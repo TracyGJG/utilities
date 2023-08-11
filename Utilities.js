@@ -9,10 +9,12 @@ import {
 	batchBy,
 	groupBy,
 	intersectArrays,
+	permute,
 	reconcileArrays,
 	replaceArray,
 	shuffleArray,
 	transposeArray,
+	unflatten,
 	unionArrays,
 } from './src/arrays/index.js';
 import {
@@ -134,29 +136,31 @@ export {
 	objectEquality,
 	parseJson,
 	pasteText,
+	permute,
 	qs,
-	qsa,
 	// 45
+	qsa,
 	random,
 	rangeBetween,
 	rangeFrom,
 	rangeGenerator,
-	reconcileArrays,
 	// 50
+	reconcileArrays,
 	regExpFromString,
 	replaceArray,
 	shortDay,
 	shortMonth,
-	shuffleArray,
 	// 55
+	shuffleArray,
 	simd,
 	sleep,
 	stringifyJson,
 	sui,
-	sum,
 	// 60
+	sum,
 	throttle,
 	transposeArray,
+	unflatten,
 	unionArrays,
 	webStore,
 };

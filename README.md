@@ -10,9 +10,10 @@ A collection of 60+ utility functions I find useful.
 |                [sum](#sum)                |  [webStore](#webstore)                              |                                         |
 |                                           |                                                     |                                         |
 |           **Arrays**                      |                                                     |                                         |
-|        [batchBy](#batchby)                |      [groupBy](#groupby)                            | [intersectArrays](#intersectarrays)     |
-| [reconcileArray](#reconcilearray)         | [replaceArray](#replacearray)                       |    [shuffleArray](#shufflearray)        |
-| [transposeArray](#transposearray)         |  [unionArrays](#unionarrays)                        |                                         |
+|        [batchBy](#batchby)                |        [groupBy](#groupby)                          | [intersectArrays](#intersectarrays)     |
+|        [permute](#permute)                | [reconcileArray](#reconcilearray)                   |    [replaceArray](#replacearray)        |
+|   [shuffleArray](#shufflearray)           | [transposeArray](#transposearray)                   |       [unflatten](#unflatten)           |
+|    [unionArrays](#unionarrays)            |                                                     |                                         |
 |                                           |                                                     |                                         |
 |   **Data Comparison and Cloning**         |                                                     |                                         |
 |     [cloneObject](#cloneobject)           | [compareObjectByProperty](#compareobjectbyproperty) |       [dataType](#datatype)             |
@@ -47,7 +48,7 @@ A collection of 60+ utility functions I find useful.
 
 The above functions make considerable use of the technique called currying/partial-application to return a specialised function. This saves on suppling parameters that are not expected to change.
 
-### NB: The functions have been prepared with no input validation.
+## NB: The functions have been prepared with no input validation.
 
 ---
 <!-- #endregion --> 
@@ -268,6 +269,18 @@ Utilities.intersectArrays([1, 2, 3, 4], [3, 4, 5, 6]); // [3, 4]
 
 A new array containing only those values found in all the given arrays.
 
+## [permute](:#permute)
+
+Permute creates an array of arrays containg every permutation of the values from each of the input arrays.
+
+### Parameters
+
+-   Series of Arrays - where each array is a dimension of the structure to be produced. 
+
+### Return Value
+
+An array of arrays nested to the depth equal to the number of input arrays. Each element of the structure is an array containing an element from each of the input arrays, in sequence.
+
 ## [reconcileArray](:#reconcilearray)
 
 Replaces the content of the _targetArray_ with content from the _sourceArray_ using the _objectKey_ to locate common objects. Object in the _sourceArray_ but not in target are added, those in target but not source are removed. Objects that appear in both arrays, as identified by the _objectKey_ property, are updated with any array properties also preserved.
@@ -328,6 +341,32 @@ e.g. [['A1', 'A2', 'A3'], ['B1', 'B2', 'B3'], ['C1', 'C2', 'C3']]
 | row 1 |  A1   |  A2   |  C3   |
 | row 2 |  B1   |  B2   |  B3   |
 | row 3 |  C1   |  C2   |  C3   |
+
+
+
+## [unflatten](:#unflatten)
+
+Converts an array of single depth into a compound structure (array of arrays) according to the initial specification.
+
+### Parameters
+
+This function is executed to a sequence of two calls.
+
+#### Primary call
+
+-   List of numbers indication the size of each dimension of an array in the new structure.
+
+#### Return Value
+
+The first call prodcues a specialised array that uses the supplied specification.
+
+#### Secondary call
+
+-   A single depth array of values to be restructured.
+
+#### Return Value
+
+A structure populated with the data supplied in the second call and in the structure defined by the specification from the first call.
 
 ## [unionArrays](:#unionArrays)
 
@@ -1245,15 +1284,19 @@ An object is returned containing either a data property when successful, or an e
 
 # Change Log
 
-### Update 10th June
+## Update 11th August 2023
+
+-   Added the `permute` and `unflatten` functions to the Array section.
+
+## Update 10th June 2023
 
 -   Added the `debounce` and `throttle` functions to the DOM section.
 
-### Update 7th May
+## Update 7th May 2023
 
 -   Added the `regExpFromString`, `parseJson`, `stringifyJson` and `generateEnums` functions to the tools section.
 
-### Update 5th May
+## Update 5th May 2023
 
 -   Added DOM functions inspired from the work of [Dave Gray](https://youtu.be/LDgPTw6tePk).
     * Arrays
@@ -1267,20 +1310,20 @@ An object is returned containing either a data property when successful, or an e
       -   isObject - confirms if the given datum is an Object.
 - Tools
   *   SIMD - refined.
-### Update 29th April
+## Update 29th April 2023
 
 -   Range methods `rangeGenerator` added.
 
-### Update 2nd April
+## Update 2nd April 2023
 
 -   Array methods `batchBy.size` and `batchBy.number` added.
 
-### Update 1st April
+## Update 1st April 2023
 
 -   `simd` added to tools.
 -   `extractProperty` removed from dataComparison (duplicate of tools/`lens`).
 
-### Update 17th March 2023
+## Update 17th March 2023
 
 -   DOM manipulation functions added.
 -   Clipboard functions `copy` and `paste` added.
@@ -1289,90 +1332,90 @@ An object is returned containing either a data property when successful, or an e
 * DOM manipulation functions inspired but Kyle Cook's YouTube video [Stop Wasting Your Time - Use These 16 JS Utility Functions Instead
 ](https://youtu.be/EoUIS2PxKCs) on his [Web Dev Simplified](https://www.youtube.com/@WebDevSimplified) channel.
 
-### Update 7th March 2023
+## Update 7th March 2023
 
 -   Added `isEmptyObject` function to Data Comparison group.
 -   Added Ancillary functions `random` and `webStore`.
 
-### Update 1st March 2023
+## Update 1st March 2023
 
 -   Added the `mapGetter` function to the Ancillaries group.
 
-### Update 4th January 2023
+## Update 4th January 2023
 
 -   Added the `adhocArray` function to the Exercising group.
 
-### Update 11th December 2022
+## Update 11th December 2022
 
 -   Added the absentee `sum` function.
 
-### Update 1st October 2022
+## Update 1st October 2022
 
 -   Enhance the `enumerate` function to support capitalisation of snake and sentence|title case keys.
 
-### Update 29th August 2022
+## Update 29th August 2022
 
 -   Added Array `groupBy` function.
 
-### Update 20th August 2022
+## Update 20th August 2022
 
 -   Added `enumerate` to generate an object to support Enumeration in JS.
 -   Removed `caseConverter` as it is of very little utility.
 
-### Update 22nd April 2022
+## Update 22nd April 2022
 
 -   Added `compose` to combine a list of monadic (single parameter) functions into a single new function.
 
-### Update 24th January 2022
+## Update 24th January 2022
 
 -   Added `duplicateObject` to create an in-depth copy of an object including properties of data types not supported by JSON.
 
-### Update 13th October 2021
+## Update 13th October 2021
 
 -   Added `extractProperty` to extract objects/values from a containing object given a path of property names.
 -   Refinement of the `compareObjectByProperty` method.
 
-### Update: 21st September 2021
+## Update: 21st September 2021
 
 -   Added `compareObjectByProperty` to generate an object comparator function based on a given property name.
 
-### Update: 22nd August 2021
+## Update: 22nd August 2021
 
 -   Added `cloneObject` to enable deep duplication of objects including data types not supported by JSON.
 
-### Update: 19th August 2021
+## Update: 19th August 2021
 
 -   Added `transposeArray` to pivot the rows with columns of a 2D array.
 
-### Update: 11th August 2021
+## Update: 11th August 2021
 
 -   Added `reconcileArray` to update an array based on a second without losing reference.
 
-### Update: 7th July 2021
+## Update: 7th July 2021
 
 -   Added `memoise` and `curry` functions.
 
-### Update: 5th June 2021
+## Update: 5th June 2021
 
 -   Added `sleep` function.
 
-### Update: 17th April 2021
+## Update: 17th April 2021
 
 -   Revised `unionArrays` function.
 
-### Update: 3rd April 2021
+## Update: 3rd April 2021
 
 -   Applied patch to address the report by Snyk of a vulnerability in the y18n package version 4.0.0.
 
-### Update: 5th March 2021
+## Update: 5th March 2021
 
 -   New function `replaceArray` added to replace the content of an array in place, without reassignment.
 
-### Update: 29th December 2020
+## Update: 29th December 2020
 
 -   New function `dataType` added to report the type of data held in a variable as a string.
 
-### Update: 5th September 2020
+## Update: 5th September 2020
 
 -   This library was originally developed as an ES Module but had to be converted to Common.JS to make it compatible and testable with Jest.
 Following the advice given in [Valentino Gagliardi's article](https://www.valentinog.com/blog/jest/), I have been able to to convert it back to an ES Module; making it usable by Node and in the web browser.

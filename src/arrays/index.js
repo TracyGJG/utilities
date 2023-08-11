@@ -57,6 +57,16 @@ export function intersectArrays(...arrays) {
 	);
 }
 
+export function permute(...axies) {
+    return (
+		function _permute(...indicies) {
+			return (indicies.length === axies.length)
+			? indicies
+			: axies[indicies.length].map(datum => _permute(...indicies, datum));
+		}
+	)();
+}
+
 export function reconcileArrays(sourceArray, targetArray, objectKey = 'id') {
 	const compareProperties = target => source =>
 		source[objectKey] === target[objectKey];
@@ -84,6 +94,10 @@ export function replaceArray(targetArray, arrayContent = []) {
 	return targetArray;
 }
 
+export function shuffleArray(array) {
+	return array.sort(() => Math.random() - 0.5);
+}
+
 export function transposeArray(matrix) {
 	return matrix.reduce(
 		(_, row) => row.map((__, i) => [...(_[i] || []), row[i]]),
@@ -91,10 +105,19 @@ export function transposeArray(matrix) {
 	);
 }
 
-export function unionArrays(...arrays) {
-	return [...new Set(arrays.flat())];
+export function unflatten(...specification) {
+    return (flatData) => _unflatten(structuredClone(flatData), ...specification);
+
+    function _unflatten(data, splits, ...specs) {
+        const splitSize = Math.ceil(data.length / splits);
+        const result = [];
+        while(splits--) {
+            result.push(data.splice(0, splitSize));
+        }
+        return specs.length ? result.map(sec => _unflatten(sec, ...specs)) : result;
+    }
 }
 
-export function shuffleArray(array) {
-	return array.sort(() => Math.random() - 0.5);
+export function unionArrays(...arrays) {
+	return [...new Set(arrays.flat())];
 }
