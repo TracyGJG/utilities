@@ -172,7 +172,7 @@ describe('Ranges', () => {
 			const expectionTestOneArg = () => {
 				inRange(100);
 			};
-			expect(expectionTestNoArgs).toThrow(SyntaxError);
+			expect(expectionTestOneArg).toThrow(SyntaxError);
 			const expectionTestThreeArg = () => {
 				inRange(100, 200, 300);
 			};
