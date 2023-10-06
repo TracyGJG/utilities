@@ -106,3 +106,14 @@ export function isObject(obj) {
 export function isBase(val) {
 	return val == null;
 }
+
+// export function flattenObject(obj, propKey) {
+// 	return Object.entries(obj).reduce(
+// 		newObj,
+// 		([key, val]) => {
+// 			newObj[key] = Array.isArray(val) ? ;
+// 			return newObj;
+// 		},
+// 		{}
+// 	);
+// }

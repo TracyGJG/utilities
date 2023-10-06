@@ -15,6 +15,7 @@ import {
 	parseJson,
 	pasteText,
 	regExpFromString,
+	regExpTemplate,
 	simd,
 	sleep,
 	stringifyJson,
@@ -458,13 +459,13 @@ describe('Tools', () => {
 			expect(timeStamp2 - timeStamp1).toBeGreaterThan(999);
 		});
 	});
-	describe('regExpFromString', () => {
+
+	describe('regExpTemplate', () => {
 		it('can use an expanded pattern with default flags', () => {
 			const testString = 'Hello, WorLd!';
-			const testPattern = `(
-				[\\sl]
+			const testRegExp = regExpTemplate()`(
+				[\sl]
 			)`;
-			const testRegExp = regExpFromString(testPattern);
 
 			const result = testString.split(testRegExp);
 			expect(result.length).toBe(7);
@@ -472,10 +473,9 @@ describe('Tools', () => {
 
 		it('can use an expanded pattern with custom flags', () => {
 			const testString = 'Hello, WorLd!';
-			const testPattern = `(
-				[\\sl]
+			const testRegExp = regExpTemplate('i')`(
+				[\sl]
 			)`;
-			const testRegExp = regExpFromString(testPattern, 'i');
 
 			const result = testString.split(testRegExp);
 			expect(result.length).toBe(9);

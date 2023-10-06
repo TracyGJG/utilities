@@ -23,6 +23,7 @@ import {
 	compareObjectByProperty,
 	dataType,
 	duplicateObject,
+	flattenObject,
 	isBase,
 	isEmptyObject,
 	isObject,

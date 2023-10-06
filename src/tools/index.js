@@ -98,6 +98,15 @@ export function regExpFromString(regExpString, regExpFlags) {
 	return new RegExp(regExpString.replaceAll(/\s*/g, ''), regExpFlags);
 }
 
+export function regExpTemplate(regExpFlags = '') {
+	return (texts, ...values) => {
+		const regExpString = texts.raw.reduce(
+			(pattern, text, index) => `${pattern}${values[index - 1]}${text}`
+		);
+		return new RegExp(regExpString.replaceAll(/\s*/g, ''), regExpFlags);
+	};
+}
+
 export function stringifyJson(jsonObject, replacer, spaces) {
 	try {
 		return { data: JSON.stringify(jsonObject, replacer, spaces) };
