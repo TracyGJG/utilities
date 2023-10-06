@@ -28,6 +28,8 @@ Subsequent calls to _accumulateAverage_ with include additional values as part o
 
 ### Parameters
 
+This function employs 2-stage execution through currying.
+
 #### Initial call
 
 -   averageToDate: Current average before the new Value arrived. (defaulted to 0)
@@ -48,6 +50,8 @@ The new calculated average.
 Utility for creating and retrieving entities from a map object.
 
 ### Parameters
+
+This function employs 2-stage execution through currying.
 
 #### Initial call
 

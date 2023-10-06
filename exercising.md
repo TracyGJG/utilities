@@ -74,6 +74,8 @@ An alternative to the console.group and console.log functions but generates HTML
 
 ### Parameters
 
+This function employs 2-stage execution through currying.
+
 #### Initial call
 
 -   groupName - string - the name of the group of log messages.

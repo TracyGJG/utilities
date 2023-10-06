@@ -308,7 +308,6 @@ describe('DOM utilities', () => {
 		let callCount;
 		function incCount() {
 			callCount += 1;
-			console.log(callCount);
 		}
 		const { clearTimeout, setTimeout } = mockTimerFunctions();
 
@@ -354,7 +353,6 @@ describe('DOM utilities', () => {
 		let callCount;
 		function incCount() {
 			callCount += 1;
-			console.log(callCount);
 		}
 		const { setTimeout } = mockTimerFunctions();
 

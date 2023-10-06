@@ -9,7 +9,7 @@
 * [memoise](#memoise)
 * [parseJson](#parseJson)
 * [pasteText](#pasteText)
-* [regExpFromString](#regexpfromstring)
+* [regExpTemplate](#regexptemplate)
 * [simd](#simd)
 * [sleep](#sleep)
 * [stringifyJson](#stringifyJson)
@@ -165,6 +165,8 @@ Single-Instruction-Multiple-Data - Generates a function based on the intial inpu
 
 ### Paremeters
 
+This function employs 2-stage execution through currying.
+
 #### Initial call
 
 -   instruction - the function to be applied to each datum. Returns a reusable function.
@@ -177,14 +179,22 @@ Single-Instruction-Multiple-Data - Generates a function based on the intial inpu
 
 An array of return values for each datum passed through the instruction (function).
 
-## [regExpFromString](:#regexpfromstring)
+## [regExpTemplate](:#regexptemplate)
 
-Enables the production of Regular Expression objects using more easily readable patterns based on template litterals. This function is based on Douglas Crockford's mega_regexp function.
+Enables the production of Regular Expression objects using more easily readable patterns based on template literals. This function is based on Douglas Crockford's mega_regexp function but extended to utilise String.raw method to remove the need to escape special charcaters.
 
 ### Parameters
 
--  regExpString - the regular expression string (template litteral).
+This function employs 2-stage execution through currying.
+
+#### Initial call
+
 -  regExpFlags - the optional string containing any flags to be applied when creating the RegExp object.
+
+#### Subsequent calls
+
+-  templateTextSections - array of text sections of the Template Literal, destructed to expose the `raw` property.
+-  templateValueSecions - (rest) array of values interpolated in the Template Literal.
 
 ### Return Value
 

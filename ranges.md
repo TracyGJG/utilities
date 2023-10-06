@@ -26,6 +26,8 @@ If the input value is within the boundaries the output from the function will be
 
 ### Parameters
 
+This function employs 2-stage execution through currying.
+
 #### Initial call
 
 -   min - lower boundary of the range.
@@ -48,6 +50,8 @@ This function supports two use cases:
 
 ### Parameters
 
+This function employs 2-stage execution through currying.
+
 #### Initial call
 
 -   from - lower boundry of the primary range.
@@ -67,6 +71,8 @@ Boolean value indicating the ranges overlap or a value is within a given range.
 This function converts a normalised value (between 0 and 1), initilised with a given range, and returns a value within the range proportional to the input value.
 
 ### Parameters
+
+This function employs 2-stage execution through currying.
 
 #### Initial call
 
@@ -107,6 +113,8 @@ oneIndexed(1, -1); // 9
 
 ### Parameters
 
+This function employs 2-stage execution through currying.
+
 #### Initial call
 
 -   max - maximum output value of the range.
@@ -126,6 +134,8 @@ Calculated new value within the range.
 The Map Ranges function is quite self explanatory. Initialised with a source and target range, and given an input value (within the source range), it returns a value in the target range with the same normalised proportion.
 
 ### Parameters
+
+This function employs 2-stage execution through currying.
 
 #### Initial call
 
@@ -151,6 +161,8 @@ When the specialised function is called with a value within the range the result
 Input values outside the expected range will be either less than 0 or greater than 1, but still proportional.
 
 ### Parameters
+
+This function employs 2-stage execution through currying.
 
 #### Initial call
 

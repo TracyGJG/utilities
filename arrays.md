@@ -201,7 +201,7 @@ Converts an array of single depth into a compound structure (array of arrays) ac
 
 ### Parameters
 
-This function is executed to a sequence of two calls.
+This function employs 2-stage execution through currying.
 
 #### Primary call
 
