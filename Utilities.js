@@ -77,7 +77,7 @@ import {
 	memoize,
 	parseJson,
 	pasteText,
-	regExpFromString,
+	regExpTemplate,
 	simd,
 	sleep,
 	stringifyJson,
@@ -147,7 +147,7 @@ export {
 	rangeGenerator,
 	// 50
 	reconcileArrays,
-	regExpFromString,
+	regExpTemplate,
 	replaceArray,
 	shortDay,
 	shortMonth,

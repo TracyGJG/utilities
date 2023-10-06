@@ -94,8 +94,9 @@ export async function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export function regExpFromString(regExpString, regExpFlags) {
-	return new RegExp(regExpString.replaceAll(/\s*/g, ''), regExpFlags);
+export function regExpTemplate(regExpFlags = '') {
+	return ({ raw }, ...values) =>
+		RegExp(String.raw({ raw }, ...values).replaceAll(/\s+/g, ''), regExpFlags);
 }
 
 export function regExpTemplate(regExpFlags = '') {

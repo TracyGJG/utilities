@@ -14,7 +14,6 @@ import {
 	memoize,
 	parseJson,
 	pasteText,
-	regExpFromString,
 	regExpTemplate,
 	simd,
 	sleep,
@@ -459,11 +458,11 @@ describe('Tools', () => {
 			expect(timeStamp2 - timeStamp1).toBeGreaterThan(999);
 		});
 	});
-
 	describe('regExpTemplate', () => {
 		it('can use an expanded pattern with default flags', () => {
 			const testString = 'Hello, WorLd!';
-			const testRegExp = regExpTemplate()`(
+			const testRETemplate = regExpTemplate();
+			const testRegExp = testRETemplate`(
 				[\sl]
 			)`;
 
@@ -473,7 +472,8 @@ describe('Tools', () => {
 
 		it('can use an expanded pattern with custom flags', () => {
 			const testString = 'Hello, WorLd!';
-			const testRegExp = regExpTemplate('i')`(
+			const testRETemplate = regExpTemplate('i');
+			const testRegExp = testRETemplate`(
 				[\sl]
 			)`;
 
