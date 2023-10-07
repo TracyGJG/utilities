@@ -1,8 +1,5 @@
 import { jest } from '@jest/globals';
 
-import flatData from './flatData.json';
-import permuteSpec from './permuteSpec.json';
-
 import {
 	batchBy,
 	groupBy,
@@ -17,6 +14,8 @@ import {
 } from './index.js';
 
 import { rangeFrom } from '../ranges/index.js';
+
+import { flatData, permuteSpec } from './testData.js';
 
 describe('Arrays', () => {
 	describe('batchBy', () => {
@@ -428,5 +427,4 @@ describe('Arrays', () => {
 			expect(unionArrays(alpha, beta, delta)).toEqual(result);
 		});
 	});
-
 });

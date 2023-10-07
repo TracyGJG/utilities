@@ -62,6 +62,13 @@ export function enumerate(source, options = {}) {
 	}
 }
 
+export function generateEnums(enumsJson, options) {
+	return Object.entries(enumsJson).reduce((enums, [enumKey, enumVals]) => {
+		enums[enumKey] = enumerate(enumVals, options);
+		return enums;
+	}, {});
+}
+
 export function lens(...props) {
 	const _props = props
 		.join('.')
@@ -77,8 +84,21 @@ export function memoize(fn, _cache = new Map()) {
 	};
 }
 
+export function parseJson(jsonString, reviver) {
+	try {
+		return { data: JSON.parse(jsonString, reviver) };
+	} catch (error) {
+		return { error: error.message };
+	}
+}
+
 export async function pasteText() {
 	return await navigator.clipboard.readText();
+}
+
+export function regExpTemplate(regExpFlags = '') {
+	return ({ raw }, ...values) =>
+		RegExp(String.raw({ raw }, ...values).replaceAll(/\s+/g, ''), regExpFlags);
 }
 
 export function simd(instruction) {
@@ -94,30 +114,10 @@ export async function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export function regExpTemplate(regExpFlags = '') {
-	return ({ raw }, ...values) =>
-		RegExp(String.raw({ raw }, ...values).replaceAll(/\s+/g, ''), regExpFlags);
-}
-
 export function stringifyJson(jsonObject, replacer, spaces) {
 	try {
 		return { data: JSON.stringify(jsonObject, replacer, spaces) };
 	} catch (error) {
 		return { error: error.message };
 	}
-}
-
-export function parseJson(jsonString, reviver) {
-	try {
-		return { data: JSON.parse(jsonString, reviver) };
-	} catch (error) {
-		return { error: error.message };
-	}
-}
-
-export function generateEnums(enumsJson, options) {
-	return Object.entries(enumsJson).reduce((enums, [enumKey, enumVals]) => {
-		enums[enumKey] = enumerate(enumVals, options);
-		return enums;
-	}, {});
 }

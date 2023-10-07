@@ -1,5 +1,10 @@
 # Change Log
 
+## Update 6th October 2023
+
+-   Replaced the `regExpFromString` function of the tools module for an improved `regExpTemplate` function.
+-   Added the `flattenObject` function to the dataComparison module.
+
 ## Update 11th August 2023
 
 -   Added the `permute` and `unflatten` functions to the Array section.

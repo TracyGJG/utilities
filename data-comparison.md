@@ -4,6 +4,7 @@
 * [compareObjectByProperty](#compareobjectbyproperty)
 * [dataType](#datatype)
 * [duplicateObject](#duplicateobject)
+* [flattenObject](#flattenobject)
 * [isBase](#isbase)
 * [isEmptyObject](#isemptyobject)
 * [isObject](#isobject)
@@ -82,15 +83,32 @@ Creates a renew object with the same structure of the input, containing copies o
 
 A new object with the same structure as the input object and copies of the primitive values and more complicated objects.
 
-## [isBase](:#isbase)
+## [flattenObject](:#flattenobject)
+
+Reduces the complexity of the given object by renaming sub-object properties and array elements.
 
 ### Parameters
 
+-   srcObj  - The source Object to be flattened. It has a default value of an empty Object.
+-   propKey - An optional string fro the name of a property in the source Object or lower.
+
 ### Return Value
+
+An Object with all the properties elevated to the top level. Nested properties are flattened and given a name that is a composite.
+
+## [isBase](:#isbase)
+
+### Parameter
+
+-   ? - A variable that might or might not be null or undefined.
+
+### Return Value
+
+A Boolean indicationg if the supplied parameter is null/undefined.
 
 ## [isEmptyObject](:#isEmptyobject)
 
-Compares two objects and reports in they are equivalent (contain the same primitives.)
+Evaluates an object and reports if it is a valid but empty Object.
 
 ### Parameters
 
@@ -104,7 +122,11 @@ Boolean flag indication if the value is an object, null or undefined.
 
 ### Parameters
 
+-   ? - A variable that might or might not be an Object.
+
 ### Return Value
+
+Boolean flag indication if the value is an object or not.
 
 ## [objectEquality](:#objectequality)
 

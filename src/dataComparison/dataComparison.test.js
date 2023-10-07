@@ -6,6 +6,7 @@ import {
 	compareObjectByProperty,
 	dataType,
 	duplicateObject,
+	flattenObject,
 	isBase,
 	isEmptyObject,
 	isObject,
@@ -241,7 +242,23 @@ describe('Comparison and Cloning', () => {
 			expect(Object.keys(resultObject.objectOfProperties).length).toBe(3);
 		});
 	});
-	describe('isBase', () => {
+	describe('Flatten Object', () => {
+		test('an empty object', () => {
+			const result = flattenObject();
+			expect(isObject(result)).toStrictEqual(true);
+			expect(Object.keys(result).length).toEqual(0);
+		});
+		test('an object or primitives', () => {
+			const result = flattenObject({
+				alpha: true,
+				beta: 42,
+				gamma: 'Hello, World!',
+			});
+			expect(isObject(result)).toStrictEqual(true);
+			expect(Object.keys(result).length).toEqual(3);
+		});
+	});
+	describe('is Null or Undefined', () => {
 		test('can confirm undefined is a base value', () => {
 			expect(isBase(undefined)).toStrictEqual(true);
 		});
@@ -276,7 +293,7 @@ describe('Comparison and Cloning', () => {
 			expect(isBase({})).toStrictEqual(false);
 		});
 	});
-	describe('Object is empty', () => {
+	describe('is an Empty Object', () => {
 		it('is false for a populated object', () => {
 			let userDetails = {
 				name: 'John Doe',
@@ -298,7 +315,7 @@ describe('Comparison and Cloning', () => {
 			expect(isEmptyObject(undefinedObj)).not.toBeDefined();
 		});
 	});
-	describe('isObject', () => {
+	describe('is an Object', () => {
 		test('can confirm an empty object is an object', () => {
 			const testCase = {};
 			expect(isObject(testCase)).toStrictEqual(true);

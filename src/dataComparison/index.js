@@ -67,10 +67,31 @@ export function duplicateObject(srcObj) {
 	}
 }
 
+export function flattenObject(srcObj = {}, propKey = '') {
+	return Object.entries(srcObj).reduce((newObj, [key, val]) => {
+		if (Array.isArray(val)) {
+			if (val.length) {
+			}
+			// } else if (!isEmptyObject(val)) {
+		} else {
+			newObj[`${propKey}${key}`] = val;
+		}
+		return newObj;
+	}, {});
+}
+
+export function isBase(val) {
+	return val == null;
+}
+
 export function isEmptyObject(obj) {
 	return (
 		obj && !Object.getOwnPropertyNames(obj).length && obj.constructor === Object
 	);
+}
+
+export function isObject(obj) {
+	return obj === Object(obj) && !Array.isArray(obj);
 }
 
 export function objectEquality(obj1, obj2, testStructureOnly = false) {
@@ -98,22 +119,3 @@ export function objectEquality(obj1, obj2, testStructureOnly = false) {
 		return typeCompare(val1, val2) && (testStructureOnly || val1 === val2);
 	}
 }
-
-export function isObject(obj) {
-	return obj === Object(obj) && !Array.isArray(obj);
-}
-
-export function isBase(val) {
-	return val == null;
-}
-
-// export function flattenObject(obj, propKey) {
-// 	return Object.entries(obj).reduce(
-// 		newObj,
-// 		([key, val]) => {
-// 			newObj[key] = Array.isArray(val) ? ;
-// 			return newObj;
-// 		},
-// 		{}
-// 	);
-// }

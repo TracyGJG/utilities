@@ -58,13 +58,11 @@ export function intersectArrays(...arrays) {
 }
 
 export function permute(...axies) {
-    return (
-		function _permute(...indicies) {
-			return (indicies.length === axies.length)
+	return (function _permute(...indicies) {
+		return indicies.length === axies.length
 			? indicies
 			: axies[indicies.length].map(datum => _permute(...indicies, datum));
-		}
-	)();
+	})();
 }
 
 export function reconcileArrays(sourceArray, targetArray, objectKey = 'id') {
@@ -106,16 +104,16 @@ export function transposeArray(matrix) {
 }
 
 export function unflatten(...specification) {
-    return (flatData) => _unflatten(structuredClone(flatData), ...specification);
+	return flatData => _unflatten(structuredClone(flatData), ...specification);
 
-    function _unflatten(data, splits, ...specs) {
-        const splitSize = Math.ceil(data.length / splits);
-        const result = [];
-        while(splits--) {
-            result.push(data.splice(0, splitSize));
-        }
-        return specs.length ? result.map(sec => _unflatten(sec, ...specs)) : result;
-    }
+	function _unflatten(data, splits, ...specs) {
+		const splitSize = Math.ceil(data.length / splits);
+		const result = [];
+		while (splits--) {
+			result.push(data.splice(0, splitSize));
+		}
+		return specs.length ? result.map(sec => _unflatten(sec, ...specs)) : result;
+	}
 }
 
 export function unionArrays(...arrays) {
