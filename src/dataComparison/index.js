@@ -67,17 +67,27 @@ export function duplicateObject(srcObj) {
 	}
 }
 
-export function flattenObject(srcObj = {}, propKey = '') {
-	return Object.entries(srcObj).reduce((newObj, [key, val]) => {
-		if (Array.isArray(val)) {
-			if (val.length) {
-			}
-			// } else if (!isEmptyObject(val)) {
+export function flattenObject(srcObj) {
+	return Object.entries(srcObj).reduce(
+		(newObj, [key, value]) => _flattenObject(newObj, key, value),
+		{}
+	);
+
+	function _flattenObject(tgtObj, propName, propValue) {
+		if (Array.isArray(propValue)) {
+			propValue.forEach((arrValue, index) =>
+				_flattenObject(tgtObj, `${propName}[${index}]`, arrValue)
+			);
+		} else if (isObject(propValue) && !isEmptyObject(propValue)) {
+			Object.entries(propValue).forEach(([propKey, propVal]) =>
+				_flattenObject(tgtObj, `${propName}.${propKey}`, propVal)
+			);
 		} else {
-			newObj[`${propKey}${key}`] = val;
+			console.log(`Primitive: ${propName} = ${propValue}`);
+			tgtObj[`${propName}`] = propValue;
 		}
-		return newObj;
-	}, {});
+		return tgtObj;
+	}
 }
 
 export function isBase(val) {

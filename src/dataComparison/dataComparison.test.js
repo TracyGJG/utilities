@@ -244,11 +244,12 @@ describe('Comparison and Cloning', () => {
 	});
 	describe('Flatten Object', () => {
 		test('an empty object', () => {
-			const result = flattenObject();
+			const result = flattenObject({});
 			expect(isObject(result)).toStrictEqual(true);
 			expect(Object.keys(result).length).toEqual(0);
 		});
-		test('an object or primitives', () => {
+
+		test('an object of primitives', () => {
 			const result = flattenObject({
 				alpha: true,
 				beta: 42,
@@ -256,6 +257,62 @@ describe('Comparison and Cloning', () => {
 			});
 			expect(isObject(result)).toStrictEqual(true);
 			expect(Object.keys(result).length).toEqual(3);
+		});
+
+		test('an object containing an array of primitives', () => {
+			const result = flattenObject({
+				delta: [true, 42, 'Hello, World!'],
+			});
+			expect(isObject(result)).toStrictEqual(true);
+			expect(Object.keys(result).length).toEqual(3);
+			expect(result['delta[0]']).toStrictEqual(true);
+			expect(result['delta[1]']).toStrictEqual(42);
+			expect(result['delta[2]']).toStrictEqual('Hello, World!');
+		});
+
+		test('an object containing a nested object of primitives', () => {
+			const result = flattenObject({
+				delta: {
+					alpha: true,
+					beta: 42,
+					gamma: 'Hello, World!',
+				},
+			});
+			expect(isObject(result)).toStrictEqual(true);
+			expect(Object.keys(result).length).toEqual(3);
+			expect(result['delta.alpha']).toStrictEqual(true);
+			expect(result['delta.beta']).toStrictEqual(42);
+			expect(result['delta.gamma']).toStrictEqual('Hello, World!');
+		});
+
+		test('an object containing an array containing an object', () => {
+			const result = flattenObject({
+				delta: [
+					{
+						alpha: true,
+						beta: 42,
+						gamma: 'Hello, World!',
+					},
+				],
+			});
+			expect(isObject(result)).toStrictEqual(true);
+			expect(Object.keys(result).length).toEqual(3);
+			expect(result['delta[0].alpha']).toStrictEqual(true);
+			expect(result['delta[0].beta']).toStrictEqual(42);
+			expect(result['delta[0].gamma']).toStrictEqual('Hello, World!');
+		});
+
+		test('an object containing a nested object containing an array', () => {
+			const result = flattenObject({
+				delta: {
+					epsilon: [true, 42, 'Hello, World!'],
+				},
+			});
+			expect(isObject(result)).toStrictEqual(true);
+			expect(Object.keys(result).length).toEqual(3);
+			expect(result['delta.epsilon[0]']).toStrictEqual(true);
+			expect(result['delta.epsilon[1]']).toStrictEqual(42);
+			expect(result['delta.epsilon[2]']).toStrictEqual('Hello, World!');
 		});
 	});
 	describe('is Null or Undefined', () => {
