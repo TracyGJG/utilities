@@ -365,15 +365,15 @@ describe('DOM utilities', () => {
 			expect(callCount).toBe(0);
 
 			throttled();
-			expect(callCount).toBe(1);
+			expect(callCount).toBe(0);
 
 			throttled();
-			expect(callCount).toBe(1);
+			expect(callCount).toBe(0);
 			await sleep(1200);
 
 			expect(callCount).toBe(1);
 			throttled();
-			expect(callCount).toBe(2);
+			expect(callCount).toBe(1);
 		});
 
 		test('will only be called once every stipulated 2 second', async () => {
@@ -381,10 +381,10 @@ describe('DOM utilities', () => {
 			expect(callCount).toBe(0);
 
 			throttled();
-			expect(callCount).toBe(1);
+			expect(callCount).toBe(0);
 
 			throttled();
-			expect(callCount).toBe(1);
+			expect(callCount).toBe(0);
 			await sleep(1200);
 
 			expect(callCount).toBe(1);

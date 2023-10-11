@@ -85,13 +85,12 @@ export function debounce(callback, delay = DEFAULT_DELAY) {
 }
 
 export function throttle(callback, delay = DEFAULT_DELAY) {
-	let shouldWait = false;
+	let timeout;
 	return (...args) => {
-		if (!shouldWait) {
-			callback(...args);
-			shouldWait = true;
-			setTimeout(() => {
-				shouldWait = false;
+		if (!timeout) {
+			timeout = setTimeout(() => {
+				callback(...args);
+				timeout = null;
 			}, delay);
 		}
 	};
