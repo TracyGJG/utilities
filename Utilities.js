@@ -72,11 +72,14 @@ import {
 	copyText,
 	curry,
 	enumerate,
+	escapeRegExp,
 	generateEnums,
+	isRegExpPattern,
 	lens,
 	memoize,
 	parseJson,
 	pasteText,
+	regExpString,
 	regExpTemplate,
 	simd,
 	sleep,
@@ -113,57 +116,61 @@ export {
 	debounce,
 	duplicateObject,
 	enumerate,
+	escapeRegExp,
 	exercise,
-	flattenObject,
 	// 25
+	flattenObject,
 	generateEnums,
 	groupBy,
 	inRange,
 	intersectArrays,
-	isBase,
 	// 30
+	isBase,
 	isEmptyObject,
 	isObject,
+	isRegExpPattern,
 	lens,
+	// 35
 	liniarInterpolate,
 	longDay,
-	// 35
 	longMonth,
 	loopRange,
 	mapGetter,
+	// 40
 	mapRanges,
 	memoize,
-	// 40
 	normaliseRange,
 	objectEquality,
 	parseJson,
+	// 45
 	pasteText,
 	permute,
-	// 45
 	qs,
 	qsa,
 	random,
+	// 50
 	rangeBetween,
 	rangeFrom,
-	// 50
 	rangeGenerator,
 	reconcileArrays,
+	regExpString,
+	// 55
 	regExpTemplate,
 	replaceArray,
 	shortDay,
-	// 55
 	shortMonth,
 	shuffleArray,
+	// 60
 	simd,
 	sleep,
 	stringifyJson,
-	// 60
 	sui,
 	sum,
+	// 65
 	throttle,
 	transposeArray,
 	unflatten,
-	// 65
 	unionArrays,
 	webStore,
+	// 70
 };

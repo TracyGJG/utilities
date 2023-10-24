@@ -4,11 +4,14 @@
 * [copyText](#copytext)
 * [curry](#curry)
 * [enumerate](#enumerate)
+* [escapeRegExp](#escaperegexp)
 * [generateEnums](#generateenums)
+* [isRegExpPattern](#isregexppattern)
 * [lens](#lens)
 * [memoise](#memoise)
 * [parseJson](#parseJson)
 * [pasteText](#pasteText)
+* [regExpString](#regexpstring)
 * [regExpTemplate](#regexptemplate)
 * [simd](#simd)
 * [sleep](#sleep)
@@ -85,6 +88,20 @@ An object containing the enumerated values.
 | E-NR |_The option 'option' is not a recognised option._|
 | E-NB |_The option 'option' is not a Boolean value._|
 
+
+## [escapeRegExp](:#escaperegexp)
+
+Converts a Regular Expression pattern to a escaped string.
+
+### Parameters
+
+- pattern - a string (defaulted to empty) to be escaped.
+
+### Return Value
+
+A string containing the escaped Regular Expression pattern.
+
+
 ## [generateEnums](:#generateenums)
 
 Creates an object containing a collection of Enumerated values taken from a JSON stringified object.
@@ -108,6 +125,20 @@ const {shortDays, shortMonths, longDays, longMonths} = generateEnums(`{
 ### Return Value
 
 An object is returned containing a collection of enumerated data values for destructuring.
+
+
+## [isRegExpPattern](:#isregexppattern)
+
+Tests to confirm the given string is a valid Regular Expression pattern.
+
+### Parameters
+
+- pattern - a string (defaulted to empty) to be escaped.
+
+### Return Value
+
+A Boolean value indicating the given string was either a normal populated string or a valid Regular Expression pattern.
+
 
 ## [lens](:#lens)
 
@@ -179,6 +210,20 @@ This function employs 2-stage execution through currying.
 
 An array of return values for each datum passed through the instruction (function).
 
+
+## [regExpString](:#regexpstring)
+
+A Tagged Template to convert a regular string into an escaped Regular Expression pattern.
+
+### Parameters
+
+- An template literal containing a Regular Expression pattern with RegExp escaped characters.
+
+### Return Value
+
+A string with all the Regular Expression characters escaped.
+
+
 ## [regExpTemplate](:#regexptemplate)
 
 Enables the production of Regular Expression objects using more easily readable patterns based on template literals. This function is based on Douglas Crockford's mega_regexp function but extended to utilise String.raw method to remove the need to escape special charcaters.
@@ -199,6 +244,7 @@ This function employs 2-stage execution through currying.
 ### Return Value
 
 A new RegExp object based on the supplied arguments.
+
 
 ## [sleep](:#sleep)
 

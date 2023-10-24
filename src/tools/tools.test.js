@@ -9,11 +9,14 @@ import {
 	copyText,
 	curry,
 	enumerate,
+	escapeRegExp,
 	generateEnums,
+	isRegExpPattern,
 	lens,
 	memoize,
 	parseJson,
 	pasteText,
+	regExpString,
 	regExpTemplate,
 	simd,
 	sleep,
@@ -543,6 +546,48 @@ describe('Tools', () => {
 			const { shortDays, longDays } = result;
 			expect(Object.keys(shortDays).length).toBe(7);
 			expect(Object.keys(longDays).length).toBe(7);
+		});
+	});
+
+	describe('escapeRegExp', () => {
+		test('can leave an empty string unchanged', () => {
+			expect(escapeRegExp()).toStrictEqual('');
+		});
+		test('can leave a normal string unchanged', () => {
+			expect(escapeRegExp('Hello, World!')).toStrictEqual('Hello, World!');
+		});
+		test('can escape a valid regular expression pattern', () => {
+			expect(escapeRegExp('^Hello,\\sWorld!?$')).toStrictEqual(
+				'\\^Hello,\\\\sWorld!\\?\\$'
+			);
+		});
+		test('can escape an invalid regular expression pattern', () => {
+			expect(escapeRegExp('^[Hello,\\sWorld!?$')).toStrictEqual(
+				'\\^\\[Hello,\\\\sWorld!\\?\\$'
+			);
+		});
+	});
+
+	describe('isRegExpPattern', () => {
+		test('can reject an empty string', () => {
+			expect(isRegExpPattern()).toStrictEqual(false);
+		});
+		test('can confirm a normal string', () => {
+			expect(isRegExpPattern('Hello, World!')).toStrictEqual(true);
+		});
+		test('can confirm a valid regular expression pattern', () => {
+			expect(isRegExpPattern('^Hello,\\sWorld!?$')).toStrictEqual(true);
+		});
+		test('can reject an invalid regular expression pattern', () => {
+			expect(isRegExpPattern('^[Hello,\\sWorld!?$')).toStrictEqual(false);
+		});
+	});
+
+	describe('regExpString', () => {
+		test('can escape a template encoded regular expression', () => {
+			expect(regExpString`^Hello,\sWorld!?$`).toStrictEqual(
+				'^Hello,\\sWorld!?$'
+			);
 		});
 	});
 });

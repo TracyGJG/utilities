@@ -121,3 +121,20 @@ export function stringifyJson(jsonObject, replacer, spaces) {
 		return { error: error.message };
 	}
 }
+
+export function escapeRegExp(pattern = '') {
+	return pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+export function isRegExpPattern(pattern = '') {
+	try {
+		RegExp(pattern);
+		return !!pattern.length;
+	} catch {
+		return false;
+	}
+}
+
+export function regExpString({ raw }) {
+	return String.raw({ raw });
+}

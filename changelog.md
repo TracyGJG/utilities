@@ -1,5 +1,9 @@
 # Change Log
 
+## Update 24th October 2023
+
+-   New functions added to the tools module: `escapeRegExp`, `isRegExpPattern` and `regExpString`.
+
 ## Update 6th October 2023
 
 -   Replaced the `regExpFromString` function of the tools module for an improved `regExpTemplate` function.
