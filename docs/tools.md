@@ -17,7 +17,7 @@
 * [sleep](#sleep)
 * [stringifyJson](#stringifyJson)
 
-* [Index](README.md)
+* [Index](../README.md)
 
 ---
 

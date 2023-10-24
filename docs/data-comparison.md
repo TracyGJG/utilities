@@ -10,7 +10,7 @@
 * [isObject](#isobject)
 * [objectEquality](#objectEquality)
 
-* [Index](README.md)
+* [Index](../README.md)
 
 ---
 

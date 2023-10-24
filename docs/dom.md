@@ -12,7 +12,7 @@
 * [debounce](#debounce)
 * [throttle](#throttle)
 
-* [Index](README.md)
+* [Index](../README.md)
 
 ---
 

@@ -6,7 +6,7 @@
 * [sum](#sum)
 * [webStore](#webstore)
 
-* [Index](README.md)
+* [Index](../README.md)
 
 ---
 

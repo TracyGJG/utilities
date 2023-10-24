@@ -7,7 +7,7 @@
 * [shortDay](#shortday)
 * [shortMonth](#shortmonth)
 
-* [Index](README.md)
+* [Index](../README.md)
 
 ---
 

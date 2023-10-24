@@ -5,7 +5,7 @@
 * [consoleTable](#consoletable)
 * [exercise](#exercise)
 
-* [Index](README.md)
+* [Index](../README.md)
 
 ---
 

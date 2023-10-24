@@ -11,7 +11,7 @@
 * [unflatten](#unflatten)
 * [unionArrays](#unionarrays)
 
-* [Index](README.md)
+* [Index](../README.md)
 
 ---
 

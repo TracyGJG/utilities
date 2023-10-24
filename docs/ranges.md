@@ -10,7 +10,7 @@
 * [rangeFrom](#rangefrom)
 * [rangeGenerator](#rangegenerator)
 
-* [Index](README.md)
+* [Index](../README.md)
 
 ---
 
