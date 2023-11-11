@@ -1,5 +1,9 @@
 # Change Log
 
+## Update 11th November 2023
+
+-   New function added to ancillaries module: `dateBasedRandom`.
+
 ## Update 24th October 2023
 
 -   New functions added to the tools module: `escapeRegExp`, `isRegExpPattern` and `regExpString`.

@@ -5,212 +5,222 @@
 import { jest } from '@jest/globals';
 
 import {
-	accumulatedAverage,
-	mapGetter,
-	random,
-	sum,
-	webStore,
+  accumulatedAverage,
+  dateBasedRandom,
+  mapGetter,
+  random,
+  sum,
+  webStore,
 } from './index.js';
 
 describe('Ancillaries', () => {
-	describe('Accumulated Average', () => {
-		it('can calculate with a single call', () => {
-			const result1 = accumulatedAverage(9, 5)(9);
-			expect(result1).toEqual(9);
-			const result2 = accumulatedAverage(9, 5)(45);
-			expect(result2).toEqual(15);
-		});
-		it('can calculate with incremental calls', () => {
-			const newAverage = accumulatedAverage();
-			expect(newAverage(1)).toEqual(1.0);
-			expect(newAverage(2)).toEqual(1.5);
-			expect(newAverage(3)).toEqual(2.0);
-			expect(newAverage(4)).toEqual(2.5);
-			expect(newAverage(5)).toEqual(3.0);
-		});
-		it('can re-calculate an average', () => {
-			const newAverage = accumulatedAverage();
-			expect(newAverage(45, 9, 6)).toEqual(15);
-		});
-	});
+  describe('Accumulated Average', () => {
+    it('can calculate with a single call', () => {
+      const result1 = accumulatedAverage(9, 5)(9);
+      expect(result1).toEqual(9);
+      const result2 = accumulatedAverage(9, 5)(45);
+      expect(result2).toEqual(15);
+    });
+    it('can calculate with incremental calls', () => {
+      const newAverage = accumulatedAverage();
+      expect(newAverage(1)).toEqual(1.0);
+      expect(newAverage(2)).toEqual(1.5);
+      expect(newAverage(3)).toEqual(2.0);
+      expect(newAverage(4)).toEqual(2.5);
+      expect(newAverage(5)).toEqual(3.0);
+    });
+    it('can re-calculate an average', () => {
+      const newAverage = accumulatedAverage();
+      expect(newAverage(45, 9, 6)).toEqual(15);
+    });
+  });
 
-	describe('Map Getter', () => {
-		it('can obtain a brand new entity', () => {
-			const entityMap = new Map();
-			const entityGetter = mapGetter(entityMap, (id, { who }) => ({
-				id,
-				who,
-			}));
-			expect(entityMap.has('hello')).toStrictEqual(false);
+  describe('Date-based Random number generator', () => {
+    it('can produce a random number between 0 and 1', () => {
+      const result = dateBasedRandom();
+      expect(typeof result).toBe('number');
+      expect(result).toBeGreaterThanOrEqual(0);
+      expect(result).toBeLessThan(1);
+    });
+  });
 
-			const entity = entityGetter('hello', { who: 'World' });
-			expect(entityMap.has('hello')).toStrictEqual(true);
-			expect(entity.who).toBe('World');
-		});
+  describe('Map Getter', () => {
+    it('can obtain a brand new entity', () => {
+      const entityMap = new Map();
+      const entityGetter = mapGetter(entityMap, (id, { who }) => ({
+        id,
+        who,
+      }));
+      expect(entityMap.has('hello')).toStrictEqual(false);
 
-		it('can obtain a pre-existing entity', () => {
-			const entityMap = new Map();
-			const entityGetter = mapGetter(entityMap, (id, { who }) => ({
-				id,
-				who,
-			}));
-			expect(entityMap.has('hello')).toStrictEqual(false);
+      const entity = entityGetter('hello', { who: 'World' });
+      expect(entityMap.has('hello')).toStrictEqual(true);
+      expect(entity.who).toBe('World');
+    });
 
-			entityMap.set('hello', {
-				id: 'hello',
-				who: 'World',
-			});
-			expect(entityMap.has('hello')).toStrictEqual(true);
+    it('can obtain a pre-existing entity', () => {
+      const entityMap = new Map();
+      const entityGetter = mapGetter(entityMap, (id, { who }) => ({
+        id,
+        who,
+      }));
+      expect(entityMap.has('hello')).toStrictEqual(false);
 
-			const entity = entityGetter('hello');
-			expect(entity.who).toBe('World');
-		});
-	});
+      entityMap.set('hello', {
+        id: 'hello',
+        who: 'World',
+      });
+      expect(entityMap.has('hello')).toStrictEqual(true);
 
-	describe('random', () => {
-		test('using default parameters', () => {
-			const randomTwo = random(2);
-			const result = randomTwo();
-			expect(result).toBeGreaterThanOrEqual(0);
-			expect(result).toBeLessThan(2);
-		});
+      const entity = entityGetter('hello');
+      expect(entity.who).toBe('World');
+    });
+  });
 
-		test('using minimal limit', () => {
-			const random1_3 = random(2, 1);
-			const result = random1_3();
-			expect(result).toBeGreaterThanOrEqual(1);
-			expect(result).toBeLessThan(3);
-		});
+  describe('random', () => {
+    test('using default parameters', () => {
+      const randomTwo = random(2);
+      const result = randomTwo();
+      expect(result).toBeGreaterThanOrEqual(0);
+      expect(result).toBeLessThan(2);
+    });
 
-		test('using minimal limit and precision', () => {
-			const random1_3_to_2dp = random(2, 1, 2);
-			const result = random1_3_to_2dp();
-			expect(result).toBeGreaterThanOrEqual(1);
-			expect(result).toBeLessThan(3);
+    test('using minimal limit', () => {
+      const random1_3 = random(2, 1);
+      const result = random1_3();
+      expect(result).toBeGreaterThanOrEqual(1);
+      expect(result).toBeLessThan(3);
+    });
 
-			const rnd = (max, min, mul, rand) =>
-				Math.floor(rand * (max - min) * mul) / mul + min;
-			expect(rnd(2, 1, 100, 0.54321)).toEqual(1.54);
-		});
-	});
+    test('using minimal limit and precision', () => {
+      const random1_3_to_2dp = random(2, 1, 2);
+      const result = random1_3_to_2dp();
+      expect(result).toBeGreaterThanOrEqual(1);
+      expect(result).toBeLessThan(3);
 
-	describe('sum', () => {
-		test('will throw an exception is arguments include a non-numeric', () => {
-			const exceptionTest = () => {
-				sum('Not A Number');
-			};
-			expect(exceptionTest).toThrow(
-				'Error: E-NN An argument supplied is not a Numeric value.'
-			);
-		});
-		test('will return zero is no arguments are supplied', () => {
-			expect(sum()).toBe(0);
-		});
-		test('will return the total if one or more arguments are supplied (positive)', () => {
-			expect(sum(2, 4, 6, 8, 10, 12)).toBe(42);
-		});
-		test('will return the total if one or more arguments are supplied (negative)', () => {
-			expect(sum(-2, -4, -6, -8, -10, -12)).toBe(-42);
-		});
-	});
+      const rnd = (max, min, mul, rand) =>
+        Math.floor(rand * (max - min) * mul) / mul + min;
+      expect(rnd(2, 1, 100, 0.54321)).toEqual(1.54);
+    });
+  });
 
-	describe('webStore', () => {
-		describe('using localStorage (default)', () => {
-			const localWebStore1 = webStore('test');
-			const localWebStore2 = webStore('test2');
+  describe('sum', () => {
+    test('will throw an exception is arguments include a non-numeric', () => {
+      const exceptionTest = () => {
+        sum('Not A Number');
+      };
+      expect(exceptionTest).toThrow(
+        'Error: E-NN An argument supplied is not a Numeric value.'
+      );
+    });
+    test('will return zero is no arguments are supplied', () => {
+      expect(sum()).toBe(0);
+    });
+    test('will return the total if one or more arguments are supplied (positive)', () => {
+      expect(sum(2, 4, 6, 8, 10, 12)).toBe(42);
+    });
+    test('will return the total if one or more arguments are supplied (negative)', () => {
+      expect(sum(-2, -4, -6, -8, -10, -12)).toBe(-42);
+    });
+  });
 
-			beforeEach(() => {
-				localStorage.clear();
-			});
+  describe('webStore', () => {
+    describe('using localStorage (default)', () => {
+      const localWebStore1 = webStore('test');
+      const localWebStore2 = webStore('test2');
 
-			test('store data', () => {
-				expect(localWebStore1.get()).toBeNull();
-				localWebStore1.set('Hello, Wolrd!');
-				expect(localWebStore1.get()).toBe('Hello, Wolrd!');
-			});
+      beforeEach(() => {
+        localStorage.clear();
+      });
 
-			test('retrieve data', () => {
-				expect(localWebStore1.get()).toBeNull();
-				localWebStore1.set('Hello, Wolrd!');
-				expect(localWebStore1.get()).toBe('Hello, Wolrd!');
-			});
+      test('store data', () => {
+        expect(localWebStore1.get()).toBeNull();
+        localWebStore1.set('Hello, Wolrd!');
+        expect(localWebStore1.get()).toBe('Hello, Wolrd!');
+      });
 
-			test('remove data', () => {
-				expect(localWebStore1.get()).toBeNull();
-				expect(localWebStore2.get()).toBeNull();
-				localWebStore1.set('Hello, Wolrd!');
-				localWebStore2.set('Hello, Wolrd!');
-				expect(localWebStore1.get()).toBe('Hello, Wolrd!');
-				expect(localWebStore2.get()).toBe('Hello, Wolrd!');
+      test('retrieve data', () => {
+        expect(localWebStore1.get()).toBeNull();
+        localWebStore1.set('Hello, Wolrd!');
+        expect(localWebStore1.get()).toBe('Hello, Wolrd!');
+      });
 
-				localWebStore1.remove();
+      test('remove data', () => {
+        expect(localWebStore1.get()).toBeNull();
+        expect(localWebStore2.get()).toBeNull();
+        localWebStore1.set('Hello, Wolrd!');
+        localWebStore2.set('Hello, Wolrd!');
+        expect(localWebStore1.get()).toBe('Hello, Wolrd!');
+        expect(localWebStore2.get()).toBe('Hello, Wolrd!');
 
-				expect(localWebStore1.get()).toBeNull();
-				expect(localWebStore2.get()).toBe('Hello, Wolrd!');
-			});
+        localWebStore1.remove();
 
-			test('clear all data', () => {
-				expect(localWebStore1.get()).toBeNull();
-				expect(localWebStore2.get()).toBeNull();
-				localWebStore1.set('Hello, Wolrd!');
-				localWebStore2.set('Hello, Wolrd!');
-				expect(localWebStore1.get()).toBe('Hello, Wolrd!');
-				expect(localWebStore2.get()).toBe('Hello, Wolrd!');
+        expect(localWebStore1.get()).toBeNull();
+        expect(localWebStore2.get()).toBe('Hello, Wolrd!');
+      });
 
-				localWebStore1.clear();
+      test('clear all data', () => {
+        expect(localWebStore1.get()).toBeNull();
+        expect(localWebStore2.get()).toBeNull();
+        localWebStore1.set('Hello, Wolrd!');
+        localWebStore2.set('Hello, Wolrd!');
+        expect(localWebStore1.get()).toBe('Hello, Wolrd!');
+        expect(localWebStore2.get()).toBe('Hello, Wolrd!');
 
-				expect(localWebStore1.get()).toBeNull();
-				expect(localWebStore2.get()).toBeNull();
-			});
-		});
+        localWebStore1.clear();
 
-		describe('using sessionStorage (webStore.sessionWebStorage)', () => {
-			const sessionWebStore1 = webStore('test', webStore.sessionWebStorage);
-			const sessionWebStore2 = webStore('test2', webStore.sessionWebStorage);
+        expect(localWebStore1.get()).toBeNull();
+        expect(localWebStore2.get()).toBeNull();
+      });
+    });
 
-			beforeEach(() => {
-				sessionStorage.clear();
-			});
+    describe('using sessionStorage (webStore.sessionWebStorage)', () => {
+      const sessionWebStore1 = webStore('test', webStore.sessionWebStorage);
+      const sessionWebStore2 = webStore('test2', webStore.sessionWebStorage);
 
-			test('store data', () => {
-				expect(sessionWebStore1.get()).toBeNull();
-				sessionWebStore1.set('Hello, Wolrd!');
-				expect(sessionWebStore1.get()).toBe('Hello, Wolrd!');
-			});
+      beforeEach(() => {
+        sessionStorage.clear();
+      });
 
-			test('retrieve data', () => {
-				expect(sessionWebStore1.get()).toBeNull();
-				sessionWebStore1.set('Hello, Wolrd!');
-				expect(sessionWebStore1.get()).toBe('Hello, Wolrd!');
-			});
+      test('store data', () => {
+        expect(sessionWebStore1.get()).toBeNull();
+        sessionWebStore1.set('Hello, Wolrd!');
+        expect(sessionWebStore1.get()).toBe('Hello, Wolrd!');
+      });
 
-			test('remove data', () => {
-				expect(sessionWebStore1.get()).toBeNull();
-				expect(sessionWebStore2.get()).toBeNull();
-				sessionWebStore1.set('Hello, Wolrd!');
-				sessionWebStore2.set('Hello, Wolrd!');
-				expect(sessionWebStore1.get()).toBe('Hello, Wolrd!');
-				expect(sessionWebStore2.get()).toBe('Hello, Wolrd!');
+      test('retrieve data', () => {
+        expect(sessionWebStore1.get()).toBeNull();
+        sessionWebStore1.set('Hello, Wolrd!');
+        expect(sessionWebStore1.get()).toBe('Hello, Wolrd!');
+      });
 
-				sessionWebStore1.remove();
+      test('remove data', () => {
+        expect(sessionWebStore1.get()).toBeNull();
+        expect(sessionWebStore2.get()).toBeNull();
+        sessionWebStore1.set('Hello, Wolrd!');
+        sessionWebStore2.set('Hello, Wolrd!');
+        expect(sessionWebStore1.get()).toBe('Hello, Wolrd!');
+        expect(sessionWebStore2.get()).toBe('Hello, Wolrd!');
 
-				expect(sessionWebStore1.get()).toBeNull();
-				expect(sessionWebStore2.get()).toBe('Hello, Wolrd!');
-			});
+        sessionWebStore1.remove();
 
-			test('clear all data', () => {
-				expect(sessionWebStore1.get()).toBeNull();
-				expect(sessionWebStore2.get()).toBeNull();
-				sessionWebStore1.set('Hello, Wolrd!');
-				sessionWebStore2.set('Hello, Wolrd!');
-				expect(sessionWebStore1.get()).toBe('Hello, Wolrd!');
-				expect(sessionWebStore2.get()).toBe('Hello, Wolrd!');
+        expect(sessionWebStore1.get()).toBeNull();
+        expect(sessionWebStore2.get()).toBe('Hello, Wolrd!');
+      });
 
-				sessionWebStore1.clear();
+      test('clear all data', () => {
+        expect(sessionWebStore1.get()).toBeNull();
+        expect(sessionWebStore2.get()).toBeNull();
+        sessionWebStore1.set('Hello, Wolrd!');
+        sessionWebStore2.set('Hello, Wolrd!');
+        expect(sessionWebStore1.get()).toBe('Hello, Wolrd!');
+        expect(sessionWebStore2.get()).toBe('Hello, Wolrd!');
 
-				expect(sessionWebStore1.get()).toBeNull();
-				expect(sessionWebStore2.get()).toBeNull();
-			});
-		});
-	});
+        sessionWebStore1.clear();
+
+        expect(sessionWebStore1.get()).toBeNull();
+        expect(sessionWebStore2.get()).toBeNull();
+      });
+    });
+  });
 });
