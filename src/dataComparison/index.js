@@ -129,3 +129,26 @@ export function objectEquality(obj1, obj2, testStructureOnly = false) {
 		return typeCompare(val1, val2) && (testStructureOnly || val1 === val2);
 	}
 }
+
+export function referencedClone(src) {
+	if (!isObject(src)) return src;
+	return Object.entries(src).reduce((tgt, [key, val]) => {
+		if (_isObject(val)) {
+			tgt[key] = val;
+		} else {
+			Object.defineProperty(tgt, key, {
+				get() {
+					return src[key];
+				},
+				set(_val) {
+					src[key] = _val;
+				},
+			});
+		}
+		return tgt;
+	}, {});
+
+	function _isObject(obj) {
+		return !!obj && typeof obj === 'object';
+	}
+}

@@ -11,6 +11,7 @@ import {
 	isEmptyObject,
 	isObject,
 	objectEquality,
+	referencedClone,
 } from './index.js';
 
 describe('Comparison and Cloning', () => {
@@ -543,6 +544,60 @@ describe('Comparison and Cloning', () => {
 			obj2.objProp.subProp2 = 'Additional Property';
 
 			expect(objectEquality(obj1, obj2)).toBeFalsy();
+		});
+	});
+	describe('Object referencedClone', () => {
+		test('can accept null', () => {
+			const testObject = null;
+			let result = referencedClone(testObject);
+			expect(result).toStrictEqual(null);
+			expect(result).toEqual(testObject);
+		});
+
+		test('can accept an array', () => {
+			const testObject = [];
+			let result = referencedClone(testObject);
+			expect(result).toStrictEqual([]);
+			expect(result).toEqual(testObject);
+		});
+
+		test('can accept an empty object', () => {
+			const testObject = {};
+			let result = referencedClone(testObject);
+			expect(result).toStrictEqual({});
+			expect(result === testObject).toStrictEqual(false);
+		});
+
+		test('can accept an object containing array and object properties', () => {
+			const testObject = {
+				arr: [],
+				obj: {},
+			};
+			let result = referencedClone(testObject);
+			expect(result).toStrictEqual(testObject);
+			expect(result.arr).toStrictEqual(testObject.arr);
+			expect(result.obj).toStrictEqual(testObject.obj);
+		});
+
+		test('can accept an object with primitive properties', () => {
+			const testObject = {
+				bool: true,
+				num: 42,
+				str: 'Hello, World!',
+				bigInt: 42n,
+			};
+			let result = referencedClone(testObject);
+			expect(result).not.toStrictEqual(testObject);
+
+			result.bool = false;
+			result.num = 666;
+			result.str = 'Goodbye cruel world';
+			result.bigInt = 666n;
+
+			expect(testObject.bool).toStrictEqual(false);
+			expect(testObject.num).toStrictEqual(666);
+			expect(testObject.str).toStrictEqual('Goodbye cruel world');
+			expect(testObject.bigInt).toStrictEqual(666n);
 		});
 	});
 });

@@ -8,7 +8,8 @@
 * [isBase](#isbase)
 * [isEmptyObject](#isemptyobject)
 * [isObject](#isobject)
-* [objectEquality](#objectEquality)
+* [objectEquality](#objectequality)
+* [referencedClone](#referencedclone)
 
 * [Index](../README.md)
 
@@ -142,3 +143,17 @@ Compares two objects and reports in they are equivalent (contain the same primit
 Boolean flag indication if the values held withint _obj1_ are the same as those in _obj2_.
 
 --- 
+
+## [referencedClone](:#referencedclone)
+
+Creates an ultra-shallow copy of a given object with references not only for compound properties such as nested objects and arrays but for primitive properties as well.
+
+### Parameters
+
+-   src - Object to be cloned
+
+### Return Value
+
+New object with references to all top-level properties of the source object.
+
+----
