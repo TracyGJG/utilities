@@ -146,11 +146,15 @@ Boolean flag indication if the values held withint _obj1_ are the same as those 
 
 ## [referencedClone](:#referencedclone)
 
-Creates an ultra-shallow copy of a given object with references not only for compound properties such as nested objects and arrays but for primitive properties as well.
+Creates an ultra-shallow copy of a given object with references to not only compound properties, such as nested objects and arrays, but also primitive properties. Optional parameters enable the generated to object to include or exclude specific top-level properties.
+
+The primary use case for this function is to generate a cut-down object that is as close to the original as possible/required.
 
 ### Parameters
 
 -   src - Object to be cloned
+-   propList - optional list of property names (strings). Default value is an empty array
+-   isInclude - optional flag to indicate how the values in the propList are to be used. Default value is false
 
 ### Return Value
 

@@ -130,20 +130,23 @@ export function objectEquality(obj1, obj2, testStructureOnly = false) {
 	}
 }
 
-export function referencedClone(src) {
+export function referencedClone(src, propList = [], isInclude = false) {
 	if (!isObject(src)) return src;
 	return Object.entries(src).reduce((tgt, [key, val]) => {
-		if (_isObject(val)) {
-			tgt[key] = val;
-		} else {
-			Object.defineProperty(tgt, key, {
-				get() {
-					return src[key];
-				},
-				set(_val) {
-					src[key] = _val;
-				},
-			});
+		if (isInclude === propList.includes(key)) {
+			if (_isObject(val)) {
+				tgt[key] = val;
+			} else {
+				Object.defineProperty(tgt, key, {
+					get() {
+						return src[key];
+					},
+					set(_val) {
+						src[key] = _val;
+					},
+					enumerable: true,
+				});
+			}
 		}
 		return tgt;
 	}, {});

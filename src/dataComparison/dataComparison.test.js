@@ -587,7 +587,7 @@ describe('Comparison and Cloning', () => {
 				bigInt: 42n,
 			};
 			let result = referencedClone(testObject);
-			expect(result).not.toStrictEqual(testObject);
+			expect(result).toStrictEqual(testObject);
 
 			result.bool = false;
 			result.num = 666;
@@ -598,6 +598,36 @@ describe('Comparison and Cloning', () => {
 			expect(testObject.num).toStrictEqual(666);
 			expect(testObject.str).toStrictEqual('Goodbye cruel world');
 			expect(testObject.bigInt).toStrictEqual(666n);
+		});
+
+		test('can exclude properties', () => {
+			const testObject = {
+				bool: true,
+				num: 42,
+				str: 'Hello, World!',
+				bigInt: 42n,
+			};
+			let result = referencedClone(testObject, ['str']);
+			expect(result).not.toStrictEqual(testObject);
+
+			const includedKeys = Object.keys(result);
+			expect(includedKeys.length).toBe(3);
+			expect(includedKeys.includes('str')).toStrictEqual(false);
+		});
+
+		test('can include properties', () => {
+			const testObject = {
+				bool: true,
+				num: 42,
+				str: 'Hello, World!',
+				bigInt: 42n,
+			};
+			let result = referencedClone(testObject, ['str'], true);
+			expect(result).not.toStrictEqual(testObject);
+
+			const includedKeys = Object.keys(result);
+			expect(includedKeys.length).toBe(1);
+			expect(includedKeys.includes('str')).toStrictEqual(true);
 		});
 	});
 });
