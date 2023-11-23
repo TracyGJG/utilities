@@ -1,6 +1,7 @@
 # Ancillaries
 
 * [accumulatedAverage](#accumulatedaverage)
+* [dateBasedRandom](#dateBasedRandom)
 * [mapGetter](#mapgetter)
 * [random](#random)
 * [sum](#sum)
@@ -44,6 +45,18 @@ This function employs 2-stage execution through currying.
 ### Return Value
 
 The new calculated average.
+
+## [dateBasedRandom](:#dateBasedRandom)
+
+Generates a random number based on the current Date-Time in milliseconds.
+
+### Parameters
+
+None.
+
+### Return Value
+
+A floating-point number greater than or equal to 0 and less than 1.
 
 ## [mapGetter](:#mapgetter)
 
