@@ -1,16 +1,17 @@
 # Ranges
 
-* [clampRange](#clamprange)
-* [inRange](#inrange)
-* [liniarInterpolate](#liniarinterpolate)
-* [loopRange](#looprange)
-* [mapRanges](#mapranges)
-* [normaliseRange](#normaliserange)
-* [rangeBetween](#rangebetween)
-* [rangeFrom](#rangefrom)
-* [rangeGenerator](#rangegenerator)
+- [clampRange](#clamprange)
+- [inRange](#inrange)
+- [liniarInterpolate](#liniarinterpolate)
+- [loopRange](#looprange)
+- [mapRanges](#mapranges)
+- [normaliseRange](#normaliserange)
+- [range](#range)
+- [rangeBetween](#rangebetween)
+- [rangeFrom](#rangefrom)
+- [rangeGenerator](#rangegenerator)
 
-* [Index](../README.md)
+- [Index](../README.md)
 
 ---
 
@@ -30,12 +31,12 @@ This function employs 2-stage execution through currying.
 
 #### Initial call
 
--   min - lower boundary of the range.
--   max - upper boundary of the range.
+- min - lower boundary of the range.
+- max - upper boundary of the range.
 
 #### Subsequent calls
 
--   value - datum to be clamped.
+- value - datum to be clamped.
 
 ### Return Value
 
@@ -54,13 +55,13 @@ This function employs 2-stage execution through currying.
 
 #### Initial call
 
--   from - lower boundry of the primary range.
--   to - upper boundry of the primary range.
+- from - lower boundry of the primary range.
+- to - upper boundry of the primary range.
 
 #### Subsequent calls
 
--   from - lower boundry of the secondary range.
--   to - upper boundry of the secondary range (optional).
+- from - lower boundry of the secondary range.
+- to - upper boundry of the secondary range (optional).
 
 ### Return Value
 
@@ -76,12 +77,12 @@ This function employs 2-stage execution through currying.
 
 #### Initial call
 
--   start - lower boundry of the range.
--   end - upper boundry of the range.
+- start - lower boundry of the range.
+- end - upper boundry of the range.
 
 #### Subsequent calls
 
--   value - datum (between 0 and 1) to be interpolated.
+- value - datum (between 0 and 1) to be interpolated.
 
 ### Return Value
 
@@ -117,13 +118,13 @@ This function employs 2-stage execution through currying.
 
 #### Initial call
 
--   max - maximum output value of the range.
--   min - minimal output value of the range (optional, defaulted to zero).
+- max - maximum output value of the range.
+- min - minimal output value of the range (optional, defaulted to zero).
 
 #### Subsequent calls
 
--   cur - Current value within the range.
--   dir - Direction of change (1 to increase and -1 to decrease.)
+- cur - Current value within the range.
+- dir - Direction of change (1 to increase and -1 to decrease.)
 
 ### Return Value
 
@@ -139,14 +140,14 @@ This function employs 2-stage execution through currying.
 
 #### Initial call
 
--   fromMin - lower boundry of the source range.
--   fromMax - upper boundry of the source range.
--   toMin - lower boundry of the target range.
--   toMax - upper boundry of the target range.
+- fromMin - lower boundry of the source range.
+- fromMax - upper boundry of the source range.
+- toMin - lower boundry of the target range.
+- toMax - upper boundry of the target range.
 
 #### Subsequent calls
 
--   value - datum from the source range to be mapped into the target range.
+- value - datum from the source range to be mapped into the target range.
 
 ### Return Value
 
@@ -166,16 +167,37 @@ This function employs 2-stage execution through currying.
 
 #### Initial call
 
--   start - lower boundry of the range.
--   end - upper boundry of the range.
+- start - lower boundry of the range.
+- end - upper boundry of the range.
 
 #### Subsequent calls
 
--   value - datum to be normalised (set to a value between 0 and 1 proportional to the given range.)
+- value - datum to be normalised (set to a value between 0 and 1 proportional to the given range.)
 
 ### Return Value
 
 A value between 0 and 1.
+
+## [range](:#range)
+
+_Range_ is a function that produces an array of _size_ numbers between zero and _size_ - 1.
+
+```javascript
+Utilities.rangeBetween(10); // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+Utilities.rangeBetween(20, 10); // [10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+
+Utilities.rangeBetween(20, 10, 3); // [10, 13, 16, 19]
+```
+
+### Parameters
+
+- size - The number of values in the output array.
+- transform - An optional transform function that is applied to each value in the generated array using a _map_ method.
+
+### Return Value
+
+A new array containing _size_ values as transformed by the optionally supplied function.
 
 ## [rangeBetween](:#rangebetween)
 
@@ -191,9 +213,9 @@ Utilities.rangeBetween(20, 10, 3); // [10, 13, 16, 19]
 
 ### Parameters
 
--   max - one more than the upper boundry of the range.
--   min - lower boundry of the range (defaulted to 0.)
--   step - size of the interval between values in the range (defaulted to 1.)
+- max - one more than the upper boundry of the range.
+- min - lower boundry of the range (defaulted to 0.)
+- step - size of the interval between values in the range (defaulted to 1.)
 
 ### Return Value
 
@@ -218,9 +240,9 @@ Utilities.rangeFrom(12, 10, fn); // [10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30,
 
 ### Parameters
 
--   init - initial value of the range.
--   len - number of values in the outputrange.
--   step - size of the interval between values in the range (defaulted to 1.)
+- init - initial value of the range.
+- len - number of values in the outputrange.
+- step - size of the interval between values in the range (defaulted to 1.)
 
 ### Return Value
 
@@ -229,7 +251,6 @@ A new array containing _len_ numbers starting from _init_, in _step_ intervals.
 ## [rangeGenerator](:#rangegenerator)
 
 A generator function for the production of a prepopulated array or itterable.
-
 
 ```javascript
 Utilities.rangeGenerator(10); // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -241,7 +262,7 @@ Utilities.rangeGenerator(10, 1, 2); // [1, 3, 5, 7, 9]
 Utilities.rangeGenerator(10, 0, 2); // [0, 2, 4, 6, 8, 10]
 
 for (i of Utilities.rangeGenerator(10, 0, 2)) {
-	console.log(i);
+  console.log(i);
 }
 
 // Output: 0, 2, 4, 6, 8, 10
@@ -249,9 +270,9 @@ for (i of Utilities.rangeGenerator(10, 0, 2)) {
 
 ### Parameters
 
--   end - the highest number in the range of numbers in the array.
--   start - _optional (defaulted to 0)_ the value of the first item in the output array.
--   step - _optional (defaulted to 1)_ the size of increment between values in the array
+- end - the highest number in the range of numbers in the array.
+- start - _optional (defaulted to 0)_ the value of the first item in the output array.
+- step - _optional (defaulted to 1)_ the size of increment between values in the array
 
 ### Return value
 

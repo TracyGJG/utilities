@@ -554,7 +554,7 @@ describe('Tools', () => {
       const { error } = parseJson(`{ "bigint": 42n }`);
       expect(error).toBeDefined();
       expect(error).toEqual(
-        `Expected ',' or '}' after property value in JSON at position 14`
+        `Expected ',' or '}' after property value in JSON at position 14 (line 1 column 15)`
       );
     });
   });
