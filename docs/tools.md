@@ -217,7 +217,7 @@ A Tagged Template to convert a regular string into an escaped Regular Expression
 
 ### Parameters
 
-- An template literal containing a Regular Expression pattern with RegExp escaped characters.
+- A template literal containing a Regular Expression pattern with RegExp escaped characters.
 
 ### Return Value
 
