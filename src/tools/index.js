@@ -115,8 +115,16 @@ export async function pasteText() {
 }
 
 export function regExpTemplate(regExpFlags = '') {
-  return ({ raw }, ...values) =>
-    RegExp(String.raw({ raw }, ...values).replaceAll(/\s+/g, ''), regExpFlags);
+  return ({ raw }, ...values) => {
+    const regExpPattern = String.raw({ raw }, ...values)
+      .split('\n')
+      .filter(line => !/^#[^#].*$/.exec(line))
+      .map(line => line.replaceAll(/(?<=[^\\])#[^#].*$/g, ''))
+      .join('\n')
+      .replaceAll(/\s+/g, '')
+      .replaceAll(/\#/g, '#');
+    return RegExp(regExpPattern, regExpFlags);
+  };
 }
 
 export function simd(instruction) {

@@ -51,6 +51,7 @@ describe('Tools', () => {
       expect(result).toBe('Hello, World!');
     });
   });
+
   describe('Compose', () => {
     it('can combine functions', () => {
       function plusNine(int) {
@@ -516,6 +517,40 @@ describe('Tools', () => {
 
       const result = testString.split(testRegExp);
       expect(result.length).toBe(9);
+    });
+
+    it('can use an expanded pattern with a full-line comments', () => {
+      const testString = 'Hello, WorLd!';
+      const testRETemplate = regExpTemplate();
+      const testRegExp = testRETemplate`(
+# Full-line comment
+				[\sl] 
+			)`;
+
+      const result = testString.split(testRegExp);
+      expect(result.length).toBe(7);
+    });
+
+    it('can use an expanded pattern with a mid-line comments', () => {
+      const testString = 'Hello, WorLd!';
+      const testRETemplate = regExpTemplate();
+      const testRegExp = testRETemplate`(
+				[\sl] # Mid-line comment
+			)`;
+
+      const result = testString.split(testRegExp);
+      expect(result.length).toBe(7);
+    });
+
+    it('can use an expanded pattern with a escaped #', () => {
+      const testString = 'Hello,#WorLd!';
+      const testRETemplate = regExpTemplate();
+      const testRegExp = testRETemplate`(
+				[\#l] # Mid-line comment
+			)`;
+
+      const result = testString.split(testRegExp);
+      expect(result.length).toBe(7);
     });
   });
 
