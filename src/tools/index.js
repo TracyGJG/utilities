@@ -114,19 +114,6 @@ export async function pasteText() {
   return await navigator.clipboard.readText();
 }
 
-export function regExpTemplate(regExpFlags = '') {
-  return ({ raw }, ...values) => {
-    const regExpPattern = String.raw({ raw }, ...values)
-      .split('\n')
-      .filter(line => !/^#[^#].*$/.exec(line))
-      .map(line => line.replaceAll(/(?<=[^\\])#[^#].*$/g, ''))
-      .join('\n')
-      .replaceAll(/\s+/g, '')
-      .replaceAll(/\#/g, '#');
-    return RegExp(regExpPattern, regExpFlags);
-  };
-}
-
 export function simd(instruction) {
   return function (...data) {
     const executions = data.map(
@@ -163,4 +150,17 @@ export function isRegExpPattern(pattern = '') {
 
 export function regExpString({ raw }) {
   return String.raw({ raw });
+}
+
+export function regExpTemplate(regExpFlags = '') {
+  return ({ raw }, ...values) => {
+    const regExpPattern = String.raw({ raw }, ...values)
+      .split('\n')
+      .filter(line => !/^#[^#].*$/.exec(line))
+      .map(line => line.replaceAll(/(?<=[^\\])#[^#].*$/g, ''))
+      .join('\n')
+      .replaceAll(/\s+/g, '')
+      .replaceAll(/\#/g, '#');
+    return RegExp(regExpPattern, regExpFlags);
+  };
 }
