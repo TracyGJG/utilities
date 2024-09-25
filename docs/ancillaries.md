@@ -1,13 +1,14 @@
 # Ancillaries
 
-* [accumulatedAverage](#accumulatedaverage)
-* [dateBasedRandom](#dateBasedRandom)
-* [mapGetter](#mapgetter)
-* [random](#random)
-* [sum](#sum)
-* [webStore](#webstore)
+- [accumulatedAverage](#accumulatedaverage)
+- [dateBasedRandom](#dateBasedRandom)
+- [mapGetter](#mapgetter)
+- [postJson](#postJson)
+- [random](#random)
+- [sum](#sum)
+- [webStore](#webstore)
 
-* [Index](../README.md)
+- [Index](../README.md)
 
 ---
 
@@ -33,14 +34,14 @@ This function employs 2-stage execution through currying.
 
 #### Initial call
 
--   averageToDate: Current average before the new Value arrived. (defaulted to 0)
--   sampleSize: Number of values in the sample, including the new Value. (defaulted to 0)
+- averageToDate: Current average before the new Value arrived. (defaulted to 0)
+- sampleSize: Number of values in the sample, including the new Value. (defaulted to 0)
 
 #### Subsequent calls
 
--   newValue - New data point to be included in the average calculation.
--   newAverge - Replacement value of the averageToDate. (optional)
--   newSampleSize - Replacement value of the sampleSize. (optional)
+- newValue - New data point to be included in the average calculation.
+- newAverge - Replacement value of the averageToDate. (optional)
+- newSampleSize - Replacement value of the sampleSize. (optional)
 
 ### Return Value
 
@@ -68,17 +69,30 @@ This function employs 2-stage execution through currying.
 
 #### Initial call
 
--   mapInstance: The map instance potentially containing an entity. 
--   entityFactory: Function for creating a new entity when not found in the map.
+- mapInstance: The map instance potentially containing an entity.
+- entityFactory: Function for creating a new entity when not found in the map.
 
 #### Subsequent calls
 
--   entityId - The Id of the entity to be retrieved from the map or created.
--   entityParams - An object containing additional paraeters required to create an entity. (optional)
+- entityId - The Id of the entity to be retrieved from the map or created.
+- entityParams - An object containing additional paraeters required to create an entity. (optional)
 
 ### Return Value
 
 The entity retrieved from the map or created anew.
+
+## [postJson](:#postJson)
+
+Generates the optons argument for a POST fetch request.
+
+### Parameters
+
+- data - the data to be send as the body of the fetch request (not stringified).
+- headers - optional object containing header properties.
+
+### Return Value
+
+An object to be used for the POST fetch request containg all the (JSON) encoding and header values required.
 
 ## [random](:#random)
 
@@ -86,9 +100,9 @@ Generates a number within the given range and to the stipulated precision.
 
 ### Parameters
 
--   max - Highest value of the random range
--   min - Lowest value of the random range (default 0)
--   precision - Number of decimal digits allowed in the random value as a power of 10 (default 0 = 10^0)
+- max - Highest value of the random range
+- min - Lowest value of the random range (default 0)
+- precision - Number of decimal digits allowed in the random value as a power of 10 (default 0 = 10^0)
 
 ### Return Value
 
@@ -100,7 +114,7 @@ Calculates the sum of all arguments supplied.
 
 ### Parameters
 
--   ...nums - a (rest) array of numbers.
+- ...nums - a (rest) array of numbers.
 
 ### Return Value
 
@@ -108,7 +122,7 @@ The sum of all the provided values.
 
 ### Exceptions
 
-| Code | Description                   |
+| Code |          Description          |
 | :--: | :---------------------------: |
 | E-NN | _Non-numeric value supplied._ |
 
@@ -118,16 +132,16 @@ Provides an object of web storage utility methods.
 
 ### Parameters
 
--   keyName - storage key
--   localWebStorage - flag indicating the type of web storage (default true = localStorage, false = sessionStorage)
+- keyName - storage key
+- localWebStorage - flag indicating the type of web storage (default true = localStorage, false = sessionStorage)
 
 ### Return Value
 
 An object of functions for the manipulation of data in Web Storage.
 
--   clear: Wipes all keys and values from web storage.
--   get: Retrieves the value from web storage with the previously given key.
--   remove: Wipes the specified key and value from the web storage.
--   set: Stores the value in web storage with the previously given key.
+- clear: Wipes all keys and values from web storage.
+- get: Retrieves the value from web storage with the previously given key.
+- remove: Wipes the specified key and value from the web storage.
+- set: Stores the value in web storage with the previously given key.
 
 ---

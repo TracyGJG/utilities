@@ -8,6 +8,7 @@ import {
   accumulatedAverage,
   dateBasedRandom,
   mapGetter,
+  postJson,
   random,
   sum,
   webStore,
@@ -220,6 +221,49 @@ describe('Ancillaries', () => {
 
         expect(sessionWebStore1.get()).toBeNull();
         expect(sessionWebStore2.get()).toBeNull();
+      });
+    });
+  });
+
+  describe('postJson', () => {
+    test('will throw an exception when the data cannot be JSON stringified', () => {
+      const testCase = () => postJson({ test: 42n });
+
+      expect(testCase).toThrow(
+        'JSON Stringify failed: Do not know how to serialize a BigInt'
+      );
+    });
+
+    test('will return a basic object given minimal arguments', () => {
+      expect(postJson({ test: 42 })).toEqual({
+        method: 'POST',
+        body: '{"test":42}',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    });
+
+    test('will return a basic object with overriden header', () => {
+      expect(postJson({ test: 42 }, { 'Content-Type': 'text/xml' })).toEqual({
+        method: 'POST',
+        body: '{"test":42}',
+        headers: {
+          'Content-Type': 'text/xml',
+        },
+      });
+    });
+
+    test('will return a basic object with an extended header', () => {
+      expect(
+        postJson({ test: 42 }, { 'Cache-Control': 'max-age=604800' })
+      ).toEqual({
+        method: 'POST',
+        body: '{"test":42}',
+        headers: {
+          'Content-Type': 'application/json',
+          'Cache-Control': 'max-age=604800',
+        },
       });
     });
   });

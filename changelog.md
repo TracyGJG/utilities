@@ -1,5 +1,9 @@
 # Change Log
 
+## 25th September 2024
+
+- Added the `postJson` function to the utilities module.
+
 ## 23rd August 2024
 
 - Enhancement of the `regExpTemplate` function to accommodate # comments.
