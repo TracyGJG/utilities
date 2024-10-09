@@ -8,6 +8,7 @@
 - [generateEnums](#generateenums)
 - [isRegExpPattern](#isregexppattern)
 - [lens](#lens)
+- [match](#match)
 - [memoise](#memoise)
 - [parseJson](#parseJson)
 - [pasteText](#pasteText)
@@ -149,6 +150,18 @@ Creates a repeatable function for extracting values out of objects/arrays at a g
 ### Return Value
 
 A lookup function to return the value of a property at the stated location, for a given object.
+
+## [match](:#match)
+
+Creates a lookup function of a collection of key:value pairs, with the first pair used a default.
+
+### Parameters
+
+- ...patterns: a list of key/value objects.
+
+### Return Value
+
+A lookup function that returns the value for a given key, with the fallback of the first value.
 
 ## [memoise](:#memoise)
 

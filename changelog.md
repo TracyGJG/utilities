@@ -1,5 +1,9 @@
 # Change Log
 
+## 9th October 2024
+
+- Added the `match` lookup function to the tools module.
+
 ## 25th September 2024
 
 - Added the `postJson` function to the utilities module.
