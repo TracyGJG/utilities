@@ -81,6 +81,7 @@ import {
 	lens,
 	lensFn,
 	memoize,
+	match,
 	parseJson,
 	pasteText,
 	regExpString,
