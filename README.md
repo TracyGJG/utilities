@@ -9,14 +9,14 @@ The functions in the following collections make considerable use of the techniqu
 
 ---
 
-## [Ancillaries](docs/ancillaries.md)
-## [Arrays](docs/arrays.md)
-## [Data Comparison](docs/data-comparison.md)
-## [Data Converters](docs/data-converters.md)
-## [Document Object Model](docs/dom.md)
-## [Exercising](docs/exercising.md)
-## [Ranges](docs/ranges.md)
-## [Tools](docs/tools.md)
+## [Ancillaries](docs/ancillaries.md) (7)
+## [Arrays](docs/arrays.md) (10)
+## [Data Comparison](docs/data-comparison.md) (10)
+## [Data Converters](docs/data-converters.md) (6)
+## [Document Object Model](docs/dom.md) (11)
+## [Exercising](docs/exercising.md) (4)
+## [Ranges](docs/ranges.md) (9)
+## [Tools](docs/tools.md) (18)
 
 ---
 
