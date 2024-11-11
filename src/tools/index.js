@@ -70,19 +70,20 @@ export function generateEnums(enumsJson, options) {
 }
 
 const PROPERTY_DECONSTRUCTION = /\]?\??\.\[?|\]?\[|\]/;
-const PROPERTY_STRING_OR_ARRAY_DIGITS = /^(\"([^"]{1,1000})\")|(\d+)$/;
+const PROPERTY_STRING_OR_ARRAY_DIGITS = /^(\"([^"]{1,1000})\")|(\d{1,10})$/;
 const removeWrappingDoubleQuites = str => str.replaceAll(/^"|"$/g, '');
+const lensReducer = (ob, pr) =>
+	PROPERTY_STRING_OR_ARRAY_DIGITS.exec(pr)
+		? ob[removeWrappingDoubleQuites(pr)]
+		: ob?.[pr];
 
 export function lens(...props) {
 	const _props = props
 		.join('.')
 		.split(PROPERTY_DECONSTRUCTION)
 		.filter(item => item !== '');
-	const reducer = (ob, pr) =>
-		PROPERTY_STRING_OR_ARRAY_DIGITS.exec(pr)
-			? ob[removeWrappingDoubleQuites(pr)]
-			: ob?.[pr];
-	return obj => _props.reduce(reducer, obj);
+
+	return obj => _props.reduce(lensReducer, obj);
 }
 
 export function lensFn(fn, ...props) {
