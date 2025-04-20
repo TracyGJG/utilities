@@ -10,6 +10,7 @@ import {
   mapGetter,
   postJson,
   random,
+  roundBoundry,
   sum,
   webStore,
 } from './index.js';
@@ -102,6 +103,77 @@ describe('Ancillaries', () => {
       const rnd = (max, min, mul, rand) =>
         Math.floor(rand * (max - min) * mul) / mul + min;
       expect(rnd(2, 1, 100, 0.54321)).toEqual(1.54);
+    });
+  });
+
+  describe('roundBoundry', () => {
+    describe('using default parameters (round)', () => {
+      const roundDefault = roundBoundry(5);
+
+      test('40 -> 40', () => {
+        expect(roundDefault(40)).toBe(40);
+      });
+      test('41 -> 40', () => {
+        expect(roundDefault(41)).toBe(40);
+      });
+      test('42 -> 40', () => {
+        expect(roundDefault(42)).toBe(40);
+      });
+      test('43 -> 45', () => {
+        expect(roundDefault(43)).toBe(45);
+      });
+      test('44 -> 45', () => {
+        expect(roundDefault(44)).toBe(45);
+      });
+      test('45 -> 45', () => {
+        expect(roundDefault(45)).toBe(45);
+      });
+    });
+
+    describe('using specified method (ceil)', () => {
+      const roundCeil = roundBoundry(5, 'ceil');
+
+      test('40 -> 40', () => {
+        expect(roundCeil(40)).toBe(40);
+      });
+      test('41 -> 45', () => {
+        expect(roundCeil(41)).toBe(45);
+      });
+      test('42 -> 45', () => {
+        expect(roundCeil(42)).toBe(45);
+      });
+      test('43 -> 45', () => {
+        expect(roundCeil(43)).toBe(45);
+      });
+      test('44 -> 45', () => {
+        expect(roundCeil(44)).toBe(45);
+      });
+      test('45 -> 45', () => {
+        expect(roundCeil(45)).toBe(45);
+      });
+    });
+
+    describe('using specified method (floor)', () => {
+      const roundFloor = roundBoundry(5, 'floor');
+
+      test('40 -> 40', () => {
+        expect(roundFloor(40)).toBe(40);
+      });
+      test('41 -> 40', () => {
+        expect(roundFloor(41)).toBe(40);
+      });
+      test('42 -> 40', () => {
+        expect(roundFloor(42)).toBe(40);
+      });
+      test('43 -> 40', () => {
+        expect(roundFloor(43)).toBe(40);
+      });
+      test('44 -> 40', () => {
+        expect(roundFloor(44)).toBe(40);
+      });
+      test('45 -> 45', () => {
+        expect(roundFloor(45)).toBe(45);
+      });
     });
   });
 

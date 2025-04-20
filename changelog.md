@@ -1,5 +1,11 @@
 # Change Log
 
+## 20th April 2025
+
+- Added two new functions:
+  - `roundBoundry` in the ancillaries module.
+  - `decolour` in the tools module.
+
 ## 9th October 2024
 
 - Added the `match` lookup function to the tools module.

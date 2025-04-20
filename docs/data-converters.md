@@ -1,13 +1,13 @@
 # Data Converters
 
-* [base64decoding](#base64decoding)
-* [base64encoding](#base64encoding)
-* [longDay](#longday)
-* [longMonth](#longmonth)
-* [shortDay](#shortday)
-* [shortMonth](#shortmonth)
+- [base64decoding](#base64decoding)
+- [base64encoding](#base64encoding)
+- [longDay](#longday)
+- [longMonth](#longmonth)
+- [shortDay](#shortday)
+- [shortMonth](#shortmonth)
 
-* [Index](../README.md)
+- [Index](../README.md)
 
 ---
 
@@ -17,7 +17,7 @@ Applies Base64 encoding of supplied data.
 
 ### Parameters
 
--   Raw data such as a binary buffer
+- Raw data such as a binary buffer
 
 ### Return Value
 
@@ -29,7 +29,7 @@ Applies Base64 decoding of supplied encloded data.
 
 ### Parameters
 
--   Data in Base64 encoding
+- Data in Base64 encoding
 
 ### Return Value
 
@@ -41,8 +41,8 @@ Provides the long form of the day of week in the given locale, based in a numeri
 
 ### Parameters
 
--   lang - Locale string (defaulted to gb-GB)
--   idx - Number in the range of 0-6 (optional on initial call, mandatory on second call.)
+- lang: Locale string (defaulted to gb-GB)
+- idx: Number in the range of 0-6 (optional on initial call, mandatory on second call.)
 
 ### Return Value
 
@@ -54,8 +54,8 @@ Provides the long form of the month of year in the given locale, based in a nume
 
 ### Parameters
 
--   lang - Locale string (defaulted to gb-GB)
--   idx - Number in the range of 0-11 (optional on initial call, mandatory on second call.)
+- lang: Locale string (defaulted to gb-GB)
+- idx: Number in the range of 0-11 (optional on initial call, mandatory on second call.)
 
 ### Return Value
 
@@ -67,8 +67,8 @@ Provides the short form of the day of week in the given locale, based in a numer
 
 ### Parameters
 
--   lang - Locale string (defaulted to gb-GB)
--   idx - Number in the range of 0-6 (optional on initial call, mandatory on second call.)
+- lang: Locale string (defaulted to gb-GB)
+- idx: Number in the range of 0-6 (optional on initial call, mandatory on second call.)
 
 ### Return Value
 
@@ -80,8 +80,8 @@ Provides the short form of the month of year in the given locale, based in a num
 
 ### Parameters
 
--   lang - Locale string (defaulted to gb-GB)
--   idx - Number in the range of 0-11 (optional on initial call, mandatory on second call.)
+- lang: Locale string (defaulted to gb-GB)
+- idx: Number in the range of 0-11 (optional on initial call, mandatory on second call.)
 
 ### Return Value
 

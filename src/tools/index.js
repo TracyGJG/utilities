@@ -1,4 +1,4 @@
-import { DATA_TYPES, dataType } from "../dataComparison/index.js";
+import { DATA_TYPES, dataType } from '../dataComparison/index.js';
 
 export function compose(...functions) {
   return (args) => functions.reduce((arg, fn) => fn(arg), args);
@@ -14,10 +14,14 @@ export function curry(fn, ...args) {
     : (..._args) => curry(fn, ...args, ..._args);
 }
 
+export function decolour(asyncFn, syncFn) {
+  return asyncFn().then(syncFn);
+}
+
 export function enumerate(source, options = {}) {
   if (dataType(source) !== DATA_TYPES.OBJECT && !Array.isArray(source)) {
     throw Error(
-      "Error: E-IS The source argument supplied is not an Array or an Object."
+      'Error: E-IS The source argument supplied is not an Array or an Object.'
     );
   }
   const filterStringKeys = (key) => dataType(key) === DATA_TYPES.STRING;
@@ -27,10 +31,10 @@ export function enumerate(source, options = {}) {
 
   if (!keys.length) {
     throw Error(
-      "Error: E-NS The source argument supplied is not populated with string keys."
+      'Error: E-NS The source argument supplied is not populated with string keys.'
     );
   }
-  const VALID_OPTIONS = ["constantProperties", "numericValues"];
+  const VALID_OPTIONS = ['constantProperties', 'numericValues'];
   for (const option in options) {
     if (!VALID_OPTIONS.includes(option)) {
       throw Error(
@@ -56,8 +60,8 @@ export function enumerate(source, options = {}) {
   function toGlobal(_propertyName) {
     const hasSpaces = /\s/.test(_propertyName);
     const globalPropertyName = hasSpaces
-      ? _propertyName.replace(/\s/g, "_")
-      : _propertyName.replace(/([a-z])([A-Z])/g, "$1_$2");
+      ? _propertyName.replace(/\s/g, '_')
+      : _propertyName.replace(/([a-z])([A-Z])/g, '$1_$2');
     return globalPropertyName.toUpperCase();
   }
 }
@@ -71,7 +75,7 @@ export function generateEnums(enumsJson, options) {
 
 const PROPERTY_DECONSTRUCTION = /\]?\??\.\[?|\]?\[|\]/;
 const PROPERTY_STRING_OR_ARRAY_DIGITS = /^(\"([^"]{1,1000})\")|(\d{1,10})$/;
-const removeWrappingDoubleQuites = (str) => str.replaceAll(/^"|"$/g, "");
+const removeWrappingDoubleQuites = (str) => str.replaceAll(/^"|"$/g, '');
 const lensReducer = (ob, pr) =>
   PROPERTY_STRING_OR_ARRAY_DIGITS.exec(pr)
     ? ob[removeWrappingDoubleQuites(pr)]
@@ -79,9 +83,9 @@ const lensReducer = (ob, pr) =>
 
 export function lens(...props) {
   const _props = props
-    .join(".")
+    .join('.')
     .split(PROPERTY_DECONSTRUCTION)
-    .filter((item) => item !== "");
+    .filter((item) => item !== '');
 
   return (obj) => _props.reduce(lensReducer, obj);
 }
@@ -138,11 +142,11 @@ export function stringifyJson(jsonObject, replacer, spaces) {
   }
 }
 
-export function escapeRegExp(pattern = "") {
-  return pattern.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+export function escapeRegExp(pattern = '') {
+  return pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-export function isRegExpPattern(pattern = "") {
+export function isRegExpPattern(pattern = '') {
   try {
     RegExp(pattern);
     return !!pattern.length;
@@ -155,15 +159,15 @@ export function regExpString({ raw }) {
   return String.raw({ raw });
 }
 
-export function regExpTemplate(regExpFlags = "") {
+export function regExpTemplate(regExpFlags = '') {
   return ({ raw }, ...values) => {
     const regExpPattern = String.raw({ raw }, ...values)
-      .split("\n")
+      .split('\n')
       .filter((line) => !/^#[^#].*$/.exec(line))
-      .map((line) => line.replaceAll(/(?<=[^\\])#[^#].*$/g, ""))
-      .join("\n")
-      .replaceAll(/\s+/g, "")
-      .replaceAll(/\#/g, "#");
+      .map((line) => line.replaceAll(/(?<=[^\\])#[^#].*$/g, ''))
+      .join('\n')
+      .replaceAll(/\s+/g, '')
+      .replaceAll(/\#/g, '#');
     return RegExp(regExpPattern, regExpFlags);
   };
 }

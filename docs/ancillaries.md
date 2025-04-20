@@ -5,6 +5,7 @@
 - [mapGetter](#mapgetter)
 - [postJson](#postJson)
 - [random](#random)
+- [roundBoundry](#roundBoundry)
 - [sum](#sum)
 - [webStore](#webstore)
 
@@ -39,9 +40,9 @@ This function employs 2-stage execution through currying.
 
 #### Subsequent calls
 
-- newValue - New data point to be included in the average calculation.
-- newAverge - Replacement value of the averageToDate. (optional)
-- newSampleSize - Replacement value of the sampleSize. (optional)
+- newValue: New data point to be included in the average calculation.
+- newAverge: Replacement value of the averageToDate. (optional)
+- newSampleSize: Replacement value of the sampleSize. (optional)
 
 ### Return Value
 
@@ -74,8 +75,8 @@ This function employs 2-stage execution through currying.
 
 #### Subsequent calls
 
-- entityId - The Id of the entity to be retrieved from the map or created.
-- entityParams - An object containing additional paraeters required to create an entity. (optional)
+- entityId: The Id of the entity to be retrieved from the map or created.
+- entityParams: An object containing additional paraeters required to create an entity. (optional)
 
 ### Return Value
 
@@ -87,8 +88,8 @@ Generates the optons argument for a POST fetch request.
 
 ### Parameters
 
-- data - the data to be send as the body of the fetch request (not stringified).
-- headers - optional object containing header properties.
+- data: the data to be send as the body of the fetch request (not stringified).
+- headers: optional object containing header properties.
 
 ### Return Value
 
@@ -100,13 +101,26 @@ Generates a number within the given range and to the stipulated precision.
 
 ### Parameters
 
-- max - Highest value of the random range
-- min - Lowest value of the random range (default 0)
-- precision - Number of decimal digits allowed in the random value as a power of 10 (default 0 = 10^0)
+- max: Highest value of the random range
+- min: Lowest value of the random range (default 0)
+- precision: Number of decimal digits allowed in the random value as a power of 10 (default 0 = 10^0)
 
 ### Return Value
 
 A function that generates a random value within the `min` and `max` range with a given decimal precision.
+
+## [roundBoundry](:#roundBoundry)
+
+Facilitates rounding values to a stipluated boundry according to a stipulated rounding function.
+
+### Parameters
+
+- interval: The boundry to which values are rounded.
+- rounderFn: The method to use for rounding (optional, defaulted to 'round', alternatives include 'floor' for round-down and 'ceil' for round-up).
+
+### Return Value
+
+A function that returns a value rounded in accordance with the supplied rounder function.
 
 ## [sum](:#sum)
 
@@ -114,7 +128,7 @@ Calculates the sum of all arguments supplied.
 
 ### Parameters
 
-- ...nums - a (rest) array of numbers.
+- ...nums: a (rest) array of numbers.
 
 ### Return Value
 
@@ -132,8 +146,8 @@ Provides an object of web storage utility methods.
 
 ### Parameters
 
-- keyName - storage key
-- localWebStorage - flag indicating the type of web storage (default true = localStorage, false = sessionStorage)
+- keyName: storage key
+- localWebStorage: flag indicating the type of web storage (default true = localStorage, false = sessionStorage)
 
 ### Return Value
 

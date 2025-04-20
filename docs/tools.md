@@ -3,6 +3,7 @@
 - [compose](#compose)
 - [copyText](#copytext)
 - [curry](#curry)
+- [decolour](#decolour)
 - [enumerate](#enumerate)
 - [escapeRegExp](#escaperegexp)
 - [generateEnums](#generateenums)
@@ -28,7 +29,7 @@ Combines a list of monadic (single parameter) functions into a single new functi
 
 ### Parameters
 
-- args - a number of monadic (single parameter) functions.
+- args: a number of monadic (single parameter) functions.
 
 ### Return Value
 
@@ -40,7 +41,7 @@ Copies the given text string to the browser's clipboard.
 
 ### Parameters
 
-- string - text to be copied to the clipboard.
+- string: text to be copied to the clipboard.
 
 ### Return Value
 
@@ -52,12 +53,21 @@ Converts the given variadic function into one that expects arguments to be suppl
 
 ### Parameters
 
-- fn - variadic function to convert into a curried function.
-- \_args - private array of arguments accumulated prior to execution.
+- fn: variadic function to convert into a curried function.
+- \_args: private array of arguments accumulated prior to execution.
 
 ### Return Value
 
 A curried function.
+
+## [decolour](:#decolour)
+
+Enables execution of an asynchronous function, followed by synchronous code, without the need make the calling function async or await the async function.
+
+### Parameters
+
+- asyncFn: The asynchronous function to be executed.
+- syncFn: The synchronous function be called with the result of the asynchronous operation.
 
 ## [enumerate](:#enumerate)
 
@@ -71,10 +81,10 @@ Options enable the enumeration keys to be converted to GLOBAL_CASE, or configure
 
 ### Parameters
 
-- source - an array or object to be used to extract the enumeration labels and values.
-- options - an optional structure used to instruct the function of its behaviour.
-  - constantProperties - Boolean flag; true to convert, false (default) to leave as is.
-  - numericValues - Boolean flag: true to provide incremental numeric values, false (default) to use the original keys.
+- source: an array or object to be used to extract the enumeration labels and values.
+- options: an optional structure used to instruct the function of its behaviour.
+- constantProperties: Boolean flag; true to convert, false (default) to leave as is.
+- numericValues: Boolean flag: true to provide incremental numeric values, false (default) to use the original keys.
 
 ### Return Value
 
@@ -95,7 +105,7 @@ Converts a Regular Expression pattern to a escaped string.
 
 ### Parameters
 
-- pattern - a string (defaulted to empty) to be escaped.
+- pattern: a string (defaulted to empty) to be escaped.
 
 ### Return Value
 
@@ -117,7 +127,7 @@ const { shortDays, shortMonths, longDays, longMonths } = generateEnums(`{
 
 ### Parameters
 
-- enumJson - a JSON stringified object containing arrays and/or objects to be used to extract the enumeration labels and values.
+- enumJson: a JSON stringified object containing arrays and/or objects to be used to extract the enumeration labels and values.
 
 * options - an optional structure used to instruct the function of its behaviour.
   - constantProperties - Boolean flag; true to convert, false (default) to leave as is.
@@ -133,7 +143,7 @@ Tests to confirm the given string is a valid Regular Expression pattern.
 
 ### Parameters
 
-- pattern - a string (defaulted to empty) to be escaped.
+- pattern: a string (defaulted to empty) to be escaped.
 
 ### Return Value
 
@@ -145,7 +155,7 @@ Creates a repeatable function for extracting values out of objects/arrays at a g
 
 ### Parameters
 
-- props - one or more propertyNames or array subscripts, either individually or in strings.
+- props: one or more propertyNames or array subscripts, either individually or in strings.
 
 ### Return Value
 
@@ -169,8 +179,8 @@ Converts the given pure function into on that is optimised using memoisation (ca
 
 ### Parameters
 
-- fn - pure function to convert into a memoised function.
-- \_cache - private cache of function executions.
+- fn: pure function to convert into a memoised function.
+- \_cache: private cache of function executions.
 
 ### Return Value
 
@@ -182,8 +192,8 @@ Safer implementation of the JSON.parse method that return an error when an excep
 
 ### Parameters
 
-- jsonString (JS String) subject of the String to Object convertion.
-- reviver (function) used to intercept the convertion process.
+- jsonString: (JS String) subject of the String to Object convertion.
+- reviver: (function) used to intercept the convertion process.
 
 ### Return Value
 
@@ -211,11 +221,11 @@ This function employs 2-stage execution through currying.
 
 #### Initial call
 
-- instruction - the function to be applied to each datum. Returns a reusable function.
+- instruction: the function to be applied to each datum. Returns a reusable function.
 
 #### Subsequent calls
 
-- data - One or more datum.
+- data: One or more datum.
 
 ### Return Value
 
@@ -245,12 +255,12 @@ This function employs 2-stage execution through currying.
 
 #### Initial call
 
-- regExpFlags - the optional string containing any flags to be applied when creating the RegExp object.
+- regExpFlags: the optional string containing any flags to be applied when creating the RegExp object.
 
 #### Subsequent calls
 
-- templateTextSections - array of text sections of the Template Literal, destructed to expose the `raw` property.
-- templateValueSecions - (rest) array of values interpolated in the Template Literal.
+- templateTextSections: array of text sections of the Template Literal, destructed to expose the `raw` property.
+- templateValueSecions: (rest) array of values interpolated in the Template Literal.
 
 ### Return Value
 
@@ -262,7 +272,7 @@ Delays processing of the current thread or a set period of time (approximately.)
 
 ### Parameters
 
-- ms - delay in milliseconds (1/1000th of a second)
+- ms: delay in milliseconds (1/1000th of a second)
 
 ### Return Value
 
@@ -274,9 +284,9 @@ Safer implementation of the JSON.stringify method that return an error when an e
 
 ### Parameters
 
-- jsonObject (JS Object) subject of the Object to String convertion.
-- replacer (function) used to intercept the convertion process.
-- spaces (number) of spaces used to indent scopes of the Object.
+- jsonObject: (JS Object) subject of the Object to String convertion.
+- replacer: (function) used to intercept the convertion process.
+- spaces: (number) of spaces used to indent scopes of the Object.
 
 ### Return Value
 

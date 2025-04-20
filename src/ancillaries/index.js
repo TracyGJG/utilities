@@ -33,9 +33,13 @@ export function random(max, min = 0, precision = 0) {
     min + Math.floor(dateBasedRandom() * (max - min) * multiplier) / multiplier;
 }
 
+export function roundBoundry(interval, rounderFn = 'round') {
+  return (value) => Math[rounderFn](value / interval) * interval;
+}
+
 export function sum(...nums) {
   let _sum = 0;
-  nums.forEach(num => {
+  nums.forEach((num) => {
     if (dataType(num) !== DATA_TYPES.NUMBER) {
       throw Error(`Error: E-NN An argument supplied is not a Numeric value.`);
     }
@@ -54,7 +58,7 @@ export function webStore(keyName, localWebStorage = true) {
     return value ? JSON.parse(value) : defaultValue;
   };
   const remove = () => webStorage.removeItem(keyName);
-  const set = value => webStorage.setItem(keyName, JSON.stringify(value));
+  const set = (value) => webStorage.setItem(keyName, JSON.stringify(value));
 
   return {
     clear,

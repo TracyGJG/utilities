@@ -1,17 +1,17 @@
 # Arrays
 
-* [batchBy](#batchby)
-* [groupBy](#groupby)
-* [intersectArrays](#intersectarrays)
-* [permute](#permute)
-* [reconcileArray](#reconcilearray)
-* [replaceArray](#replacearray)
-* [shuffleArray](#shufflearray)
-* [transposeArray](#transposearray)
-* [unflatten](#unflatten)
-* [unionArrays](#unionarrays)
+- [batchBy](#batchby)
+- [groupBy](#groupby)
+- [intersectArrays](#intersectarrays)
+- [permute](#permute)
+- [reconcileArray](#reconcilearray)
+- [replaceArray](#replacearray)
+- [shuffleArray](#shufflearray)
+- [transposeArray](#transposearray)
+- [unflatten](#unflatten)
+- [unionArrays](#unionarrays)
 
-* [Index](../README.md)
+- [Index](../README.md)
 
 ---
 
@@ -19,11 +19,11 @@
 
 Both methods follow the same pattern: They take a single number and return a function. The generated function takes an array and returns an array of batches (arrays).
 
-* size - splits a given array into a number of batches of the stipulated size.
-* number - splits a given array into the stipulated number of evenly distributed batches.
+- size - splits a given array into a number of batches of the stipulated size.
+- number - splits a given array into the stipulated number of evenly distributed batches.
 
 ```javascript
-const sourceArray = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3 ];
+const sourceArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3];
 
 const batchByThree = batchBy.size(3);
 
@@ -53,10 +53,10 @@ const fourBatches = batchBy.number(4)(sourceArray);
 
 ### Parameters
 
-* size: The maximum content of each batch with the minimum being one less.
-* number: The maximum number of batches to split the input array with;
-   - The batch size to vary by no more than one item.
-   - The number of batches to only be less than the given argument when it exceeds the size of the input array.
+- size: The maximum content of each batch with the minimum being one less.
+- number: The maximum number of batches to split the input array with;
+  - The batch size to vary by no more than one item.
+  - The number of batches to only be less than the given argument when it exceeds the size of the input array.
 
 ### Return Value
 
@@ -67,14 +67,14 @@ Arrays of batches (array) populated with content of the input array.
 Given a source array of objects and a function used to identify to which group an object belongs, this function creates an object with a property for each group of objects.
 
 ```javascript
-  const groupFunction = ({ name }) => name;
-  const sourceArray = [
-    { id: 1, name: 'alpha' },
-    { id: 2, name: 'beta' },
-    { id: 3, name: 'alpha' },
-  ];
-  const resultGroupFunction = groupBy(groupFunction);
-  const resultGroupObject = resultGroupFunction(sourceArray);
+const groupFunction = ({ name }) => name;
+const sourceArray = [
+  { id: 1, name: 'alpha' },
+  { id: 2, name: 'beta' },
+  { id: 3, name: 'alpha' },
+];
+const resultGroupFunction = groupBy(groupFunction);
+const resultGroupObject = resultGroupFunction(sourceArray);
 ```
 
 The variable `resultGroupObject` with contain the following object:
@@ -93,13 +93,13 @@ The variable `resultGroupObject` with contain the following object:
 
 ### Parameters
 
--   Function that identifies the group of an object in the array
--   Source array of objects
+- Function that identifies the group of an object in the array
+- Source array of objects
 
 The arguments can be supplied at the same time or one at a time. So the above example could be performed as follows:
 
 ```javascript
-  const resultGroupObject = groupBy(groupFunction, sourceArray);
+const resultGroupObject = groupBy(groupFunction, sourceArray);
 ```
 
 ### Return Value
@@ -116,7 +116,7 @@ Utilities.intersectArrays([1, 2, 3, 4], [3, 4, 5, 6]); // [3, 4]
 
 ### Parameters
 
--   arrays - One or more arrays from which the intersect is to be extracted.
+- arrays: One or more arrays from which the intersect is to be extracted.
 
 ### Return Value
 
@@ -128,7 +128,7 @@ Permute creates an array of arrays containg every permutation of the values from
 
 ### Parameters
 
--   Series of Arrays - where each array is a dimension of the structure to be produced. 
+- Series of Arrays: where each array is a dimension of the structure to be produced.
 
 ### Return Value
 
@@ -140,9 +140,9 @@ Replaces the content of the _targetArray_ with content from the _sourceArray_ us
 
 ### Parameters
 
--   sourceArray - Reference to an Object Array containing content to by used to update the primary array.
--   targetArray - Reference to an Object Array to be updated without losing reference.
--   objectKey - Optional string (defaulted to 'id') name of the property of all objects in the array that act as a unique identifier.
+- sourceArray: Reference to an Object Array containing content to by used to update the primary array.
+- targetArray: Reference to an Object Array to be updated without losing reference.
+- objectKey: Optional string (defaulted to 'id') name of the property of all objects in the array that act as a unique identifier.
 
 ### Return Value
 
@@ -154,8 +154,8 @@ Replaces the content of the _targetArray_ with the (optional) content of the _ar
 
 ### Parameters
 
--   targetArray - Reference to the array to be replaced.
--   arrayContent - Optional reference to an array containing data to populate the target array.
+- targetArray: Reference to the array to be replaced.
+- arrayContent: Optional reference to an array containing data to populate the target array.
 
 ### Return Value
 
@@ -165,7 +165,11 @@ None - updates the _targetArray_ directly by reference.
 
 ### Parameters
 
+- array: The array to be shuffled
+
 ### Return Value
+
+The source array in its shuffled state.
 
 ## [transposeArray](:#transposearray)
 
@@ -173,7 +177,7 @@ Takes a 2-dimensional array (matrix) and produces a new array where the rows of 
 
 ### Parameters
 
--   The original 2D array.
+- The original 2D array.
 
 e.g. [['A1', 'B1', 'C1'], ['A2', 'B2', 'C2'], ['A3', 'B3', 'C3']]
 
@@ -205,7 +209,7 @@ This function employs 2-stage execution through currying.
 
 #### Primary call
 
--   List of numbers indication the size of each dimension of an array in the new structure.
+- List of numbers indication the size of each dimension of an array in the new structure.
 
 #### Return Value
 
@@ -213,7 +217,7 @@ The first call prodcues a specialised array that uses the supplied specification
 
 #### Secondary call
 
--   A single depth array of values to be restructured.
+- A single depth array of values to be restructured.
 
 #### Return Value
 
@@ -229,7 +233,7 @@ Utilities.unionArrays([1, 2, 3, 4], [3, 4, 5, 6]); // [1, 2, 3, 4, 5 ,6]
 
 ### Parameters
 
--   arrays - One or more arrays from which the union is to be extracted.
+- arrays: One or more arrays from which the union is to be extracted.
 
 ### Return Value
 
