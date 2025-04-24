@@ -2,7 +2,7 @@
 
 ## 22nd April 2025
 
-- Added the `poller` function to the DOM module.
+- Added the `poller`, `mockIntervalFunctions` and `mockTimeoutFunctions` functions to the DOM module.
 
 ## 20th April 2025
 
