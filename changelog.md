@@ -1,5 +1,9 @@
 # Change Log
 
+## 22nd April 2025
+
+- Added the `poller` function to the DOM module.
+
 ## 20th April 2025
 
 - Added two new functions:

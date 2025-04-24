@@ -11,6 +11,7 @@
 - [sui](#sui)
 - [debounce](#debounce)
 - [throttle](#throttle)
+- [poller](#poller)
 
 - [Index](../README.md)
 
@@ -163,5 +164,20 @@ Converts the given callback function to one that is throttled for a specific per
 ### Return Value
 
 The trottled callback function.
+
+## [poller](:#poller)
+
+A wrapper function used to perform checks on a regular interval to ensure the condition is right to perform an action. The polling is limited to a maximum number of cycles and if reached the action is preformed regardless of the check.
+
+### Parameter
+
+- interval: (number) the duration (in milliseconds) between checks - the polling interval.
+- cycles: (number) the maxmimum number of checks to be performed before the action is performed regardless of the result of the check function.
+- checkFn: (function) executed with each cycle is to confirm if the pre-condition has been achieved.
+- actionFn: (function) executed when either the check function passes or the number of cycles is reached.
+
+### Return Value
+
+None.
 
 ---
