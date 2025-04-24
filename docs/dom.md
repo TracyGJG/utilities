@@ -12,6 +12,8 @@
 - [debounce](#debounce)
 - [throttle](#throttle)
 - [poller](#poller)
+- [mockTimeoutFunctions](#mocktimeoutfunctions)
+- [mockIntervalFunctions](#mockintervalfunctions)
 
 - [Index](../README.md)
 
@@ -179,5 +181,37 @@ A wrapper function used to perform checks on a regular interval to ensure the co
 ### Return Value
 
 None.
+
+## [mockTimeoutFunctions](:#mocktimeoutfunctions)
+
+Provides an alternative set of functions to replace Web API functions for setting and clearing a Timeout, and artificially advancing time.
+
+### Parameters
+
+None
+
+### Return Value
+
+An object containing the following methods to mock global functions:
+
+- setTimeout: Creates a Timeout that executes a given callback function after a specified duration.
+- clearTimeout: Terminate a given Timeout.
+- clockTick: Artificially advancing time.
+
+## [mockIntervalFunctions](:#mockintervalfunctions)
+
+Provides an alternative set of functions to replace Web API functions for setting and clearing an Interval, and artificially advancing time.
+
+### Parameters
+
+None
+
+### Return Value
+
+An object containing the following methods to mock global functions:
+
+- setInterval: Creates an Interval that executes a given callback function at a regular time frame.
+- clearInterval: Terminate a given Interval.
+- clockTick: Artificially advancing time.
 
 ---
