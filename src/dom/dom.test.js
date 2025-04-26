@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { afterEach, jest } from '@jest/globals';
+import { afterEach, beforeEach, jest } from '@jest/globals';
 
 import {
   acc,
@@ -17,6 +17,8 @@ import {
   debounce,
   throttle,
   poller,
+  mockTimeoutFunctions,
+  mockIntervalFunctions,
 } from './index.js';
 
 import { sleep } from '../tools';
@@ -32,55 +34,6 @@ const trustedText = `&lt;script&gt;
 		alert('Hello World')
 	})();
 &lt;/script&gt;`;
-
-function mockTimerFunctions() {
-  const timers = {};
-
-  return {
-    clearTimeout,
-    setTimeout,
-  };
-
-  function clearTimeout(timerRef) {
-    delete timers.timer;
-  }
-  function setTimeout(callBack, duration) {
-    const timer = Date.now();
-    timers[timer];
-    sleep(duration).then((_) => timers?.timer && callback());
-    return timer;
-  }
-}
-
-function mockIntervalFunctions() {
-  const timers = new Set();
-
-  return {
-    clearInterval,
-    setInterval,
-  };
-
-  function clearInterval(timerRef) {
-    const hadTimer = timers.delete(timerRef);
-    console.log(`\tclearInterval: ${timerRef} - ${hadTimer}`);
-  }
-  async function setInterval(callBack, duration) {
-    const timer = Date.now();
-    timers.add(timer);
-    console.log(`\tsetInterval: ${timer} Started`);
-
-    async (resolve) => {
-      do {
-        await sleep(duration);
-        timers.has(timer) && callBack();
-      } while (timers.has(timer));
-      console.log(`\tsetInterval: ${timer} Resolved`);
-      resolve();
-    };
-    console.log(`\tsetInterval: ${timer} Exit`);
-    return timer;
-  }
-}
 
 describe('DOM utilities', () => {
   afterAll(() => {
@@ -341,7 +294,6 @@ describe('DOM utilities', () => {
     function incCount() {
       callCount += 1;
     }
-    const { clearTimeout, setTimeout } = mockTimerFunctions();
 
     beforeEach(() => {
       callCount = 0;
@@ -386,7 +338,6 @@ describe('DOM utilities', () => {
     function incCount() {
       callCount += 1;
     }
-    const { setTimeout } = mockTimerFunctions();
 
     beforeEach(() => {
       callCount = 0;
@@ -429,32 +380,156 @@ describe('DOM utilities', () => {
     });
   });
 
-  describe.only('poll an action', () => {
-    let callCount;
-    function incCount() {
-      callCount += 1;
-      console.log(`incCount: ${callCount}`);
-    }
-    function checkCount() {
-      console.log(`checkCount: ${callCount === 2}`);
-      return callCount === 20;
-    }
-    const { clearInterval: _clearInterval, setInterval: _setInterval } =
-      mockIntervalFunctions();
+  describe('poller', () => {
+    let counter = 0;
+    const checkCount = jest.fn(() => counter % 2);
+    const incCount = jest.fn(() => counter++);
+    const mockSetInterval = jest.fn(() => 'Set Interval');
+    const mockClearInterval = jest.fn();
 
-    window.setInterval = _setInterval;
-    window.clearInterval = _clearInterval;
+    window.setInterval = mockSetInterval;
+    window.clearInterval = mockClearInterval;
 
     beforeEach(() => {
-      callCount = 0;
+      counter = 0;
     });
 
-    afterEach(() => {});
+    afterEach(() => {
+      jest.resetAllMocks();
+    });
 
-    test('default', async () => {
-      expect(callCount).toBe(0);
-      await poller(100, 5, checkCount, incCount);
-      expect(callCount).toBe(0);
+    test('can execute an action', () => {
+      expect(mockSetInterval).toHaveBeenCalledTimes(0);
+      expect(mockClearInterval).toHaveBeenCalledTimes(0);
+
+      const result = poller(100, 5, checkCount, incCount);
+
+      expect(result).toBeDefined();
+      expect(mockSetInterval).toHaveBeenCalledTimes(1);
+      expect(mockSetInterval.mock.calls[0][1]).toBe(100);
+      expect(mockClearInterval).toHaveBeenCalledTimes(0);
+
+      const callbackFn = mockSetInterval.mock.calls[0][0];
+      expect(checkCount).toHaveBeenCalledTimes(0);
+      callbackFn();
+      expect(checkCount).toHaveBeenCalledTimes(1);
+
+      counter = 3;
+      callbackFn();
+      expect(mockClearInterval).toHaveBeenCalledTimes(1);
+      expect(checkCount).toHaveBeenCalledTimes(2);
+    });
+  });
+
+  describe('mockTimeoutFunctions', () => {
+    let timeoutCallback;
+
+    beforeEach(() => {
+      timeoutCallback = jest.fn(() => 42);
+    });
+    afterEach(() => {
+      jest.resetAllMocks();
+    });
+
+    test('exposes required methods', () => {
+      const timeoutFunctions = mockTimeoutFunctions();
+
+      expect(timeoutFunctions).toBeDefined();
+      expect(timeoutFunctions.clockTick).toBeDefined();
+      expect(timeoutFunctions.setTimeout).toBeDefined();
+      expect(timeoutFunctions.clearTimeout).toBeDefined();
+
+      expect(typeof timeoutFunctions.clockTick).toBe('function');
+      expect(typeof timeoutFunctions.setTimeout).toBe('function');
+      expect(typeof timeoutFunctions.clearTimeout).toBe('function');
+    });
+
+    test('default behaviour (completed)', () => {
+      const { clockTick, setTimeout } = mockTimeoutFunctions();
+
+      expect(timeoutCallback).toHaveBeenCalledTimes(0);
+      let timeout = setTimeout(timeoutCallback, 200);
+      expect(timeout).toBeDefined();
+
+      expect(timeoutCallback).toHaveBeenCalledTimes(0);
+      expect(clockTick(timeout, 100)).toStrictEqual(null);
+
+      expect(timeoutCallback).toHaveBeenCalledTimes(0);
+      expect(clockTick(timeout, 100)).toStrictEqual(42);
+
+      expect(timeoutCallback).toHaveBeenCalledTimes(1);
+      expect(clockTick(timeout, 100)).toStrictEqual(undefined);
+    });
+
+    test('default behaviour (cancelled)', () => {
+      const { clockTick, setTimeout, clearTimeout } = mockTimeoutFunctions();
+
+      expect(timeoutCallback).toHaveBeenCalledTimes(0);
+      let timeout = setTimeout(timeoutCallback, 200);
+      expect(timeout).toBeDefined();
+
+      expect(timeoutCallback).toHaveBeenCalledTimes(0);
+      expect(clockTick(timeout, 100)).toStrictEqual(null);
+
+      expect(timeoutCallback).toHaveBeenCalledTimes(0);
+      expect(clearTimeout(timeout)).toStrictEqual(true);
+
+      expect(timeoutCallback).toHaveBeenCalledTimes(0);
+      expect(clockTick(timeout, 100)).toStrictEqual(undefined);
+    });
+  });
+
+  describe('mockIntervalFunctions', () => {
+    let intervalCallback;
+
+    beforeEach(() => {
+      intervalCallback = jest.fn(() => 42);
+    });
+    afterEach(() => {
+      jest.resetAllMocks();
+    });
+
+    test('exposes required methods', () => {
+      const intervalFunctions = mockIntervalFunctions();
+
+      expect(intervalFunctions).toBeDefined();
+      expect(intervalFunctions.clockTick).toBeDefined();
+      expect(intervalFunctions.setInterval).toBeDefined();
+      expect(intervalFunctions.clearInterval).toBeDefined();
+
+      expect(typeof intervalFunctions.clockTick).toBe('function');
+      expect(typeof intervalFunctions.setInterval).toBe('function');
+      expect(typeof intervalFunctions.clearInterval).toBe('function');
+    });
+
+    test('default behaviour', () => {
+      const { clockTick, setInterval, clearInterval } = mockIntervalFunctions();
+
+      expect(intervalCallback).toHaveBeenCalledTimes(0);
+      let timeout = setInterval(intervalCallback, 120);
+      expect(timeout).toBeDefined();
+
+      expect(intervalCallback).toHaveBeenCalledTimes(0);
+      expect(clockTick(timeout, 100)).toStrictEqual(null);
+
+      expect(intervalCallback).toHaveBeenCalledTimes(0);
+      expect(clockTick(timeout, 100)).toStrictEqual(42);
+
+      expect(intervalCallback).toHaveBeenCalledTimes(1);
+      expect(clockTick(timeout, 200)).toStrictEqual(42);
+
+      expect(intervalCallback).toHaveBeenCalledTimes(2);
+      expect(clockTick(timeout, 100)).toStrictEqual(null);
+
+      expect(intervalCallback).toHaveBeenCalledTimes(2);
+      expect(clockTick(timeout, 100)).toStrictEqual(42);
+
+      expect(intervalCallback).toHaveBeenCalledTimes(3);
+      expect(clockTick(timeout, 100)).toStrictEqual(null);
+
+      expect(clearInterval(timeout)).toStrictEqual(true);
+      expect(clockTick(timeout, 100)).toStrictEqual(undefined);
+      expect(clearInterval(timeout)).toStrictEqual(false);
     });
   });
 });

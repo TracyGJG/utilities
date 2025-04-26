@@ -5,7 +5,8 @@
   "main": "utilities.html",
   "scripts": {
     "coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
-    "coverage-ui": "http-server ./coverage/lcov-report",
+    "coverage-watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage --watch",
+    "coverage-report": "http-server ./coverage/lcov-report",
     "watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },

@@ -123,9 +123,10 @@ export function mockTimeoutFunctions() {
 
   function clockTick(timerRef, tick) {
     if (!timers.has(timerRef)) return;
-    timers.get(timerRef).duration -= tick;
 
-    if (timers.get(timerRef).duration > 0) return;
+    timers.get(timerRef).duration -= tick;
+    if (timers.get(timerRef).duration > 0) return null;
+
     const result = timers.get(timerRef).callback();
     timers.delete(timerRef);
     return result;
@@ -153,9 +154,10 @@ export function mockIntervalFunctions() {
 
   function clockTick(timerRef, tick) {
     if (!timers.has(timerRef)) return;
-    timers.get(timerRef).duration -= tick;
 
-    if (timers.get(timerRef).duration > 0) return;
+    timers.get(timerRef).duration -= tick;
+    if (timers.get(timerRef).duration > 0) return null;
+
     timers.get(timerRef).duration = timers.get(timerRef).interval;
     return timers.get(timerRef).callback();
   }
