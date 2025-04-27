@@ -53,6 +53,9 @@ import {
   sui,
   debounce,
   throttle,
+  poller,
+  mockIntervalFunctions,
+  mockTimeoutFunctions,
 } from './src/dom/index.js';
 import {
   adhocArray,
@@ -151,41 +154,45 @@ export {
   match,
   // 45
   memoize,
+  mockIntervalFunctions,
+  mockTimeoutFunctions,
   normaliseRange,
   objectEquality,
+  // 50
   parseJson,
   pasteText,
-  // 50
   permute,
+  poller,
   postJson,
+  // 55
   qs,
   qsa,
   random,
-  // 55
   rangeBetween,
   rangeFrom,
+  // 60
   rangeGenerator,
   reconcileArrays,
   referencedClone,
-  // 60
   regExpString,
   regExpTemplate,
+  // 65
   replaceArray,
   roundBoundry,
   shortDay,
-  // 65
   shortMonth,
   shuffleArray,
+  // 70
   simd,
   sleep,
   stringifyJson,
-  // 70
   sui,
   sum,
+  // 75
   throttle,
   transposeArray,
   unflatten,
-  // 75
   unionArrays,
   webStore,
+  // 80
 };
