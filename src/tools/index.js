@@ -105,7 +105,6 @@ export function memoise(fn, _cache = new Map()) {
     const key = JSON.stringify(args);
     !_cache.has(key) && _cache.set(key, fn(...args));
     return _cache.get(key);
-    // return (_cache.has(key) ? _cache : _cache.set(key, fn(...args))).get(key);
   };
 }
 
