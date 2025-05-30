@@ -1,5 +1,3 @@
-import { jest } from '@jest/globals';
-
 import { sum } from '../ancillaries/index.js';
 
 import {
@@ -142,11 +140,11 @@ describe('Ranges', () => {
     });
 
     test('one-based', () => {
-      expect(range(6, _ => _ + 1)).toEqual([1, 2, 3, 4, 5, 6]);
+      expect(range(6, (_) => _ + 1)).toEqual([1, 2, 3, 4, 5, 6]);
     });
 
     test('stepped', () => {
-      const result = range(6, _ => (_ + 1) * 2);
+      const result = range(6, (_) => (_ + 1) * 2);
       expect(result).toEqual([2, 4, 6, 8, 10, 12]);
       expect(sum(...result)).toBe(42);
     });
@@ -196,7 +194,7 @@ describe('Ranges', () => {
       expect(rangeFrom(12, 10, 2)[11]).toEqual(32);
     });
     it('can generate a range - pair of arguments, with step function', () => {
-      const transformFn = _ => 2 * _;
+      const transformFn = (_) => 2 * _;
       expect(rangeFrom(12, 10, transformFn).length).toEqual(12);
       expect(rangeFrom(12, 10, transformFn)[0]).toEqual(10);
       expect(rangeFrom(12, 10, transformFn)[11]).toEqual(32);

@@ -2,6 +2,7 @@ import {
   accumulatedAverage,
   dateBasedRandom,
   mapGetter,
+  modulo,
   postJson,
   random,
   roundBoundry,
@@ -70,6 +71,7 @@ import {
   loopRange,
   mapRanges,
   normaliseRange,
+  range,
   rangeBetween,
   rangeFrom,
   rangeGenerator,
@@ -85,8 +87,8 @@ import {
   isRegExpPattern,
   lens,
   lensFn,
-  memoize,
   match,
+  memoise,
   parseJson,
   pasteText,
   regExpString,
@@ -153,46 +155,48 @@ export {
   mapRanges,
   match,
   // 45
-  memoize,
+  memoise,
   mockIntervalFunctions,
   mockTimeoutFunctions,
+  modulo,
   normaliseRange,
-  objectEquality,
   // 50
+  objectEquality,
   parseJson,
   pasteText,
   permute,
   poller,
-  postJson,
   // 55
+  postJson,
   qs,
   qsa,
   random,
+  range,
+  // 60
   rangeBetween,
   rangeFrom,
-  // 60
   rangeGenerator,
   reconcileArrays,
   referencedClone,
+  // 65
   regExpString,
   regExpTemplate,
-  // 65
   replaceArray,
   roundBoundry,
   shortDay,
+  // 70
   shortMonth,
   shuffleArray,
-  // 70
   simd,
   sleep,
   stringifyJson,
+  // 75
   sui,
   sum,
-  // 75
   throttle,
   transposeArray,
   unflatten,
+  // 80
   unionArrays,
   webStore,
-  // 80
 };

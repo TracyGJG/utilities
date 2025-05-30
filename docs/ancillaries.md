@@ -2,7 +2,8 @@
 
 - [accumulatedAverage](#accumulatedaverage)
 - [dateBasedRandom](#dateBasedRandom)
-- [mapGetter](#mapgetter)
+- [mapGetter](#mapGetter)
+- [modulo](#modulo)
 - [postJson](#postJson)
 - [random](#random)
 - [roundBoundry](#roundBoundry)
@@ -60,7 +61,7 @@ None.
 
 A floating-point number greater than or equal to 0 and less than 1.
 
-## [mapGetter](:#mapgetter)
+## [mapGetter](:#mapGetter)
 
 Utility for creating and retrieving entities from a map object.
 
@@ -81,6 +82,30 @@ This function employs 2-stage execution through currying.
 ### Return Value
 
 The entity retrieved from the map or created anew.
+
+## [modulo](:#modulo)
+
+Calculates the modulo of a value with correct handling of negative values.
+
+For example, winding back a (12hr) clock four hours from 2pm is not -2pm but 10am.
+
+`modulo(12)(-4) = 10`.
+
+### Parameters
+
+This function employs 2-stage execution through currying.
+
+#### Initial call
+
+The first call expect the first argument, which is the modulus (divisor). The second parameter is optional.
+
+#### Subsequent calls
+
+In the secondary call the function is expecting the argument to be the second parameter, which is the dividend.
+
+### Return Value
+
+The modulus of the second argument by the first argument.
 
 ## [postJson](:#postJson)
 

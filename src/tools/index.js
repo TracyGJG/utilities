@@ -100,7 +100,7 @@ export function lensFn(fn, ...props) {
   };
 }
 
-export function memoize(fn, _cache = new Map()) {
+export function memoise(fn, _cache = new Map()) {
   return (...args) => {
     const key = JSON.stringify(args);
     !_cache.has(key) && _cache.set(key, fn(...args));

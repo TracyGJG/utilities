@@ -1,5 +1,10 @@
 # Change Log
 
+## 30th May 2025
+
+- Added the `modulo` function to the ancillaries module.
+- Renamed the `memoize` function in the tools module to `memoise`.
+
 ## 22nd April 2025
 
 - Added the `poller`, `mockIntervalFunctions` and `mockTimeoutFunctions` functions to the DOM module.

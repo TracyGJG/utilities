@@ -16,7 +16,7 @@ import {
   lens,
   lensFn,
   match,
-  memoize,
+  memoise,
   parseJson,
   pasteText,
   regExpString,
@@ -477,7 +477,7 @@ describe('Tools', () => {
 
     it('can increase globalCount just once for each call (memoised)', () => {
       const cache = new Map();
-      const delayedCube_ = memoize(delayedCube, cache);
+      const delayedCube_ = memoise(delayedCube, cache);
       const callDelayedCube = () => delayedCube_(2, 3, 7);
       expect(delayedCube).toHaveBeenCalledTimes(0);
 
@@ -492,7 +492,7 @@ describe('Tools', () => {
     });
 
     it('can increase globalCount just once for each call (memoised, default cache)', () => {
-      const delayedCube_ = memoize(delayedCube);
+      const delayedCube_ = memoise(delayedCube);
       const callDelayedCube = () => delayedCube_(2, 3, 7);
       expect(delayedCube).toHaveBeenCalledTimes(0);
 
