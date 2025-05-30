@@ -8,6 +8,7 @@ import {
   accumulatedAverage,
   dateBasedRandom,
   mapGetter,
+  modulo,
   postJson,
   random,
   roundBoundry,
@@ -76,6 +77,30 @@ describe('Ancillaries', () => {
 
       const entity = entityGetter('hello');
       expect(entity.who).toBe('World');
+    });
+  });
+
+  describe('modulo', () => {
+    it('calculate the modulo of zero', () => {
+      expect(module(42, 0)).toBe(0);
+      expect(module(42)(0)).toBe(0);
+    });
+
+    it('calculate the modulo of a value in range', () => {
+      expect(module(42, 20)).toBe(20);
+      expect(module(42)(20)).toBe(20);
+    });
+    
+    it('calculate the modulo of a positive value out of range', () => {
+      expect(module(42, 66)).toBe(24);
+      expect(module(42)(66)).toBe(24);
+      expect(module(42, 666)).toBe(24);
+      expect(module(42)(666)).toBe(24);
+    });
+    
+    it('calculate the modulo of a negative value in range', () => {
+      expect(module(42, -20)).toBe(22);
+      expect(module(42)(-20)).toBe(22);
     });
   });
 
