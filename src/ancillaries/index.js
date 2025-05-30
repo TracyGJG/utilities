@@ -48,6 +48,13 @@ export function sum(...nums) {
   return _sum;
 }
 
+export function modulo(mod, val) {
+  return (val == null) ? (_val) => _mod(mod, _val) : _mod(mod, val);
+  function _mod(mod, val) {
+    return (val + mod) % mod;
+  }
+}
+
 export function webStore(keyName, localWebStorage = true) {
   const webStorage = localWebStorage
     ? window.localStorage
