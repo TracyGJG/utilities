@@ -37,19 +37,8 @@ export function roundBoundry(interval, rounderFn = 'round') {
   return (value) => Math[rounderFn](value / interval) * interval;
 }
 
-export function sum(...nums) {
-  let _sum = 0;
-  nums.forEach((num) => {
-    if (dataType(num) !== DATA_TYPES.NUMBER) {
-      throw Error(`Error: E-NN An argument supplied is not a Numeric value.`);
-    }
-    _sum += num;
-  });
-  return _sum;
-}
-
 export function modulo(mod, val) {
-  return (val == null) ? (_val) => _mod(mod, _val) : _mod(mod, val);
+  return val == null ? (_val) => _mod(mod, _val) : _mod(mod, val);
   function _mod(mod, val) {
     return (val + mod) % mod;
   }

@@ -1,5 +1,35 @@
 # Change Log
 
+## 13th August 2025
+
+Obsolete functions removed
+
+### Ancillaries
+
+- sum
+
+### arrays
+
+- intersectArrays & unionArrays
+
+### dataComparison
+
+- cloneObject
+
+### dataConverters
+
+- longDay & longMonth
+- shortDay & shortMonth
+
+### dom
+
+- acc, ace, ael, cde, cse, dce, sq, qsa
+- sui renamed `sanatise`
+
+## 12th August 2025
+
+- Added the `duplicateElementIds` function to the DOM module.
+
 ## 30th May 2025
 
 - Added the `modulo` function to the ancillaries module.

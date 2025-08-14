@@ -2,14 +2,12 @@
 
 - [batchBy](#batchby)
 - [groupBy](#groupby)
-- [intersectArrays](#intersectarrays)
 - [permute](#permute)
 - [reconcileArray](#reconcilearray)
 - [replaceArray](#replacearray)
 - [shuffleArray](#shufflearray)
 - [transposeArray](#transposearray)
 - [unflatten](#unflatten)
-- [unionArrays](#unionarrays)
 
 - [Index](../README.md)
 
@@ -105,22 +103,6 @@ const resultGroupObject = groupBy(groupFunction, sourceArray);
 ### Return Value
 
 An object with a property for each group found. Each property has an array of objects as its value.
-
-## [intersectArrays](:#intersectarrays)
-
-Extracts the common values of all the input arrays into a new array of distinct values.
-
-```javascript
-Utilities.intersectArrays([1, 2, 3, 4], [3, 4, 5, 6]); // [3, 4]
-```
-
-### Parameters
-
-- arrays: One or more arrays from which the intersect is to be extracted.
-
-### Return Value
-
-A new array containing only those values found in all the given arrays.
 
 ## [permute](:#permute)
 
@@ -222,21 +204,5 @@ The first call prodcues a specialised array that uses the supplied specification
 #### Return Value
 
 A structure populated with the data supplied in the second call and in the structure defined by the specification from the first call.
-
-## [unionArrays](:#unionArrays)
-
-Extracts a list of all the values from the input arrays into a new array of distinct values.
-
-```javascript
-Utilities.unionArrays([1, 2, 3, 4], [3, 4, 5, 6]); // [1, 2, 3, 4, 5 ,6]
-```
-
-### Parameters
-
-- arrays: One or more arrays from which the union is to be extracted.
-
-### Return Value
-
-A new array containing a distinct list of values from all of the given arrays.
 
 ---

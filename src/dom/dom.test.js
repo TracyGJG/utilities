@@ -5,20 +5,13 @@
 import { afterEach, beforeEach, jest } from '@jest/globals';
 
 import {
-  acc,
-  ace,
-  ael,
-  cde,
-  cse,
-  dce,
-  qs,
-  qsa,
-  sui,
+  sanatise,
   debounce,
   throttle,
   poller,
   mockTimeoutFunctions,
   mockIntervalFunctions,
+  duplicateElementIds,
 } from './index.js';
 
 import { sleep } from '../tools';
@@ -40,229 +33,7 @@ describe('DOM utilities', () => {
     jest.resetAllMocks();
   });
 
-  describe('add CSS Class (acc)', () => {
-    test('can be performed using a parent element', () => {
-      let callResult = '';
-      const parent = {
-        querySelector(_domElement) {
-          return {
-            classList: {
-              add(className) {
-                callResult = className;
-              },
-            },
-          };
-        },
-      };
-      expect(callResult).toBe('');
-
-      const result = acc(null, 'testCssClass', parent);
-
-      expect(callResult).toBe('testCssClass');
-    });
-    test('can be performed using the default document', () => {
-      const main = document.createElement('main');
-      ace(main);
-      expect(main.outerHTML).toBe('<main></main>');
-
-      acc('main', 'testCssClass');
-      expect(main.outerHTML).toBe('<main class="testCssClass"></main>');
-    });
-  });
-
-  describe('append Child to element (ace)', () => {
-    test('can append a child element to a parent', () => {
-      const parent = document.createElement('div');
-      const child = document.createElement('span');
-      const spyParentAppendChild = jest.spyOn(parent, 'appendChild');
-
-      expect(parent.children.length).toBe(0);
-      ace(child, parent);
-
-      expect(parent.children.length).toBe(1);
-      expect(spyParentAppendChild).toHaveBeenCalledTimes(1);
-    });
-  });
-
-  describe('add Event Listener (ael)', () => {
-    test('for multiple elements', () => {
-      const buttonElement = document.createElement('button');
-      const callback = jest.fn();
-
-      const evt = new MouseEvent('click', {
-        bubbles: true,
-        cancelable: true,
-        view: window,
-      });
-
-      ace(buttonElement);
-      ael('click', callback, 'button', { once: true });
-      expect(callback).toHaveBeenCalledTimes(0);
-
-      buttonElement.dispatchEvent(evt);
-      expect(callback).toHaveBeenCalledTimes(1);
-    });
-
-    test('for a single element', () => {
-      const buttonElement = document.createElement('button');
-      const callback = jest.fn();
-
-      const evt = new MouseEvent('click', {
-        bubbles: true,
-        cancelable: true,
-        view: window,
-      });
-
-      ace(buttonElement);
-      ael('click', callback);
-      expect(callback).toHaveBeenCalledTimes(0);
-
-      buttonElement.dispatchEvent(evt);
-      expect(callback).toHaveBeenCalledTimes(1);
-    });
-
-    test('for the document', () => {
-      const buttonElement = document.createElement('button');
-      const callback = jest.fn();
-
-      const evt = new MouseEvent('click', {
-        bubbles: true,
-        cancelable: true,
-        view: window,
-      });
-
-      ace(buttonElement);
-      ael('click', callback, 'button', undefined, buttonElement);
-      expect(callback).toHaveBeenCalledTimes(0);
-
-      buttonElement.dispatchEvent(evt);
-      expect(callback).toHaveBeenCalledTimes(1);
-    });
-  });
-
-  describe('create DOM element (cde)', () => {
-    beforeEach(() => {
-      document.body.innerHTML = '';
-    });
-
-    test('with default parameters', () => {
-      const domElement = cde('button');
-
-      expect(domElement).toBeDefined();
-      expect(domElement.outerHTML).toBe('<button></button>');
-      expect(domElement.tagName).toBe('BUTTON');
-    });
-
-    test('with custom parameters', () => {
-      const domElement = cde(
-        'button',
-        {
-          class: 'accept',
-          dataset: {
-            one: 'ONE',
-            two: 'TWO',
-          },
-          text: 'Accept',
-          title: 'test',
-        },
-        document
-      );
-      ace(domElement);
-
-      expect(domElement).toBeDefined();
-      expect(document.body.outerHTML).toBe(
-        '<body><button class="accept" data-one="ONE" data-two="TWO" title="test">Accept</button></body>'
-      );
-      expect(domElement.tagName).toBe('BUTTON');
-      expect(domElement.className).toBe('accept');
-      expect(domElement.title).toBe('test');
-      expect(domElement.dataset.one).toBe('ONE');
-      expect(domElement.dataset.two).toBe('TWO');
-      expect(domElement.textContent).toBe('Accept');
-    });
-  });
-
-  describe('create SVG element (cse)', () => {
-    beforeEach(() => {
-      document.body.innerHTML = '';
-    });
-
-    test('with default parameters', () => {
-      const domElement = cse('svg');
-
-      expect(domElement).toBeDefined();
-      expect(domElement.outerHTML).toBe('<svg></svg>');
-      expect(domElement.tagName).toBe('svg');
-    });
-
-    test('with custom parameters', () => {
-      const domElement = cse('svg', { viewBox: '0 0 200 100' }, document);
-      ace(domElement);
-
-      expect(domElement).toBeDefined();
-      expect(document.body.outerHTML).toBe(
-        '<body><svg viewBox="0 0 200 100"></svg></body>'
-      );
-      expect(domElement.tagName).toBe('svg');
-      expect(domElement.attributes.viewBox.nodeValue).toBe('0 0 200 100');
-      expect(domElement.namespaceURI).toBe('http://www.w3.org/2000/svg');
-    });
-  });
-
-  describe('delete child elements (dce)', () => {
-    test('from a parent element', () => {
-      const parent = document.createElement('main');
-      const child = document.createElement('div');
-      const gchild = document.createElement('span');
-      ace(child, parent);
-      ace(gchild, child);
-
-      expect(parent.children.length).toBe(1);
-      expect(parent.children[0].children.length).toBe(1);
-
-      dce(parent);
-      expect(parent.children.length).toBe(0);
-    });
-  });
-
-  describe('query Selector (qs)', () => {
-    test('can select a child element from a parent', () => {
-      const parent = document.createElement('div');
-      const child = document.createElement('span');
-      ace(child, parent);
-
-      const result = qs('span');
-
-      expect(result).toBeDefined();
-    });
-  });
-
-  describe('query Selector All (qsa)', () => {
-    test('can select multiple child elements from a parent', () => {
-      const parent = document.createElement('div');
-      const child = document.createElement('span');
-      ace(child, parent);
-
-      const result = qsa('span', parent);
-
-      expect(result).toBeDefined();
-      expect(result.length).toBe(1);
-    });
-
-    test('can select multiple child elements from the Document', () => {
-      const parent = document.createElement('div');
-      const child = document.createElement('span');
-      ace(child, parent);
-      ace(child);
-
-      const result = qsa('span');
-
-      expect(result).toBeDefined();
-      expect(result.length).toBe(1);
-    });
-  });
-
-  describe('sanitize user/untrusted input (sui)', () => {
+  describe('sanitize user/untrusted input (sanatise)', () => {
     test('can be performed using a parent element', () => {
       const parent = {
         createElement(_domElement) {
@@ -273,7 +44,7 @@ describe('DOM utilities', () => {
         },
       };
 
-      const result = sui(untrustedText, parent);
+      const result = sanatise(untrustedText, parent);
 
       expect(result).toBeDefined();
       expect(result.length).toBe(14);
@@ -281,7 +52,7 @@ describe('DOM utilities', () => {
     });
 
     test('can be performed using the default Document', () => {
-      const result = sui(untrustedText);
+      const result = sanatise(untrustedText);
 
       expect(result).toBeDefined();
       expect(result.length).toBe(73);
@@ -530,6 +301,56 @@ describe('DOM utilities', () => {
       expect(clearInterval(timeout)).toStrictEqual(true);
       expect(clockTick(timeout, 100)).toStrictEqual(undefined);
       expect(clearInterval(timeout)).toStrictEqual(false);
+    });
+  });
+
+  describe('duplicateElementIds', () => {
+    beforeEach(() => {
+      document.body.innerHTML = '';
+    });
+
+    describe('in the default scope it returns', () => {
+      test('an empty array when no elements have an id', () => {
+        expect(duplicateElementIds().length).toBe(0);
+      });
+      test('an empty array when all elements have a unique id', () => {
+        document.body.innerHTML = `<main>
+          <div id="div1">One</div>
+          <div id="div2">Two</div>
+        </main>`;
+        expect(duplicateElementIds().length).toBe(0);
+      });
+      test('an empty array when all elements have a dollar prefix', () => {
+        document.body.innerHTML = `<main>
+          <div id="$div1">One</div>
+          <div id="$div2">Two</div>
+        </main>`;
+        expect(duplicateElementIds({ isPrefixed: true }).length).toBe(0);
+      });
+      test('returns false when there are elements with duplicate ids', () => {
+        document.body.innerHTML = `<main>
+          <div id="div1">One</div>
+          <div id="div1">Two</div>
+        </main>`;
+        expect(duplicateElementIds()).toStrictEqual(['div1']);
+      });
+      test('returns false when there are elements with unprefixed ids', () => {
+        document.body.innerHTML = `<main>
+          <div id="$div1">One</div>
+          <div id="div2">Two</div>
+        </main>`;
+        expect(duplicateElementIds({ isPrefixed: true })).toStrictEqual([
+          'div2',
+        ]);
+      });
+    });
+
+    describe('in the defined scope', () => {
+      test('returns true when there are no elements with id attributes', () => {});
+      test('returns true when there are only elements with unique id attributes', () => {});
+      test('returns true when all elements have a defined prefix', () => {});
+      test('returns false when there are elements with duplicate ids', () => {});
+      test('returns false when there are elements with unprefixed ids', () => {});
     });
   });
 });

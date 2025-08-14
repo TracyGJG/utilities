@@ -16,22 +16,6 @@ export const DATA_TYPES = JSON.parse(`{
 	"UNDEFINED": "undefined"
 }`);
 
-export function cloneObject(obj) {
-  if (obj === null || typeof obj !== 'object' || '__isActiveClone' in obj)
-    return obj;
-
-  let temp = obj instanceof Date ? new obj.constructor() : obj.constructor();
-
-  for (let key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) {
-      obj['__isActiveClone'] = null;
-      temp[key] = cloneObject(obj[key]);
-      delete obj['__isActiveClone'];
-    }
-  }
-  return temp;
-}
-
 export function compareObjectByProperty(propName, ascending = true) {
   return (objA, objB) =>
     (ascending ? 1 : -1) *
@@ -42,29 +26,6 @@ export function compareObjectByProperty(propName, ascending = true) {
 
 export function dataType(subject) {
   return Object.prototype.toString.call(subject).slice(8, -1).toLowerCase();
-}
-
-export function duplicateObject(srcObj) {
-  if (Array.isArray(srcObj)) {
-    return srcObj.map(duplicateObject);
-  }
-  if (srcObj != null && typeof srcObj === 'object') {
-    if (srcObj instanceof Date) {
-      return new Date(srcObj.toISOString());
-    }
-    if (srcObj instanceof RegExp) {
-      return new RegExp(srcObj.source, srcObj.flags);
-    }
-    return Object.entries(srcObj).reduce(
-      (tgtObj, [propName, propValue]) => ({
-        ...tgtObj,
-        [propName]: duplicateObject(propValue),
-      }),
-      {}
-    );
-  } else {
-    return srcObj;
-  }
 }
 
 export function flattenObject(srcObj) {
@@ -104,7 +65,7 @@ export function isObject(obj) {
 }
 
 export function objectEquality(obj1, obj2, testStructureOnly = false) {
-  const keysString = obj => Object.keys(obj).join();
+  const keysString = (obj) => Object.keys(obj).join();
   const typeCompare = (val1, val2) => dataType(val1) === dataType(val2);
   return deepEquality(obj1, obj2);
 

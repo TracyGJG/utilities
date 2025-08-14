@@ -6,24 +6,22 @@ import {
   postJson,
   random,
   roundBoundry,
-  sum,
   webStore,
 } from './src/ancillaries/index.js';
+
 import {
   batchBy,
   groupBy,
-  intersectArrays,
   permute,
   reconcileArrays,
   replaceArray,
   shuffleArray,
   transposeArray,
   unflatten,
-  unionArrays,
 } from './src/arrays/index.js';
+
 import {
   DATA_TYPES,
-  cloneObject,
   compareObjectByProperty,
   dataType,
   duplicateObject,
@@ -34,36 +32,26 @@ import {
   objectEquality,
   referencedClone,
 } from './src/dataComparison/index.js';
+
+import { base64Decode, base64Encode } from './src/dataConverters/index.js';
+
 import {
-  base64Decode,
-  base64Encode,
-  longDay,
-  longMonth,
-  shortDay,
-  shortMonth,
-} from './src/dataConverters/index.js';
-import {
-  acc,
-  ace,
-  ael,
-  cde,
-  cse,
-  dce,
-  qs,
-  qsa,
-  sui,
+  duplicateElementIds,
   debounce,
-  throttle,
-  poller,
   mockIntervalFunctions,
   mockTimeoutFunctions,
+  poller,
+  sanatise,
+  throttle,
 } from './src/dom/index.js';
+
 import {
   adhocArray,
   consoleGroup,
   consoleTable,
   exercise,
 } from './src/exercising/index.js';
+
 import {
   clampRange,
   inRange,
@@ -76,6 +64,7 @@ import {
   rangeFrom,
   rangeGenerator,
 } from './src/ranges/index.js';
+
 import {
   compose,
   copyText,
@@ -101,102 +90,84 @@ import {
 export {
   DATA_TYPES,
   // 0
-  acc,
   accumulatedAverage,
-  ace,
   adhocArray,
-  ael,
-  // 5
   base64Decode,
   base64Encode,
   batchBy,
-  cde,
+  // 5
+  checkElementsForDuplicateIds,
   clampRange,
-  // 10
-  cloneObject,
   compareObjectByProperty,
   compose,
   consoleGroup,
+  // 10
   consoleTable,
-  // 15
   copyText,
-  cse,
   curry,
   dateBasedRandom,
   dataType,
-  // 20
-  dce,
+  // 15
   decolour,
   debounce,
   duplicateObject,
   enumerate,
-  // 25
   escapeRegExp,
+  // 20
   exercise,
   flattenObject,
   generateEnums,
   groupBy,
-  // 30
   inRange,
-  intersectArrays,
+  // 25
   isBase,
   isEmptyObject,
   isObject,
-  // 35
   isRegExpPattern,
   lens,
+  // 30
   lensFn,
   liniarInterpolate,
-  longDay,
-  // 40
-  longMonth,
   loopRange,
   mapGetter,
   mapRanges,
+  // 35
   match,
-  // 45
   memoise,
   mockIntervalFunctions,
   mockTimeoutFunctions,
   modulo,
+  // 40
   normaliseRange,
-  // 50
   objectEquality,
   parseJson,
   pasteText,
   permute,
+  // 45
   poller,
-  // 55
   postJson,
-  qs,
-  qsa,
   random,
   range,
-  // 60
   rangeBetween,
+  // 50
   rangeFrom,
   rangeGenerator,
   reconcileArrays,
   referencedClone,
-  // 65
   regExpString,
+  // 55
   regExpTemplate,
   replaceArray,
   roundBoundry,
-  shortDay,
-  // 70
-  shortMonth,
+  sanatise,
   shuffleArray,
+  // 60
   simd,
   sleep,
   stringifyJson,
-  // 75
-  sui,
-  sum,
   throttle,
   transposeArray,
+  // 65
   unflatten,
-  // 80
-  unionArrays,
   webStore,
 };

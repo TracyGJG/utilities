@@ -1,5 +1,3 @@
-import { sum } from '../ancillaries/index.js';
-
 import {
   clampRange,
   inRange,
@@ -144,9 +142,10 @@ describe('Ranges', () => {
     });
 
     test('stepped', () => {
+      Math.sumPrecise = (numArray) => numArray.reduce((tot, val) => tot + val);
       const result = range(6, (_) => (_ + 1) * 2);
       expect(result).toEqual([2, 4, 6, 8, 10, 12]);
-      expect(sum(...result)).toBe(42);
+      expect(Math.sumPrecise(result)).toBe(42);
     });
   });
 

@@ -1,6 +1,5 @@
 # Data Comparison and Cloning
 
-- [cloneObject](#cloneobject)
 - [compareObjectByProperty](#compareobjectbyproperty)
 - [dataType](#datatype)
 - [duplicateObject](#duplicateobject)
@@ -24,18 +23,6 @@ This module exposes a constant object `DATA_TYPES` that is a collection of enume
 | BOOLEAN |  boolean  |   NULL   |   null    |  STRING   |  string   |
 |  DATE   |   date    |  NUMBER  |  number   |  SYMBOL   |  symbol   |
 |  ERROR  |   error   |  OBJECT  |  object   | UNDEFINED | undefined |
-
-## [cloneObject](:#cloneobject)
-
-Creates a renew object with the same structure of the input, containing copies of the primitive values.
-
-### Parameters
-
-- obj: source object to be duplicated
-
-### Return Value
-
-A new object with the same structure as the input object and copies of the primitive values.
 
 ## [compareObjectByProperty](:#compareObjectByProperty)
 

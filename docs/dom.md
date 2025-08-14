@@ -10,6 +10,7 @@
 - [qsa](#qsa)
 - [sui](#sui)
 - [debounce](#debounce)
+- [checkElementsForDuplicateIds](#checkElements)
 - [throttle](#throttle)
 - [poller](#poller)
 - [mockTimeoutFunctions](#mocktimeoutfunctions)
@@ -154,6 +155,26 @@ Converts the given callback function to one that is debounced for a specific per
 
 The debounced callback function.
 
+## [checkElementsForDuplicateIds](:checkElements)
+
+Validates elements with an ID attribute, within a defined scope of the DOM, have a unique ID.
+
+In addition, if requested, the check includes confirming the IDs have a dollar ($) symbol prefix.
+
+### Parameters
+
+The parameters can be stated either way around as properties in an object.
+
+- target - Optional base DOM element to define the search scope. Defaulted to `document.body`.
+- isPrefixed - Optional flag to indicate that all ID attributes should be prefixed with a dollar symbol. Defaulted to false.
+
+### Return Value
+
+A Boolean value indicating if all the elements within scope and an ID attribute, meets the requirement:
+
+- Unique
+- Prefixed with dollar symbol if needed.
+
 ## [throttle](:#throttle)
 
 Converts the given callback function to one that is throttled for a specific period of time in ms.
@@ -165,7 +186,7 @@ Converts the given callback function to one that is throttled for a specific per
 
 ### Return Value
 
-The trottled callback function.
+The throttled callback function.
 
 ## [poller](:#poller)
 

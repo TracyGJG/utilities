@@ -1,9 +1,7 @@
 import {
   DATA_TYPES,
-  cloneObject,
   compareObjectByProperty,
   dataType,
-  duplicateObject,
   flattenObject,
   isBase,
   isEmptyObject,
@@ -59,6 +57,7 @@ describe('Comparison and Cloning', () => {
       expect(testObjArray[5].id).toEqual(1);
     });
   });
+
   describe('dataType', () => {
     describe('Enumerations', () => {
       it('has a values for 14 data types', () => {
@@ -178,69 +177,7 @@ describe('Comparison and Cloning', () => {
       });
     });
   });
-  describe('Object Duplication', () => {
-    it('can return self if object is null', () => {
-      const result = cloneObject(null);
-      expect(result).toBeNull();
-    });
-    it('can return self if object is an array', () => {
-      const result = cloneObject([]);
-      expect(Array.isArray(result)).toBeTruthy();
-    });
-    it('can duplicate an empty object', () => {
-      const result = cloneObject({});
-      expect(typeof result).toBe('object');
-      expect(Object.keys(result).length).toBe(0);
-    });
-    it('can duplicate an object containing a Date property', () => {
-      const result = cloneObject({ dt: new Date() });
-      expect(typeof result).toBe('object');
-      expect(Object.keys(result).length).toBe(1);
-      expect(result.dt instanceof Date).toBeTruthy();
-    });
-    it('can exclude inherited properties', () => {
-      const baseObject = { dt: new Date() };
-      const testObject = {};
-      testObject.__proto__ = baseObject;
-      expect(testObject.dt).toBeTruthy();
 
-      const resultObject = cloneObject(testObject);
-      expect(typeof resultObject).toBe('object');
-      expect(Object.keys(resultObject).length).toBe(0);
-      expect(resultObject.dt).toBeFalsy();
-    });
-    it('can duplicate complex objects properties', () => {
-      function testFn() {
-        return this.message;
-      }
-      const testFnWithMessage = testFn.bind({ message: 'Hello World' });
-
-      const testObject = {
-        arrayOfPrimitives: [
-          true,
-          42,
-          'Fourty-Two',
-          null,
-          undefined,
-          Symbol('Fourty-Two'),
-          42n,
-          NaN,
-          Infinity,
-        ],
-        objectOfProperties: {
-          dt: new Date(),
-          re: /^Hello World$/i,
-          fn: testFnWithMessage,
-        },
-      };
-
-      const resultObject = duplicateObject(testObject);
-      expect(typeof resultObject).toBe('object');
-      expect(Object.keys(resultObject).length).toBe(2);
-      expect(resultObject.arrayOfPrimitives.length).toBe(9);
-      expect(Object.keys(resultObject.objectOfProperties).length).toBe(3);
-    });
-  });
   describe('Flatten Object', () => {
     test('an empty object', () => {
       const result = flattenObject({});
@@ -314,6 +251,7 @@ describe('Comparison and Cloning', () => {
       expect(result['delta.epsilon[2]']).toStrictEqual('Hello, World!');
     });
   });
+
   describe('is Null or Undefined', () => {
     test('can confirm undefined is a base value', () => {
       expect(isBase(undefined)).toStrictEqual(true);
@@ -349,6 +287,7 @@ describe('Comparison and Cloning', () => {
       expect(isBase({})).toStrictEqual(false);
     });
   });
+
   describe('is an Empty Object', () => {
     it('is false for a populated object', () => {
       let userDetails = {
@@ -371,6 +310,7 @@ describe('Comparison and Cloning', () => {
       expect(isEmptyObject(undefinedObj)).not.toBeDefined();
     });
   });
+
   describe('is an Object', () => {
     test('can confirm an empty object is an object', () => {
       const testCase = {};
@@ -411,6 +351,7 @@ describe('Comparison and Cloning', () => {
       expect(isObject(testCase)).toStrictEqual(false);
     });
   });
+
   describe('Object Equality', () => {
     it('can compare primitive strings (true)', () => {
       expect(objectEquality('42', '42')).toStrictEqual(true);
@@ -544,6 +485,7 @@ describe('Comparison and Cloning', () => {
       expect(objectEquality(obj1, obj2)).toBeFalsy();
     });
   });
+
   describe('Object referencedClone', () => {
     test('can accept null', () => {
       const testObject = null;
