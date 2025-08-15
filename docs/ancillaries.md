@@ -4,11 +4,9 @@
 - [dateBasedRandom](#dateBasedRandom)
 - [mapGetter](#mapGetter)
 - [modulo](#modulo)
-- [postJson](#postJson)
 - [random](#random)
 - [roundBoundry](#roundBoundry)
 - [sum](#sum)
-- [webStore](#webstore)
 
 - [Index](../README.md)
 
@@ -107,19 +105,6 @@ In the secondary call the function is expecting the argument to be the second pa
 
 The modulus of the second argument by the first argument.
 
-## [postJson](:#postJson)
-
-Generates the optons argument for a POST fetch request.
-
-### Parameters
-
-- data: the data to be send as the body of the fetch request (not stringified).
-- headers: optional object containing header properties.
-
-### Return Value
-
-An object to be used for the POST fetch request containg all the (JSON) encoding and header values required.
-
 ## [random](:#random)
 
 Generates a number within the given range and to the stipulated precision.
@@ -164,23 +149,5 @@ The sum of all the provided values.
 | Code |          Description          |
 | :--: | :---------------------------: |
 | E-NN | _Non-numeric value supplied._ |
-
-## [webStore](:#webstore)
-
-Provides an object of web storage utility methods.
-
-### Parameters
-
-- keyName: storage key
-- localWebStorage: flag indicating the type of web storage (default true = localStorage, false = sessionStorage)
-
-### Return Value
-
-An object of functions for the manipulation of data in Web Storage.
-
-- clear: Wipes all keys and values from web storage.
-- get: Retrieves the value from web storage with the previously given key.
-- remove: Wipes the specified key and value from the web storage.
-- set: Stores the value in web storage with the previously given key.
 
 ---

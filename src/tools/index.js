@@ -1,17 +1,7 @@
 import { DATA_TYPES, dataType } from '../dataComparison/index.js';
 
-export function compose(...functions) {
-  return (args) => functions.reduce((arg, fn) => fn(arg), args);
-}
-
 export function copyText(text) {
   navigator.clipboard.writeText(text);
-}
-
-export function curry(fn, ...args) {
-  return args.length === fn.length
-    ? fn(...args)
-    : (..._args) => curry(fn, ...args, ..._args);
 }
 
 export function decolour(asyncFn, syncFn) {
@@ -73,102 +63,12 @@ export function generateEnums(enumsJson, options) {
   }, {});
 }
 
-const PROPERTY_DECONSTRUCTION = /\]?\??\.\[?|\]?\[|\]/;
-const PROPERTY_STRING_OR_ARRAY_DIGITS = /^(\"([^"]{1,1000})\")|(\d{1,10})$/;
-const removeWrappingDoubleQuites = (str) => str.replaceAll(/^"|"$/g, '');
-const lensReducer = (ob, pr) =>
-  PROPERTY_STRING_OR_ARRAY_DIGITS.exec(pr)
-    ? ob[removeWrappingDoubleQuites(pr)]
-    : ob?.[pr];
-
-export function lens(...props) {
-  const _props = props
-    .join('.')
-    .split(PROPERTY_DECONSTRUCTION)
-    .filter((item) => item !== '');
-
-  return (obj) => _props.reduce(lensReducer, obj);
-}
-
-export function lensFn(fn, ...props) {
-  const propLens = lens(...props);
-  return (obj) => {
-    const prop = propLens(obj);
-    if (undefined !== prop) {
-      return fn(prop, obj);
-    }
-  };
-}
-
-export function memoise(fn, _cache = new Map()) {
-  return (...args) => {
-    const key = JSON.stringify(args);
-    !_cache.has(key) && _cache.set(key, fn(...args));
-    return _cache.get(key);
-  };
-}
-
-export function parseJson(jsonString, reviver) {
-  try {
-    return { data: JSON.parse(jsonString, reviver) };
-  } catch (error) {
-    return { error: error.message };
-  }
-}
-
 export async function pasteText() {
   return await navigator.clipboard.readText();
 }
 
-export function simd(instruction) {
-  return function (...data) {
-    const executions = data.map(
-      (datum) => new Promise((resolve) => resolve(instruction(datum)))
-    );
-    return Promise.allSettled(executions);
-  };
-}
-
 export async function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-export function stringifyJson(jsonObject, replacer, spaces) {
-  try {
-    return { data: JSON.stringify(jsonObject, replacer, spaces) };
-  } catch (error) {
-    return { error: error.message };
-  }
-}
-
-export function escapeRegExp(pattern = '') {
-  return pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-export function isRegExpPattern(pattern = '') {
-  try {
-    RegExp(pattern);
-    return !!pattern.length;
-  } catch {
-    return false;
-  }
-}
-
-export function regExpString({ raw }) {
-  return String.raw({ raw });
-}
-
-export function regExpTemplate(regExpFlags = '') {
-  return ({ raw }, ...values) => {
-    const regExpPattern = String.raw({ raw }, ...values)
-      .split('\n')
-      .filter((line) => !/^#[^#].*$/.exec(line))
-      .map((line) => line.replaceAll(/(?<=[^\\])#[^#].*$/g, ''))
-      .join('\n')
-      .replaceAll(/\s+/g, '')
-      .replaceAll(/\#/g, '#');
-    return RegExp(regExpPattern, regExpFlags);
-  };
 }
 
 export function match(...patterns) {

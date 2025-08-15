@@ -1,5 +1,3 @@
-import { DATA_TYPES, dataType } from '../dataComparison/index.js';
-
 export function accumulatedAverage(averageToDate = 0, sampleSize = 0) {
   let runningTotal = averageToDate * (sampleSize || 1);
   let currentSampleSize = sampleSize;
@@ -41,43 +39,5 @@ export function modulo(mod, val) {
   return val == null ? (_val) => _mod(mod, _val) : _mod(mod, val);
   function _mod(mod, val) {
     return (val + mod) % mod;
-  }
-}
-
-export function webStore(keyName, localWebStorage = true) {
-  const webStorage = localWebStorage
-    ? window.localStorage
-    : window.sessionStorage;
-  const clear = () => webStorage.clear();
-  const get = (defaultValue = null) => {
-    const value = webStorage.getItem(keyName);
-    return value ? JSON.parse(value) : defaultValue;
-  };
-  const remove = () => webStorage.removeItem(keyName);
-  const set = (value) => webStorage.setItem(keyName, JSON.stringify(value));
-
-  return {
-    clear,
-    get,
-    remove,
-    set,
-  };
-}
-
-webStore.sessionWebStorage = false;
-
-export function postJson(data, headers = {}) {
-  try {
-    const body = JSON.stringify(data);
-    return {
-      method: 'POST',
-      body,
-      headers: {
-        'Content-Type': 'application/json',
-        ...headers,
-      },
-    };
-  } catch (error) {
-    throw Error(`JSON Stringify failed: ${error.message}`);
   }
 }

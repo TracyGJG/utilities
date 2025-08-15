@@ -3,10 +3,8 @@ import {
   dateBasedRandom,
   mapGetter,
   modulo,
-  postJson,
   random,
   roundBoundry,
-  webStore,
 } from './src/ancillaries/index.js';
 
 import {
@@ -24,7 +22,6 @@ import {
   DATA_TYPES,
   compareObjectByProperty,
   dataType,
-  duplicateObject,
   flattenObject,
   isBase,
   isEmptyObject,
@@ -33,11 +30,9 @@ import {
   referencedClone,
 } from './src/dataComparison/index.js';
 
-import { base64Decode, base64Encode } from './src/dataConverters/index.js';
-
 import {
-  duplicateElementIds,
   debounce,
+  duplicateElementIds,
   mockIntervalFunctions,
   mockTimeoutFunctions,
   poller,
@@ -66,25 +61,13 @@ import {
 } from './src/ranges/index.js';
 
 import {
-  compose,
   copyText,
-  curry,
   decolour,
   enumerate,
-  escapeRegExp,
   generateEnums,
-  isRegExpPattern,
-  lens,
-  lensFn,
   match,
-  memoise,
-  parseJson,
   pasteText,
-  regExpString,
-  regExpTemplate,
-  simd,
   sleep,
-  stringifyJson,
 } from './src/tools/index.js';
 
 export {
@@ -92,82 +75,62 @@ export {
   // 0
   accumulatedAverage,
   adhocArray,
-  base64Decode,
-  base64Encode,
   batchBy,
-  // 5
-  checkElementsForDuplicateIds,
   clampRange,
   compareObjectByProperty,
-  compose,
+  // 5
   consoleGroup,
-  // 10
   consoleTable,
   copyText,
-  curry,
   dateBasedRandom,
   dataType,
-  // 15
+  // 10
   decolour,
   debounce,
-  duplicateObject,
+  duplicateElementIds,
   enumerate,
-  escapeRegExp,
-  // 20
   exercise,
+  // 15
   flattenObject,
   generateEnums,
   groupBy,
   inRange,
-  // 25
   isBase,
+  // 20
   isEmptyObject,
   isObject,
-  isRegExpPattern,
-  lens,
-  // 30
-  lensFn,
   liniarInterpolate,
   loopRange,
   mapGetter,
+  // 25
   mapRanges,
-  // 35
   match,
-  memoise,
   mockIntervalFunctions,
   mockTimeoutFunctions,
+  // 30
   modulo,
-  // 40
   normaliseRange,
   objectEquality,
-  parseJson,
   pasteText,
   permute,
-  // 45
   poller,
-  postJson,
+  // 35
   random,
   range,
   rangeBetween,
-  // 50
   rangeFrom,
   rangeGenerator,
+  // 40
   reconcileArrays,
   referencedClone,
-  regExpString,
-  // 55
-  regExpTemplate,
   replaceArray,
   roundBoundry,
   sanatise,
+  // 45
   shuffleArray,
-  // 60
-  simd,
   sleep,
-  stringifyJson,
   throttle,
   transposeArray,
-  // 65
   unflatten,
-  webStore,
+  // 50
 };

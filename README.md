@@ -14,8 +14,6 @@ The functions in the following collections make considerable use of the techniqu
 
 ## [Data Comparison](docs/data-comparison.md) (9)
 
-## [Data Converters](docs/data-converters.md) (2)
-
 ## [Document Object Model](docs/dom.md) (7)
 
 ## [Exercising](docs/exercising.md) (4)
@@ -23,9 +21,5 @@ The functions in the following collections make considerable use of the techniqu
 ## [Ranges](docs/ranges.md) (10)
 
 ## [Tools](docs/tools.md) (19)
-
----
-
-## [Change Log](changelog.md)
 
 ---
