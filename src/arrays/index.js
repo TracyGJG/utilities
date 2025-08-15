@@ -51,12 +51,6 @@ export function groupBy(lookupFn, sourceArray) {
   }
 }
 
-export function intersectArrays(...arrays) {
-  return arrays.reduce((arrAcc, arrN) =>
-    [...new Set(arrAcc)].filter((item) => arrN.includes(item))
-  );
-}
-
 export function permute(...axies) {
   return (function _permute(...indicies) {
     return indicies.length === axies.length
@@ -116,8 +110,4 @@ export function unflatten(...specification) {
       ? result.map((sec) => _unflatten(sec, ...specs))
       : result;
   }
-}
-
-export function unionArrays(...arrays) {
-  return [...new Set(arrays.flat())];
 }

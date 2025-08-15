@@ -327,14 +327,14 @@ describe('DOM utilities', () => {
         </main>`;
         expect(duplicateElementIds({ isPrefixed: true }).length).toBe(0);
       });
-      test('returns false when there are elements with duplicate ids', () => {
+      test('a list when there are elements with duplicate ids', () => {
         document.body.innerHTML = `<main>
           <div id="div1">One</div>
           <div id="div1">Two</div>
         </main>`;
         expect(duplicateElementIds()).toStrictEqual(['div1']);
       });
-      test('returns false when there are elements with unprefixed ids', () => {
+      test('a list when there are elements with unprefixed ids', () => {
         document.body.innerHTML = `<main>
           <div id="$div1">One</div>
           <div id="div2">Two</div>
@@ -345,12 +345,52 @@ describe('DOM utilities', () => {
       });
     });
 
-    describe('in the defined scope', () => {
-      test('returns true when there are no elements with id attributes', () => {});
-      test('returns true when there are only elements with unique id attributes', () => {});
-      test('returns true when all elements have a defined prefix', () => {});
-      test('returns false when there are elements with duplicate ids', () => {});
-      test('returns false when there are elements with unprefixed ids', () => {});
+    describe('in the defined scope it returns', () => {
+      test('an empty array when there are no elements with id attributes', () => {
+        document.body.innerHTML = `<main>
+          <div>One</div>
+          <div>Two</div>
+        </main>`;
+        const target = document.querySelector('main');
+        expect(duplicateElementIds({ target }).length).toBe(0);
+      });
+      test('an empty array when there are only elements with unique id attributes', () => {
+        document.body.innerHTML = `<main>
+          <div id="div1">One</div>
+          <div id="div2">Two</div>
+        </main>`;
+        const target = document.querySelector('main');
+        expect(duplicateElementIds({ target }).length).toBe(0);
+      });
+      test('an empty array when all elements have a defined prefix', () => {
+        document.body.innerHTML = `<main>
+          <div id="$div1">One</div>
+          <div id="$div2">Two</div>
+        </main>`;
+        const target = document.querySelector('main');
+        expect(duplicateElementIds({ target, isPrefixed: true }).length).toBe(
+          0
+        );
+      });
+      test('a list when there are elements with duplicate ids', () => {
+        document.body.innerHTML = `<main>
+          <div id="div1">One</div>
+          <div id="div2">Two</div>
+          <div id="div2">Three</div>
+        </main>`;
+        const target = document.querySelector('main');
+        expect(duplicateElementIds({ target }).length).toBe(1);
+      });
+      test('a list when there are elements with unprefixed ids', () => {
+        document.body.innerHTML = `<main>
+          <div id="div1">One</div>
+          <div id="$div2">Two</div>
+        </main>`;
+        const target = document.querySelector('main');
+        expect(duplicateElementIds({ target, isPrefixed: true }).length).toBe(
+          1
+        );
+      });
     });
   });
 });

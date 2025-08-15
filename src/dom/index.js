@@ -105,11 +105,13 @@ export function mockIntervalFunctions() {
 }
 
 export function duplicateElementIds(
-  { target, isPrefixed } = { target: document.body, isPrefixed: false }
+  { target = document.body, isPrefixed = false } = {
+    target: document.body,
+    isPrefixed: false,
+  }
 ) {
-  const elementsWithIds = [...target.querySelectorAll(`[id]`)].map(
-    (el) => el.id
-  );
+  const targetElements = target.querySelectorAll(`[id]`);
+  const elementsWithIds = [...targetElements].map((el) => el.id);
   const uniqueIds = [...new Set(elementsWithIds)];
   const duplicateIds = uniqueIds.filter(
     (id) => elementsWithIds.filter((elId) => elId === id).length > 1

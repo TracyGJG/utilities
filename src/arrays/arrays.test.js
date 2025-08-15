@@ -1,14 +1,12 @@
 import {
   batchBy,
   groupBy,
-  intersectArrays,
   permute,
   reconcileArrays,
   replaceArray,
   shuffleArray,
   transposeArray,
   unflatten,
-  unionArrays,
 } from './index.js';
 
 import { rangeFrom } from '../ranges/index.js';
@@ -100,33 +98,6 @@ describe('Arrays', () => {
       expect(resultGroupObject.alpha[0].id).toBe(1);
       expect(resultGroupObject.alpha[1].id).toBe(3);
       expect(resultGroupObject.beta[0].id).toBe(2);
-    });
-  });
-
-  describe('Intersect Array', () => {
-    const alpha = rangeFrom(4, 1); // [1, 2, 3, 4]
-    const beta = rangeFrom(4, 2); // [2, 3, 4, 5]
-    const delta = rangeFrom(4, 3); // [3, 4, 5, 6]
-    const zeta = rangeFrom(4, 10, 10); // [10, 20, 30, 40]
-    it('can intersect a single array', () => {
-      const result = [1, 2, 3, 4];
-      expect(intersectArrays(alpha)).toEqual(result);
-    });
-    it('can intersect an array with an empty array', () => {
-      const result = [];
-      expect(intersectArrays(alpha, [])).toEqual(result);
-    });
-    it('can intersect two (non-intersecting arrays)', () => {
-      const result = [];
-      expect(intersectArrays(alpha, zeta)).toEqual(result);
-    });
-    it('can intersect two (intersecting arrays)', () => {
-      const result = [2, 3, 4];
-      expect(intersectArrays(alpha, beta)).toEqual(result);
-    });
-    it('can intersect three arrays', () => {
-      const result = [3, 4];
-      expect(intersectArrays(alpha, beta, delta)).toEqual(result);
     });
   });
 
@@ -400,29 +371,6 @@ describe('Arrays', () => {
       expect(result[3][2].length).toEqual(2);
       expect(result.flat().length).toEqual(12);
       expect(result.flat(2).length).toEqual(24);
-    });
-  });
-
-  describe('Union Array', () => {
-    const alpha = rangeFrom(4, 1); // [1, 2, 3, 4]
-    const beta = rangeFrom(4, 2); // [2, 3, 4, 5]
-    const delta = rangeFrom(4, 3); // [3, 4, 5, 6]
-    const zeta = rangeFrom(4, 10, 10); // [10, 20, 30, 40]
-    it('can union a single array', () => {
-      const result = [1, 2, 3, 4];
-      expect(unionArrays(alpha)).toEqual(result);
-    });
-    it('can union an array with an empty array', () => {
-      const result = [1, 2, 3, 4];
-      expect(unionArrays(alpha, [])).toEqual(result);
-    });
-    it('can union two (non-intersecting arrays)', () => {
-      const result = [1, 2, 3, 4, 10, 20, 30, 40];
-      expect(unionArrays(alpha, zeta)).toEqual(result);
-    });
-    it('can union three (intesecting) arrays', () => {
-      const result = [1, 2, 3, 4, 5, 6];
-      expect(unionArrays(alpha, beta, delta)).toEqual(result);
     });
   });
 });
