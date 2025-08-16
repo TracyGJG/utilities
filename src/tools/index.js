@@ -63,14 +63,6 @@ export function generateEnums(enumsJson, options) {
   }, {});
 }
 
-export async function pasteText() {
-  return await navigator.clipboard.readText();
-}
-
-export async function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 export function match(...patterns) {
   const PATTERNS = Object.freeze(
     patterns.reduce(
@@ -83,4 +75,12 @@ export function match(...patterns) {
   );
   const DEFAULT = Object.values(patterns[0])[0];
   return (pattern) => PATTERNS?.[pattern] ?? DEFAULT;
+}
+
+export async function pasteText() {
+  return await navigator.clipboard.readText();
+}
+
+export async function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }

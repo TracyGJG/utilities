@@ -107,8 +107,8 @@ export {
   match,
   mockIntervalFunctions,
   mockTimeoutFunctions,
-  // 30
   modulo,
+  // 30
   normaliseRange,
   objectEquality,
   pasteText,

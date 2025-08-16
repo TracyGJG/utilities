@@ -1,6 +1,6 @@
 # Utilities
 
-A collection of 60+ utility functions I find useful.
+A collection of 50 utility functions I find useful.
 
 The functions in the following collections make considerable use of the technique called currying/partial-application to return a specialised function. This saves on suppling parameters that are not expected to change.
 
@@ -8,11 +8,11 @@ The functions in the following collections make considerable use of the techniqu
 
 ---
 
-## [Ancillaries](docs/ancillaries.md) (8)
+## [Ancillaries](docs/ancillaries.md) (6)
 
 ## [Arrays](docs/arrays.md) (8)
 
-## [Data Comparison](docs/data-comparison.md) (9)
+## [Data Comparison](docs/data-comparison.md) (8)
 
 ## [Document Object Model](docs/dom.md) (7)
 
@@ -20,6 +20,6 @@ The functions in the following collections make considerable use of the techniqu
 
 ## [Ranges](docs/ranges.md) (10)
 
-## [Tools](docs/tools.md) (19)
+## [Tools](docs/tools.md) (7)
 
 ---

@@ -1,12 +1,6 @@
 const _document = document;
 const DEFAULT_DELAY = 1000;
 
-export function sanatise(text, dom = _document) {
-  const div = dom.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
-}
-
 export function debounce(callback, delay = DEFAULT_DELAY) {
   let timeout;
   return (...args) => {
@@ -17,30 +11,26 @@ export function debounce(callback, delay = DEFAULT_DELAY) {
   };
 }
 
-export function throttle(callback, delay = DEFAULT_DELAY) {
-  let timeout;
-  return (...args) => {
-    if (!timeout) {
-      timeout = setTimeout(() => {
-        callback(...args);
-        timeout = null;
-      }, delay);
-    }
-  };
-}
+export function duplicateElementIds(
+  { target = document.body, isPrefixed = false } = {
+    target: document.body,
+    isPrefixed: false,
+  }
+) {
+  const targetElements = target.querySelectorAll(`[id]`);
+  const elementsWithIds = [...targetElements].map((el) => el.id);
+  const uniqueIds = [...new Set(elementsWithIds)];
+  const duplicateIds = uniqueIds.filter(
+    (id) => elementsWithIds.filter((elId) => elId === id).length > 1
+  );
 
-export function poller(interval, cycles, checkFn, actionFn) {
-  let cycle = 0;
-
-  const Interval = setInterval(() => {
-    if (checkFn() || cycle === cycles) {
-      actionFn();
-      clearInterval(Interval);
-    }
-    cycle++;
-  }, interval);
-
-  return Interval;
+  if (duplicateIds.length) {
+    return duplicateIds;
+  }
+  if (isPrefixed) {
+    return elementsWithIds.filter((id) => id.at(0) !== '$');
+  }
+  return [];
 }
 
 export function mockTimeoutFunctions() {
@@ -104,24 +94,34 @@ export function mockIntervalFunctions() {
   }
 }
 
-export function duplicateElementIds(
-  { target = document.body, isPrefixed = false } = {
-    target: document.body,
-    isPrefixed: false,
-  }
-) {
-  const targetElements = target.querySelectorAll(`[id]`);
-  const elementsWithIds = [...targetElements].map((el) => el.id);
-  const uniqueIds = [...new Set(elementsWithIds)];
-  const duplicateIds = uniqueIds.filter(
-    (id) => elementsWithIds.filter((elId) => elId === id).length > 1
-  );
+export function poller(interval, cycles, checkFn, actionFn) {
+  let cycle = 0;
 
-  if (duplicateIds.length) {
-    return duplicateIds;
-  }
-  if (isPrefixed) {
-    return elementsWithIds.filter((id) => id.at(0) !== '$');
-  }
-  return [];
+  const Interval = setInterval(() => {
+    if (checkFn() || cycle === cycles) {
+      actionFn();
+      clearInterval(Interval);
+    }
+    cycle++;
+  }, interval);
+
+  return Interval;
+}
+
+export function sanatise(text, dom = _document) {
+  const div = dom.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+export function throttle(callback, delay = DEFAULT_DELAY) {
+  let timeout;
+  return (...args) => {
+    if (!timeout) {
+      timeout = setTimeout(() => {
+        callback(...args);
+        timeout = null;
+      }, delay);
+    }
+  };
 }

@@ -11,6 +11,12 @@ export function accumulatedAverage(averageToDate = 0, sampleSize = 0) {
   };
 }
 
+export function dateBasedRandom() {
+  const baseValue = Date.now();
+  const multiplier = Date.now() % 1000;
+  return +[...`${baseValue * multiplier}.0`].reverse().join('');
+}
+
 export function mapGetter(mapInstance, entityFactory) {
   return (entityId, entityParams) =>
     mapInstance.get(entityId) ||
@@ -19,10 +25,11 @@ export function mapGetter(mapInstance, entityFactory) {
       .get(entityId);
 }
 
-export function dateBasedRandom() {
-  const baseValue = Date.now();
-  const multiplier = Date.now() % 1000;
-  return +[...`${baseValue * multiplier}.0`].reverse().join('');
+export function modulo(mod, val) {
+  return val == null ? (_val) => _mod(mod, _val) : _mod(mod, val);
+  function _mod(mod, val) {
+    return (val + mod) % mod;
+  }
 }
 
 export function random(max, min = 0, precision = 0) {
@@ -33,11 +40,4 @@ export function random(max, min = 0, precision = 0) {
 
 export function roundBoundry(interval, rounderFn = 'round') {
   return (value) => Math[rounderFn](value / interval) * interval;
-}
-
-export function modulo(mod, val) {
-  return val == null ? (_val) => _mod(mod, _val) : _mod(mod, val);
-  function _mod(mod, val) {
-    return (val + mod) % mod;
-  }
 }
