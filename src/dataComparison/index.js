@@ -90,6 +90,20 @@ export function objectEquality(obj1, obj2, testStructureOnly = false) {
   }
 }
 
+export function reduceObject(...propertyNames) {
+  if (!propertyNames.length)
+    throw Error(
+      'Error: reduceObject requires at least 1 property name as a parameter.'
+    );
+
+  return (srcObj) =>
+    Object.entries(srcObj).reduce(
+      (dstObj, [key, val]) =>
+        propertyNames.includes(key) ? { ...dstObj, [key]: val } : dstObj,
+      {}
+    );
+}
+
 export function referencedClone(src, propList = [], isInclude = false) {
   if (!isObject(src)) return src;
   return Object.entries(src).reduce((tgt, [key, val]) => {

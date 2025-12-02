@@ -8,6 +8,7 @@
 - [isEmptyObject](#isemptyobject)
 - [isObject](#isobject)
 - [objectEquality](#objectequality)
+- [reduceObject](#reduceobject)
 - [referencedClone](#referencedclone)
 
 - [Index](../README.md)
@@ -129,7 +130,29 @@ Compares two objects and reports in they are equivalent (contain the same primit
 
 Boolean flag indication if the values held withint _obj1_ are the same as those in _obj2_.
 
----
+## [reduceObject](:#reduceobject)
+
+Function constructor to reduce a source object and create a new object only containing the configured properties, by reference.
+
+### Parameters
+
+#### Initial call
+
+A series of strings that list the names of properties to be reduced.
+
+#### Subsequent call
+
+The source object to be reduced.
+
+### Return Value
+
+#### Initial call
+
+A function preconfigured to reduce a given object to just the defined properties.
+
+#### Subsequent call
+
+A new object with a copy of only the predefined properties (by reference).
 
 ## [referencedClone](:#referencedclone)
 

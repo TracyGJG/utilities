@@ -12,7 +12,7 @@ The functions in the following collections make considerable use of the techniqu
 
 ## [Arrays](docs/arrays.md) (8)
 
-## [Data Comparison](docs/data-comparison.md) (8)
+## [Data Comparison](docs/data-comparison.md) (9)
 
 ## [Document Object Model](docs/dom.md) (7)
 

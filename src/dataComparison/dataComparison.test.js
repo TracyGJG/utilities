@@ -7,6 +7,7 @@ import {
   isEmptyObject,
   isObject,
   objectEquality,
+  reduceObject,
   referencedClone,
 } from './index.js';
 
@@ -483,6 +484,36 @@ describe('Comparison and Cloning', () => {
       obj2.objProp.subProp2 = 'Additional Property';
 
       expect(objectEquality(obj1, obj2)).toBeFalsy();
+    });
+  });
+
+  describe('Object reducer', () => {
+    test('reports an exception if there are no arguments', () => {
+      const testException = () => reduceObject();
+
+      expect(testException).toThrow(
+        'Error: reduceObject requires at least 1 property name as a parameter.'
+      );
+    });
+
+    test('can handle and empty source object', () => {
+      const testFn = reduceObject('alpha');
+      expect(testFn({})).toEqual({});
+    });
+
+    test('can handle a complete object mapping', () => {
+      const testFn = reduceObject('alpha');
+      expect(testFn({ alpha: 'A' })).toEqual({ alpha: 'A' });
+    });
+
+    test('can handle a partial object mapping', () => {
+      const testFn = reduceObject('alpha');
+      expect(testFn({ alpha: 'A', beta: 'B' })).toEqual({ alpha: 'A' });
+    });
+
+    test('can handle a mismatched object mapping', () => {
+      const testFn = reduceObject('alpha');
+      expect(testFn({ beta: 'B' })).toEqual({});
     });
   });
 
