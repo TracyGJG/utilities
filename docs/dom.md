@@ -15,6 +15,7 @@
 - [poller](#poller)
 - [mockTimeoutFunctions](#mocktimeoutfunctions)
 - [mockIntervalFunctions](#mockintervalfunctions)
+- [reactivate](#reactivate)
 
 - [Index](../README.md)
 
@@ -234,5 +235,19 @@ An object containing the following methods to mock global functions:
 - setInterval: Creates an Interval that executes a given callback function at a regular time frame.
 - clearInterval: Terminate a given Interval.
 - clockTick: Artificially advancing time.
+
+## [reactivate](:#reactivate)
+
+Links a named variable with DOM elements to enable reactivity.
+
+### Parameters
+
+- reactiveVar: The name of a reference used to link the variable to the reactive DOM element.
+- initialValue: The initial value of the reactive variable and injected value in the DOM.
+- domContext: Optional reference to a containing DOM element (defaulted to `document`).
+
+### Return Value
+
+An object is returned with a single property of `value` that can be set programmatically.
 
 ---

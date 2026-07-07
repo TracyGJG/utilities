@@ -5,13 +5,14 @@
 import { afterEach, beforeEach, jest } from '@jest/globals';
 
 import {
-  sanatise,
   debounce,
-  throttle,
-  poller,
-  mockTimeoutFunctions,
-  mockIntervalFunctions,
   duplicateElementIds,
+  mockIntervalFunctions,
+  mockTimeoutFunctions,
+  poller,
+  reactivate,
+  sanatise,
+  throttle,
 } from './index.js';
 
 import { sleep } from '../tools';
@@ -369,7 +370,7 @@ describe('DOM utilities', () => {
         </main>`;
         const target = document.querySelector('main');
         expect(duplicateElementIds({ target, isPrefixed: true }).length).toBe(
-          0
+          0,
         );
       });
       test('a list when there are elements with duplicate ids', () => {
@@ -388,9 +389,68 @@ describe('DOM utilities', () => {
         </main>`;
         const target = document.querySelector('main');
         expect(duplicateElementIds({ target, isPrefixed: true }).length).toBe(
-          1
+          1,
         );
       });
+    });
+  });
+
+  describe('reactivate', () => {
+    let reactiv8;
+
+    beforeEach(() => {
+      document.body.innerHTML = /*html*/ `
+        <main>
+          <p data-reactive-content="reactiv8"></p>
+          <input type="text" value="reactiv8" />
+          <textarea value="reactiv8"></textarea>
+          <select value="reactiv8">
+            <option>Hello</option>
+            <option>World</option>
+            <option>Hello, World!</option>
+          </select>
+          <button id="$btn">Update</button>
+        </main>
+      `;
+    });
+
+    test('a list when there are elements with unprefixed ids', () => {
+      reactiv8 = reactivate('reactiv8', 'Hello, World!');
+
+      expect(document.querySelector('p').textContent).toBe('Hello, World!');
+      expect(document.querySelector('input').value).toBe('Hello, World!');
+      expect(document.querySelector('textarea').value).toBe('Hello, World!');
+      expect(document.querySelector('select').selectedIndex).toBe(2);
+
+      reactiv8.value = 'Hello';
+
+      expect(document.querySelector('p').textContent).toBe('Hello');
+      expect(document.querySelector('input').value).toBe('Hello');
+      expect(document.querySelector('textarea').value).toBe('Hello');
+      expect(document.querySelector('select').selectedIndex).toBe(0);
+    });
+
+    test('a list when there are elements with unprefixed ids', () => {
+      reactiv8 = reactivate(
+        'reactiv8',
+        'Hello, World!',
+        document.querySelector('main'),
+      );
+
+      expect(document.querySelector('p').textContent).toBe('Hello, World!');
+      expect(document.querySelector('input').value).toBe('Hello, World!');
+      expect(document.querySelector('textarea').value).toBe('Hello, World!');
+      expect(document.querySelector('select').selectedIndex).toBe(2);
+
+      const $input = document.querySelector('input');
+      $input.value = 'Hello';
+      const userEvent = new KeyboardEvent('keyup');
+      $input.dispatchEvent(userEvent);
+
+      expect(document.querySelector('p').textContent).toBe('Hello');
+      expect(document.querySelector('input').value).toBe('Hello');
+      expect(document.querySelector('textarea').value).toBe('Hello');
+      expect(document.querySelector('select').selectedIndex).toBe(0);
     });
   });
 });

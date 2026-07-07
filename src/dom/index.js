@@ -15,13 +15,13 @@ export function duplicateElementIds(
   { target = document.body, isPrefixed = false } = {
     target: document.body,
     isPrefixed: false,
-  }
+  },
 ) {
   const targetElements = target.querySelectorAll(`[id]`);
   const elementsWithIds = [...targetElements].map((el) => el.id);
   const uniqueIds = [...new Set(elementsWithIds)];
   const duplicateIds = uniqueIds.filter(
-    (id) => elementsWithIds.filter((elId) => elId === id).length > 1
+    (id) => elementsWithIds.filter((elId) => elId === id).length > 1,
   );
 
   if (duplicateIds.length) {
@@ -124,4 +124,38 @@ export function throttle(callback, delay = DEFAULT_DELAY) {
       }, delay);
     }
   };
+}
+
+export function reactivate(reactiveVar, initialValue, domContext = document) {
+  const reactiveVariable = { _: true };
+  const contents = [
+    ...domContext.querySelectorAll(`[data-reactive-content="${reactiveVar}"]`),
+  ];
+  const values = [...domContext.querySelectorAll(`[value="${reactiveVar}"]`)];
+
+  updateDom(initialValue);
+
+  Object.defineProperty(reactiveVariable, 'value', {
+    set(updatedValue) {
+      updateDom(updatedValue);
+    },
+  });
+
+  return reactiveVariable;
+
+  function updateDom(val) {
+    if (reactiveVariable._) {
+      reactiveVariable._ = false;
+      values.forEach((value) => {
+        value.addEventListener(
+          value.childElementCount ? 'change' : 'keyup',
+          (evt) => (reactiveVariable.value = evt.target.value),
+        );
+      });
+    }
+    values.forEach((value) => {
+      value.value = val;
+    });
+    contents.forEach((content) => (content.textContent = val));
+  }
 }

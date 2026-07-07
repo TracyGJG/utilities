@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -6,12 +6,31 @@
     <title>DOM Test harness</title>
   </head>
   <body>
-    <script type="module">
-      // await import('./timer-test-harness.js');
-      // await import('./interval-test-harness.js');
+    <main>
+      <p data-reactive-content="reactiv8"></p>
+      <input type="text" value="reactiv8" />
+      <textarea value="reactiv8"></textarea>
+      <select value="reactiv8">
+        <option>Hello</option>
+        <option>World</option>
+        <option>Hello, World!</option>
+      </select>
+      <button id="$btn">Update</button>
+    </main>
 
-      await import('./polling-test-harness.js');
-      // await import('./polling-test-harness2.js');
+    <script type="module">
+      import { reactivate } from './index.js';
+
+      const reactiv8 = reactivate(
+        'reactiv8',
+        'Hello, World!',
+        document.querySelector('main'),
+      );
+
+      $btn.addEventListener(
+        'click',
+        () => (reactiv8.value = prompt('Update') ?? ''),
+      );
     </script>
   </body>
 </html>
