@@ -1,6 +1,5 @@
-/**
- * @jest-environment jsdom
- */
+import { describe, it, test, beforeEach } from 'node:test';
+import assert from 'node:assert/strict';
 
 import {
   accumulatedAverage,

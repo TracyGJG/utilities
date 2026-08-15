@@ -1,8 +1,5 @@
-/**
- * @jest-environment jsdom
- */
-
-import { jest } from '@jest/globals';
+import { describe, it, test, beforeEach, afterEach, mock } from 'node:test';
+import assert from 'node:assert/strict';
 
 import {
   copyText,
@@ -15,30 +12,39 @@ import {
 } from './index.js';
 
 describe('Tools', () => {
+  // afterEach(() => {
+  //   mock.resetCalls();
+  // });
+
   describe('Clipboard Operations', () => {
-    const mockReadText = jest.fn(() => Promise.resolve('Hello, World!'));
+    const mockReadText = mock.fn(() => {
+      console.log('mockReadText');
+      return Promise.resolve('mockReadText');
+    });
+    const mockWriteText = mock.fn(() => {
+      console.log('mockWriteText');
+    });
     beforeEach(() => {
       navigator.clipboard = {
         readText: mockReadText,
-        writeText: jest.fn(),
+        writeText: mockWriteText,
       };
     });
 
     test('Copy Text', () => {
-      expect(navigator.clipboard.writeText).toHaveBeenCalledTimes(0);
-      copyText('Hello, World!');
+      assert.strictEqual(mockWriteText.mock.callCount(), 0);
+      copyText('mockReadText');
 
-      expect(navigator.clipboard.writeText).toHaveBeenCalledTimes(1);
-      expect(navigator.clipboard.writeText).toHaveBeenLastCalledWith(
-        'Hello, World!'
-      );
+      assert.strictEqual(mockWriteText.mock.callCount(), 1);
+      assert.deepStrictEqual(mockWriteText.mock.calls[0].arguments, [
+        'mockReadText',
+      ]);
     });
     test('Paste Text', async () => {
-      expect.assertions(3);
-      expect(navigator.clipboard.readText).toHaveBeenCalledTimes(0);
+      assert.strictEqual(mockReadText.mock.callCount(), 0);
       const result = await pasteText();
-      expect(navigator.clipboard.readText).toHaveBeenCalledTimes(1);
-      expect(result).toBe('Hello, World!');
+      assert.strictEqual(mockReadText.mock.callCount(), 1);
+      assert.equal(result, 'mockReadText');
     });
   });
 
@@ -54,12 +60,12 @@ describe('Tools', () => {
     }
 
     it('converts an async operation to sync', async () => {
-      expect(result).toBe('');
+      assert.equal(result, '');
 
       decolour(asyncFn, syncFn);
 
       await sleep(60);
-      expect(result).toBe(`Hello, World!`);
+      assert.equal(result, `Hello, World!`);
     });
   });
 
@@ -68,43 +74,61 @@ describe('Tools', () => {
       it('a source parameter other than an Array or Object (E-IS)', () => {
         const exceptionTest = () =>
           Object.keys(enumerate('INVALID SOURCE ARGUMENT'));
-        expect(exceptionTest).toThrow(
-          'Error: E-IS The source argument supplied is not an Array or an Object.'
+        assert.throws(
+          exceptionTest,
+          Error(
+            'Error: E-IS The source argument supplied is not an Array or an Object.',
+          ),
         );
       });
 
       it('a source parameter of null (E-IS)', () => {
         const exceptionTest = () => Object.keys(enumerate(null));
-        expect(exceptionTest).toThrow(
-          'Error: E-IS The source argument supplied is not an Array or an Object.'
+        assert.throws(
+          exceptionTest,
+          Error(
+            'Error: E-IS The source argument supplied is not an Array or an Object.',
+          ),
         );
       });
 
       it('a source parameter of undefined (E-IS)', () => {
         const exceptionTest = () => Object.keys(enumerate(undefined));
-        expect(exceptionTest).toThrow(
-          'Error: E-IS The source argument supplied is not an Array or an Object.'
+        assert.throws(
+          exceptionTest,
+          Error(
+            'Error: E-IS The source argument supplied is not an Array or an Object.',
+          ),
         );
       });
 
       it('an empty Object as source argument (E-NS)', () => {
         const exceptionTest = () => Object.keys(enumerate({}));
-        expect(exceptionTest).toThrow(
-          'Error: E-NS The source argument supplied is not populated with string keys.'
+        assert.throws(
+          exceptionTest,
+          Error(
+            'Error: E-NS The source argument supplied is not populated with string keys.',
+          ),
         );
       });
 
       it('an empty Array as source argument (E-NS)', () => {
         const exceptionTest = () => Object.keys(enumerate([]));
-        expect(exceptionTest).toThrow(
-          'Error: E-NS The source argument supplied is not populated with string keys.'
+        assert.throws(
+          exceptionTest,
+          Error(
+            'Error: E-NS The source argument supplied is not populated with string keys.',
+          ),
         );
       });
 
       it('a source argument Array populated with non-string data (E-NS)', () => {
         const exceptionTest = () => Object.keys(enumerate([42, false]));
-        expect(exceptionTest).toThrow(
-          'Error: E-NS The source argument supplied is not populated with string keys.'
+        assert.throws(
+          exceptionTest,
+          Error(
+            'Error: E-NS The source argument supplied is not populated with string keys.',
+          ),
         );
       });
 
@@ -113,8 +137,11 @@ describe('Tools', () => {
           enumerate(['alpha', 'beta'], {
             unrecognisedOption: true,
           });
-        expect(exceptionTest).toThrow(
-          `Error: E-NR The option 'unrecognisedOption' is not a recognised option.`
+        assert.throws(
+          exceptionTest,
+          Error(
+            `Error: E-NR The option 'unrecognisedOption' is not a recognised option.`,
+          ),
         );
       });
 
@@ -123,8 +150,11 @@ describe('Tools', () => {
           enumerate(['alpha', 'beta'], {
             numericValues: 0,
           });
-        expect(exceptionTest).toThrow(
-          `Error: E-NB The option 'numericValues' is not a Boolean value.`
+        assert.throws(
+          exceptionTest,
+          Error(
+            `Error: E-NB The option 'numericValues' is not a Boolean value.`,
+          ),
         );
       });
     });
@@ -132,10 +162,10 @@ describe('Tools', () => {
     describe('will return an object of Enumerated keys', () => {
       it('using a populated source string array', () => {
         const result = enumerate(['alpha', 'beta', 'deltaGamma']);
-        expect(Object.keys(result).length).toBe(3);
-        expect(result.alpha).toBe('alpha');
-        expect(result.beta).toBe('beta');
-        expect(result.deltaGamma).toBe('deltaGamma');
+        assert.equal(Object.keys(result).length, 3);
+        assert.equal(result.alpha, 'alpha');
+        assert.equal(result.beta, 'beta');
+        assert.equal(result.deltaGamma, 'deltaGamma');
       });
 
       it('using a populated source object', () => {
@@ -144,31 +174,31 @@ describe('Tools', () => {
           beta: 'b',
           deltaGamma: 'dG',
         });
-        expect(Object.keys(result).length).toBe(3);
-        expect(result.alpha).toBe('alpha');
-        expect(result.beta).toBe('beta');
-        expect(result.deltaGamma).toBe('deltaGamma');
+        assert.equal(Object.keys(result).length, 3);
+        assert.equal(result.alpha, 'alpha');
+        assert.equal(result.beta, 'beta');
+        assert.equal(result.deltaGamma, 'deltaGamma');
       });
 
       it('with numeric values, using a populated source array', () => {
         const result = enumerate(['alpha', 'beta', 'deltaGamma'], {
           numericValues: true,
         });
-        expect(Object.keys(result).length).toBe(3);
-        expect(result.alpha).toBe(0);
-        expect(result.beta).toBe(1);
-        expect(result.deltaGamma).toBe(2);
+        assert.equal(Object.keys(result).length, 3);
+        assert.equal(result.alpha, 0);
+        assert.equal(result.beta, 1);
+        assert.equal(result.deltaGamma, 2);
       });
 
       it('with numeric values, using a populated source object', () => {
         const result = enumerate(
           { alpha: 'a', beta: 'b', deltaGamma: 'dG' },
-          { numericValues: true }
+          { numericValues: true },
         );
-        expect(Object.keys(result).length).toBe(3);
-        expect(result.alpha).toBe(0);
-        expect(result.beta).toBe(1);
-        expect(result.deltaGamma).toBe(2);
+        assert.equal(Object.keys(result).length, 3);
+        assert.equal(result.alpha, 0);
+        assert.equal(result.beta, 1);
+        assert.equal(result.deltaGamma, 2);
       });
 
       it('with constant properties, using a populated array', () => {
@@ -184,16 +214,16 @@ describe('Tools', () => {
           ],
           {
             constantProperties: true,
-          }
+          },
         );
-        expect(Object.keys(result).length).toBe(7);
-        expect(result.ALPHA).toBe('alpha');
-        expect(result.BETA).toBe('BETA');
-        expect(result.DELTA_GAMMA).toBe('deltaGamma');
-        expect(result.EPSILON_ZETA).toBe('Epsilon zeta');
-        expect(result.ETA_THETA).toBe('EtaTheta');
-        expect(result.__IOTA__).toBe('  Iota  ');
-        expect(result.KAPPA_LAMBDA).toBe('Kappa_Lambda');
+        assert.equal(Object.keys(result).length, 7);
+        assert.equal(result.ALPHA, 'alpha');
+        assert.equal(result.BETA, 'BETA');
+        assert.equal(result.DELTA_GAMMA, 'deltaGamma');
+        assert.equal(result.EPSILON_ZETA, 'Epsilon zeta');
+        assert.equal(result.ETA_THETA, 'EtaTheta');
+        assert.equal(result.__IOTA__, '  Iota  ');
+        assert.equal(result.KAPPA_LAMBDA, 'Kappa_Lambda');
       });
     });
   });
@@ -203,29 +233,29 @@ describe('Tools', () => {
       const lookup = match(
         { alpha: 'ALPHA' },
         { beta: 'BETA' },
-        { gamma: 'GAMMA' }
+        { gamma: 'GAMMA' },
       );
-      expect(lookup('beta')).toBe('BETA');
+      assert.equal(lookup('beta'), 'BETA');
     });
 
     test('non-matching value', () => {
       const lookup = match(
         { alpha: 'ALPHA' },
         { beta: 'BETA' },
-        { gamma: 'GAMMA' }
+        { gamma: 'GAMMA' },
       );
-      expect(lookup('delta')).toBe('ALPHA');
+      assert.equal(lookup('delta'), 'ALPHA');
     });
 
     test('matching function', () => {
       const lookup = match(
         { alpha: () => 'ALPHA' },
         { beta: () => 'BETA' },
-        { gamma: () => 'GAMMA' }
+        { gamma: () => 'GAMMA' },
       );
       const result = lookup('beta');
-      expect(typeof result).toBe('function');
-      expect(result()).toBe('BETA');
+      assert.equal(typeof result, 'function');
+      assert.equal(result(), 'BETA');
     });
   });
 
@@ -234,14 +264,14 @@ describe('Tools', () => {
       const timeStamp1 = new Date();
       await sleep(1000);
       const timeStamp2 = new Date();
-      expect(timeStamp2 - timeStamp1).toBeLessThan(1021);
+      assert.ok(timeStamp2 - timeStamp1 < 1021);
     });
 
     it('can delay progress by a given interval (greater than period)', async () => {
       const timeStamp1 = new Date();
       await sleep(1000);
       const timeStamp2 = new Date();
-      expect(timeStamp2 - timeStamp1).toBeGreaterThan(999);
+      assert.ok(timeStamp2 - timeStamp1 > 999);
     });
   });
 
@@ -259,13 +289,13 @@ describe('Tools', () => {
           'Saturday',
         ],
       });
-      expect(result).toBeDefined();
-      expect(result.shortDays).toBeDefined();
-      expect(result.longDays).toBeDefined();
+      assert.notEqual(result, undefined);
+      assert.notEqual(result.shortDays, undefined);
+      assert.notEqual(result.longDays, undefined);
 
       const { shortDays, longDays } = result;
-      expect(Object.keys(shortDays).length).toBe(7);
-      expect(Object.keys(longDays).length).toBe(7);
+      assert.equal(Object.keys(shortDays).length, 7);
+      assert.equal(Object.keys(longDays).length, 7);
     });
   });
 });

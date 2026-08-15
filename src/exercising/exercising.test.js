@@ -1,3 +1,6 @@
+import { describe, it, test, beforeEach } from 'node:test';
+import assert from 'node:assert/strict';
+
 import { adhocArray, consoleGroup, consoleTable, exercise } from './index.js';
 
 const expectedTableHtml = [
@@ -32,7 +35,7 @@ describe('Exercising', () => {
       const testException = () => adhocArray('X');
 
       expect(testException).toThrow(
-        'Error: adhocArray parameter 1 needs to be of type Number.'
+        'Error: adhocArray parameter 1 needs to be of type Number.',
       );
     });
 
@@ -40,7 +43,7 @@ describe('Exercising', () => {
       const testException = () => adhocArray(-1);
 
       expect(testException).toThrow(
-        'Error: adhocArray parameter 1 needs to be greater than zero.'
+        'Error: adhocArray parameter 1 needs to be greater than zero.',
       );
     });
 
@@ -48,7 +51,7 @@ describe('Exercising', () => {
       const testException = () => adhocArray(1, 'X');
 
       expect(testException).toThrow(
-        'Error: adhocArray parameter 2 needs to be of type Function.'
+        'Error: adhocArray parameter 2 needs to be of type Function.',
       );
     });
 
@@ -56,7 +59,7 @@ describe('Exercising', () => {
       const testException = () => adhocArray(1, () => {});
 
       expect(testException).toThrow(
-        'Error: adhocArray parameter 2 needs a single parameter.'
+        'Error: adhocArray parameter 2 needs a single parameter.',
       );
     });
 
@@ -64,7 +67,7 @@ describe('Exercising', () => {
       const testException = () => adhocArray(1, (a, b) => {});
 
       expect(testException).toThrow(
-        'Error: adhocArray parameter 2 needs a single parameter.'
+        'Error: adhocArray parameter 2 needs a single parameter.',
       );
     });
 

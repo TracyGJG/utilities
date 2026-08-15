@@ -1,8 +1,5 @@
-/**
- * @jest-environment jsdom
- */
-
-import { afterEach, beforeEach, jest } from '@jest/globals';
+import { describe, it, test, beforeEach } from 'node:test';
+import assert from 'node:assert/strict';
 
 import {
   debounce,
