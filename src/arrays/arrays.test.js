@@ -25,19 +25,19 @@ describe('Arrays', () => {
 
       test('with an empty input array', () => {
         const batches = batchesOfThree([]);
-        expect(batches.length).toBe(0);
+        assert.equal(batches.length, 0);
       });
 
       test('with an even input array', () => {
         const batches = batchesOfThree([...testData, 'L']);
-        expect(batches.length).toBe(4);
-        expect(batches[3].length).toBe(3);
+        assert.equal(batches.length, 4);
+        assert.equal(batches[3].length, 3);
       });
 
       test('with an uneven input array', () => {
         const batches = batchesOfThree([...testData]);
-        expect(batches.length).toBe(4);
-        expect(batches[3].length).toBe(2);
+        assert.equal(batches.length, 4);
+        assert.equal(batches[3].length, 2);
       });
     });
     describe('Number', () => {
@@ -45,19 +45,19 @@ describe('Arrays', () => {
 
       test('with an empty input array', () => {
         const batches = fourBatches([]);
-        expect(batches.length).toBe(0);
+        assert.equal(batches.length, 0);
       });
 
       test('with an even input array', () => {
         const batches = fourBatches([...testData, 'L']);
-        expect(batches.length).toBe(4);
-        expect(batches[3].length).toBe(3);
+        assert.equal(batches.length, 4);
+        assert.equal(batches[3].length, 3);
       });
 
       test('with an uneven input array', () => {
         const batches = fourBatches([...testData]);
-        expect(batches.length).toBe(4);
-        expect(batches[3].length).toBe(2);
+        assert.equal(batches.length, 4);
+        assert.equal(batches[3].length, 2);
       });
     });
   });
@@ -67,7 +67,7 @@ describe('Arrays', () => {
       const groupFunction = ({ name }) => name;
       const sourceArray = [];
       const resultGroupObject = groupBy(groupFunction, sourceArray);
-      expect(Object.keys(resultGroupObject).length).toBe(0);
+      assert.equal(Object.keys(resultGroupObject).length, 0);
     });
     test('returns an object with a single property when given an array containing objects of the same group (same time args)', () => {
       const groupFunction = ({ name }) => name;
@@ -78,9 +78,9 @@ describe('Arrays', () => {
       ];
       const resultGroupObject = groupBy(groupFunction, sourceArray);
 
-      expect(Object.keys(resultGroupObject).length).toBe(1);
-      expect(Object.keys(resultGroupObject)[0]).toBe('alpha');
-      expect(resultGroupObject.alpha.length).toBe(3);
+      assert.equal(Object.keys(resultGroupObject).length, 1);
+      assert.equal(Object.keys(resultGroupObject)[0], 'alpha');
+      assert.equal(resultGroupObject.alpha.length, 3);
     });
     test('returns an object with multiple properties when given an array containing objects of different groups (different time args)', () => {
       const groupFunction = ({ name }) => name;
@@ -92,47 +92,47 @@ describe('Arrays', () => {
       const resultGroupFunction = groupBy(groupFunction);
       const resultGroupObject = resultGroupFunction(sourceArray);
 
-      expect(Object.keys(resultGroupObject).length).toBe(2);
-      expect(Object.keys(resultGroupObject)[0]).toBe('alpha');
-      expect(Object.keys(resultGroupObject)[1]).toBe('beta');
+      assert.equal(Object.keys(resultGroupObject).length, 2);
+      assert.equal(Object.keys(resultGroupObject)[0], 'alpha');
+      assert.equal(Object.keys(resultGroupObject)[1], 'beta');
 
-      expect(resultGroupObject.alpha.length).toBe(2);
-      expect(resultGroupObject.beta.length).toBe(1);
-      expect(resultGroupObject.alpha[0].id).toBe(1);
-      expect(resultGroupObject.alpha[1].id).toBe(3);
-      expect(resultGroupObject.beta[0].id).toBe(2);
+      assert.equal(resultGroupObject.alpha.length, 2);
+      assert.equal(resultGroupObject.beta.length, 1);
+      assert.equal(resultGroupObject.alpha[0].id, 1);
+      assert.equal(resultGroupObject.alpha[1].id, 3);
+      assert.equal(resultGroupObject.beta[0].id, 2);
     });
   });
 
   describe('Permute a set of arrays', () => {
     test('In three dimensions', () => {
-      expect(permuteSpec.length).toBe(3);
-      expect(permuteSpec[0].length).toBe(2);
-      expect(permuteSpec[1].length).toBe(3);
-      expect(permuteSpec[2].length).toBe(4);
+      assert.equal(permuteSpec.length, 3);
+      assert.equal(permuteSpec[0].length, 2);
+      assert.equal(permuteSpec[1].length, 3);
+      assert.equal(permuteSpec[2].length, 4);
 
       const result = permute(...permuteSpec);
-      expect(Array.isArray(result)).toStrictEqual(true);
-      expect(result.length).toBe(2);
+      assert.equal(Array.isArray(result), true);
+      assert.equal(result.length, 2);
 
-      expect(Array.isArray(result[0])).toStrictEqual(true);
-      expect(result[0].length).toBe(3);
-      expect(result[1].length).toBe(3);
+      assert.equal(Array.isArray(result[0]), true);
+      assert.equal(result[0].length, 3);
+      assert.equal(result[1].length, 3);
 
-      expect(Array.isArray(result[0][0])).toStrictEqual(true);
-      expect(result[0][0].length).toBe(4);
-      expect(result[0][1].length).toBe(4);
-      expect(result[0][2].length).toBe(4);
-      expect(result[1][0].length).toBe(4);
-      expect(result[1][1].length).toBe(4);
-      expect(result[1][2].length).toBe(4);
+      assert.equal(Array.isArray(result[0][0]), true);
+      assert.equal(result[0][0].length, 4);
+      assert.equal(result[0][1].length, 4);
+      assert.equal(result[0][2].length, 4);
+      assert.equal(result[1][0].length, 4);
+      assert.equal(result[1][1].length, 4);
+      assert.equal(result[1][2].length, 4);
 
-      expect(Array.isArray(result[0][0][0])).toStrictEqual(true);
-      expect(result[0][0][0].length).toBe(3);
+      assert.equal(Array.isArray(result[0][0][0]), true);
+      assert.equal(result[0][0][0].length, 3);
 
-      expect(typeof result[0][0][0][0]).toStrictEqual('string');
-      expect(result[0][0][0][0].length).toBe(1);
-      expect(result[0][0][0][0]).toBe('A');
+      assert.equal(typeof result[0][0][0][0], 'string');
+      assert.equal(result[0][0][0][0].length, 1);
+      assert.equal(result[0][0][0][0], 'A');
     });
   });
 
@@ -143,42 +143,42 @@ describe('Arrays', () => {
 
       reconcileArrays(source, target);
 
-      expect(target.length).toBe(0);
+      assert.equal(target.length, 0);
     });
     it('can add new objects to the target array', () => {
       const source = [{ id: '1', value: 'alpha' }];
       const target = [];
 
-      expect(target.length).toBe(0);
+      assert.equal(target.length, 0);
       reconcileArrays(source, target);
 
-      expect(target.length).toBe(1);
-      expect(target[0].id).toBe('1');
-      expect(target[0].value).toBe('alpha');
+      assert.equal(target.length, 1);
+      assert.equal(target[0].id, '1');
+      assert.equal(target[0].value, 'alpha');
     });
     it('can remove old objects from the target array', () => {
       const source = [];
       const target = [{ id: '1', value: 'alpha' }];
 
-      expect(target.length).toBe(1);
+      assert.equal(target.length, 1);
       reconcileArrays(source, target);
 
-      expect(target.length).toBe(0);
+      assert.equal(target.length, 0);
     });
     it('can update matching objects in the target array', () => {
       // Arrange
       const source = [{ id: '1', value: 'beta' }];
       const target = [{ id: '1', value: 'alpha' }];
       // Affirm
-      expect(target.length).toBe(1);
-      expect(target[0].id).toBe('1');
-      expect(target[0].value).toBe('alpha');
+      assert.equal(target.length, 1);
+      assert.equal(target[0].id, '1');
+      assert.equal(target[0].value, 'alpha');
       // Action
       reconcileArrays(source, target);
       // Assert
-      expect(target.length).toBe(1);
-      expect(target[0].id).toBe('1');
-      expect(target[0].value).toBe('beta');
+      assert.equal(target.length, 1);
+      assert.equal(target[0].id, '1');
+      assert.equal(target[0].value, 'beta');
     });
     it('can manage a combination of changes to the target array', () => {
       // Arrange
@@ -193,19 +193,19 @@ describe('Arrays', () => {
         { id: '3', value: 'alpha' },
       ];
       // Affirm
-      expect(target.length).toBe(3);
-      expect(target[0].id).toBe('1');
-      expect(target[0].value).toBe('alpha');
-      expect(target[2].id).toBe('3');
-      expect(target[2].value).toBe('alpha');
+      assert.equal(target.length, 3);
+      assert.equal(target[0].id, '1');
+      assert.equal(target[0].value, 'alpha');
+      assert.equal(target[2].id, '3');
+      assert.equal(target[2].value, 'alpha');
       // Action
       reconcileArrays(source, target);
       // Assert
-      expect(target.length).toBe(3);
-      expect(target[0].id).toBe('2');
-      expect(target[0].value).toBe('alpha');
-      expect(target[1].id).toBe('3');
-      expect(target[1].value).toBe('beta');
+      assert.equal(target.length, 3);
+      assert.equal(target[0].id, '2');
+      assert.equal(target[0].value, 'alpha');
+      assert.equal(target[1].id, '3');
+      assert.equal(target[1].value, 'beta');
     });
     it('can reconcile arrays that contain arrays', () => {
       // Arrange
@@ -220,30 +220,30 @@ describe('Arrays', () => {
         { id: '3', values: ['alpha', 'beta'] },
       ];
       // Affirm
-      expect(target.length).toBe(3);
-      expect(target[0].id).toBe('1');
-      expect(target[0].values.length).toBe(0);
-      expect(target[1].id).toBe('2');
-      expect(target[1].values.length).toBe(1);
-      expect(target[1].values[0]).toBe('beta');
-      expect(target[2].id).toBe('3');
-      expect(target[2].values.length).toBe(2);
-      expect(target[2].values[0]).toBe('alpha');
-      expect(target[2].values[1]).toBe('beta');
+      assert.equal(target.length, 3);
+      assert.equal(target[0].id, '1');
+      assert.equal(target[0].values.length, 0);
+      assert.equal(target[1].id, '2');
+      assert.equal(target[1].values.length, 1);
+      assert.equal(target[1].values[0], 'beta');
+      assert.equal(target[2].id, '3');
+      assert.equal(target[2].values.length, 2);
+      assert.equal(target[2].values[0], 'alpha');
+      assert.equal(target[2].values[1], 'beta');
       // Action
       reconcileArrays(source, target);
       // Assert
-      expect(target.length).toBe(3);
-      expect(target[0].id).toBe('1');
-      expect(target[0].values.length).toBe(1);
-      expect(target[0].values[0]).toBe('gamma');
-      expect(target[1].id).toBe('2');
-      expect(target[1].values.length).toBe(1);
-      expect(target[1].values[0]).toBe('alpha');
-      expect(target[2].id).toBe('3');
-      expect(target[2].values.length).toBe(2);
-      expect(target[2].values[0]).toBe('gamma');
-      expect(target[2].values[1]).toBe('beta');
+      assert.equal(target.length, 3);
+      assert.equal(target[0].id, '1');
+      assert.equal(target[0].values.length, 1);
+      assert.equal(target[0].values[0], 'gamma');
+      assert.equal(target[1].id, '2');
+      assert.equal(target[1].values.length, 1);
+      assert.equal(target[1].values[0], 'alpha');
+      assert.equal(target[2].id, '3');
+      assert.equal(target[2].values.length, 2);
+      assert.equal(target[2].values[0], 'gamma');
+      assert.equal(target[2].values[1], 'beta');
     });
   });
 
@@ -253,14 +253,14 @@ describe('Arrays', () => {
       const srcArr = [1, 2, 3];
 
       replaceArray(tgtArr, srcArr);
-      expect(tgtArr.length).toEqual(3);
+      assert.equal(tgtArr.length, 3);
     });
 
     it('can empty a populated array', () => {
       const tgtArr = [1, 2, 3];
 
       replaceArray(tgtArr);
-      expect(tgtArr.length).toEqual(0);
+      assert.equal(tgtArr.length, 0);
     });
 
     it('can replace a populated array', () => {
@@ -268,7 +268,7 @@ describe('Arrays', () => {
       const srcArr = [4, 5, 6, 7];
 
       replaceArray(tgtArr, srcArr);
-      expect(tgtArr.length).toEqual(4);
+      assert.equal(tgtArr.length, 4);
     });
   });
 
@@ -276,7 +276,7 @@ describe('Arrays', () => {
     test('can mix an array', () => {
       const testCase = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
       shuffleArray(testCase);
-      expect(testCase).not.toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+      assert.notEqual(testCase, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
     });
   });
 
@@ -284,32 +284,32 @@ describe('Arrays', () => {
     it('can process an empty array', () => {
       const testMatrix = [];
       const resultMatrix = transposeArray(testMatrix);
-      expect(Array.isArray(resultMatrix)).toBeTruthy();
-      expect(resultMatrix.length).toBe(0);
+      assert.equal(Array.isArray(resultMatrix), true);
+      assert.equal(resultMatrix.length, 0);
     });
     it('can process an array containing empty rows', () => {
       const testMatrix = [[], [], []];
       const resultMatrix = transposeArray(testMatrix);
-      expect(Array.isArray(resultMatrix)).toBeTruthy();
-      expect(resultMatrix.length).toBe(0);
+      assert.equal(Array.isArray(resultMatrix), true);
+      assert.equal(resultMatrix.length, 0);
     });
     it('can process an array containing a single row', () => {
       const testMatrix = [['alpha', 'beta', 'gamma']];
       const resultMatrix = transposeArray(testMatrix);
-      expect(Array.isArray(resultMatrix)).toBeTruthy();
-      expect(resultMatrix.length).toBe(3);
-      expect(resultMatrix[0][0]).toBe('alpha');
-      expect(resultMatrix[1][0]).toBe('beta');
-      expect(resultMatrix[2][0]).toBe('gamma');
+      assert.equal(Array.isArray(resultMatrix), true);
+      assert.equal(resultMatrix.length, 3);
+      assert.equal(resultMatrix[0][0], 'alpha');
+      assert.equal(resultMatrix[1][0], 'beta');
+      assert.equal(resultMatrix[2][0], 'gamma');
     });
     it('can process an array containing rows with a single value (column)', () => {
       const testMatrix = [['alpha'], ['beta'], ['gamma']];
       const resultMatrix = transposeArray(testMatrix);
-      expect(Array.isArray(resultMatrix)).toBeTruthy();
-      expect(resultMatrix.length).toBe(1);
-      expect(resultMatrix[0][0]).toBe('alpha');
-      expect(resultMatrix[0][1]).toBe('beta');
-      expect(resultMatrix[0][2]).toBe('gamma');
+      assert.equal(Array.isArray(resultMatrix), true);
+      assert.equal(resultMatrix.length, 1);
+      assert.equal(resultMatrix[0][0], 'alpha');
+      assert.equal(resultMatrix[0][1], 'beta');
+      assert.equal(resultMatrix[0][2], 'gamma');
     });
     it('can process a 2D array (matrix)', () => {
       const testMatrix = [
@@ -318,62 +318,62 @@ describe('Arrays', () => {
         ['C', 3, 'gamma'],
       ];
       const resultMatrix = transposeArray(testMatrix);
-      expect(Array.isArray(resultMatrix)).toBeTruthy();
-      expect(resultMatrix.length).toBe(3);
-      expect(resultMatrix[0][0]).toBe('A');
-      expect(resultMatrix[0][1]).toBe('B');
-      expect(resultMatrix[0][2]).toBe('C');
-      expect(resultMatrix[1][0]).toBe(1);
-      expect(resultMatrix[1][1]).toBe(2);
-      expect(resultMatrix[1][2]).toBe(3);
-      expect(resultMatrix[2][0]).toBe('alpha');
-      expect(resultMatrix[2][1]).toBe('beta');
-      expect(resultMatrix[2][2]).toBe('gamma');
+      assert.equal(Array.isArray(resultMatrix), true);
+      assert.equal(resultMatrix.length, 3);
+      assert.equal(resultMatrix[0][0], 'A');
+      assert.equal(resultMatrix[0][1], 'B');
+      assert.equal(resultMatrix[0][2], 'C');
+      assert.equal(resultMatrix[1][0], 1);
+      assert.equal(resultMatrix[1][1], 2);
+      assert.equal(resultMatrix[1][2], 3);
+      assert.equal(resultMatrix[2][0], 'alpha');
+      assert.equal(resultMatrix[2][1], 'beta');
+      assert.equal(resultMatrix[2][2], 'gamma');
     });
   });
 
   describe('Unflatten', () => {
     test('can restructure a flat array (little-endian)', () => {
-      expect(flatData.length).toBe(72);
+      assert.equal(flatData.length, 72);
 
       const result = unflatten(2, 3, 4)(flatData);
-      expect(result.length).toEqual(2);
-      expect(result[0].length).toEqual(3);
-      expect(result[1].length).toEqual(3);
-      expect(result[0][0].length).toEqual(4);
-      expect(result[0][1].length).toEqual(4);
-      expect(result[0][2].length).toEqual(4);
-      expect(result[1][0].length).toEqual(4);
-      expect(result[1][1].length).toEqual(4);
-      expect(result[1][2].length).toEqual(4);
-      expect(result.flat().length).toEqual(6);
-      expect(result.flat(2).length).toEqual(24);
+      assert.equal(result.length, 2);
+      assert.equal(result[0].length, 3);
+      assert.equal(result[1].length, 3);
+      assert.equal(result[0][0].length, 4);
+      assert.equal(result[0][1].length, 4);
+      assert.equal(result[0][2].length, 4);
+      assert.equal(result[1][0].length, 4);
+      assert.equal(result[1][1].length, 4);
+      assert.equal(result[1][2].length, 4);
+      assert.equal(result.flat().length, 6);
+      assert.equal(result.flat(2).length, 24);
     });
 
     test('can restructure a flat array (big-endian)', () => {
-      expect(flatData.length).toBe(72);
+      assert.equal(flatData.length, 72);
 
       const specialisedFunction = unflatten(4, 3, 2);
       const result = specialisedFunction(flatData);
-      expect(result.length).toEqual(4);
-      expect(result[0].length).toEqual(3);
-      expect(result[1].length).toEqual(3);
-      expect(result[2].length).toEqual(3);
-      expect(result[3].length).toEqual(3);
-      expect(result[0][0].length).toEqual(2);
-      expect(result[0][1].length).toEqual(2);
-      expect(result[0][2].length).toEqual(2);
-      expect(result[1][0].length).toEqual(2);
-      expect(result[1][1].length).toEqual(2);
-      expect(result[1][2].length).toEqual(2);
-      expect(result[2][0].length).toEqual(2);
-      expect(result[2][1].length).toEqual(2);
-      expect(result[2][2].length).toEqual(2);
-      expect(result[3][0].length).toEqual(2);
-      expect(result[3][1].length).toEqual(2);
-      expect(result[3][2].length).toEqual(2);
-      expect(result.flat().length).toEqual(12);
-      expect(result.flat(2).length).toEqual(24);
+      assert.equal(result.length, 4);
+      assert.equal(result[0].length, 3);
+      assert.equal(result[1].length, 3);
+      assert.equal(result[2].length, 3);
+      assert.equal(result[3].length, 3);
+      assert.equal(result[0][0].length, 2);
+      assert.equal(result[0][1].length, 2);
+      assert.equal(result[0][2].length, 2);
+      assert.equal(result[1][0].length, 2);
+      assert.equal(result[1][1].length, 2);
+      assert.equal(result[1][2].length, 2);
+      assert.equal(result[2][0].length, 2);
+      assert.equal(result[2][1].length, 2);
+      assert.equal(result[2][2].length, 2);
+      assert.equal(result[3][0].length, 2);
+      assert.equal(result[3][1].length, 2);
+      assert.equal(result[3][2].length, 2);
+      assert.equal(result.flat().length, 12);
+      assert.equal(result.flat(2).length, 24);
     });
   });
 });

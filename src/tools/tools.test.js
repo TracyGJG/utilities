@@ -12,23 +12,19 @@ import {
 } from './index.js';
 
 describe('Tools', () => {
-  // afterEach(() => {
-  //   mock.resetCalls();
-  // });
-
   describe('Clipboard Operations', () => {
-    const mockReadText = mock.fn(() => {
-      console.log('mockReadText');
-      return Promise.resolve('mockReadText');
-    });
-    const mockWriteText = mock.fn(() => {
-      console.log('mockWriteText');
-    });
+    const mockReadText = mock.fn(() => Promise.resolve('mockReadText'));
+    const mockWriteText = mock.fn(() => {});
     beforeEach(() => {
       navigator.clipboard = {
         readText: mockReadText,
         writeText: mockWriteText,
       };
+    });
+
+    afterEach(() => {
+      mockReadText.mock.resetCalls();
+      mockWriteText.mock.resetCalls();
     });
 
     test('Copy Text', () => {
@@ -40,6 +36,7 @@ describe('Tools', () => {
         'mockReadText',
       ]);
     });
+
     test('Paste Text', async () => {
       assert.strictEqual(mockReadText.mock.callCount(), 0);
       const result = await pasteText();

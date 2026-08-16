@@ -1,35 +1,35 @@
-import { describe, it, test, beforeEach } from 'node:test';
+import { describe, it, test, beforeEach, afterEach, mock } from 'node:test';
 import assert from 'node:assert/strict';
 
-import {
-  debounce,
-  duplicateElementIds,
-  mockIntervalFunctions,
-  mockTimeoutFunctions,
-  poller,
-  reactivate,
-  sanatise,
-  throttle,
-} from './index.js';
+import { GlobalWindow, Window, KeyboardEvent } from 'happy-dom';
 
-import { sleep } from '../tools';
+import { sleep } from '../tools/index.js';
 
-const untrustedText = `<script>
-	(() => {
-		alert('Hello World')
-	})();
-</script>`;
+describe('DOM utilities', async () => {
+  const window = new GlobalWindow();
+  globalThis.document = window.document;
+  const {
+    debounce,
+    duplicateElementIds,
+    mockIntervalFunctions,
+    mockTimeoutFunctions,
+    poller,
+    reactivate,
+    sanatise,
+    throttle,
+  } = await import('./index.js');
 
-const trustedText = `&lt;script&gt;
-	(() =&gt; {
-		alert('Hello World')
-	})();
-&lt;/script&gt;`;
+  const untrustedText = `<script>
+  (() => {
+    alert('Hello World')
+  })();
+  </script>`;
 
-describe('DOM utilities', () => {
-  afterAll(() => {
-    jest.resetAllMocks();
-  });
+  const trustedText = `&lt;script&gt;
+  (() =&gt; {
+    alert('Hello World')
+  })();
+  &lt;/script&gt;`;
 
   describe('sanitize user/untrusted input (sanatise)', () => {
     test('can be performed using a parent element', () => {
@@ -44,17 +44,17 @@ describe('DOM utilities', () => {
 
       const result = sanatise(untrustedText, parent);
 
-      expect(result).toBeDefined();
-      expect(result.length).toBe(14);
-      expect(result).toBe('Sanitised Text');
+      assert.ok(result);
+      assert.equal(result.length, 14);
+      assert.equal(result, 'Sanitised Text');
     });
 
     test('can be performed using the default Document', () => {
       const result = sanatise(untrustedText);
 
-      expect(result).toBeDefined();
-      expect(result.length).toBe(73);
-      expect(result).toBe(trustedText);
+      assert.ok(result);
+      assert.equal(result.length, 79);
+      assert.equal(result, trustedText);
     });
   });
 
@@ -70,35 +70,35 @@ describe('DOM utilities', () => {
 
     test('will only be called after being idle for the default 1 second', async () => {
       const debounced = debounce(incCount);
-      expect(callCount).toBe(0);
+      assert.equal(callCount, 0);
 
       debounced();
       await sleep(500);
 
       debounced();
       await sleep(500);
-      expect(callCount).toBe(0);
+      assert.equal(callCount, 0);
 
       await sleep(600);
-      expect(callCount).toBe(1);
+      assert.equal(callCount, 1);
     });
 
     test('will only be called after being idle for the stipulated 2 second', async () => {
       const debounced = debounce(incCount, 2000);
-      expect(callCount).toBe(0);
+      assert.equal(callCount, 0);
 
       debounced();
       await sleep(500);
 
       debounced();
       await sleep(500);
-      expect(callCount).toBe(0);
+      assert.equal(callCount, 0);
 
       await sleep(600);
-      expect(callCount).toBe(0);
+      assert.equal(callCount, 0);
 
       await sleep(1000);
-      expect(callCount).toBe(1);
+      assert.equal(callCount, 1);
     });
   });
 
@@ -114,79 +114,80 @@ describe('DOM utilities', () => {
 
     test('will only be called once every default 1 second', async () => {
       const throttled = throttle(incCount);
-      expect(callCount).toBe(0);
+      assert.equal(callCount, 0);
 
       throttled();
-      expect(callCount).toBe(0);
+      assert.equal(callCount, 0);
 
       throttled();
-      expect(callCount).toBe(0);
+      assert.equal(callCount, 0);
       await sleep(1200);
 
-      expect(callCount).toBe(1);
+      assert.equal(callCount, 1);
       throttled();
-      expect(callCount).toBe(1);
+      assert.equal(callCount, 1);
     });
 
     test('will only be called once every stipulated 2 second', async () => {
       const throttled = throttle(incCount, 2000);
-      expect(callCount).toBe(0);
+      assert.equal(callCount, 0);
 
       throttled();
-      expect(callCount).toBe(0);
+      assert.equal(callCount, 0);
 
       throttled();
-      expect(callCount).toBe(0);
+      assert.equal(callCount, 0);
       await sleep(1200);
 
-      expect(callCount).toBe(1);
+      assert.equal(callCount, 1);
       throttled();
-      expect(callCount).toBe(1);
+      assert.equal(callCount, 1);
 
       await sleep(1200);
       throttled();
-      expect(callCount).toBe(2);
+      assert.equal(callCount, 2);
     });
   });
 
   describe('poller', () => {
     let counter = 0;
-    const checkCount = jest.fn(() => counter % 2);
-    const incCount = jest.fn(() => counter++);
-    const mockSetInterval = jest.fn(() => 'Set Interval');
-    const mockClearInterval = jest.fn();
+    const checkCount = mock.fn(() => counter % 2);
+    const incCount = mock.fn(() => counter++);
+    const mockSetInterval = mock.fn(() => 'Set Interval');
+    const mockClearInterval = mock.fn();
 
-    window.setInterval = mockSetInterval;
-    window.clearInterval = mockClearInterval;
+    globalThis.setInterval = mockSetInterval;
+    globalThis.clearInterval = mockClearInterval;
 
     beforeEach(() => {
       counter = 0;
     });
 
     afterEach(() => {
-      jest.resetAllMocks();
+      mockSetInterval.mock.resetCalls();
+      mockClearInterval.mock.resetCalls();
     });
 
     test('can execute an action', () => {
-      expect(mockSetInterval).toHaveBeenCalledTimes(0);
-      expect(mockClearInterval).toHaveBeenCalledTimes(0);
+      assert.equal(mockSetInterval.mock.callCount(), 0);
+      assert.equal(mockClearInterval.mock.callCount(), 0);
 
       const result = poller(100, 5, checkCount, incCount);
+      assert.ok(result);
 
-      expect(result).toBeDefined();
-      expect(mockSetInterval).toHaveBeenCalledTimes(1);
-      expect(mockSetInterval.mock.calls[0][1]).toBe(100);
-      expect(mockClearInterval).toHaveBeenCalledTimes(0);
+      assert.equal(mockSetInterval.mock.callCount(), 1);
+      assert.deepStrictEqual(mockSetInterval.mock.calls[0].arguments[1], 100);
+      assert.equal(mockClearInterval.mock.callCount(), 0);
 
-      const callbackFn = mockSetInterval.mock.calls[0][0];
-      expect(checkCount).toHaveBeenCalledTimes(0);
+      const callbackFn = mockSetInterval.mock.calls[0].arguments[0];
+      assert.equal(checkCount.mock.callCount(), 0);
       callbackFn();
-      expect(checkCount).toHaveBeenCalledTimes(1);
+      assert.equal(checkCount.mock.callCount(), 1);
 
       counter = 3;
       callbackFn();
-      expect(mockClearInterval).toHaveBeenCalledTimes(1);
-      expect(checkCount).toHaveBeenCalledTimes(2);
+      assert.equal(mockClearInterval.mock.callCount(), 1);
+      assert.equal(checkCount.mock.callCount(), 2);
     });
   });
 
@@ -194,57 +195,57 @@ describe('DOM utilities', () => {
     let timeoutCallback;
 
     beforeEach(() => {
-      timeoutCallback = jest.fn(() => 42);
+      timeoutCallback = mock.fn(() => 42);
     });
     afterEach(() => {
-      jest.resetAllMocks();
+      timeoutCallback.mock.resetCalls();
     });
 
     test('exposes required methods', () => {
       const timeoutFunctions = mockTimeoutFunctions();
 
-      expect(timeoutFunctions).toBeDefined();
-      expect(timeoutFunctions.clockTick).toBeDefined();
-      expect(timeoutFunctions.setTimeout).toBeDefined();
-      expect(timeoutFunctions.clearTimeout).toBeDefined();
+      assert.ok(timeoutFunctions);
+      assert.ok(timeoutFunctions.clockTick);
+      assert.ok(timeoutFunctions.setTimeout);
+      assert.ok(timeoutFunctions.clearTimeout);
 
-      expect(typeof timeoutFunctions.clockTick).toBe('function');
-      expect(typeof timeoutFunctions.setTimeout).toBe('function');
-      expect(typeof timeoutFunctions.clearTimeout).toBe('function');
+      assert.equal(typeof timeoutFunctions.clockTick, 'function');
+      assert.equal(typeof timeoutFunctions.setTimeout, 'function');
+      assert.equal(typeof timeoutFunctions.clearTimeout, 'function');
     });
 
     test('default behaviour (completed)', () => {
       const { clockTick, setTimeout } = mockTimeoutFunctions();
 
-      expect(timeoutCallback).toHaveBeenCalledTimes(0);
+      assert.equal(timeoutCallback.mock.callCount(), 0);
       let timeout = setTimeout(timeoutCallback, 200);
-      expect(timeout).toBeDefined();
+      assert.ok(timeout);
 
-      expect(timeoutCallback).toHaveBeenCalledTimes(0);
-      expect(clockTick(timeout, 100)).toStrictEqual(null);
+      assert.equal(timeoutCallback.mock.callCount(), 0);
+      assert.equal(clockTick(timeout, 100), null);
 
-      expect(timeoutCallback).toHaveBeenCalledTimes(0);
-      expect(clockTick(timeout, 100)).toStrictEqual(42);
+      assert.equal(timeoutCallback.mock.callCount(), 0);
+      assert.equal(clockTick(timeout, 100), 42);
 
-      expect(timeoutCallback).toHaveBeenCalledTimes(1);
-      expect(clockTick(timeout, 100)).toStrictEqual(undefined);
+      assert.equal(timeoutCallback.mock.callCount(), 1);
+      assert.equal(clockTick(timeout, 100), undefined);
     });
 
     test('default behaviour (cancelled)', () => {
       const { clockTick, setTimeout, clearTimeout } = mockTimeoutFunctions();
 
-      expect(timeoutCallback).toHaveBeenCalledTimes(0);
+      assert.equal(timeoutCallback.mock.callCount(), 0);
       let timeout = setTimeout(timeoutCallback, 200);
-      expect(timeout).toBeDefined();
+      assert.ok(timeout);
 
-      expect(timeoutCallback).toHaveBeenCalledTimes(0);
-      expect(clockTick(timeout, 100)).toStrictEqual(null);
+      assert.equal(timeoutCallback.mock.callCount(), 0);
+      assert.equal(clockTick(timeout, 100), null);
 
-      expect(timeoutCallback).toHaveBeenCalledTimes(0);
-      expect(clearTimeout(timeout)).toStrictEqual(true);
+      assert.equal(timeoutCallback.mock.callCount(), 0);
+      assert.ok(clearTimeout(timeout), true);
 
-      expect(timeoutCallback).toHaveBeenCalledTimes(0);
-      expect(clockTick(timeout, 100)).toStrictEqual(undefined);
+      assert.equal(timeoutCallback.mock.callCount(), 0);
+      assert.equal(clockTick(timeout, 100), undefined);
     });
   });
 
@@ -252,53 +253,54 @@ describe('DOM utilities', () => {
     let intervalCallback;
 
     beforeEach(() => {
-      intervalCallback = jest.fn(() => 42);
+      intervalCallback = mock.fn(() => 42);
     });
+
     afterEach(() => {
-      jest.resetAllMocks();
+      intervalCallback.mock.resetCalls();
     });
 
     test('exposes required methods', () => {
       const intervalFunctions = mockIntervalFunctions();
 
-      expect(intervalFunctions).toBeDefined();
-      expect(intervalFunctions.clockTick).toBeDefined();
-      expect(intervalFunctions.setInterval).toBeDefined();
-      expect(intervalFunctions.clearInterval).toBeDefined();
+      assert.ok(intervalFunctions);
+      assert.ok(intervalFunctions.clockTick);
+      assert.ok(intervalFunctions.setInterval);
+      assert.ok(intervalFunctions.clearInterval);
 
-      expect(typeof intervalFunctions.clockTick).toBe('function');
-      expect(typeof intervalFunctions.setInterval).toBe('function');
-      expect(typeof intervalFunctions.clearInterval).toBe('function');
+      assert.equal(typeof intervalFunctions.clockTick, 'function');
+      assert.equal(typeof intervalFunctions.setInterval, 'function');
+      assert.equal(typeof intervalFunctions.clearInterval, 'function');
     });
 
     test('default behaviour', () => {
       const { clockTick, setInterval, clearInterval } = mockIntervalFunctions();
 
-      expect(intervalCallback).toHaveBeenCalledTimes(0);
+      assert.strictEqual(intervalCallback.mock.callCount(), 0);
       let timeout = setInterval(intervalCallback, 120);
-      expect(timeout).toBeDefined();
+      assert.ok(timeout);
 
-      expect(intervalCallback).toHaveBeenCalledTimes(0);
-      expect(clockTick(timeout, 100)).toStrictEqual(null);
+      assert.equal(intervalCallback.mock.callCount(), 0);
+      assert.equal(clockTick(timeout, 100), null);
 
-      expect(intervalCallback).toHaveBeenCalledTimes(0);
-      expect(clockTick(timeout, 100)).toStrictEqual(42);
+      assert.equal(intervalCallback.mock.callCount(), 0);
+      assert.equal(clockTick(timeout, 100), 42);
 
-      expect(intervalCallback).toHaveBeenCalledTimes(1);
-      expect(clockTick(timeout, 200)).toStrictEqual(42);
+      assert.equal(intervalCallback.mock.callCount(), 1);
+      assert.equal(clockTick(timeout, 200), 42);
 
-      expect(intervalCallback).toHaveBeenCalledTimes(2);
-      expect(clockTick(timeout, 100)).toStrictEqual(null);
+      assert.equal(intervalCallback.mock.callCount(), 2);
+      assert.strictEqual(clockTick(timeout, 100), null);
 
-      expect(intervalCallback).toHaveBeenCalledTimes(2);
-      expect(clockTick(timeout, 100)).toStrictEqual(42);
+      assert.equal(intervalCallback.mock.callCount(), 2);
+      assert.equal(clockTick(timeout, 100), 42);
 
-      expect(intervalCallback).toHaveBeenCalledTimes(3);
-      expect(clockTick(timeout, 100)).toStrictEqual(null);
+      assert.equal(intervalCallback.mock.callCount(), 3);
+      assert.strictEqual(clockTick(timeout, 100), null);
 
-      expect(clearInterval(timeout)).toStrictEqual(true);
-      expect(clockTick(timeout, 100)).toStrictEqual(undefined);
-      expect(clearInterval(timeout)).toStrictEqual(false);
+      assert.ok(clearInterval(timeout));
+      assert.ok(!clockTick(timeout, 100));
+      assert.ok(!clearInterval(timeout));
     });
   });
 
@@ -309,35 +311,35 @@ describe('DOM utilities', () => {
 
     describe('in the default scope it returns', () => {
       test('an empty array when no elements have an id', () => {
-        expect(duplicateElementIds().length).toBe(0);
+        assert.equal(duplicateElementIds().length, 0);
       });
       test('an empty array when all elements have a unique id', () => {
         document.body.innerHTML = `<main>
-          <div id="div1">One</div>
-          <div id="div2">Two</div>
-        </main>`;
-        expect(duplicateElementIds().length).toBe(0);
+            <div id="div1">One</div>
+            <div id="div2">Two</div>
+          </main>`;
+        assert.equal(duplicateElementIds().length, 0);
       });
       test('an empty array when all elements have a dollar prefix', () => {
         document.body.innerHTML = `<main>
-          <div id="$div1">One</div>
-          <div id="$div2">Two</div>
-        </main>`;
-        expect(duplicateElementIds({ isPrefixed: true }).length).toBe(0);
+            <div id="$div1">One</div>
+            <div id="$div2">Two</div>
+          </main>`;
+        assert.equal(duplicateElementIds({ isPrefixed: true }).length, 0);
       });
       test('a list when there are elements with duplicate ids', () => {
         document.body.innerHTML = `<main>
-          <div id="div1">One</div>
-          <div id="div1">Two</div>
-        </main>`;
-        expect(duplicateElementIds()).toStrictEqual(['div1']);
+            <div id="div1">One</div>
+            <div id="div1">Two</div>
+          </main>`;
+        assert.deepStrictEqual(duplicateElementIds(), ['div1']);
       });
       test('a list when there are elements with unprefixed ids', () => {
         document.body.innerHTML = `<main>
-          <div id="$div1">One</div>
-          <div id="div2">Two</div>
-        </main>`;
-        expect(duplicateElementIds({ isPrefixed: true })).toStrictEqual([
+            <div id="$div1">One</div>
+            <div id="div2">Two</div>
+          </main>`;
+        assert.deepStrictEqual(duplicateElementIds({ isPrefixed: true }), [
           'div2',
         ]);
       });
@@ -346,46 +348,48 @@ describe('DOM utilities', () => {
     describe('in the defined scope it returns', () => {
       test('an empty array when there are no elements with id attributes', () => {
         document.body.innerHTML = `<main>
-          <div>One</div>
-          <div>Two</div>
-        </main>`;
+            <div>One</div>
+            <div>Two</div>
+          </main>`;
         const target = document.querySelector('main');
-        expect(duplicateElementIds({ target }).length).toBe(0);
+        assert.equal(duplicateElementIds({ target }).length, 0);
       });
       test('an empty array when there are only elements with unique id attributes', () => {
         document.body.innerHTML = `<main>
-          <div id="div1">One</div>
-          <div id="div2">Two</div>
-        </main>`;
+            <div id="div1">One</div>
+            <div id="div2">Two</div>
+          </main>`;
         const target = document.querySelector('main');
-        expect(duplicateElementIds({ target }).length).toBe(0);
+        assert.equal(duplicateElementIds({ target }).length, 0);
       });
       test('an empty array when all elements have a defined prefix', () => {
         document.body.innerHTML = `<main>
-          <div id="$div1">One</div>
-          <div id="$div2">Two</div>
-        </main>`;
+            <div id="$div1">One</div>
+            <div id="$div2">Two</div>
+          </main>`;
         const target = document.querySelector('main');
-        expect(duplicateElementIds({ target, isPrefixed: true }).length).toBe(
+        assert.equal(
+          duplicateElementIds({ target, isPrefixed: true }).length,
           0,
         );
       });
       test('a list when there are elements with duplicate ids', () => {
         document.body.innerHTML = `<main>
-          <div id="div1">One</div>
-          <div id="div2">Two</div>
-          <div id="div2">Three</div>
-        </main>`;
+            <div id="div1">One</div>
+            <div id="div2">Two</div>
+            <div id="div2">Three</div>
+          </main>`;
         const target = document.querySelector('main');
-        expect(duplicateElementIds({ target }).length).toBe(1);
+        assert.equal(duplicateElementIds({ target }).length, 1);
       });
       test('a list when there are elements with unprefixed ids', () => {
         document.body.innerHTML = `<main>
-          <div id="div1">One</div>
-          <div id="$div2">Two</div>
-        </main>`;
+            <div id="div1">One</div>
+            <div id="$div2">Two</div>
+          </main>`;
         const target = document.querySelector('main');
-        expect(duplicateElementIds({ target, isPrefixed: true }).length).toBe(
+        assert.equal(
+          duplicateElementIds({ target, isPrefixed: true }).length,
           1,
         );
       });
@@ -397,34 +401,34 @@ describe('DOM utilities', () => {
 
     beforeEach(() => {
       document.body.innerHTML = /*html*/ `
-        <main>
-          <p data-reactive-content="reactiv8"></p>
-          <input type="text" value="reactiv8" />
-          <textarea value="reactiv8"></textarea>
-          <select value="reactiv8">
-            <option>Hello</option>
-            <option>World</option>
-            <option>Hello, World!</option>
-          </select>
-          <button id="$btn">Update</button>
-        </main>
-      `;
+          <main>
+            <p data-reactive-content="reactiv8"></p>
+            <input type="text" value="reactiv8" />
+            <textarea value="reactiv8"></textarea>
+            <select value="reactiv8">
+              <option>Hello</option>
+              <option>World</option>
+              <option>Hello, World!</option>
+            </select>
+            <button id="$btn">Update</button>
+          </main>
+        `;
     });
 
     test('a list when there are elements with unprefixed ids', () => {
       reactiv8 = reactivate('reactiv8', 'Hello, World!');
 
-      expect(document.querySelector('p').textContent).toBe('Hello, World!');
-      expect(document.querySelector('input').value).toBe('Hello, World!');
-      expect(document.querySelector('textarea').value).toBe('Hello, World!');
-      expect(document.querySelector('select').selectedIndex).toBe(2);
+      assert.equal(document.querySelector('p').textContent, 'Hello, World!');
+      assert.equal(document.querySelector('input').value, 'Hello, World!');
+      assert.equal(document.querySelector('textarea').value, 'Hello, World!');
+      assert.equal(document.querySelector('select').selectedIndex, 2);
 
       reactiv8.value = 'Hello';
 
-      expect(document.querySelector('p').textContent).toBe('Hello');
-      expect(document.querySelector('input').value).toBe('Hello');
-      expect(document.querySelector('textarea').value).toBe('Hello');
-      expect(document.querySelector('select').selectedIndex).toBe(0);
+      assert.equal(document.querySelector('p').textContent, 'Hello');
+      assert.equal(document.querySelector('input').value, 'Hello');
+      assert.equal(document.querySelector('textarea').value, 'Hello');
+      assert.equal(document.querySelector('select').selectedIndex, 0);
     });
 
     test('a list when there are elements with unprefixed ids', () => {
@@ -434,20 +438,20 @@ describe('DOM utilities', () => {
         document.querySelector('main'),
       );
 
-      expect(document.querySelector('p').textContent).toBe('Hello, World!');
-      expect(document.querySelector('input').value).toBe('Hello, World!');
-      expect(document.querySelector('textarea').value).toBe('Hello, World!');
-      expect(document.querySelector('select').selectedIndex).toBe(2);
+      assert.equal(document.querySelector('p').textContent, 'Hello, World!');
+      assert.equal(document.querySelector('input').value, 'Hello, World!');
+      assert.equal(document.querySelector('textarea').value, 'Hello, World!');
+      assert.equal(document.querySelector('select').selectedIndex, 2);
 
       const $input = document.querySelector('input');
       $input.value = 'Hello';
       const userEvent = new KeyboardEvent('keyup');
       $input.dispatchEvent(userEvent);
 
-      expect(document.querySelector('p').textContent).toBe('Hello');
-      expect(document.querySelector('input').value).toBe('Hello');
-      expect(document.querySelector('textarea').value).toBe('Hello');
-      expect(document.querySelector('select').selectedIndex).toBe(0);
+      assert.equal(document.querySelector('p').textContent, 'Hello');
+      assert.equal(document.querySelector('input').value, 'Hello');
+      assert.equal(document.querySelector('textarea').value, 'Hello');
+      assert.equal(document.querySelector('select').selectedIndex, 0);
     });
   });
 });

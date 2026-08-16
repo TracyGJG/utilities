@@ -31,34 +31,34 @@ describe('Comparison and Cloning', () => {
 
     it('can produce an object comparator using a given property name (ascending)', () => {
       testObjArray.sort(compareObjectByProperty('name'));
-      assert.strictEqual(testObjArray[0].name, 'Alpha');
-      assert.strictEqual(testObjArray[0].id, 1);
-      assert.strictEqual(testObjArray[1].name, 'Beta');
-      assert.strictEqual(testObjArray[1].id, 3);
-      assert.strictEqual(testObjArray[2].name, 'Beta');
-      assert.strictEqual(testObjArray[2].id, 5);
-      assert.strictEqual(testObjArray[4].name, 'Delta');
-      assert.strictEqual(testObjArray[4].id, 4);
-      assert.strictEqual(testObjArray[3].name, 'Delta');
-      assert.strictEqual(testObjArray[3].id, 6);
-      assert.strictEqual(testObjArray[5].name, 'Gamma');
-      assert.strictEqual(testObjArray[5].id, 2);
+      assert.equal(testObjArray[0].name, 'Alpha');
+      assert.equal(testObjArray[0].id, 1);
+      assert.equal(testObjArray[1].name, 'Beta');
+      assert.equal(testObjArray[1].id, 3);
+      assert.equal(testObjArray[2].name, 'Beta');
+      assert.equal(testObjArray[2].id, 5);
+      assert.equal(testObjArray[4].name, 'Delta');
+      assert.equal(testObjArray[4].id, 4);
+      assert.equal(testObjArray[3].name, 'Delta');
+      assert.equal(testObjArray[3].id, 6);
+      assert.equal(testObjArray[5].name, 'Gamma');
+      assert.equal(testObjArray[5].id, 2);
     });
 
     it('can produce an object comparator using a given property name (descending)', () => {
       testObjArray.sort(compareObjectByProperty('name', false));
-      assert.strictEqual(testObjArray[0].name, 'Gamma');
-      assert.strictEqual(testObjArray[0].id, 2);
-      assert.strictEqual(testObjArray[1].name, 'Delta');
-      assert.strictEqual(testObjArray[1].id, 6);
-      assert.strictEqual(testObjArray[2].name, 'Delta');
-      assert.strictEqual(testObjArray[2].id, 4);
-      assert.strictEqual(testObjArray[3].name, 'Beta');
-      assert.strictEqual(testObjArray[3].id, 3);
-      assert.strictEqual(testObjArray[4].name, 'Beta');
-      assert.strictEqual(testObjArray[4].id, 5);
-      assert.strictEqual(testObjArray[5].name, 'Alpha');
-      assert.strictEqual(testObjArray[5].id, 1);
+      assert.equal(testObjArray[0].name, 'Gamma');
+      assert.equal(testObjArray[0].id, 2);
+      assert.equal(testObjArray[1].name, 'Delta');
+      assert.equal(testObjArray[1].id, 6);
+      assert.equal(testObjArray[2].name, 'Delta');
+      assert.equal(testObjArray[2].id, 4);
+      assert.equal(testObjArray[3].name, 'Beta');
+      assert.equal(testObjArray[3].id, 3);
+      assert.equal(testObjArray[4].name, 'Beta');
+      assert.equal(testObjArray[4].id, 5);
+      assert.equal(testObjArray[5].name, 'Alpha');
+      assert.equal(testObjArray[5].id, 1);
     });
   });
 
@@ -182,10 +182,10 @@ describe('Comparison and Cloning', () => {
     });
   });
 
-  describe.skip('Flatten Object', () => {
+  describe('Flatten Object', () => {
     test('an empty object', () => {
       const result = flattenObject({});
-      assert.strictEqual(isObject(result)).toStrictEqual(true);
+      assert.equal(isObject(result), true);
       assert.equal(Object.keys(result).length, 0);
     });
 
@@ -195,7 +195,7 @@ describe('Comparison and Cloning', () => {
         beta: 42,
         gamma: 'Hello, World!',
       });
-      assert.strictEqual(isObject(result)).toStrictEqual(true);
+      assert.equal(isObject(result), true);
       assert.equal(Object.keys(result).length, 3);
     });
 
@@ -203,11 +203,11 @@ describe('Comparison and Cloning', () => {
       const result = flattenObject({
         delta: [true, 42, 'Hello, World!'],
       });
-      assert.strictEqual(isObject(result)).toStrictEqual(true);
+      assert.equal(isObject(result), true);
       assert.equal(Object.keys(result).length, 3);
-      expect(result['delta[0]']).toStrictEqual(true);
-      expect(result['delta[1]']).toStrictEqual(42);
-      expect(result['delta[2]']).toStrictEqual('Hello, World!');
+      assert.equal(result['delta[0]'], true);
+      assert.equal(result['delta[1]'], 42);
+      assert.equal(result['delta[2]'], 'Hello, World!');
     });
 
     test('an object containing a nested object of primitives', () => {
@@ -218,11 +218,11 @@ describe('Comparison and Cloning', () => {
           gamma: 'Hello, World!',
         },
       });
-      expect(isObject(result)).toStrictEqual(true);
-      assert.equal(Object.keys(result).length).toEqual(3);
-      expect(result['delta.alpha']).toStrictEqual(true);
-      expect(result['delta.beta']).toStrictEqual(42);
-      expect(result['delta.gamma']).toStrictEqual('Hello, World!');
+      assert.equal(isObject(result), true);
+      assert.equal(Object.keys(result).length, 3);
+      assert.equal(result['delta.alpha'], true);
+      assert.equal(result['delta.beta'], 42);
+      assert.equal(result['delta.gamma'], 'Hello, World!');
     });
 
     test('an object containing an array containing an object', () => {
@@ -235,11 +235,11 @@ describe('Comparison and Cloning', () => {
           },
         ],
       });
-      expect(isObject(result)).toStrictEqual(true);
-      assert.equal(Object.keys(result).length).toEqual(3);
-      expect(result['delta[0].alpha']).toStrictEqual(true);
-      expect(result['delta[0].beta']).toStrictEqual(42);
-      expect(result['delta[0].gamma']).toStrictEqual('Hello, World!');
+      assert.equal(isObject(result), true);
+      assert.equal(Object.keys(result).length, 3);
+      assert.equal(result['delta[0].alpha'], true);
+      assert.equal(result['delta[0].beta'], 42);
+      assert.equal(result['delta[0].gamma'], 'Hello, World!');
     });
 
     test('an object containing a nested object containing an array', () => {
@@ -248,139 +248,134 @@ describe('Comparison and Cloning', () => {
           epsilon: [true, 42, 'Hello, World!'],
         },
       });
-      expect(isObject(result)).toStrictEqual(true);
-      assert.equal(Object.keys(result).length).toEqual(3);
-      expect(result['delta.epsilon[0]']).toStrictEqual(true);
-      expect(result['delta.epsilon[1]']).toStrictEqual(42);
-      expect(result['delta.epsilon[2]']).toStrictEqual('Hello, World!');
+      assert.equal(isObject(result), true);
+      assert.equal(Object.keys(result).length, 3);
+      assert.equal(result['delta.epsilon[0]'], true);
+      assert.equal(result['delta.epsilon[1]'], 42);
+      assert.equal(result['delta.epsilon[2]'], 'Hello, World!');
     });
   });
 
-  describe.skip('is Null or Undefined', () => {
+  describe('is Null or Undefined', () => {
     test('can confirm undefined is a base value', () => {
-      expect(isBase(undefined)).toStrictEqual(true);
+      assert.ok(isBase(undefined));
     });
     test('can confirm null is a base value', () => {
-      expect(isBase(null)).toStrictEqual(true);
+      assert.ok(isBase(null));
     });
     test('can confirm false is not a base value', () => {
-      expect(isBase(false)).toStrictEqual(false);
+      assert.ok(!isBase(false));
     });
     test('can confirm true is not a base value', () => {
-      expect(isBase(true)).toStrictEqual(false);
+      assert.ok(!isBase(true));
     });
     test('can confirm zero is not a base value', () => {
-      expect(isBase(0)).toStrictEqual(false);
+      assert.ok(!isBase(0));
     });
     test('can confirm one is not a base value', () => {
-      expect(isBase(1)).toStrictEqual(false);
+      assert.ok(!isBase(1));
     });
     test('can confirm minus one is not a base value', () => {
-      expect(isBase(-1)).toStrictEqual(false);
+      assert.ok(!isBase(-1));
     });
     test('can confirm an empty string is not a base value', () => {
-      expect(isBase('')).toStrictEqual(false);
+      assert.ok(!isBase(''));
     });
     test('can confirm a populated string is not a base value', () => {
-      expect(isBase('42')).toStrictEqual(false);
+      assert.ok(!isBase('42'));
     });
     test('can confirm an empty array is not a base value', () => {
-      expect(isBase([])).toStrictEqual(false);
+      assert.ok(!isBase([]));
     });
     test('can confirm an empty object is not a base value', () => {
-      expect(isBase({})).toStrictEqual(false);
+      assert.ok(!isBase({}));
     });
   });
 
-  describe.skip('is an Empty Object', () => {
+  describe('is an Empty Object', () => {
     it('is false for a populated object', () => {
       let userDetails = {
         name: 'John Doe',
         username: 'jonnydoe',
         age: 14,
       };
-      expect(isEmptyObject(userDetails)).toStrictEqual(false);
+      assert.ok(!isEmptyObject(userDetails));
     });
     it('is true for a default object', () => {
       let myEmptyObj = {};
-      expect(isEmptyObject(myEmptyObj)).toStrictEqual(true);
+      assert.ok(isEmptyObject(myEmptyObj));
     });
     it('is null for a variable with a null value', () => {
       let nullObj = null;
-      assert.equal(isEmptyObject(nullObj)).toBeNull();
+      assert.ok(!isEmptyObject(nullObj));
     });
     it('is undefined for a variable of undefined value', () => {
       let undefinedObj;
-      expect(isEmptyObject(undefinedObj)).not.toBeDefined();
+      assert.ok(!isEmptyObject(undefinedObj));
     });
   });
 
-  describe.skip('is an Object', () => {
+  describe('is an Object', () => {
     test('can confirm an empty object is an object', () => {
-      const testCase = {};
-      expect(isObject(testCase)).toStrictEqual(true);
+      assert.ok(isObject({}));
     });
     test('can confirm a populated object is an object', () => {
-      expect(isObject({ message: 'Hello World' })).toStrictEqual(true);
+      assert.ok(isObject({ message: 'Hello World' }));
     });
     test('can confirm undefined is not an object', () => {
-      expect(isObject(undefined)).toStrictEqual(false);
+      assert.ok(!isObject(undefined));
     });
     test('can confirm null is not an object', () => {
-      expect(isObject(null)).toStrictEqual(false);
+      assert.ok(!isObject(null));
     });
     test('can confirm false is not an object', () => {
-      expect(isObject(false)).toStrictEqual(false);
+      assert.ok(!isObject(false));
     });
     test('can confirm true is not an object', () => {
-      expect(isObject(true)).toStrictEqual(false);
+      assert.ok(!isObject(true));
     });
     test('can confirm zero is not an object', () => {
-      expect(isObject(0)).toStrictEqual(false);
+      assert.ok(!isObject(0));
     });
     test('can confirm one is not an object', () => {
-      expect(isObject(1)).toStrictEqual(false);
+      assert.ok(!isObject(1));
     });
     test('can confirm minus one is not an object', () => {
-      expect(isObject(-1)).toStrictEqual(false);
+      assert.ok(!isObject(-1));
     });
     test('can confirm an empty string is not an object', () => {
-      expect(isObject('')).toStrictEqual(false);
+      assert.ok(!isObject(''));
     });
     test('can confirm a populated string is not an object', () => {
-      expect(isObject('42')).toStrictEqual(false);
+      assert.ok(!isObject('42'));
     });
     test('can confirm an empty array is not an object', () => {
       const testCase = [];
-      expect(isObject(testCase)).toStrictEqual(false);
+      assert.ok(!isObject(testCase));
     });
   });
 
-  describe.skip('Object Equality', () => {
+  describe('Object Equality', () => {
     it('can compare primitive strings (true)', () => {
-      expect(objectEquality('42', '42')).toStrictEqual(true);
+      assert.ok(objectEquality('42', '42'));
     });
     it('can compare primitive strings (false)', () => {
-      expect(objectEquality('42', '_42_')).toStrictEqual(false);
+      assert.ok(!objectEquality('42', '_42_'));
     });
     it('can compare arrays (of strings) (true)', () => {
-      expect(objectEquality(['42'], ['42'])).toStrictEqual(true);
+      assert.ok(objectEquality(['42'], ['42']));
     });
     it('can compare arrays (of strings) (false)', () => {
-      expect(objectEquality(['42'], ['_42_'])).toStrictEqual(false);
+      assert.ok(!objectEquality(['42'], ['_42_']));
     });
     it('can compare simple matching objects', () => {
-      expect(objectEquality({ val: '42' }, { val: '42' })).toStrictEqual(true);
+      assert.ok(objectEquality({ val: '42' }, { val: '42' }));
     });
     it('can compare simple non-matching objects (property)', () => {
-      expect(objectEquality({ val: '42' }, { val_: '42' })).toStrictEqual(
-        false,
-      );
+      assert.ok(!objectEquality({ val: '42' }, { val_: '42' }));
     });
     it('can compare simple non-matching objects (value)', () => {
-      expect(objectEquality({ val: '42' }, { val: '_42_' })).toStrictEqual(
-        false,
-      );
+      assert.ok(!objectEquality({ val: '42' }, { val: '_42_' }));
     });
     it('can compare similar nested objects', () => {
       const obj1 = {
@@ -394,7 +389,7 @@ describe('Comparison and Cloning', () => {
       };
       const obj2 = JSON.parse(JSON.stringify(obj1));
 
-      expect(objectEquality(obj1, obj2)).toBeTruthy();
+      assert.ok(objectEquality(obj1, obj2));
     });
     it('can compare object structures (same)', () => {
       const obj1 = {
@@ -408,7 +403,7 @@ describe('Comparison and Cloning', () => {
       };
       const obj2 = JSON.parse(JSON.stringify(obj1));
 
-      expect(objectEquality(obj1, obj2, true)).toBeTruthy();
+      assert.ok(objectEquality(obj1, obj2, true));
     });
     it('can compare object structures (different value)', () => {
       const obj1 = {
@@ -423,7 +418,7 @@ describe('Comparison and Cloning', () => {
       const obj2 = JSON.parse(JSON.stringify(obj1));
       obj2.arrProp[2] = 'delta';
 
-      expect(objectEquality(obj1, obj2, true)).toBeTruthy();
+      assert.ok(objectEquality(obj1, obj2, true));
     });
     it('can compare object structures (different value)', () => {
       const obj1 = {
@@ -438,7 +433,7 @@ describe('Comparison and Cloning', () => {
       const obj2 = JSON.parse(JSON.stringify(obj1));
       obj2.arrProp[2] = 42;
 
-      expect(objectEquality(obj1, obj2, true)).toBeFalsy();
+      assert.ok(!objectEquality(obj1, obj2, true));
     });
 
     it('can compare objects with dissimilar array lengths', () => {
@@ -454,7 +449,7 @@ describe('Comparison and Cloning', () => {
       const obj2 = JSON.parse(JSON.stringify(obj1));
       obj2.arrProp.push('delta');
 
-      expect(objectEquality(obj1, obj2)).toBeFalsy();
+      assert.ok(!objectEquality(obj1, obj2));
     });
 
     it('can compare objects that vary only be a single nested property value', () => {
@@ -470,7 +465,7 @@ describe('Comparison and Cloning', () => {
       const obj2 = JSON.parse(JSON.stringify(obj1));
       obj2.objProp.subProp = 'Dif Property';
 
-      expect(objectEquality(obj1, obj2)).toBeFalsy();
+      assert.ok(!objectEquality(obj1, obj2));
     });
 
     it('can compare objects that vary in structure by a single nested property', () => {
@@ -486,60 +481,63 @@ describe('Comparison and Cloning', () => {
       const obj2 = JSON.parse(JSON.stringify(obj1));
       obj2.objProp.subProp2 = 'Additional Property';
 
-      expect(objectEquality(obj1, obj2)).toBeFalsy();
+      assert.ok(!objectEquality(obj1, obj2));
     });
   });
 
-  describe.skip('Object reducer', () => {
+  describe('Object reducer', () => {
     test('reports an exception if there are no arguments', () => {
       const testException = () => reduceObject();
 
-      expect(testException).toThrow(
-        'Error: reduceObject requires at least 1 property name as a parameter.',
+      assert.throws(
+        testException,
+        Error(
+          'Error: reduceObject requires at least 1 property name as a parameter.',
+        ),
       );
     });
 
     test('can handle and empty source object', () => {
       const testFn = reduceObject('alpha');
-      expect(testFn({})).toEqual({});
+      assert.deepStrictEqual(testFn({}), {});
     });
 
     test('can handle a complete object mapping', () => {
       const testFn = reduceObject('alpha');
-      expect(testFn({ alpha: 'A' })).toEqual({ alpha: 'A' });
+      assert.deepStrictEqual(testFn({ alpha: 'A' }), { alpha: 'A' });
     });
 
     test('can handle a partial object mapping', () => {
       const testFn = reduceObject('alpha');
-      expect(testFn({ alpha: 'A', beta: 'B' })).toEqual({ alpha: 'A' });
+      assert.notStrictEqual(testFn({ alpha: 'A', beta: 'B' }), { alpha: 'A' });
     });
 
     test('can handle a mismatched object mapping', () => {
       const testFn = reduceObject('alpha');
-      expect(testFn({ beta: 'B' })).toEqual({});
+      assert.notStrictEqual(testFn({ beta: 'B' }), {});
     });
   });
 
-  describe.skip('Object referencedClone', () => {
+  describe('Object referencedClone', () => {
     test('can accept null', () => {
       const testObject = null;
       let result = referencedClone(testObject);
-      expect(result).toStrictEqual(null);
-      expect(result).toEqual(testObject);
+      assert.ok(!result);
+      assert.equal(result, testObject);
     });
 
     test('can accept an array', () => {
       const testObject = [];
       let result = referencedClone(testObject);
-      expect(result).toStrictEqual([]);
-      expect(result).toEqual(testObject);
+      assert.deepStrictEqual(result, []);
+      assert.equal(result, testObject);
     });
 
     test('can accept an empty object', () => {
       const testObject = {};
       let result = referencedClone(testObject);
-      expect(result).toStrictEqual({});
-      expect(result === testObject).toStrictEqual(false);
+      assert.deepStrictEqual(result, {});
+      assert.ok(result !== testObject);
     });
 
     test('can accept an object containing array and object properties', () => {
@@ -548,9 +546,9 @@ describe('Comparison and Cloning', () => {
         obj: {},
       };
       let result = referencedClone(testObject);
-      expect(result).toStrictEqual(testObject);
-      expect(result.arr).toStrictEqual(testObject.arr);
-      expect(result.obj).toStrictEqual(testObject.obj);
+      assert.deepStrictEqual(result, testObject);
+      assert.strictEqual(result.arr, testObject.arr);
+      assert.strictEqual(result.obj, testObject.obj);
     });
 
     test('can accept an object with primitive properties', () => {
@@ -561,17 +559,17 @@ describe('Comparison and Cloning', () => {
         bigInt: 42n,
       };
       let result = referencedClone(testObject);
-      expect(result).toStrictEqual(testObject);
+      assert.deepStrictEqual(result, testObject);
 
       result.bool = false;
       result.num = 666;
       result.str = 'Goodbye cruel world';
       result.bigInt = 666n;
 
-      expect(testObject.bool).toStrictEqual(false);
-      expect(testObject.num).toStrictEqual(666);
-      expect(testObject.str).toStrictEqual('Goodbye cruel world');
-      expect(testObject.bigInt).toStrictEqual(666n);
+      assert.ok(!testObject.bool);
+      assert.equal(testObject.num, 666);
+      assert.equal(testObject.str, 'Goodbye cruel world');
+      assert.equal(testObject.bigInt, 666n);
     });
 
     test('can exclude properties', () => {
@@ -582,11 +580,11 @@ describe('Comparison and Cloning', () => {
         bigInt: 42n,
       };
       let result = referencedClone(testObject, ['str']);
-      expect(result).not.toStrictEqual(testObject);
+      assert.notStrictEqual(result, testObject);
 
       const includedKeys = Object.keys(result);
-      expect(includedKeys.length).toBe(3);
-      expect(includedKeys.includes('str')).toStrictEqual(false);
+      assert.equal(includedKeys.length, 3);
+      assert.ok(!includedKeys.includes('str'));
     });
 
     test('can include properties', () => {
@@ -597,11 +595,11 @@ describe('Comparison and Cloning', () => {
         bigInt: 42n,
       };
       let result = referencedClone(testObject, ['str'], true);
-      expect(result).not.toStrictEqual(testObject);
+      assert.notStrictEqual(result, testObject);
 
       const includedKeys = Object.keys(result);
-      expect(includedKeys.length).toBe(1);
-      expect(includedKeys.includes('str')).toStrictEqual(true);
+      assert.equal(includedKeys.length, 1);
+      assert.ok(includedKeys.includes('str'));
     });
   });
 });

@@ -14,30 +14,30 @@ describe('Ancillaries', () => {
   describe('Accumulated Average', () => {
     it('can calculate with a single call', () => {
       const result1 = accumulatedAverage(9, 5)(9);
-      expect(result1).toEqual(9);
+      assert.equal(result1, 9);
       const result2 = accumulatedAverage(9, 5)(45);
-      expect(result2).toEqual(15);
+      assert.equal(result2, 15);
     });
     it('can calculate with incremental calls', () => {
       const newAverage = accumulatedAverage();
-      expect(newAverage(1)).toEqual(1.0);
-      expect(newAverage(2)).toEqual(1.5);
-      expect(newAverage(3)).toEqual(2.0);
-      expect(newAverage(4)).toEqual(2.5);
-      expect(newAverage(5)).toEqual(3.0);
+      assert.equal(newAverage(1), 1.0);
+      assert.equal(newAverage(2), 1.5);
+      assert.equal(newAverage(3), 2.0);
+      assert.equal(newAverage(4), 2.5);
+      assert.equal(newAverage(5), 3.0);
     });
     it('can re-calculate an average', () => {
       const newAverage = accumulatedAverage();
-      expect(newAverage(45, 9, 6)).toEqual(15);
+      assert.equal(newAverage(45, 9, 6), 15);
     });
   });
 
   describe('Date-based Random number generator', () => {
     it('can produce a random number between 0 and 1', () => {
       const result = dateBasedRandom();
-      expect(typeof result).toBe('number');
-      expect(result).toBeGreaterThanOrEqual(0);
-      expect(result).toBeLessThan(1);
+      assert.equal(typeof result, 'number');
+      assert.ok(result >= 0);
+      assert.ok(result < 1);
     });
   });
 
@@ -48,11 +48,11 @@ describe('Ancillaries', () => {
         id,
         who,
       }));
-      expect(entityMap.has('hello')).toStrictEqual(false);
+      assert.equal(entityMap.has('hello'), false);
 
       const entity = entityGetter('hello', { who: 'World' });
-      expect(entityMap.has('hello')).toStrictEqual(true);
-      expect(entity.who).toBe('World');
+      assert.equal(entityMap.has('hello'), true);
+      assert.equal(entity.who, 'World');
     });
 
     it('can obtain a pre-existing entity', () => {
@@ -61,40 +61,40 @@ describe('Ancillaries', () => {
         id,
         who,
       }));
-      expect(entityMap.has('hello')).toStrictEqual(false);
+      assert.equal(entityMap.has('hello'), false);
 
       entityMap.set('hello', {
         id: 'hello',
         who: 'World',
       });
-      expect(entityMap.has('hello')).toStrictEqual(true);
+      assert.equal(entityMap.has('hello'), true);
 
       const entity = entityGetter('hello');
-      expect(entity.who).toBe('World');
+      assert.equal(entity.who, 'World');
     });
   });
 
   describe('modulo', () => {
     it('calculate the modulo of zero', () => {
-      expect(modulo(42, 0)).toBe(0);
-      expect(modulo(42)(0)).toBe(0);
+      assert.equal(modulo(42, 0), 0);
+      assert.equal(modulo(42)(0), 0);
     });
 
     it('calculate the modulo of a value in range', () => {
-      expect(modulo(42, 20)).toBe(20);
-      expect(modulo(42)(20)).toBe(20);
+      assert.equal(modulo(42, 20), 20);
+      assert.equal(modulo(42)(20), 20);
     });
 
     it('calculate the modulo of a positive value out of range', () => {
-      expect(modulo(42, 66)).toBe(24);
-      expect(modulo(42)(66)).toBe(24);
-      expect(modulo(42, 666)).toBe(36);
-      expect(modulo(42)(666)).toBe(36);
+      assert.equal(modulo(42, 66), 24);
+      assert.equal(modulo(42)(66), 24);
+      assert.equal(modulo(42, 666), 36);
+      assert.equal(modulo(42)(666), 36);
     });
 
     it('calculate the modulo of a negative value in range', () => {
-      expect(modulo(42, -20)).toBe(22);
-      expect(modulo(42)(-20)).toBe(22);
+      assert.equal(modulo(42, -20), 22);
+      assert.equal(modulo(42)(-20), 22);
     });
   });
 
@@ -102,26 +102,26 @@ describe('Ancillaries', () => {
     test('using default parameters', () => {
       const randomTwo = random(2);
       const result = randomTwo();
-      expect(result).toBeGreaterThanOrEqual(0);
-      expect(result).toBeLessThan(2);
+      assert.ok(result >= 0);
+      assert.ok(result < 2);
     });
 
     test('using minimal limit', () => {
       const random1_3 = random(2, 1);
       const result = random1_3();
-      expect(result).toBeGreaterThanOrEqual(1);
-      expect(result).toBeLessThan(3);
+      assert.ok(result >= 1);
+      assert.ok(result < 3);
     });
 
     test('using minimal limit and precision', () => {
       const random1_3_to_2dp = random(2, 1, 2);
       const result = random1_3_to_2dp();
-      expect(result).toBeGreaterThanOrEqual(1);
-      expect(result).toBeLessThan(3);
+      assert.ok(result >= 1);
+      assert.ok(result < 3);
 
       const rnd = (max, min, mul, rand) =>
         Math.floor(rand * (max - min) * mul) / mul + min;
-      expect(rnd(2, 1, 100, 0.54321)).toEqual(1.54);
+      assert.equal(rnd(2, 1, 100, 0.54321), 1.54);
     });
   });
 
@@ -130,22 +130,22 @@ describe('Ancillaries', () => {
       const roundDefault = roundBoundry(5);
 
       test('40 -> 40', () => {
-        expect(roundDefault(40)).toBe(40);
+        assert.equal(roundDefault(40), 40);
       });
       test('41 -> 40', () => {
-        expect(roundDefault(41)).toBe(40);
+        assert.equal(roundDefault(41), 40);
       });
       test('42 -> 40', () => {
-        expect(roundDefault(42)).toBe(40);
+        assert.equal(roundDefault(42), 40);
       });
       test('43 -> 45', () => {
-        expect(roundDefault(43)).toBe(45);
+        assert.equal(roundDefault(43), 45);
       });
       test('44 -> 45', () => {
-        expect(roundDefault(44)).toBe(45);
+        assert.equal(roundDefault(44), 45);
       });
       test('45 -> 45', () => {
-        expect(roundDefault(45)).toBe(45);
+        assert.equal(roundDefault(45), 45);
       });
     });
 
@@ -153,22 +153,22 @@ describe('Ancillaries', () => {
       const roundCeil = roundBoundry(5, 'ceil');
 
       test('40 -> 40', () => {
-        expect(roundCeil(40)).toBe(40);
+        assert.equal(roundCeil(40), 40);
       });
       test('41 -> 45', () => {
-        expect(roundCeil(41)).toBe(45);
+        assert.equal(roundCeil(41), 45);
       });
       test('42 -> 45', () => {
-        expect(roundCeil(42)).toBe(45);
+        assert.equal(roundCeil(42), 45);
       });
       test('43 -> 45', () => {
-        expect(roundCeil(43)).toBe(45);
+        assert.equal(roundCeil(43), 45);
       });
       test('44 -> 45', () => {
-        expect(roundCeil(44)).toBe(45);
+        assert.equal(roundCeil(44), 45);
       });
       test('45 -> 45', () => {
-        expect(roundCeil(45)).toBe(45);
+        assert.equal(roundCeil(45), 45);
       });
     });
 
@@ -176,22 +176,22 @@ describe('Ancillaries', () => {
       const roundFloor = roundBoundry(5, 'floor');
 
       test('40 -> 40', () => {
-        expect(roundFloor(40)).toBe(40);
+        assert.equal(roundFloor(40), 40);
       });
       test('41 -> 40', () => {
-        expect(roundFloor(41)).toBe(40);
+        assert.equal(roundFloor(41), 40);
       });
       test('42 -> 40', () => {
-        expect(roundFloor(42)).toBe(40);
+        assert.equal(roundFloor(42), 40);
       });
       test('43 -> 40', () => {
-        expect(roundFloor(43)).toBe(40);
+        assert.equal(roundFloor(43), 40);
       });
       test('44 -> 40', () => {
-        expect(roundFloor(44)).toBe(40);
+        assert.equal(roundFloor(44), 40);
       });
       test('45 -> 45', () => {
-        expect(roundFloor(45)).toBe(45);
+        assert.equal(roundFloor(45), 45);
       });
     });
   });
